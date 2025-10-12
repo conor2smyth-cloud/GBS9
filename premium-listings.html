@@ -1,100 +1,35 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>Premium Listings — GBS9</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="css/style.css" />
-  <script defer src="js/header.js"></script>
-  <style>
-    .hero-premium{padding:80px 20px;background:linear-gradient(145deg,#121212,#1b1b1b);border-bottom:1px solid rgba(255,255,255,.08)}
-    .hero-premium h1{font-size:clamp(28px,4vw,48px);letter-spacing:.5px;text-align:center}
-    .sub{text-align:center;color:#cfcfcf;max-width:760px;margin:10px auto 0}
-    .menu-grid{display:grid;gap:22px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));padding:32px 20px;max-width:1200px;margin:0 auto}
-    .menu-card{background:rgba(26,26,26,.9);border:1px solid rgba(255,255,255,.08);border-radius:16px;overflow:hidden;box-shadow:0 10px 28px rgba(0,0,0,.5);cursor:pointer;transition:.25s}
-    .menu-card:hover{transform:translateY(-4px);box-shadow:0 16px 36px rgba(0,0,0,.6)}
-    .menu-card img{width:100%;aspect-ratio:4/5;object-fit:cover}
-    .menu-meta{padding:14px 16px}
-    .menu-meta h3{margin:0 0 6px;font-size:1.1rem;letter-spacing:.4px}
-    .menu-meta p{margin:0;color:#bfbfbf;font-size:.95rem}
-
-    /* Modal */
-    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.72);z-index:2000}
-    .modal.open{display:flex}
-    .modal-card{width:min(920px,92vw);background:#151515;border:1px solid rgba(255,255,255,.1);border-radius:18px;overflow:hidden;box-shadow:0 18px 60px rgba(0,0,0,.6);display:grid;grid-template-columns:1.2fr 1fr}
-    .modal-card img{width:100%;height:100%;object-fit:cover}
-    .modal-body{padding:18px 18px 22px}
-    .modal-body h2{margin:0 0 6px}
-    .modal-body .muted{color:#bbb;margin-bottom:10px}
-    .modal-close{position:absolute;top:12px;right:14px;background:#222;border:1px solid rgba(255,255,255,.12);color:#eee;border-radius:12px;padding:6px 10px;cursor:pointer}
-    @media (max-width:900px){.modal-card{grid-template-columns:1fr}}
-  </style>
+  <meta charset="UTF-8">
+  <title>Premium Listings</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <div id="site-header"></div>
-
-  <header class="hero-premium">
-    <h1>Premium Listings</h1>
-    <p class="sub">Signature cocktails with stories — a polished, Dead Rabbit–inspired presentation.</p>
-  </header>
-
-  <section class="menu-grid" id="menuGrid"></section>
-
-  <!-- Modal -->
-  <div class="modal" id="menuModal" aria-hidden="true">
-    <div class="modal-card">
-      <button class="modal-close" id="modalClose">×</button>
-      <img id="modalImg" alt="">
-      <div class="modal-body">
-        <h2 id="modalTitle"></h2>
-        <div class="muted" id="modalSub"></div>
-        <p id="modalStory" style="margin-top:10px;color:#d8d8d8"></p>
-        <div id="modalIngredients" style="margin-top:12px"></div>
-      </div>
-    </div>
-  </div>
-
+  <main class="premium-listings">
+    <h1>Premium Cocktail Listings</h1>
+    <div class="grid" id="cocktail-grid"></div>
+  </main>
+  <script defer src="js/header.js"></script>
   <script>
-    async function loadPremium() {
-      const res = await fetch('data/images.json');
+    async function loadCocktails() {
+      const res = await fetch("data/images.json");
       const data = await res.json();
-      const grid = document.getElementById('menuGrid');
-      const cocktails = data.cocktails || [];
-      cocktails.forEach(c => {
-        const card = document.createElement('article');
-        card.className = 'menu-card';
+      const grid = document.getElementById("cocktail-grid");
+
+      data.cocktails.forEach(c => {
+        const card = document.createElement("div");
+        card.className = "card";
         card.innerHTML = `
           <img src="${c.image}" alt="${c.name}">
-          <div class="menu-meta">
-            <h3>${c.name}</h3>
-            <p>${c.bio || 'Handcrafted, balanced and elegant.'}</p>
-          </div>`;
-        card.addEventListener('click', () => openModal(c));
+          <h3>${c.name}</h3>
+          <p>${c.bio || "A premium crafted cocktail."}</p>
+        `;
         grid.appendChild(card);
       });
     }
-
-    function openModal(item){
-      document.getElementById('modalImg').src = item.image;
-      document.getElementById('modalTitle').textContent = item.name;
-      document.getElementById('modalSub').textContent = item.base ? `${item.base} • ${item.glass || ''}` : 'Signature Cocktail';
-      document.getElementById('modalStory').textContent = item.story || item.bio || 'A guest-favourite with a refined profile.';
-      const ingWrap = document.getElementById('modalIngredients');
-      if (item.ingredients && item.ingredients.length){
-        ingWrap.innerHTML = '<h3 style="margin:10px 0 6px">Ingredients</h3><ul style="padding-left:18px;line-height:1.7">'
-          + item.ingredients.map(i=>`<li>${i}</li>`).join('') + '</ul>';
-      } else {
-        ingWrap.innerHTML = '';
-      }
-      document.getElementById('menuModal').classList.add('open');
-    }
-
-    document.getElementById('modalClose').addEventListener('click',()=>document.getElementById('menuModal').classList.remove('open'));
-    document.getElementById('menuModal').addEventListener('click',e=>{
-      if(e.target.id==='menuModal') e.currentTarget.classList.remove('open');
-    });
-
-    loadPremium();
+    loadCocktails();
   </script>
 </body>
 </html>

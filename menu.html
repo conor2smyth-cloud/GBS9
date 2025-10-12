@@ -1,160 +1,71 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>Design Your Menu — GBS9</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="css/style.css" />
-  <script defer src="js/header.js"></script>
-  <style>
-    .tinder-wrap{max-width:960px;margin:40px auto;padding:0 16px}
-    .deck{position:relative;width:min(360px,90vw);height:520px;margin:0 auto}
-    .tcard{position:absolute;inset:0;border-radius:18px;overflow:hidden;box-shadow:0 18px 38px rgba(0,0,0,.5);background:#111;touch-action:none;user-select:none}
-    .tcard img{width:100%;height:100%;object-fit:cover;opacity:.92}
-    .t-meta{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.75));padding:14px}
-    .t-meta h3{margin:0 0 4px}
-    .t-meta p{margin:0;color:#dedede;font-size:.95rem}
-    .actions{display:flex;gap:14px;justify-content:center;margin:14px 0}
-    .act{border:1px solid rgba(255,255,255,.12);background:#1f1f1f;color:#eee;padding:10px 14px;border-radius:999px;cursor:pointer}
-    .match-flash{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.65);color:#fff;font-size:2rem;z-index:3000}
-    .match-flash.show{display:flex;animation:fade1 1.1s ease}
-    @keyframes fade1{0%{opacity:0}15%{opacity:1}85%{opacity:1}100%{opacity:0}}
-
-    .rail{max-width:960px;margin:24px auto;padding:0 16px}
-    .rail h4{margin:6px 0 10px;color:#cfcfcf}
-    .rail-list{display:flex;gap:10px;flex-wrap:wrap}
-    .rail-item{display:flex;align-items:center;gap:8px;padding:6px 10px;background:#1a1a1a;border:1px solid rgba(255,255,255,.08);border-radius:999px}
-    .rail-item img{width:26px;height:26px;object-fit:cover;border-radius:6px}
-  </style>
+  <meta charset="UTF-8">
+  <title>Design Your Menu</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <div id="site-header"></div>
-
-  <main class="tinder-wrap">
-    <h1 style="text-align:center;margin-bottom:14px">Design Your Menu</h1>
-    <p class="sub" style="text-align:center">Swipe right to add; left to skip. Short “bio” shown on the card.</p>
-
+  <main class="menu-builder">
+    <h1>Design Your Menu</h1>
     <div class="deck" id="deck"></div>
+
     <div class="actions">
-      <button class="act" id="btn-skip">Skip</button>
-      <button class="act" id="btn-like">Like</button>
+      <button id="dislike">✖️</button>
+      <button id="like">❤️</button>
     </div>
 
-    <div class="match-flash" id="matchFlash">🍸 It’s a match!</div>
-
-    <section class="rail">
-      <h4>Your Custom Menu</h4>
-      <div class="rail-list" id="menuRail"></div>
-    </section>
+    <div id="match-container"></div>
   </main>
-
+  <script defer src="js/header.js"></script>
   <script>
-    let cards = [], idx = 0;
+    let cocktails = [];
+    let index = 0;
 
-    function shortBio(s=''){ const t = s.trim(); return t.length>90 ? t.slice(0,87)+'…' : t; }
-
-    function mountCard(c){
-      const el = document.createElement('div');
-      el.className='tcard';
-      el.innerHTML = `
-        <img src="${c.image}" alt="${c.name}">
-        <div class="t-meta">
-          <h3>${c.name}</h3>
-          <p>${shortBio(c.bio || 'Balanced, elegant and crowd-pleasing.')}</p>
-        </div>`;
-      const deck = document.getElementById('deck');
-      deck.appendChild(el);
-      enableSwipe(el, () => like(c, el), () => skip(el));
-    }
-
-    function like(c, el){
-      // send to rail
-      const rail = document.getElementById('menuRail');
-      const chip = document.createElement('div');
-      chip.className='rail-item';
-      chip.innerHTML = `<img src="${c.image}" alt=""><span>${c.name}</span>`;
-      rail.appendChild(chip);
-
-      matchFlash();
-      animateOut(el, +1);
-      next();
-    }
-    function skip(el){ animateOut(el, -1); next(); }
-
-    function animateOut(el, dir){
-      el.style.transition='transform .28s ease, opacity .28s ease';
-      el.style.transform=`translate(${dir*480}px, -40px) rotate(${dir*20}deg)`;
-      el.style.opacity='0';
-      setTimeout(()=>el.remove(), 280);
-    }
-
-    function matchFlash(){
-      const f = document.getElementById('matchFlash');
-      f.classList.add('show');
-      setTimeout(()=>f.classList.remove('show'), 1100);
-    }
-
-    function enableSwipe(el, onRight, onLeft){
-      let startX=0, startY=0, dx=0, dy=0, dragging=false;
-
-      const onDown = e=>{
-        dragging=true;
-        const p = e.touches ? e.touches[0] : e;
-        startX = p.clientX; startY = p.clientY;
-        el.style.transition='none';
-      };
-      const onMove = e=>{
-        if(!dragging) return;
-        const p = e.touches ? e.touches[0] : e;
-        dx = p.clientX - startX; dy = p.clientY - startY;
-        el.style.transform = `translate(${dx}px, ${dy}px) rotate(${dx/16}deg)`;
-      };
-      const onUp = ()=>{
-        if(!dragging) return;
-        dragging=false;
-        if(dx > 120) onRight();
-        else if(dx < -120) onLeft();
-        else {
-          el.style.transition='transform .25s ease';
-          el.style.transform='translate(0,0) rotate(0)';
-        }
-      };
-
-      el.addEventListener('mousedown', onDown);
-      window.addEventListener('mousemove', onMove);
-      window.addEventListener('mouseup', onUp);
-      el.addEventListener('touchstart', onDown, {passive:true});
-      el.addEventListener('touchmove', onMove, {passive:true});
-      el.addEventListener('touchend', onUp);
-
-      document.getElementById('btn-like').onclick = onRight;
-      document.getElementById('btn-skip').onclick = onLeft;
-    }
-
-    function next(){
-      idx++;
-      if(idx < cards.length){ mountCard(cards[idx]); }
-      else {
-        const deck = document.getElementById('deck');
-        if(!deck.querySelector('.tcard')){
-          deck.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;opacity:.8">No more cocktails!</div>';
-        }
-      }
-    }
-
-    async function init(){
-      const res = await fetch('data/images.json');
+    async function loadCocktails() {
+      const res = await fetch("data/images.json");
       const data = await res.json();
-      cards = (data.cocktails || []).slice(); // shallow copy
-      if(!cards.length){
-        document.getElementById('deck').innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;opacity:.8">No cocktails found.</div>';
+      cocktails = data.cocktails;
+      showCard();
+    }
+
+    function showCard() {
+      if (index >= cocktails.length) {
+        document.getElementById("deck").innerHTML = "<p>No more cocktails!</p>";
         return;
       }
-      // reverse mount so first appears on top
-      cards.slice().reverse().forEach(()=>{});
-      mountCard(cards[idx]);
+      const c = cocktails[index];
+      document.getElementById("deck").innerHTML = `
+        <div class="card">
+          <img src="${c.image}" alt="${c.name}">
+          <h3>${c.name}</h3>
+          <p>${c.bio || "A refreshing cocktail."}</p>
+        </div>
+      `;
     }
-    init();
+
+    function handleLike() {
+      const c = cocktails[index];
+      document.getElementById("match-container").innerHTML += `
+        <div class="match">
+          <p>It's a match with <strong>${c.name}</strong>! ❤️</p>
+        </div>
+      `;
+      index++;
+      showCard();
+    }
+
+    function handleDislike() {
+      index++;
+      showCard();
+    }
+
+    document.getElementById("like").addEventListener("click", handleLike);
+    document.getElementById("dislike").addEventListener("click", handleDislike);
+
+    loadCocktails();
   </script>
 </body>
 </html>
+
