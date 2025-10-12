@@ -2,4 +2,35 @@
   "cocktails": [],
   "beer": [],
   "equipment": []
+	},	
+	{
+  "cocktails": [
+    {
+      "name": "Espresso Martini",
+      "image": "images/cocktails/cocktail-espresso-martini.jpg",
+      "bio": "Bold, rich coffee with a smooth vodka kick."
+    },
+    {
+      "name": "Margarita",
+      "image": "images/cocktails/cocktail-margarita-salt.jpg",
+      "bio": "Classic tequila with lime and salted rim."
+    },
+    {
+      "name": "Negroni",
+      "image": "images/cocktails/cocktail-negroni-orange.jpg",
+      "bio": "Strong, bitter, and perfectly balanced."
+    },
+    {
+      "name": "Old Fashioned",
+      "image": "images/cocktails/cocktail-old-fashioned-dark.jpg",
+      "bio": "Whiskey, sugar, bitters — timeless and bold."
+    },
+    {
+      "name": "Gin & Tonic",
+      "image": "images/cocktails/cocktail-gin-tonic.jpg",
+      "bio": "Refreshing gin highball with crisp tonic."
+    }
+  ]
+}
+
 }
