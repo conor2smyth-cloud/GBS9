@@ -8,11 +8,10 @@
   <script src="js/header.js" defer></script>
   <style>
     body {
+      font-family: 'Poppins', sans-serif;
       background: linear-gradient(to bottom right, #1f1f1f, #2c2c2c);
       color: #f5f5f5;
-      font-family: 'Poppins', sans-serif;
       margin: 0;
-      padding: 0;
     }
     main {
       max-width: 1000px;
@@ -21,28 +20,26 @@
     }
     h1 {
       text-align: center;
-      margin-bottom: 2rem;
       color: #ffcc66;
+      margin-bottom: 1.5rem;
     }
-
     /* Accordion */
     .accordion {
       background: rgba(255,255,255,0.05);
       border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 10px;
+      border-radius: 8px;
       margin-bottom: 1rem;
       overflow: hidden;
     }
     .accordion button {
       width: 100%;
+      text-align: left;
+      padding: 1rem;
       background: none;
       border: none;
       outline: none;
-      text-align: left;
-      padding: 1rem;
       font-size: 1.1rem;
       color: #ffcc66;
-      font-weight: 600;
       cursor: pointer;
     }
     .accordion button:hover {
@@ -51,141 +48,110 @@
     .accordion-content {
       display: none;
       padding: 1rem;
-      background: rgba(255,255,255,0.05);
-      border-top: 1px solid rgba(255,255,255,0.1);
+      background: rgba(0,0,0,0.2);
     }
-    .accordion-content a {
-      color: #ff9966;
-      font-weight: 600;
-      text-decoration: none;
+    .accordion-content.open {
+      display: block;
     }
-
     /* Quiz */
     #quiz {
       margin-top: 3rem;
-      padding: 2rem;
+      padding: 1rem;
       background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 12px;
+      border-radius: 8px;
     }
     #quiz h2 {
-      color: #ffcc66;
-      margin-bottom: 1rem;
-      text-align: center;
+      color: #ff9966;
     }
     .question {
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
     }
-    .question p {
+    .question strong {
+      display: block;
       margin-bottom: 0.5rem;
-      font-weight: 600;
     }
-    .question label {
-      display: block;
-      margin-bottom: 0.3rem;
-      cursor: pointer;
-    }
-    button.submit-quiz {
-      display: block;
-      margin: 1rem auto;
-      padding: 0.7rem 1.5rem;
-      border: none;
-      border-radius: 30px;
-      background: #ffcc66;
-      font-weight: 600;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    button.submit-quiz:hover {
-      background: #ffaa33;
-    }
-    #quiz-result {
-      text-align: center;
-      font-weight: 600;
-      margin-top: 1rem;
-      color: #ff9966;
+    #result {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background: rgba(255,204,102,0.15);
+      border-radius: 6px;
     }
   </style>
 </head>
 <body>
-  <div id="header"></div>
+  <header id="site-header"></header>
 
   <main>
     <h1>Our Services</h1>
 
-    <!-- Accordion -->
     <div class="accordion">
-      <button>Cocktail Service</button>
+      <button onclick="toggleAccordion(this)">🍸 Cocktail Service</button>
       <div class="accordion-content">
-        <p>Skilled mixologists crafting world-class cocktails for your event.</p>
-        <a href="cocktail-service.html">Learn more →</a>
+        <p>Signature cocktails tailored to your event. <a href="cocktail-service.html">Learn more →</a></p>
       </div>
     </div>
+
     <div class="accordion">
-      <button>Draft Systems</button>
+      <button onclick="toggleAccordion(this)">🍺 Draft Systems</button>
       <div class="accordion-content">
-        <p>Portable draft beer systems for smooth service at any venue.</p>
-        <a href="draft-systems.html">Learn more →</a>
+        <p>Portable tap systems for beer and cocktails. <a href="draft-systems.html">Learn more →</a></p>
       </div>
     </div>
+
     <div class="accordion">
-      <button>Event Bartending</button>
+      <button onclick="toggleAccordion(this)">🎉 Event Bartending</button>
       <div class="accordion-content">
-        <p>Professional bartenders for weddings, corporate functions, and parties.</p>
-        <a href="event-bartending.html">Learn more →</a>
+        <p>Professional bartenders for weddings, birthdays, and more. <a href="event-bartending.html">Learn more →</a></p>
       </div>
     </div>
+
     <div class="accordion">
-      <button>Equipment Rental</button>
+      <button onclick="toggleAccordion(this)">⚙️ Equipment Rental</button>
       <div class="accordion-content">
-        <p>Rent premium bar equipment and glassware to elevate your event.</p>
-        <a href="equipment-rental.html">Learn more →</a>
+        <p>Everything you need to host: glassware, shakers, draft taps. <a href="equipment-rental.html">Learn more →</a></p>
       </div>
     </div>
 
     <!-- Quiz -->
     <section id="quiz">
-      <h2>Find the Perfect Service for Your Party</h2>
+      <h2>Find the Right Service for Your Party</h2>
       <form id="quizForm">
         <div class="question">
-          <p>1. How many guests are you expecting?</p>
-          <label><input type="radio" name="q1" value="small"> Less than 20</label>
-          <label><input type="radio" name="q1" value="medium"> 20-50</label>
-          <label><input type="radio" name="q1" value="large"> 50+</label>
+          <strong>1. What type of event are you hosting?</strong>
+          <label><input type="radio" name="q1" value="cocktail"> Birthday</label><br>
+          <label><input type="radio" name="q1" value="cocktail"> Wedding</label><br>
+          <label><input type="radio" name="q1" value="draft"> Corporate Event</label><br>
+          <label><input type="radio" name="q1" value="mixed"> Casual Party</label>
         </div>
-        <div class="question">
-          <p>2. What type of drinks do you prefer?</p>
-          <label><input type="radio" name="q2" value="cocktails"> Cocktails</label>
-          <label><input type="radio" name="q2" value="beer"> Beer</label>
-          <label><input type="radio" name="q2" value="mixed"> A mix</label>
-        </div>
-        <!-- Repeat until 10 questions (simplified here with 2 for brevity) -->
-
-        <button type="button" class="submit-quiz" onclick="submitQuiz()">See Your Results</button>
+        <!-- Repeat for 10 questions (as we wrote earlier) -->
+        <button type="submit">See Recommendation</button>
       </form>
-      <p id="quiz-result"></p>
+      <div id="result"></div>
     </section>
   </main>
 
   <script>
-    // Accordion logic
-    const accordions = document.querySelectorAll(".accordion button");
-    accordions.forEach(btn => {
-      btn.addEventListener("click", () => {
-        const panel = btn.nextElementSibling;
-        const isOpen = panel.style.display === "block";
-
-        document.querySelectorAll(".accordion-content").forEach(p => p.style.display = "none");
-
-        if (!isOpen) panel.style.display = "block";
-      });
-    });
-
-    // Quiz logic
-    function submitQuiz() {
-      const resultEl = document.getElementById("quiz-result");
-      resultEl.textContent = "🎉 Based on your answers, we recommend our Cocktail Service with optional draft systems!";
+    function toggleAccordion(button) {
+      const allContents = document.querySelectorAll('.accordion-content');
+      allContents.forEach(c => c.classList.remove('open'));
+      const content = button.nextElementSibling;
+      content.classList.add('open');
     }
+
+    document.getElementById('quizForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const answers = [...new FormData(this).values()];
+      let cocktail = answers.filter(a => a === 'cocktail').length;
+      let draft = answers.filter(a => a === 'draft').length;
+      let mixed = answers.filter(a => a === 'mixed').length;
+
+      let recommendation = '';
+      if (cocktail > draft) recommendation = "We recommend our Cocktail Service 🍸";
+      else if (draft > cocktail) recommendation = "We recommend our Draft Systems 🍺";
+      else recommendation = "We recommend Event Bartending 🎉";
+
+      document.getElementById('result').innerHTML = `<p>${recommendation}</p>`;
+    });
   </script>
 </body>
 </html>
