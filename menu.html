@@ -1,23 +1,20 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Design Your Menu</title>
-  <link rel="stylesheet" href="css/style.css?v=20251012">
-  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Montserrat:wght@600&display=swap" rel="stylesheet">
+  <title>Design Your Menu | GBS9</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <!-- Global Navigation -->
+  <!-- HEADER -->
   <header>
     <nav class="nav-bar">
       <ul>
         <li><a href="index.html">Home</a></li>
         <li><a href="services.html">Services</a></li>
         <li><a href="premium-listings.html">Premium Listings</a></li>
-        <li class="logo">
-          <a href="index.html"><img src="images/logo2.png" alt="GBS Logo"></a>
-        </li>
+        <li class="logo"><a href="index.html"><img src="images/logo2.png" alt="GBS Logo"></a></li>
         <li><a href="lookbook.html">Lookbook</a></li>
         <li><a href="tonights-event.html" class="highlight">Tonight’s Event</a></li>
         <li><a href="admin.html" class="highlight">Admin</a></li>
@@ -25,71 +22,98 @@
     </nav>
   </header>
 
-  <main>
-    <h2>Design Your Own Menu</h2>
-    <div class="swipe-container">
-      <div id="cardStack" class="card-stack"></div>
-      <div class="swipe-buttons">
-        <button class="dislike" onclick="dislike()">✖</button>
-        <button class="like" onclick="like()">❤</button>
+  <!-- MAIN CONTENT -->
+  <main style="padding: 2rem;">
+    <h2 class="section-title">Design Your Menu</h2>
+    <p style="margin-bottom: 1.5rem;">Swipe through cocktails to create your perfect custom menu.</p>
+
+    <!-- Tinder-style swipe container -->
+    <div class="tinder-container">
+      <div id="tinder-card" class="tinder-card">
+        <img id="tinder-img" src="images/cocktails/cocktail-classic-sour.jpg" alt="Cocktail">
+        <h3 id="tinder-name">Whiskey Sour</h3>
+        <p id="tinder-short">A timeless balance of whiskey, lemon, and sweetness.</p>
+      </div>
+      <div class="tinder-buttons">
+        <button id="dislike" class="btn-dislike">✘</button>
+        <button id="like" class="btn-like">♥</button>
       </div>
     </div>
 
-    <section class="custom-menu" id="customMenu">
-      <h3>Your Custom Menu</h3>
+    <!-- Selected menu -->
+    <section class="menu-results">
+      <h3>Your Menu</h3>
+      <ul id="menu-list"></ul>
     </section>
   </main>
 
-  <footer>
-    <p>&copy; 2025 GBS9. All Rights Reserved.</p>
-  </footer>
-
+  <!-- JS -->
   <script>
-    let cocktails = [];
-    let currentIndex = 0;
-
-    async function loadCards() {
-      const res = await fetch("data/cocktails.json");
-      cocktails = await res.json();
-      renderCard();
-    }
-
-    function renderCard() {
-      const stack = document.getElementById("cardStack");
-      stack.innerHTML = "";
-      if (currentIndex < cocktails.length) {
-        const c = cocktails[currentIndex];
-        const card = document.createElement("div");
-        card.className = "swipe-card";
-        card.innerHTML = `
-          <img src="images/cocktails/${c.image}" alt="${c.name}">
-          <h3>${c.name}</h3>
-          <p>${c.short}</p>
-        `;
-        stack.appendChild(card);
-      } else {
-        stack.innerHTML = "<p>No more cocktails. Refresh to start again!</p>";
+    const cocktails = [
+      {
+        name: "Whiskey Sour",
+        image: "images/cocktails/cocktail-classic-sour.jpg",
+        short: "A timeless balance of whiskey, lemon, and sweetness."
+      },
+      {
+        name: "Espresso Martini",
+        image: "images/cocktails/cocktail-espresso-martini.jpg",
+        short: "Silky, smooth, and rich with fresh espresso."
+      },
+      {
+        name: "Margarita",
+        image: "images/cocktails/cocktail-margarita-salt.jpg",
+        short: "A perfect mix of tequila, lime, and salt."
+      },
+      {
+        name: "Negroni",
+        image: "images/cocktails/cocktail-negroni-orange.jpg",
+        short: "Bittersweet and bold, an Italian classic."
       }
+    ];
+
+    let current = 0;
+    const card = document.getElementById("tinder-card");
+    const img = document.getElementById("tinder-img");
+    const nameEl = document.getElementById("tinder-name");
+    const shortEl = document.getElementById("tinder-short");
+    const menuList = document.getElementById("menu-list");
+
+    function showCocktail(index) {
+      const c = cocktails[index];
+      img.src = c.image;
+      nameEl.textContent = c.name;
+      shortEl.textContent = c.short;
     }
 
-    function like() {
-      const c = cocktails[currentIndex];
-      const menu = document.getElementById("customMenu");
-      menu.innerHTML += `
+    function addToMenu(cocktail) {
+      const li = document.createElement("li");
+      li.innerHTML = `
         <div class="menu-item">
-          <span>${c.name} – ${c.short}</span>
-          <img src="images/cocktails/${c.image}" alt="${c.name}">
-        </div>`;
-      currentIndex++;
-      renderCard();
+          <img src="${cocktail.image}" alt="${cocktail.name}" class="menu-thumb">
+          <div>
+            <strong>${cocktail.name}</strong><br>
+            <span>${cocktail.short}</span>
+          </div>
+        </div>
+      `;
+      menuList.appendChild(li);
     }
 
-    function dislike() {
-      currentIndex++;
-      renderCard();
-    }
+    document.getElementById("like").addEventListener("click", () => {
+      addToMenu(cocktails[current]);
+      current = (current + 1) % cocktails.length;
+      showCocktail(current);
+    });
 
-    loadCards();
+    document.getElementById("dislike").addEventListener("click", () => {
+      current = (current + 1) % cocktails.length;
+      showCocktail(current);
+    });
+
+    // initialize
+    showCocktail(current);
   </script>
 </body>
 </html>
+

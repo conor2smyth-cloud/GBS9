@@ -3,12 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Dashboard - GBS9</title>
-  <link rel="stylesheet" href="css/style.css?v=20251012">
-  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Montserrat:wght@600&display=swap" rel="stylesheet">
+  <title>Admin Panel | GBS9</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <!-- Global Navigation -->
+  <!-- HEADER -->
   <header>
     <nav class="nav-bar">
       <ul>
@@ -19,47 +18,56 @@
           <a href="index.html"><img src="images/logo2.png" alt="GBS Logo"></a>
         </li>
         <li><a href="lookbook.html">Lookbook</a></li>
+        <li><a href="menu.html">Design Menu</a></li>
         <li><a href="tonights-event.html" class="highlight">Tonight’s Event</a></li>
-        <li><a href="admin.html" class="active highlight">Admin</a></li>
       </ul>
     </nav>
   </header>
 
-  <main class="content">
-    <h2>Admin Dashboard</h2>
-    <p>Here’s where you manage everything behind the bar:</p>
+  <!-- MAIN -->
+  <main class="admin-panel">
+    <h1>Admin Dashboard</h1>
+    <p class="subtitle">Control hub for managing cocktails, images, and events.</p>
 
+    <!-- Section: Quick Links -->
     <section class="admin-section">
-      <h3>1. Upload New Images</h3>
-      <p>Add cocktail, beer, or equipment photos to <code>images/_raw</code>. They’ll be processed automatically.</p>
+      <h2>Quick Actions</h2>
+      <div class="admin-cards">
+        <a href="premium-listings.html" class="card">Manage Premium Listings</a>
+        <a href="menu.html" class="card">Manage Tinder Menu</a>
+        <a href="lookbook.html" class="card">Update Lookbook</a>
+        <a href="services.html" class="card">Update Services</a>
+      </div>
     </section>
 
+    <!-- Section: Data Flow -->
     <section class="admin-section">
-      <h3>2. Update Cocktails</h3>
-      <p>Edit the master file at <code>data/cocktails.json</code>. Each entry includes:</p>
+      <h2>Cocktail Data Flow</h2>
+      <p>This diagram shows how cocktail data and images move through the system.</p>
+      <div class="diagram">
+        <ul>
+          <li><strong>1. Upload Images</strong> → Place raw cocktail/equipment images into <code>/images/_raw/</code>.</li>
+          <li><strong>2. Process</strong> → The Python script resizes, watermarks, and moves them to <code>/images/cocktails</code> or <code>/images/equipment</code>.</li>
+          <li><strong>3. JSON Update</strong> → Cocktails are added/edited in <code>/data/cocktails.json</code>.</li>
+          <li><strong>4. Frontend Display</strong> → Premium Listings, Tinder Menu, and Lookbook pull dynamically from JSON + processed images.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Section: Admin Notes -->
+    <section class="admin-section">
+      <h2>Notes & Future Updates</h2>
       <ul>
-        <li><strong>Name</strong> (Cocktail name)</li>
-        <li><strong>Base</strong> (e.g. Vodka, Whiskey)</li>
-        <li><strong>Glass</strong> (Martini, Coupe, Old Fashioned)</li>
-        <li><strong>Ingredients</strong> (Array of strings)</li>
-        <li><strong>Short</strong> (Brief blurb, also used for Tinder bios)</li>
+        <li>Excel import for 1000+ cocktails coming soon.</li>
+        <li>Keep file names consistent for JSON → image matching.</li>
+        <li>Style changes are centralized in <code>css/style.css</code>.</li>
       </ul>
-    </section>
-
-    <section class="admin-section">
-      <h3>3. Import from Excel</h3>
-      <p>You can prepare a cocktail list in Excel. We’ll provide a script that automatically converts Excel into JSON for <code>data/cocktails.json</code>.</p>
-    </section>
-
-    <section class="admin-section">
-      <h3>4. Image Pipeline Flow</h3>
-      <img src="images/admin/flow-diagram.png" alt="Image Pipeline Diagram" class="admin-img">
-      <p><em>Reference diagram: Upload to <code>_raw</code> → Processing (resize, watermark, tint) → Final images in <code>/cocktails</code>, <code>/beer</code>, <code>/equipment</code>.</em></p>
     </section>
   </main>
 
+  <!-- FOOTER -->
   <footer>
-    <p>&copy; 2025 GBS9. All Rights Reserved.</p>
+    <p>&copy; 2025 GBS9 | Admin Control Panel</p>
   </footer>
 </body>
 </html>
