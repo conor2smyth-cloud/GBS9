@@ -1,71 +1,346 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Design Your Menu</title>
-  <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8" />
+  <title>Design Your Menu — GBS9</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* ---------- Page-specific styles for the Tinder UI ---------- */
+    .tinder-wrap {
+      max-width: 1100px;
+      margin: 24px auto 40px;
+      padding: 0 16px;
+    }
+    .tinder-header {
+      text-align: center;
+      margin-bottom: 18px;
+    }
+    .tinder-sub {
+      text-align: center;
+      color: #cfcfcf;
+      margin-bottom: 18px;
+    }
+
+    /* Deck area */
+    .deck-area {
+      display: grid;
+      grid-template-columns: minmax(300px, 420px);
+      justify-content: center;
+      gap: 16px;
+      margin: 0 auto 16px;
+      position: relative;
+      min-height: 520px;
+    }
+
+    /* Swipe card */
+    .t-card {
+      position: absolute;
+      inset: 0;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 18px 38px rgba(0,0,0,.55);
+      background: #111;
+      user-select: none;
+      touch-action: none;
+      transition: box-shadow .2s ease;
+    }
+    .t-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: .96;
+    }
+
+    /* Bottom gradient panel with text */
+    .t-info {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      padding: 16px 16px 18px;
+      background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,.78) 55%, rgba(0,0,0,.9) 100%);
+      color: #fff;
+    }
+    .t-name {
+      font-size: 1.35rem;
+      margin: 0 0 6px;
+      letter-spacing: .3px;
+    }
+    .t-bio {
+      margin: 0;
+      color: #e8e8e8;
+      opacity: .95;
+    }
+
+    /* Like / Dislike buttons */
+    .t-actions {
+      display: flex;
+      justify-content: center;
+      gap: 26px;
+      margin: 14px 0 6px;
+    }
+    .t-btn {
+      border: 0;
+      background: #1f1f1f;
+      color: #fff;
+      width: 64px;
+      height: 64px;
+      border-radius: 999px;
+      font-size: 1.6rem;
+      cursor: pointer;
+      box-shadow: 0 8px 18px rgba(0,0,0,.35);
+      transition: transform .15s ease, background .15s ease;
+    }
+    .t-btn:hover { transform: scale(1.07); }
+    .t-btn--no { background: #292929; }
+    .t-btn--yes { background: #d4af37; color: #000; font-weight: 800; }
+
+    /* Match flash */
+    .match-flash {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      background: rgba(0,0,0,.55);
+      font-size: 2rem;
+      z-index: 3000;
+    }
+    .match-flash.show {
+      display: flex;
+      animation: fadeInOut 1.1s ease;
+    }
+    @keyframes fadeInOut {
+      0% { opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { opacity: 0; }
+    }
+
+    /* Selected menu list */
+    .picked-wrap {
+      margin: 26px auto 0;
+      max-width: 880px;
+    }
+    .picked-title {
+      font-size: 1.2rem;
+      letter-spacing: .5px;
+      color: #d4af37;
+      margin: 10px 0 14px;
+      text-align: center;
+    }
+    .picked-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    .picked-item {
+      display: grid;
+      grid-template-columns: 1fr 110px; /* text left, thumbnail right */
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      background: rgba(24,24,24,.88);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 12px;
+    }
+    .picked-meta {
+      display: grid;
+      gap: 4px;
+    }
+    .picked-name {
+      font-weight: 700;
+      color: #f4f4f4;
+    }
+    .picked-blurb {
+      color: #cfcfcf;
+      font-size: .95rem;
+      line-height: 1.35;
+    }
+    .picked-thumb {
+      width: 100%;
+      height: 84px;
+      border-radius: 8px;
+      object-fit: cover;
+      box-shadow: 0 6px 16px rgba(0,0,0,.45);
+    }
+
+    /* Card animations */
+    .hide-left  { transition: transform .28s ease, opacity .28s ease; transform: translate(-520px, -40px) rotate(-18deg); opacity: 0; }
+    .hide-right { transition: transform .28s ease, opacity .28s ease; transform: translate( 520px, -40px) rotate( 18deg); opacity: 0; }
+    .fade-in    { animation: fade .28s ease; }
+    @keyframes fade { from {opacity:0} to {opacity:1} }
+
+    @media (min-width: 980px) {
+      .deck-area { grid-template-columns: 420px; }
+    }
+  </style>
 </head>
 <body>
+  <!-- Shared header -->
   <div id="site-header"></div>
-  <main class="menu-builder">
-    <h1>Design Your Menu</h1>
-    <div class="deck" id="deck"></div>
 
-    <div class="actions">
-      <button id="dislike">✖️</button>
-      <button id="like">❤️</button>
+  <main class="tinder-wrap">
+    <header class="tinder-header">
+      <h1>Design Your Menu</h1>
+      <p class="tinder-sub">Swipe right (or tap ❤️) to add a cocktail to tonight’s menu. Swipe left (or tap ✖️) to skip.</p>
+    </header>
+
+    <!-- Swipe Deck -->
+    <section class="deck-area">
+      <div id="deck"></div>
+    </section>
+
+    <!-- Actions -->
+    <div class="t-actions">
+      <button class="t-btn t-btn--no" id="btnNo" aria-label="Dislike">✖️</button>
+      <button class="t-btn t-btn--yes" id="btnYes" aria-label="Like">❤️</button>
     </div>
 
-    <div id="match-container"></div>
+    <!-- Match flash -->
+    <div class="match-flash" id="matchFlash">🍸 It’s a match!</div>
+
+    <!-- Selected Menu -->
+    <section class="picked-wrap">
+      <h2 class="picked-title">Selected Menu</h2>
+      <div class="picked-list" id="pickedList"></div>
+    </section>
   </main>
+
   <script defer src="js/header.js"></script>
   <script>
-    let cocktails = [];
-    let index = 0;
+    // ------------ Data + helpers ------------
+    let cards = [];         // all cocktails
+    let current = 0;        // current index
+    let dragging = false;
+    let startX = 0, startY = 0, dx = 0, dy = 0;
 
-    async function loadCocktails() {
-      const res = await fetch("data/images.json");
-      const data = await res.json();
-      cocktails = data.cocktails;
-      showCard();
+    function shortBio(s='') {
+      const t = s.trim();
+      return t.length > 110 ? t.slice(0, 107) + '…' : t;
     }
 
-    function showCard() {
-      if (index >= cocktails.length) {
-        document.getElementById("deck").innerHTML = "<p>No more cocktails!</p>";
+    function preload(src) {
+      const img = new Image();
+      img.src = src;
+    }
+
+    // ------------ Mounting the active card ------------
+    function mountCard(deck, c) {
+      const el = document.createElement('div');
+      el.className = 't-card fade-in';
+      el.innerHTML = `
+        <img src="${c.image}" alt="${c.name}">
+        <div class="t-info">
+          <h3 class="t-name">${c.name}</h3>
+          <p class="t-bio">${shortBio(c.bio || 'Balanced, elegant and crowd-pleasing.')}</p>
+        </div>
+      `;
+      deck.innerHTML = ''; // keep one active card visible
+      deck.appendChild(el);
+      enableSwipe(el, () => like(c, el), () => dislike(el));
+    }
+
+    // ------------ Like / Dislike logic ------------
+    function like(c, el) {
+      // add to Selected Menu
+      const list = document.getElementById('pickedList');
+      const item = document.createElement('div');
+      item.className = 'picked-item';
+      item.innerHTML = `
+        <div class="picked-meta">
+          <div class="picked-name">${c.name}</div>
+          <div class="picked-blurb">${shortBio(c.bio || 'A guest-favourite with a refined profile.')}</div>
+        </div>
+        <img class="picked-thumb" src="${c.image}" alt="${c.name}">
+      `;
+      list.appendChild(item);
+
+      // flash
+      const flash = document.getElementById('matchFlash');
+      flash.classList.add('show');
+      setTimeout(() => flash.classList.remove('show'), 1100);
+
+      // animate out to the right and go next
+      el.classList.add('hide-right');
+      setTimeout(next, 280);
+    }
+
+    function dislike(el) {
+      el.classList.add('hide-left');
+      setTimeout(next, 280);
+    }
+
+    function next() {
+      current++;
+      const deck = document.getElementById('deck');
+      if (current >= cards.length) {
+        deck.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;opacity:.85">No more cocktails — great choices!</div>';
         return;
       }
-      const c = cocktails[index];
-      document.getElementById("deck").innerHTML = `
-        <div class="card">
-          <img src="${c.image}" alt="${c.name}">
-          <h3>${c.name}</h3>
-          <p>${c.bio || "A refreshing cocktail."}</p>
-        </div>
-      `;
+      // preload next image to avoid flash
+      const nextItem = cards[current + 1];
+      if (nextItem && nextItem.image) preload(nextItem.image);
+
+      mountCard(deck, cards[current]);
     }
 
-    function handleLike() {
-      const c = cocktails[index];
-      document.getElementById("match-container").innerHTML += `
-        <div class="match">
-          <p>It's a match with <strong>${c.name}</strong>! ❤️</p>
-        </div>
-      `;
-      index++;
-      showCard();
+    // ------------ Swipe Handling (mouse + touch) ------------
+    function enableSwipe(el, onRight, onLeft) {
+      function down(e) {
+        dragging = true;
+        const p = e.touches ? e.touches[0] : e;
+        startX = p.clientX; startY = p.clientY;
+        el.style.transition = 'none';
+      }
+      function move(e) {
+        if (!dragging) return;
+        const p = e.touches ? e.touches[0] : e;
+        dx = p.clientX - startX; dy = p.clientY - startY;
+        el.style.transform = `translate(${dx}px, ${dy}px) rotate(${dx/18}deg)`;
+      }
+      function up() {
+        if (!dragging) return;
+        dragging = false;
+        // Decide
+        if (dx > 120) onRight();
+        else if (dx < -120) onLeft();
+        else {
+          el.style.transition = 'transform .22s ease';
+          el.style.transform = 'translate(0,0) rotate(0)';
+        }
+      }
+      el.addEventListener('mousedown', down);
+      window.addEventListener('mousemove', move);
+      window.addEventListener('mouseup', up);
+      el.addEventListener('touchstart', down, {passive:true});
+      el.addEventListener('touchmove', move, {passive:true});
+      el.addEventListener('touchend', up);
+
+      // Buttons as fallback
+      document.getElementById('btnYes').onclick = onRight;
+      document.getElementById('btnNo').onclick  = onLeft;
     }
 
-    function handleDislike() {
-      index++;
-      showCard();
+    // ------------ Boot ------------
+    async function init() {
+      try {
+        const res = await fetch('data/images.json', { cache: 'no-store' });
+        const data = await res.json();
+        cards = (data.cocktails || []).slice();
+
+        if (!cards.length) {
+          document.getElementById('deck').innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;opacity:.85">No cocktails found.</div>';
+          return;
+        }
+
+        // Preload first two for smoothness
+        preload(cards[0].image);
+        if (cards[1]) preload(cards[1].image);
+
+        mountCard(document.getElementById('deck'), cards[current]);
+      } catch (e) {
+        document.getElementById('deck').innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;opacity:.85">Could not load menu data.</div>';
+      }
     }
-
-    document.getElementById("like").addEventListener("click", handleLike);
-    document.getElementById("dislike").addEventListener("click", handleDislike);
-
-    loadCocktails();
+    init();
   </script>
 </body>
 </html>
-
