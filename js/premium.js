@@ -1,59 +1,82 @@
-async function loadCocktails() {
-  try {
-    const res = await fetch("data/cocktails.json");
-    const cocktails = await res.json();
+document.addEventListener("DOMContentLoaded", () => {
+  const cocktailGrid = document.getElementById("cocktailGrid");
+  const modal = document.getElementById("cocktailModal");
+  const modalImg = document.getElementById("modalImage");
+  const modalName = document.getElementById("modalName");
+  const modalDesc = document.getElementById("modalDescription");
+  const modalIngredients = document.getElementById("modalIngredients");
+  const closeBtn = document.querySelector(".modal .close");
 
-    const grid = document.getElementById("cocktail-grid");
-    const baseFilter = document.getElementById("base-filter");
-    const glassFilter = document.getElementById("glass-filter");
-    const searchBox = document.getElementById("search-box");
+  let cocktails = [];
 
-    function render(filterBase, filterGlass, search) {
-      grid.innerHTML = "";
-      cocktails.forEach(c => {
-        if (filterBase && c.base !== filterBase) return;
-        if (filterGlass && c.glass !== filterGlass) return;
-        if (search && !c.name.toLowerCase().includes(search.toLowerCase())) return;
+  // Fetch cocktails JSON
+  fetch("data/cocktails.json")
+    .then(res => res.json())
+    .then(data => {
+      cocktails = data;
+      renderCocktails(cocktails);
+    })
+    .catch(err => console.error("Error loading cocktails:", err));
 
-        const card = document.createElement("div");
-        card.className = "cocktail-card";
-        card.innerHTML = `
-          <img src="images/cocktails/${c.image}" alt="${c.name}">
-          <h3>${c.name}</h3>
-          <p>${c.base} – ${c.glass}</p>
-        `;
-        card.addEventListener("click", () => showPopup(c));
-        grid.appendChild(card);
-      });
-    }
-
-    function showPopup(cocktail) {
-      const popup = document.createElement("div");
-      popup.className = "popup";
-      popup.innerHTML = `
-        <div class="popup-content">
-          <span class="close">&times;</span>
-          <h2>${cocktail.name}</h2>
-          <img src="images/cocktails/${cocktail.image}" alt="${cocktail.name}">
-          <p><strong>Base:</strong> ${cocktail.base}</p>
-          <p><strong>Glass:</strong> ${cocktail.glass}</p>
-          <p><strong>Ingredients:</strong></p>
-          <ul>${cocktail.ingredients.map(i => `<li>${i}</li>`).join("")}</ul>
-        </div>
+  function renderCocktails(list) {
+    cocktailGrid.innerHTML = "";
+    list.forEach(cocktail => {
+      const card = document.createElement("div");
+      card.className = "cocktail-card";
+      card.innerHTML = `
+        <img src="images/cocktails/${cocktail.image}" alt="${cocktail.name}">
+        <h3>${cocktail.name}</h3>
+        <p>${cocktail.short}</p>
       `;
-      document.body.appendChild(popup);
-      popup.querySelector(".close").addEventListener("click", () => popup.remove());
+      card.addEventListener("click", () => openModal(cocktail));
+      cocktailGrid.appendChild(card);
+    });
+  }
+
+  function openModal(cocktail) {
+    modal.style.display = "block";
+    modalImg.src = `images/cocktails/${cocktail.image}`;
+    modalName.textContent = cocktail.name;
+    modalDesc.textContent = cocktail.short;
+    modalIngredients.innerHTML = "";
+    cocktail.ingredients.forEach(ing => {
+      const li = document.createElement("li");
+      li.textContent = ing;
+      modalIngredients.appendChild(li);
+    });
+  }
+
+  closeBtn.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
+
+  window.addEventListener("click", e => {
+    if (e.target === modal) {
+      modal.style.display = "none";
+    }
+  });
+
+  // Filtering
+  const filters = document.querySelectorAll(".filters input[type=checkbox]");
+  filters.forEach(filter => {
+    filter.addEventListener("change", () => {
+      applyFilters();
+    });
+  });
+
+  function applyFilters() {
+    const selected = Array.from(filters)
+      .filter(f => f.checked)
+      .map(f => f.value);
+
+    if (selected.length === 0) {
+      renderCocktails(cocktails);
+      return;
     }
 
-    // filters
-    baseFilter.addEventListener("change", () => render(baseFilter.value, glassFilter.value, searchBox.value));
-    glassFilter.addEventListener("change", () => render(baseFilter.value, glassFilter.value, searchBox.value));
-    searchBox.addEventListener("input", () => render(baseFilter.value, glassFilter.value, searchBox.value));
-
-    render("", "", "");
-  } catch (err) {
-    console.error("Error loading cocktails:", err);
+    const filtered = cocktails.filter(c =>
+      selected.includes(c.base) || selected.includes(c.glass)
+    );
+    renderCocktails(filtered);
   }
-}
-
-document.addEventListener("DOMContentLoaded", loadCocktails);
+});
