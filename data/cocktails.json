@@ -1,82 +1,164 @@
 [
   {
-    "name": "Whiskey Sour",
+    "name": "Cocktail Closeup Brown",
+    "base": "TBD",
+    "glass": "TBD",
+    "image": "cocktail-closeup-brown.jpg",
+    "short": "A rich brown cocktail served in style.",
+    "status": "available",
+    "kegged": "no"
+  },
+  {
+    "name": "Cocktail Closeup Orange",
+    "base": "TBD",
+    "glass": "TBD",
+    "image": "cocktail-closeup-orange.jpg",
+    "short": "Bright citrus notes with an orange hue.",
+    "status": "available",
+    "kegged": "no"
+  },
+  {
+    "name": "Cocktail Dark Bitters",
+    "base": "TBD",
+    "glass": "TBD",
+    "image": "cocktail-dark-bitters.jpg",
+    "short": "A darker blend with complex bitters.",
+    "status": "available",
+    "kegged": "no"
+  },
+  {
+    "name": "Cocktail Fancy Garnish",
+    "base": "TBD",
+    "glass": "TBD",
+    "image": "cocktail-fancy-garnish.jpg",
+    "short": "An elegant serve with a fancy garnish.",
+    "status": "available",
+    "kegged": "no"
+  },
+  {
+    "name": "Cocktail Fizz Light",
+    "base": "TBD",
+    "glass": "TBD",
+    "image": "cocktail-fizz-light.jpg",
+    "short": "Effervescent and refreshing, light fizz.",
+    "status": "available",
+    "kegged": "no"
+  },
+  {
+    "name": "Cocktail Frothy Top",
+    "base": "TBD",
+    "glass": "TBD",
+    "image": "cocktail-frothy-top.jpg",
+    "short": "Frothy topped cocktail with smooth texture.",
+    "status": "available",
+    "kegged": "no"
+  },
+  {
+    "name": "Cocktail Garnish Lime Orange",
+    "base": "TBD",
+    "glass": "TBD",
+    "image": "cocktail-garnish-lime-orange.jpg",
+    "short": "Fresh lime and orange garnish combo.",
+    "status": "available",
+    "kegged": "no"
+  },
+  {
+    "name": "Cocktail Glass Tall Orange",
+    "base": "TBD",
+    "glass": "Tall",
+    "image": "cocktail-glass-tall-orange.jpg",
+    "short": "Tall orange cocktail with vibrant flavor.",
+    "status": "available",
+    "kegged": "no"
+  },
+  {
+    "name": "Cocktail Hurricane Glass",
+    "base": "TBD",
+    "glass": "Hurricane",
+    "image": "cocktail-hurricane-glass.jpg",
+    "short": "Served in a hurricane glass, bold and tropical.",
+    "status": "available",
+    "kegged": "no"
+  },
+  {
+    "name": "Cocktail Classic Sour",
     "base": "Whiskey",
     "glass": "Old Fashioned",
     "image": "cocktail-classic-sour.jpg",
-    "ingredients": ["2 oz Whiskey", "1 oz Lemon Juice", "0.75 oz Simple Syrup", "Egg White (optional)"],
-    "short": "A timeless balance of whiskey, lemon, and sweetness."
+    "short": "A timeless balance of whiskey, lemon, and sweetness.",
+    "status": "available",
+    "kegged": "yes"
   },
   {
-    "name": "Espresso Martini",
+    "name": "Cocktail Espresso Martini",
     "base": "Vodka",
     "glass": "Martini",
     "image": "cocktail-espresso-martini.jpg",
-    "ingredients": ["2 oz Vodka", "1 oz Coffee Liqueur", "1 oz Espresso"],
-    "short": "Silky, smooth, and rich with fresh espresso."
+    "short": "Silky, smooth, and rich with fresh espresso.",
+    "status": "available",
+    "kegged": "no"
   },
   {
-    "name": "Gin and Tonic",
+    "name": "Cocktail Gin Tonic",
     "base": "Gin",
     "glass": "Highball",
     "image": "cocktail-gin-tonic.jpg",
-    "ingredients": ["2 oz Gin", "Tonic Water", "Lime Wedge"],
-    "short": "Crisp, refreshing, and botanically bright."
+    "short": "Classic gin & tonic with citrus notes.",
+    "status": "available",
+    "kegged": "no"
   },
   {
-    "name": "Margarita",
+    "name": "Cocktail Highball Tall",
+    "base": "TBD",
+    "glass": "Highball",
+    "image": "cocktail-highball-tall.jpg",
+    "short": "Tall refreshing cocktail in a highball glass.",
+    "status": "available",
+    "kegged": "no"
+  },
+  {
+    "name": "Cocktail Margarita Salt",
     "base": "Tequila",
     "glass": "Coupe",
     "image": "cocktail-margarita-salt.jpg",
-    "ingredients": ["2 oz Tequila", "1 oz Lime Juice", "1 oz Triple Sec", "Salt Rim"],
-    "short": "A zesty tequila classic with a salted rim."
+    "short": "Classic margarita with salted rim.",
+    "status": "available",
+    "kegged": "yes"
   },
   {
-    "name": "Negroni",
+    "name": "Cocktail Martini Garnish",
+    "base": "Vodka",
+    "glass": "Martini",
+    "image": "cocktail-martini-garnish.jpg",
+    "short": "Crisp martini with garnish.",
+    "status": "available",
+    "kegged": "no"
+  },
+  {
+    "name": "Cocktail Negroni Orange",
     "base": "Gin",
     "glass": "Old Fashioned",
     "image": "cocktail-negroni-orange.jpg",
-    "ingredients": ["1 oz Gin", "1 oz Campari", "1 oz Sweet Vermouth"],
-    "short": "Bittersweet harmony of gin, vermouth, and Campari."
+    "short": "Classic negroni with orange twist.",
+    "status": "available",
+    "kegged": "no"
   },
   {
-    "name": "Old Fashioned",
+    "name": "Cocktail Old Fashioned Dark",
     "base": "Whiskey",
     "glass": "Old Fashioned",
     "image": "cocktail-old-fashioned-dark.jpg",
-    "ingredients": ["2 oz Bourbon or Rye", "2 dashes Angostura Bitters", "Sugar Cube", "Orange Peel"],
-    "short": "Smooth whiskey with sugar, bitters, and citrus."
+    "short": "Deep and bold old fashioned style.",
+    "status": "available",
+    "kegged": "yes"
   },
   {
-    "name": "Shaken Pink",
-    "base": "Vodka",
+    "name": "Cocktail Shaken Pink",
+    "base": "TBD",
     "glass": "Coupe",
     "image": "cocktail-shaken-pink.jpg",
-    "ingredients": ["2 oz Vodka", "1 oz Cranberry Juice", "0.5 oz Lime Juice", "Dash Grenadine"],
-    "short": "Bright, fruity, and irresistibly pink."
-  },
-  {
-    "name": "Tall Citrus",
-    "base": "Rum",
-    "glass": "Highball",
-    "image": "cocktail-glass-tall-orange.jpg",
-    "ingredients": ["2 oz Light Rum", "Orange Juice", "Lime Wedge"],
-    "short": "Tall, citrus-forward, and refreshing."
-  },
-  {
-    "name": "Hurricane",
-    "base": "Rum",
-    "glass": "Hurricane",
-    "image": "cocktail-hurricane-glass.jpg",
-    "ingredients": ["2 oz Dark Rum", "2 oz Passion Fruit Juice", "1 oz Lime Juice", "Grenadine"],
-    "short": "Tropical storm of rum and fruit flavors."
-  },
-  {
-    "name": "Fancy Garnish",
-    "base": "Vodka",
-    "glass": "Coupe",
-    "image": "cocktail-fancy-garnish.jpg",
-    "ingredients": ["2 oz Vodka", "0.5 oz Elderflower Liqueur", "Top with Prosecco", "Fruit Garnish"],
-    "short": "Elegant and bubbly with a lavish garnish."
+    "short": "A bright shaken pink cocktail.",
+    "status": "available",
+    "kegged": "no"
   }
 ]
