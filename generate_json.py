@@ -1,72 +1,44 @@
-import os, json
+import os
+import json
 
-# Folder paths
-RAW_COCKTAILS = "images/_raw/cocktails"
-RAW_BEER = "images/_raw/beer"
-RAW_EQUIP = "images/_raw/equipment"
+# Directories
+RAW_DIRS = {
+    "cocktails": "images/_raw/cocktails",
+    "beer": "images/_raw/beer",
+    "equipment": "images/_raw/equipment"
+}
+OUTPUT_JSON = "data/cocktails.json"
 
-# Output JSONs
-OUTPUT_COCKTAILS = "data/cocktails.json"
-OUTPUT_BEER = "data/beer.json"
-OUTPUT_EQUIP = "data/equipment.json"
+def generate_entries():
+    data = {"cocktails": [], "beer": [], "equipment": []}
 
+    for category, folder in RAW_DIRS.items():
+        if not os.path.exists(folder):
+            print(f"⚠️ Skipping missing folder: {folder}")
+            continue
 
-def make_entries(src_folder, category):
-    entries = []
-    if not os.path.exists(src_folder):
-        print(f"⚠️ Missing folder: {src_folder}")
-        return entries
+        for filename in os.listdir(folder):
+            if filename.lower().endswith((".jpg", ".jpeg", ".png")):
+                name = os.path.splitext(filename)[0].replace("-", " ").title()
+                entry = {
+                    "name": name,
+                    "base": "Unknown" if category == "cocktails" else None,
+                    "glass": "Unknown" if category == "cocktails" else None,
+                    "image": filename,
+                    "ingredients": [],
+                    "short": f"{name} – coming soon!",
+                    "kegged": "No" if category in ["cocktails", "beer"] else None,
+                    "type": category
+                }
+                data[category].append(entry)
 
-    for filename in os.listdir(src_folder):
-        if filename.lower().endswith((".jpg", ".jpeg", ".png")):
-            # Generate name from filename
-            name = filename.replace("-", " ").replace(".jpg", "").replace(".jpeg", "").replace(".png", "").title()
-
-            entry = {
-                "name": name,
-                "image": filename,
-                "short": f"A {category} item: {name}."
-            }
-
-            # Add category-specific defaults
-            if category == "cocktail":
-                entry.update({
-                    "base": "TBD",
-                    "glass": "TBD",
-                    "status": "available",
-                    "kegged": "no"
-                })
-            elif category == "beer":
-                entry.update({
-                    "type": "lager",  # default type
-                    "abv": "TBD"
-                })
-            elif category == "equipment":
-                entry.update({
-                    "usage": "bar setup",
-                    "status": "in stock"
-                })
-
-            entries.append(entry)
-    return entries
-
-
-def main():
-    cocktails = make_entries(RAW_COCKTAILS, "cocktail")
-    beers = make_entries(RAW_BEER, "beer")
-    equipment = make_entries(RAW_EQUIP, "equipment")
-
-    os.makedirs("data", exist_ok=True)
-
-    with open(OUTPUT_COCKTAILS, "w") as f:
-        json.dump(cocktails, f, indent=2)
-    with open(OUTPUT_BEER, "w") as f:
-        json.dump(beers, f, indent=2)
-    with open(OUTPUT_EQUIP, "w") as f:
-        json.dump(equipment, f, indent=2)
-
-    print(f"✅ Wrote {len(cocktails)} cocktails, {len(beers)} beers, {len(equipment)} equipment entries")
-
+    return data
 
 if __name__ == "__main__":
-    main()
+    data = generate_entries()
+    os.makedirs(os.path.dirname(OUTPUT_JSON), exist_ok=True)
+
+    with open(OUTPUT_JSON, "w") as f:
+        json.dump(data, f, indent=2)
+
+    print(f"✅ cocktails.json regenerated with {sum(len(v) for v in data.values())} entries")

@@ -1,119 +1,208 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Design Your Menu | GBS9</title>
+  <title>Design Your Menu - GBS9</title>
   <link rel="stylesheet" href="css/style.css">
+  <script src="js/header.js" defer></script>
+  <style>
+    body {
+      background: linear-gradient(to bottom right, #1f1f1f, #2c2c2c);
+      color: #f5f5f5;
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    main {
+      max-width: 1000px;
+      margin: auto;
+      padding: 2rem;
+      text-align: center;
+    }
+    h1 {
+      margin-bottom: 1.5rem;
+      color: #ffcc66;
+    }
+
+    /* Card stack */
+    #cardStack {
+      position: relative;
+      width: 320px;
+      height: 420px;
+      margin: 0 auto 2rem;
+      perspective: 1000px;
+    }
+    .card {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+      transition: transform 0.4s ease, opacity 0.4s ease;
+    }
+    .card img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 1rem;
+      border: 3px solid #ffcc66;
+    }
+    .card h2 {
+      margin: 0.5rem 0;
+      color: #fff;
+    }
+    .card p {
+      font-size: 0.9rem;
+      opacity: 0.85;
+    }
+
+    /* Buttons */
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 1rem;
+    }
+    .buttons button {
+      background: #333;
+      border: none;
+      padding: 0.7rem 1.5rem;
+      border-radius: 30px;
+      font-size: 1rem;
+      color: #fff;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .buttons button:hover {
+      background: #ffcc66;
+      color: #000;
+    }
+
+    /* Your Menu */
+    #yourMenu {
+      margin-top: 3rem;
+      text-align: left;
+    }
+    #yourMenu h2 {
+      margin-bottom: 1rem;
+      color: #ffcc66;
+    }
+    .menu-item {
+      display: flex;
+      align-items: center;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 0.5rem 1rem;
+      margin-bottom: 0.5rem;
+      border-radius: 12px;
+    }
+    .menu-item img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: 1rem;
+      border: 2px solid #ffcc66;
+    }
+    .menu-item span {
+      font-weight: 600;
+      color: #fff;
+    }
+    .menu-item small {
+      display: block;
+      font-size: 0.8rem;
+      opacity: 0.75;
+    }
+  </style>
 </head>
 <body>
-  <!-- HEADER -->
-  <header>
-    <nav class="nav-bar">
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="services.html">Services</a></li>
-        <li><a href="premium-listings.html">Premium Listings</a></li>
-        <li class="logo"><a href="index.html"><img src="images/logo2.png" alt="GBS Logo"></a></li>
-        <li><a href="lookbook.html">Lookbook</a></li>
-        <li><a href="tonights-event.html" class="highlight">Tonight’s Event</a></li>
-        <li><a href="admin.html" class="highlight">Admin</a></li>
-      </ul>
-    </nav>
-  </header>
+  <div id="header"></div>
 
-  <!-- MAIN CONTENT -->
-  <main style="padding: 2rem;">
-    <h2 class="section-title">Design Your Menu</h2>
-    <p style="margin-bottom: 1.5rem;">Swipe through cocktails to create your perfect custom menu.</p>
-
-    <!-- Tinder-style swipe container -->
-    <div class="tinder-container">
-      <div id="tinder-card" class="tinder-card">
-        <img id="tinder-img" src="images/cocktails/cocktail-classic-sour.jpg" alt="Cocktail">
-        <h3 id="tinder-name">Whiskey Sour</h3>
-        <p id="tinder-short">A timeless balance of whiskey, lemon, and sweetness.</p>
-      </div>
-      <div class="tinder-buttons">
-        <button id="dislike" class="btn-dislike">✘</button>
-        <button id="like" class="btn-like">♥</button>
-      </div>
+  <main>
+    <h1>Design Your Menu</h1>
+    <div id="cardStack"></div>
+    <div class="buttons">
+      <button onclick="dislikeCard()">❌ Dislike</button>
+      <button onclick="likeCard()">✅ Like</button>
     </div>
 
-    <!-- Selected menu -->
-    <section class="menu-results">
-      <h3>Your Menu</h3>
-      <ul id="menu-list"></ul>
+    <section id="yourMenu">
+      <h2>Your Menu</h2>
+      <div id="menuList"></div>
     </section>
   </main>
 
-  <!-- JS -->
   <script>
-    const cocktails = [
-      {
-        name: "Whiskey Sour",
-        image: "images/cocktails/cocktail-classic-sour.jpg",
-        short: "A timeless balance of whiskey, lemon, and sweetness."
-      },
-      {
-        name: "Espresso Martini",
-        image: "images/cocktails/cocktail-espresso-martini.jpg",
-        short: "Silky, smooth, and rich with fresh espresso."
-      },
-      {
-        name: "Margarita",
-        image: "images/cocktails/cocktail-margarita-salt.jpg",
-        short: "A perfect mix of tequila, lime, and salt."
-      },
-      {
-        name: "Negroni",
-        image: "images/cocktails/cocktail-negroni-orange.jpg",
-        short: "Bittersweet and bold, an Italian classic."
+    let cocktails = [];
+    let currentIndex = 0;
+
+    async function loadCocktails() {
+      try {
+        const res = await fetch("data/cocktails.json");
+        cocktails = await res.json();
+        renderCard();
+      } catch (err) {
+        console.error("Error loading cocktails.json", err);
       }
-    ];
-
-    let current = 0;
-    const card = document.getElementById("tinder-card");
-    const img = document.getElementById("tinder-img");
-    const nameEl = document.getElementById("tinder-name");
-    const shortEl = document.getElementById("tinder-short");
-    const menuList = document.getElementById("menu-list");
-
-    function showCocktail(index) {
-      const c = cocktails[index];
-      img.src = c.image;
-      nameEl.textContent = c.name;
-      shortEl.textContent = c.short;
     }
 
-    function addToMenu(cocktail) {
-      const li = document.createElement("li");
-      li.innerHTML = `
-        <div class="menu-item">
-          <img src="${cocktail.image}" alt="${cocktail.name}" class="menu-thumb">
-          <div>
-            <strong>${cocktail.name}</strong><br>
-            <span>${cocktail.short}</span>
-          </div>
+    function renderCard() {
+      const stack = document.getElementById("cardStack");
+      stack.innerHTML = "";
+      if (currentIndex < cocktails.length) {
+        const drink = cocktails[currentIndex];
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+          <img src="images/cocktails/${drink.image}" alt="${drink.name}">
+          <h2>${drink.name}</h2>
+          <p>${drink.short}</p>
+        `;
+        stack.appendChild(card);
+      } else {
+        stack.innerHTML = "<p>🎉 You've gone through all cocktails!</p>";
+      }
+    }
+
+    function likeCard() {
+      if (currentIndex < cocktails.length) {
+        addToMenu(cocktails[currentIndex]);
+        currentIndex++;
+        renderCard();
+      }
+    }
+
+    function dislikeCard() {
+      if (currentIndex < cocktails.length) {
+        currentIndex++;
+        renderCard();
+      }
+    }
+
+    function addToMenu(drink) {
+      const menuList = document.getElementById("menuList");
+      const item = document.createElement("div");
+      item.className = "menu-item";
+      item.innerHTML = `
+        <img src="images/cocktails/${drink.image}" alt="${drink.name}">
+        <div>
+          <span>${drink.name}</span>
+          <small>${drink.short}</small>
         </div>
       `;
-      menuList.appendChild(li);
+      menuList.appendChild(item);
     }
 
-    document.getElementById("like").addEventListener("click", () => {
-      addToMenu(cocktails[current]);
-      current = (current + 1) % cocktails.length;
-      showCocktail(current);
-    });
-
-    document.getElementById("dislike").addEventListener("click", () => {
-      current = (current + 1) % cocktails.length;
-      showCocktail(current);
-    });
-
-    // initialize
-    showCocktail(current);
+    loadCocktails();
   </script>
 </body>
 </html>
-

@@ -1,418 +1,236 @@
-{
-  "cocktails": [
-    {
-      "name": "Cocktail Amber",
-      "base": "Unknown",
-      "glass": "Unknown",
-      "image": "cocktail-amber.jpg",
-      "ingredients": [],
-      "short": "Cocktail Amber \u2013 coming soon!",
-      "kegged": "No",
-      "type": "cocktails"
-    },
-    {
-      "name": "Cocktail Clear Spirit",
-      "base": "Unknown",
-      "glass": "Unknown",
-      "image": "cocktail-clear-spirit.png",
-      "ingredients": [],
-      "short": "Cocktail Clear Spirit \u2013 coming soon!",
-      "kegged": "No",
-      "type": "cocktails"
-    },
-    {
-      "name": "Cocktail Closeup Brown",
-      "base": "Unknown",
-      "glass": "Unknown",
-      "image": "cocktail-closeup-brown.jpg",
-      "ingredients": [],
-      "short": "Cocktail Closeup Brown \u2013 coming soon!",
-      "kegged": "No",
-      "type": "cocktails"
-    },
-    {
-      "name": "Cocktail Closeup Dark",
-      "base": "Unknown",
-      "glass": "Unknown",
-      "image": "cocktail-closeup-dark.png",
-      "ingredients": [],
-      "short": "Cocktail Closeup Dark \u2013 coming soon!",
-      "kegged": "No",
-      "type": "cocktails"
-    },
-    {
-      "name": "Cocktail Closeup Orange",
-      "base": "Unknown",
-      "glass": "Unknown",
-      "image": "cocktail-closeup-orange.jpg",
-      "ingredients": [],
-      "short": "Cocktail Closeup Orange \u2013 coming soon!",
-      "kegged": "No",
-      "type": "cocktails"
-    },
-    {
-      "name": "Cocktail Closeup Red",
-      "base": "Unknown",
-      "glass": "Unknown",
-      "image": "cocktail-closeup-red.png",
-      "ingredients": [],
-      "short": "Cocktail Closeup Red \u2013 coming soon!",
-      "kegged": "No",
-      "type": "cocktails"
-    },
-    {
-      "name": "Cocktail Dark Bitters",
-      "base": "Unknown",
-      "glass": "Unknown",
-      "image": "cocktail-dark-bitters.jpg",
-      "ingredients": [],
-      "short": "Cocktail Dark Bitters \u2013 coming soon!",
-      "kegged": "No",
-      "type": "cocktails"
-    },
-    {
-      "name": "Cocktail Espresso Glass",
-      "base": "Unknown",
-      "glass": "Unknown",
-      "image": "cocktail-espresso-glass.png",
-      "ingredients": [],
-      "short": "Cocktail Espresso Glass \u2013 coming soon!",
-      "kegged": "No",
-      "type": "cocktails"
-    },
-    {
-      "name": "Cocktail Fancy Garnish",
-      "base": "Unknown",
-      "glass": "Unknown",
-      "image": "cocktail-fancy-garnish.jpg",
-      "ingredients": [],
-      "short": "Cocktail Fancy Garnish \u2013 coming soon!",
-      "kegged": "No",
-      "type": "cocktails"
-    },
-    {
-      "name": "Cocktail Fancy Pink",
-      "base": "Unknown",
-      "glass": "Unknown",
-      "image": "cocktail-fancy-pink.png",
-      "ingredients": [],
-      "short": "Cocktail Fancy Pink \u2013 coming soon!",
-      "kegged": "No",
-      "type": "cocktails"
-    },
-    {
-      "name": "Cocktail Fizz Light",
-      "base": "Unknown",
-      "glass": "Unknown",
-      "image": "cocktail-fizz-light.jpg",
-      "ingredients": [],
-      "short": "Cocktail Fizz Light \u2013 coming soon!",
-      "kegged": "No",
-      "type": "cocktails"
-    },
-    {
-      "name": "Cocktail Frothy Top",
-      "base": "Unknown",
-      "glass": "Unknown",
-      "image": "cocktail-frothy-top.jpg",
-      "ingredients": [],
-      "short": "Cocktail Frothy Top \u2013 coming soon!",
-      "kegged": "No",
-      "type": "cocktails"
-    },
-    {
-      "name": "Cocktail Frothy White",
-      "base": "Unknown",
-      "glass": "Unknown",
-      "image": "cocktail-frothy-white.png",
-      "ingredients": [],
-      "short": "Cocktail Frothy White \u2013 coming soon!",
-      "kegged": "No",
-      "type": "cocktails"
-    },
-    {
-      "name": "Cocktail Garnish Lime Orange",
-      "base": "Unknown",
-      "glass": "Unknown",
-      "image": "cocktail-garnish-lime-orange.jpg",
-      "ingredients": [],
-      "short": "Cocktail Garnish Lime Orange \u2013 coming soon!",
-      "kegged": "No",
-      "type": "cocktails"
-    },
-    {
-      "name": "Cocktail Gin Tonic Clear",
-      "base": "Unknown",
-      "glass": "Unknown",
-      "image": "cocktail-gin-tonic-clear.png",
-      "ingredients": [],
-      "short": "Cocktail Gin Tonic Clear \u2013 coming soon!",
-      "kegged": "No",
-      "type": "cocktails"
-    },
-    {
-      "name": "Cocktail Glass Tall Orange",
-      "base": "Unknown",
-      "glass": "Unknown",
-      "image": "cocktail-glass-tall-orange.jpg",
-      "ingredients": [],
-      "short": "Cocktail Glass Tall Orange \u2013 coming soon!",
-      "kegged": "No",
-      "type": "cocktails"
-    },
-    {
-      "name": "Cocktail Highball Green",
-      "base": "Unknown",
-      "glass": "Unknown",
-      "image": "cocktail-highball-green.png",
-      "ingredients": [],
-      "short": "Cocktail Highball Green \u2013 coming soon!",
-      "kegged": "No",
-      "type": "cocktails"
-    },
-    {
-      "name": "Cocktail Hurricane Glass",
-      "base": "Unknown",
-      "glass": "Unknown",
-      "image": "cocktail-hurricane-glass.jpg",
-      "ingredients": [],
-      "short": "Cocktail Hurricane Glass \u2013 coming soon!",
-      "kegged": "No",
-      "type": "cocktails"
-    },
-    {
-      "name": "Cocktail Light Pink",
-      "base": "Unknown",
-      "glass": "Unknown",
-      "image": "cocktail-light-pink.png",
-      "ingredients": [],
-      "short": "Cocktail Light Pink \u2013 coming soon!",
-      "kegged": "No",
-      "type": "cocktails"
-    },
-    {
-      "name": "Cocktail Old Fashioned Classic",
-      "base": "Unknown",
-      "glass": "Unknown",
-      "image": "cocktail-old-fashioned-classic.jpg",
-      "ingredients": [],
-      "short": "Cocktail Old Fashioned Classic \u2013 coming soon!",
-      "kegged": "No",
-      "type": "cocktails"
-    },
-    {
-      "name": "Cocktail Old Fashioned Smoke",
-      "base": "Unknown",
-      "glass": "Unknown",
-      "image": "cocktail-old-fashioned-smoke.jpg",
-      "ingredients": [],
-      "short": "Cocktail Old Fashioned Smoke \u2013 coming soon!",
-      "kegged": "No",
-      "type": "cocktails"
-    },
-    {
-      "name": "Cocktail Pale Sour",
-      "base": "Unknown",
-      "glass": "Unknown",
-      "image": "cocktail-pale-sour.png",
-      "ingredients": [],
-      "short": "Cocktail Pale Sour \u2013 coming soon!",
-      "kegged": "No",
-      "type": "cocktails"
-    },
-    {
-      "name": "Cocktail Red Bitters",
-      "base": "Unknown",
-      "glass": "Unknown",
-      "image": "cocktail-red-bitters.png",
-      "ingredients": [],
-      "short": "Cocktail Red Bitters \u2013 coming soon!",
-      "kegged": "No",
-      "type": "cocktails"
-    },
-    {
-      "name": "Cocktail Red Garnish",
-      "base": "Unknown",
-      "glass": "Unknown",
-      "image": "cocktail-red-garnish.png",
-      "ingredients": [],
-      "short": "Cocktail Red Garnish \u2013 coming soon!",
-      "kegged": "No",
-      "type": "cocktails"
-    },
-    {
-      "name": "Cocktail Tall Red",
-      "base": "Unknown",
-      "glass": "Unknown",
-      "image": "cocktail-tall-red.png",
-      "ingredients": [],
-      "short": "Cocktail Tall Red \u2013 coming soon!",
-      "kegged": "No",
-      "type": "cocktails"
-    },
-    {
-      "name": "Cocktail Tall Yellow",
-      "base": "Unknown",
-      "glass": "Unknown",
-      "image": "cocktail-tall-yellow.png",
-      "ingredients": [],
-      "short": "Cocktail Tall Yellow \u2013 coming soon!",
-      "kegged": "No",
-      "type": "cocktails"
-    }
-  ],
-  "beer": [
-    {
-      "name": "Coors",
-      "base": null,
-      "glass": null,
-      "image": "coors.jpg",
-      "ingredients": [],
-      "short": "Coors \u2013 coming soon!",
-      "kegged": "No",
-      "type": "beer"
-    },
-    {
-      "name": "Guinness",
-      "base": null,
-      "glass": null,
-      "image": "guinness.jpg",
-      "ingredients": [],
-      "short": "Guinness \u2013 coming soon!",
-      "kegged": "No",
-      "type": "beer"
-    },
-    {
-      "name": "Harp",
-      "base": null,
-      "glass": null,
-      "image": "harp.jpg",
-      "ingredients": [],
-      "short": "Harp \u2013 coming soon!",
-      "kegged": "No",
-      "type": "beer"
-    },
-    {
-      "name": "Heineken",
-      "base": null,
-      "glass": null,
-      "image": "heineken.jpg",
-      "ingredients": [],
-      "short": "Heineken \u2013 coming soon!",
-      "kegged": "No",
-      "type": "beer"
-    },
-    {
-      "name": "Smithwicks",
-      "base": null,
-      "glass": null,
-      "image": "smithwicks.jpg",
-      "ingredients": [],
-      "short": "Smithwicks \u2013 coming soon!",
-      "kegged": "No",
-      "type": "beer"
-    }
-  ],
-  "equipment": [
-    {
-      "name": "Bar Setup Front",
-      "base": null,
-      "glass": null,
-      "image": "bar-setup-front.jpg",
-      "ingredients": [],
-      "short": "Bar Setup Front \u2013 coming soon!",
-      "kegged": null,
-      "type": "equipment"
-    },
-    {
-      "name": "Bar Setup Inside",
-      "base": null,
-      "glass": null,
-      "image": "bar-setup-inside.jpg",
-      "ingredients": [],
-      "short": "Bar Setup Inside \u2013 coming soon!",
-      "kegged": null,
-      "type": "equipment"
-    },
-    {
-      "name": "Cocktail Classic Sour",
-      "base": null,
-      "glass": null,
-      "image": "cocktail-classic-sour.jpg",
-      "ingredients": [],
-      "short": "Cocktail Classic Sour \u2013 coming soon!",
-      "kegged": null,
-      "type": "equipment"
-    },
-    {
-      "name": "Cocktail Espresso Martini",
-      "base": null,
-      "glass": null,
-      "image": "cocktail-espresso-martini.jpg",
-      "ingredients": [],
-      "short": "Cocktail Espresso Martini \u2013 coming soon!",
-      "kegged": null,
-      "type": "equipment"
-    },
-    {
-      "name": "Cocktail Gin Tonic",
-      "base": null,
-      "glass": null,
-      "image": "cocktail-gin-tonic.jpg",
-      "ingredients": [],
-      "short": "Cocktail Gin Tonic \u2013 coming soon!",
-      "kegged": null,
-      "type": "equipment"
-    },
-    {
-      "name": "Cocktail Highball Tall",
-      "base": null,
-      "glass": null,
-      "image": "cocktail-highball-tall.jpg",
-      "ingredients": [],
-      "short": "Cocktail Highball Tall \u2013 coming soon!",
-      "kegged": null,
-      "type": "equipment"
-    },
-    {
-      "name": "Cocktail Margarita Salt",
-      "base": null,
-      "glass": null,
-      "image": "cocktail-margarita-salt.jpg",
-      "ingredients": [],
-      "short": "Cocktail Margarita Salt \u2013 coming soon!",
-      "kegged": null,
-      "type": "equipment"
-    },
-    {
-      "name": "Cocktail Martini Garnish",
-      "base": null,
-      "glass": null,
-      "image": "cocktail-martini-garnish.jpg",
-      "ingredients": [],
-      "short": "Cocktail Martini Garnish \u2013 coming soon!",
-      "kegged": null,
-      "type": "equipment"
-    },
-    {
-      "name": "Cocktail Negroni Orange",
-      "base": null,
-      "glass": null,
-      "image": "cocktail-negroni-orange.jpg",
-      "ingredients": [],
-      "short": "Cocktail Negroni Orange \u2013 coming soon!",
-      "kegged": null,
-      "type": "equipment"
-    },
-    {
-      "name": "Cocktail Shaken Pink",
-      "base": null,
-      "glass": null,
-      "image": "cocktail-shaken-pink.jpg",
-      "ingredients": [],
-      "short": "Cocktail Shaken Pink \u2013 coming soon!",
-      "kegged": null,
-      "type": "equipment"
-    }
-  ]
-}
+[
+  {
+    "name": "Cocktail Amber",
+    "image": "cocktail-amber.jpg",
+    "short": "A cocktails item: Cocktail Amber.",
+    "base": "TBD",
+    "glass": "TBD",
+    "status": "available",
+    "kegged": "no"
+  },
+  {
+    "name": "Cocktail Clear Spirit",
+    "image": "cocktail-clear-spirit.png",
+    "short": "A cocktails item: Cocktail Clear Spirit.",
+    "base": "TBD",
+    "glass": "TBD",
+    "status": "available",
+    "kegged": "no"
+  },
+  {
+    "name": "Cocktail Closeup Brown",
+    "image": "cocktail-closeup-brown.jpg",
+    "short": "A cocktails item: Cocktail Closeup Brown.",
+    "base": "TBD",
+    "glass": "TBD",
+    "status": "available",
+    "kegged": "no"
+  },
+  {
+    "name": "Cocktail Closeup Dark",
+    "image": "cocktail-closeup-dark.png",
+    "short": "A cocktails item: Cocktail Closeup Dark.",
+    "base": "TBD",
+    "glass": "TBD",
+    "status": "available",
+    "kegged": "no"
+  },
+  {
+    "name": "Cocktail Closeup Orange",
+    "image": "cocktail-closeup-orange.jpg",
+    "short": "A cocktails item: Cocktail Closeup Orange.",
+    "base": "TBD",
+    "glass": "TBD",
+    "status": "available",
+    "kegged": "no"
+  },
+  {
+    "name": "Cocktail Closeup Red",
+    "image": "cocktail-closeup-red.png",
+    "short": "A cocktails item: Cocktail Closeup Red.",
+    "base": "TBD",
+    "glass": "TBD",
+    "status": "available",
+    "kegged": "no"
+  },
+  {
+    "name": "Cocktail Dark Bitters",
+    "image": "cocktail-dark-bitters.jpg",
+    "short": "A cocktails item: Cocktail Dark Bitters.",
+    "base": "TBD",
+    "glass": "TBD",
+    "status": "available",
+    "kegged": "no"
+  },
+  {
+    "name": "Cocktail Espresso Glass",
+    "image": "cocktail-espresso-glass.png",
+    "short": "A cocktails item: Cocktail Espresso Glass.",
+    "base": "TBD",
+    "glass": "TBD",
+    "status": "available",
+    "kegged": "no"
+  },
+  {
+    "name": "Cocktail Fancy Garnish",
+    "image": "cocktail-fancy-garnish.jpg",
+    "short": "A cocktails item: Cocktail Fancy Garnish.",
+    "base": "TBD",
+    "glass": "TBD",
+    "status": "available",
+    "kegged": "no"
+  },
+  {
+    "name": "Cocktail Fancy Pink",
+    "image": "cocktail-fancy-pink.png",
+    "short": "A cocktails item: Cocktail Fancy Pink.",
+    "base": "TBD",
+    "glass": "TBD",
+    "status": "available",
+    "kegged": "no"
+  },
+  {
+    "name": "Cocktail Fizz Light",
+    "image": "cocktail-fizz-light.jpg",
+    "short": "A cocktails item: Cocktail Fizz Light.",
+    "base": "TBD",
+    "glass": "TBD",
+    "status": "available",
+    "kegged": "no"
+  },
+  {
+    "name": "Cocktail Frothy Top",
+    "image": "cocktail-frothy-top.jpg",
+    "short": "A cocktails item: Cocktail Frothy Top.",
+    "base": "TBD",
+    "glass": "TBD",
+    "status": "available",
+    "kegged": "no"
+  },
+  {
+    "name": "Cocktail Frothy White",
+    "image": "cocktail-frothy-white.png",
+    "short": "A cocktails item: Cocktail Frothy White.",
+    "base": "TBD",
+    "glass": "TBD",
+    "status": "available",
+    "kegged": "no"
+  },
+  {
+    "name": "Cocktail Garnish Lime Orange",
+    "image": "cocktail-garnish-lime-orange.jpg",
+    "short": "A cocktails item: Cocktail Garnish Lime Orange.",
+    "base": "TBD",
+    "glass": "TBD",
+    "status": "available",
+    "kegged": "no"
+  },
+  {
+    "name": "Cocktail Gin Tonic Clear",
+    "image": "cocktail-gin-tonic-clear.png",
+    "short": "A cocktails item: Cocktail Gin Tonic Clear.",
+    "base": "TBD",
+    "glass": "TBD",
+    "status": "available",
+    "kegged": "no"
+  },
+  {
+    "name": "Cocktail Glass Tall Orange",
+    "image": "cocktail-glass-tall-orange.jpg",
+    "short": "A cocktails item: Cocktail Glass Tall Orange.",
+    "base": "TBD",
+    "glass": "TBD",
+    "status": "available",
+    "kegged": "no"
+  },
+  {
+    "name": "Cocktail Highball Green",
+    "image": "cocktail-highball-green.png",
+    "short": "A cocktails item: Cocktail Highball Green.",
+    "base": "TBD",
+    "glass": "TBD",
+    "status": "available",
+    "kegged": "no"
+  },
+  {
+    "name": "Cocktail Hurricane Glass",
+    "image": "cocktail-hurricane-glass.jpg",
+    "short": "A cocktails item: Cocktail Hurricane Glass.",
+    "base": "TBD",
+    "glass": "TBD",
+    "status": "available",
+    "kegged": "no"
+  },
+  {
+    "name": "Cocktail Light Pink",
+    "image": "cocktail-light-pink.png",
+    "short": "A cocktails item: Cocktail Light Pink.",
+    "base": "TBD",
+    "glass": "TBD",
+    "status": "available",
+    "kegged": "no"
+  },
+  {
+    "name": "Cocktail Old Fashioned Classic",
+    "image": "cocktail-old-fashioned-classic.jpg",
+    "short": "A cocktails item: Cocktail Old Fashioned Classic.",
+    "base": "TBD",
+    "glass": "TBD",
+    "status": "available",
+    "kegged": "no"
+  },
+  {
+    "name": "Cocktail Old Fashioned Smoke",
+    "image": "cocktail-old-fashioned-smoke.jpg",
+    "short": "A cocktails item: Cocktail Old Fashioned Smoke.",
+    "base": "TBD",
+    "glass": "TBD",
+    "status": "available",
+    "kegged": "no"
+  },
+  {
+    "name": "Cocktail Pale Sour",
+    "image": "cocktail-pale-sour.png",
+    "short": "A cocktails item: Cocktail Pale Sour.",
+    "base": "TBD",
+    "glass": "TBD",
+    "status": "available",
+    "kegged": "no"
+  },
+  {
+    "name": "Cocktail Red Bitters",
+    "image": "cocktail-red-bitters.png",
+    "short": "A cocktails item: Cocktail Red Bitters.",
+    "base": "TBD",
+    "glass": "TBD",
+    "status": "available",
+    "kegged": "no"
+  },
+  {
+    "name": "Cocktail Red Garnish",
+    "image": "cocktail-red-garnish.png",
+    "short": "A cocktails item: Cocktail Red Garnish.",
+    "base": "TBD",
+    "glass": "TBD",
+    "status": "available",
+    "kegged": "no"
+  },
+  {
+    "name": "Cocktail Tall Red",
+    "image": "cocktail-tall-red.png",
+    "short": "A cocktails item: Cocktail Tall Red.",
+    "base": "TBD",
+    "glass": "TBD",
+    "status": "available",
+    "kegged": "no"
+  },
+  {
+    "name": "Cocktail Tall Yellow",
+    "image": "cocktail-tall-yellow.png",
+    "short": "A cocktails item: Cocktail Tall Yellow.",
+    "base": "TBD",
+    "glass": "TBD",
+    "status": "available",
+    "kegged": "no"
+  }
+]
