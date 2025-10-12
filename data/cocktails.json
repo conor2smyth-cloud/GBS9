@@ -16,28 +16,20 @@
     "short": "Silky, smooth, and rich with fresh espresso."
   },
   {
-    "name": "Gin & Tonic",
+    "name": "Gin and Tonic",
     "base": "Gin",
     "glass": "Highball",
     "image": "cocktail-gin-tonic.jpg",
-    "ingredients": ["2 oz Gin", "4 oz Tonic Water", "Lime Wedge"],
-    "short": "Refreshing and crisp with botanical gin."
+    "ingredients": ["2 oz Gin", "Tonic Water", "Lime Wedge"],
+    "short": "Crisp, refreshing, and botanically bright."
   },
   {
     "name": "Margarita",
     "base": "Tequila",
     "glass": "Coupe",
     "image": "cocktail-margarita-salt.jpg",
-    "ingredients": ["2 oz Tequila", "1 oz Lime Juice", "1 oz Triple Sec"],
-    "short": "A Mexican classic with a salted rim."
-  },
-  {
-    "name": "Martini",
-    "base": "Gin",
-    "glass": "Martini",
-    "image": "cocktail-martini-garnish.jpg",
-    "ingredients": ["2 oz Gin", "1 oz Dry Vermouth", "Olive or Lemon Twist"],
-    "short": "The king of cocktails – clean and sharp."
+    "ingredients": ["2 oz Tequila", "1 oz Lime Juice", "1 oz Triple Sec", "Salt Rim"],
+    "short": "A zesty tequila classic with a salted rim."
   },
   {
     "name": "Negroni",
@@ -45,106 +37,46 @@
     "glass": "Old Fashioned",
     "image": "cocktail-negroni-orange.jpg",
     "ingredients": ["1 oz Gin", "1 oz Campari", "1 oz Sweet Vermouth"],
-    "short": "Bitter-sweet Italian aperitif."
+    "short": "Bittersweet harmony of gin, vermouth, and Campari."
   },
   {
     "name": "Old Fashioned",
     "base": "Whiskey",
     "glass": "Old Fashioned",
     "image": "cocktail-old-fashioned-dark.jpg",
-    "ingredients": ["2 oz Bourbon", "1 Sugar Cube", "2 dashes Bitters"],
-    "short": "A classic whiskey-forward drink."
+    "ingredients": ["2 oz Bourbon or Rye", "2 dashes Angostura Bitters", "Sugar Cube", "Orange Peel"],
+    "short": "Smooth whiskey with sugar, bitters, and citrus."
   },
   {
-    "name": "Pink Lady",
-    "base": "Gin",
+    "name": "Shaken Pink",
+    "base": "Vodka",
     "glass": "Coupe",
     "image": "cocktail-shaken-pink.jpg",
-    "ingredients": ["2 oz Gin", "1 oz Applejack", "0.5 oz Grenadine", "Egg White"],
-    "short": "Fruity, smooth, and vibrantly pink."
+    "ingredients": ["2 oz Vodka", "1 oz Cranberry Juice", "0.5 oz Lime Juice", "Dash Grenadine"],
+    "short": "Bright, fruity, and irresistibly pink."
   },
   {
-    "name": "Highball",
-    "base": "Whiskey",
+    "name": "Tall Citrus",
+    "base": "Rum",
     "glass": "Highball",
-    "image": "cocktail-highball-tall.jpg",
-    "ingredients": ["1.5 oz Whiskey", "4 oz Soda Water"],
-    "short": "Crisp and refreshing whiskey soda."
+    "image": "cocktail-glass-tall-orange.jpg",
+    "ingredients": ["2 oz Light Rum", "Orange Juice", "Lime Wedge"],
+    "short": "Tall, citrus-forward, and refreshing."
   },
   {
-    "name": "Fizz",
-    "base": "Gin",
-    "glass": "Highball",
-    "image": "cocktail-fizz-light.jpg",
-    "ingredients": ["2 oz Gin", "1 oz Lemon Juice", "0.75 oz Simple Syrup", "Soda Water"],
-    "short": "Light and sparkling with citrus."
-  },
-
-  {
-    "name": "Guinness",
-    "base": "Stout",
-    "glass": "Pint",
-    "image": "guinness.jpg",
-    "ingredients": ["1 Pint Guinness"],
-    "short": "The world-famous Irish stout."
+    "name": "Hurricane",
+    "base": "Rum",
+    "glass": "Hurricane",
+    "image": "cocktail-hurricane-glass.jpg",
+    "ingredients": ["2 oz Dark Rum", "2 oz Passion Fruit Juice", "1 oz Lime Juice", "Grenadine"],
+    "short": "Tropical storm of rum and fruit flavors."
   },
   {
-    "name": "Heineken",
-    "base": "Lager",
-    "glass": "Pint",
-    "image": "heineken.jpg",
-    "ingredients": ["1 Pint Heineken"],
-    "short": "Crisp and refreshing Dutch lager."
-  },
-  {
-    "name": "Coors Light",
-    "base": "Lager",
-    "glass": "Pint",
-    "image": "coors-light.jpg",
-    "ingredients": ["1 Pint Coors Light"],
-    "short": "Light American lager, extra refreshing."
-  },
-
-  {
-    "name": "Draft System",
-    "type": "Equipment",
-    "image": "equipment-draft-system.jpg",
-    "price": "€150/day",
-    "short": "Professional mobile draft system."
-  },
-  {
-    "name": "Event Bar",
-    "type": "Equipment",
-    "image": "event-bar-service.jpg",
-    "price": "€200/day",
-    "short": "Portable bar setup for events."
-  },
-  {
-    "name": "Front Bar Setup",
-    "type": "Equipment",
-    "image": "bar-setup-front.jpg",
-    "price": "€100/day",
-    "short": "Sleek and modern bar front."
-  },
-  {
-    "name": "Inside Bar Setup",
-    "type": "Equipment",
-    "image": "bar-setup-inside.jpg",
-    "price": "€120/day",
-    "short": "Compact interior bar system."
-  },
-  {
-    "name": "Citrus Garnishes",
-    "type": "Equipment",
-    "image": "garnish-dehydrated-citrus.png",
-    "price": "€20",
-    "short": "Dehydrated citrus slices for garnish."
-  },
-  {
-    "name": "Bar Tools Set",
-    "type": "Equipment",
+    "name": "Fancy Garnish",
+    "base": "Vodka",
+    "glass": "Coupe",
     "image": "cocktail-fancy-garnish.jpg",
-    "price": "€50",
-    "short": "Shakers, strainers, and essentials."
+    "ingredients": ["2 oz Vodka", "0.5 oz Elderflower Liqueur", "Top with Prosecco", "Fruit Garnish"],
+    "short": "Elegant and bubbly with a lavish garnish."
   }
 ]
