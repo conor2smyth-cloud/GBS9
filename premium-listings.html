@@ -12,8 +12,10 @@
       padding: 0;
       background: linear-gradient(to bottom right, #1b1b1b, #2a2a2a);
       color: #f5f5f5;
+      display: flex;
     }
     main {
+      flex: 1;
       max-width: 1100px;
       margin: 0 auto;
       padding: 2rem;
@@ -66,6 +68,39 @@
     .card p {
       font-size: 0.9rem;
       color: #ddd;
+    }
+
+    /* Sticky Right Nav */
+    .right-nav {
+      position: sticky;
+      top: 100px;
+      align-self: flex-start;
+      width: 200px;
+      background: rgba(40,40,40,0.9);
+      padding: 1rem;
+      margin-left: 1rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.1);
+      height: fit-content;
+    }
+    .right-nav h3 {
+      margin-bottom: 1rem;
+      color: #ffcc66;
+    }
+    .right-nav ul {
+      list-style: none;
+      padding: 0;
+    }
+    .right-nav li {
+      margin-bottom: 0.7rem;
+    }
+    .right-nav a {
+      color: #fff;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+    .right-nav a:hover {
+      color: #ffcc66;
     }
 
     /* Modal */
@@ -121,6 +156,19 @@
     .close:hover {
       color: #fff;
     }
+    .fav-btn {
+      margin-top: 1rem;
+      padding: 0.7rem 1.2rem;
+      background: #ffcc66;
+      color: #000;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .fav-btn:hover {
+      background: #ffaa44;
+    }
     @keyframes fadeIn {
       from {opacity: 0; transform: translateY(-15px);}
       to {opacity: 1; transform: translateY(0);}
@@ -128,24 +176,6 @@
   </style>
 </head>
 <body>
-
-<!-- ✅ FIXED: Clean, single header -->
-<header class="navbar">
-  <nav>
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="services.html">Services</a></li>
-      <li><a href="premium-listings.html">Premium Listings</a></li>
-      <li class="logo">
-        <a href="index.html"><img src="images/logo2.png" alt="GBS Logo"></a>
-      </li>
-      <li><a href="menu.html">Design Your Menu</a></li>
-      <li><a href="lookbook.html">Lookbook</a></li>
-      <li><a href="tonights-event.html">Tonight’s Event</a></li>
-      <li><a href="admin.html" class="highlight">Admin</a></li>
-    </ul>
-  </nav>
-</header>
 
 <main>
   <h1>Premium Listings</h1>
@@ -166,6 +196,15 @@
   </section>
 </main>
 
+<aside class="right-nav">
+  <h3>Jump to</h3>
+  <ul>
+    <li><a href="#cocktails">🍸 Cocktails</a></li>
+    <li><a href="#beer">🍺 Beer</a></li>
+    <li><a href="#equipment">⚙️ Equipment</a></li>
+  </ul>
+</aside>
+
 <!-- Modal -->
 <div id="modal" class="modal">
   <div class="modal-content">
@@ -174,82 +213,87 @@
     <h3 id="modalTitle"></h3>
     <p id="modalDesc"></p>
     <p id="modalDetails"></p>
+    <button class="fav-btn" onclick="addToFavourites()">❤️ Add to Favourites</button>
   </div>
 </div>
 
 <script>
+  let currentItem = null;
+  let currentType = null;
+  let favourites = JSON.parse(localStorage.getItem("favourites")) || [];
+
   async function loadListings() {
-    try {
-      const res = await fetch('data/cocktails.json');
-      const data = await res.json();
+    const res = await fetch('data/cocktails.json');
+    const data = await res.json();
 
-      const cocktailGrid = document.getElementById('cocktailGrid');
-      const beerGrid = document.getElementById('beerGrid');
-      const equipmentGrid = document.getElementById('equipmentGrid');
-      const modal = document.getElementById("modal");
-      const modalImg = document.getElementById("modalImg");
-      const modalTitle = document.getElementById("modalTitle");
-      const modalDesc = document.getElementById("modalDesc");
-      const modalDetails = document.getElementById("modalDetails");
-      const closeBtn = document.querySelector(".close");
+    const cocktailGrid = document.getElementById('cocktailGrid');
+    const beerGrid = document.getElementById('beerGrid');
+    const equipmentGrid = document.getElementById('equipmentGrid');
+    const modal = document.getElementById("modal");
+    const modalImg = document.getElementById("modalImg");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalDesc = document.getElementById("modalDesc");
+    const modalDetails = document.getElementById("modalDetails");
+    const closeBtn = document.querySelector(".close");
 
-      function createCard(item, type) {
-        const imgPath = `images/${type}/${item.image}`;
-        return `
-          <div class="card" data-type="${type}" data-name="${item.name}">
-            <img src="${imgPath}" alt="${item.name}" onerror="this.src='images/coming-soon.jpg'">
-            <h3>${item.name}</h3>
-            <p>${item.short}</p>
-          </div>
-        `;
-      }
+    function createCard(item, type) {
+      const imgPath = `images/${type}/${item.image}`;
+      return `
+        <div class="card" data-type="${type}" data-name="${item.name}">
+          <img src="${imgPath}" alt="${item.name}" onerror="this.src='images/coming-soon.jpg'">
+          <h3>${item.name}</h3>
+          <p>${item.short}</p>
+        </div>
+      `;
+    }
 
-      data.cocktails.forEach(drink => {
-        cocktailGrid.innerHTML += createCard(drink, "cocktails");
-      });
-      data.beer.forEach(drink => {
-        beerGrid.innerHTML += createCard(drink, "beer");
-      });
-      data.equipment.forEach(eq => {
-        equipmentGrid.innerHTML += createCard(eq, "equipment");
-      });
+    data.cocktails.forEach(drink => {
+      cocktailGrid.innerHTML += createCard(drink, "cocktails");
+    });
+    data.beer.forEach(drink => {
+      beerGrid.innerHTML += createCard(drink, "beer");
+    });
+    data.equipment.forEach(eq => {
+      equipmentGrid.innerHTML += createCard(eq, "equipment");
+    });
 
-      // Modal click
-      document.body.addEventListener("click", function(e) {
-        const card = e.target.closest(".card");
-        if (card) {
-          const type = card.getAttribute("data-type");
-          const name = card.getAttribute("data-name");
-          let item;
+    document.body.addEventListener("click", function(e) {
+      const card = e.target.closest(".card");
+      if (card) {
+        const type = card.getAttribute("data-type");
+        const name = card.getAttribute("data-name");
+        let item;
+        if (type === "cocktails") item = data.cocktails.find(d => d.name === name);
+        if (type === "beer") item = data.beer.find(d => d.name === name);
+        if (type === "equipment") item = data.equipment.find(d => d.name === name);
 
-          if (type === "cocktails") {
-            item = data.cocktails.find(d => d.name === name);
-          } else if (type === "beer") {
-            item = data.beer.find(d => d.name === name);
-          } else {
-            item = data.equipment.find(d => d.name === name);
-          }
-
-          if (item) {
-            modalImg.src = `images/${type}/${item.image}`;
-            modalTitle.textContent = item.name;
-            modalDesc.textContent = item.short || "";
-            modalDetails.innerHTML = `
-              ${item.base ? `<strong>Base:</strong> ${item.base}<br>` : ""}
-              ${item.glass ? `<strong>Glass:</strong> ${item.glass}<br>` : ""}
-              ${item.ingredients ? `<strong>Ingredients:</strong> ${item.ingredients.join(", ")}<br>` : ""}
-              ${item.kegged ? `<strong>Kegged:</strong> ${item.kegged}` : ""}
-            `;
-            modal.style.display = "flex";
-          }
+        if (item) {
+          currentItem = item;
+          currentType = type;
+          modalImg.src = `images/${type}/${item.image}`;
+          modalTitle.textContent = item.name;
+          modalDesc.textContent = item.short || "";
+          modalDetails.innerHTML = `
+            ${item.base ? `<strong>Base:</strong> ${item.base}<br>` : ""}
+            ${item.glass ? `<strong>Glass:</strong> ${item.glass}<br>` : ""}
+            ${item.ingredients ? `<strong>Ingredients:</strong> ${item.ingredients.join(", ")}<br>` : ""}
+            ${item.kegged ? `<strong>Kegged:</strong> ${item.kegged}` : ""}
+          `;
+          modal.style.display = "flex";
         }
-      });
+      }
+    });
 
-      closeBtn.onclick = () => modal.style.display = "none";
-      window.onclick = e => { if (e.target === modal) modal.style.display = "none"; };
+    closeBtn.onclick = () => modal.style.display = "none";
+    window.onclick = e => { if (e.target === modal) modal.style.display = "none"; };
+  }
 
-    } catch (err) {
-      console.error("Error loading listings:", err);
+  function addToFavourites() {
+    if (currentItem) {
+      favourites.push({ ...currentItem, type: currentType });
+      localStorage.setItem("favourites", JSON.stringify(favourites));
+      alert(`${currentItem.name} added to Favourites!`);
+      document.getElementById("modal").style.display = "none";
     }
   }
 
@@ -257,4 +301,5 @@
 </script>
 </body>
 </html>
+
 
