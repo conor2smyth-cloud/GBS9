@@ -1,36 +1,41 @@
 {
-  "cocktails": [],
-  "beer": [],
-  "equipment": []
-	},	
-	{
   "cocktails": [
     {
-      "name": "Espresso Martini",
-      "image": "images/cocktails/cocktail-espresso-martini.jpg",
-      "bio": "Bold, rich coffee with a smooth vodka kick."
+      "name": "Cocktail Amber",
+      "image": "images/cocktails/cocktail-amber.jpg",
+      "image_webp": "images/cocktails/cocktail-amber.webp"
     },
     {
-      "name": "Margarita",
-      "image": "images/cocktails/cocktail-margarita-salt.jpg",
-      "bio": "Classic tequila with lime and salted rim."
+      "name": "Cocktail Espresso Glass",
+      "image": "images/cocktails/cocktail-espresso-glass.jpg",
+      "image_webp": "images/cocktails/cocktail-espresso-glass.webp"
     },
     {
-      "name": "Negroni",
-      "image": "images/cocktails/cocktail-negroni-orange.jpg",
-      "bio": "Strong, bitter, and perfectly balanced."
+      "name": "Cocktail Fancy Pink",
+      "image": "images/cocktails/cocktail-fancy-pink.jpg",
+      "image_webp": "images/cocktails/cocktail-fancy-pink.webp"
     },
     {
-      "name": "Old Fashioned",
-      "image": "images/cocktails/cocktail-old-fashioned-dark.jpg",
-      "bio": "Whiskey, sugar, bitters — timeless and bold."
+      "name": "Cocktail Light Pink",
+      "image": "images/cocktails/cocktail-light-pink.jpg",
+      "image_webp": "images/cocktails/cocktail-light-pink.webp"
     },
     {
-      "name": "Gin & Tonic",
-      "image": "images/cocktails/cocktail-gin-tonic.jpg",
-      "bio": "Refreshing gin highball with crisp tonic."
+      "name": "Cocktail Pale Sour",
+      "image": "images/cocktails/cocktail-pale-sour.jpg",
+      "image_webp": "images/cocktails/cocktail-pale-sour.webp"
+    },
+    {
+      "name": "Cocktail Red Bitters",
+      "image": "images/cocktails/cocktail-red-bitters.jpg",
+      "image_webp": "images/cocktails/cocktail-red-bitters.webp"
+    },
+    {
+      "name": "Cocktail Tall Yellow",
+      "image": "images/cocktails/cocktail-tall-yellow.jpg",
+      "image_webp": "images/cocktails/cocktail-tall-yellow.webp"
     }
-  ]
-}
-
+  ],
+  "beer": [],
+  "equipment": []
 }
