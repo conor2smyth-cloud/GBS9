@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Premium Listings - GBS9</title>
   <link rel="stylesheet" href="css/style.css">
-  <script src="js/header.js" defer></script>
   <style>
     body {
       font-family: 'Poppins', sans-serif;
@@ -130,6 +129,7 @@
 </head>
 <body>
 
+<!-- ✅ FIXED: Clean, single header -->
 <header class="navbar">
   <nav>
     <ul>
@@ -147,114 +147,114 @@
   </nav>
 </header>
 
-  <header id="site-header"></header>
-  <main>
-    <h1>Premium Listings</h1>
+<main>
+  <h1>Premium Listings</h1>
 
-    <section id="cocktails">
-      <h2>🍸 Cocktails</h2>
-      <div class="grid" id="cocktailGrid"></div>
-    </section>
+  <section id="cocktails">
+    <h2>🍸 Cocktails</h2>
+    <div class="grid" id="cocktailGrid"></div>
+  </section>
 
-    <section id="beer">
-      <h2>🍺 Beer</h2>
-      <div class="grid" id="beerGrid"></div>
-    </section>
+  <section id="beer">
+    <h2>🍺 Beer</h2>
+    <div class="grid" id="beerGrid"></div>
+  </section>
 
-    <section id="equipment">
-      <h2>⚙️ Equipment</h2>
-      <div class="grid" id="equipmentGrid"></div>
-    </section>
-  </main>
+  <section id="equipment">
+    <h2>⚙️ Equipment</h2>
+    <div class="grid" id="equipmentGrid"></div>
+  </section>
+</main>
 
-  <!-- Modal -->
-  <div id="modal" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <img id="modalImg" src="" alt="">
-      <h3 id="modalTitle"></h3>
-      <p id="modalDesc"></p>
-      <p id="modalDetails"></p>
-    </div>
+<!-- Modal -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <img id="modalImg" src="" alt="">
+    <h3 id="modalTitle"></h3>
+    <p id="modalDesc"></p>
+    <p id="modalDetails"></p>
   </div>
+</div>
 
-  <script>
-    async function loadListings() {
-      try {
-        const res = await fetch('data/cocktails.json');
-        const data = await res.json();
+<script>
+  async function loadListings() {
+    try {
+      const res = await fetch('data/cocktails.json');
+      const data = await res.json();
 
-        const cocktailGrid = document.getElementById('cocktailGrid');
-        const beerGrid = document.getElementById('beerGrid');
-        const equipmentGrid = document.getElementById('equipmentGrid');
-        const modal = document.getElementById("modal");
-        const modalImg = document.getElementById("modalImg");
-        const modalTitle = document.getElementById("modalTitle");
-        const modalDesc = document.getElementById("modalDesc");
-        const modalDetails = document.getElementById("modalDetails");
-        const closeBtn = document.querySelector(".close");
+      const cocktailGrid = document.getElementById('cocktailGrid');
+      const beerGrid = document.getElementById('beerGrid');
+      const equipmentGrid = document.getElementById('equipmentGrid');
+      const modal = document.getElementById("modal");
+      const modalImg = document.getElementById("modalImg");
+      const modalTitle = document.getElementById("modalTitle");
+      const modalDesc = document.getElementById("modalDesc");
+      const modalDetails = document.getElementById("modalDetails");
+      const closeBtn = document.querySelector(".close");
 
-        function createCard(item, type) {
-          const imgPath = `images/${type}/${item.image}`;
-          return `
-            <div class="card" data-type="${type}" data-name="${item.name}">
-              <img src="${imgPath}" alt="${item.name}" onerror="this.src='images/coming-soon.jpg'">
-              <h3>${item.name}</h3>
-              <p>${item.short}</p>
-            </div>
-          `;
-        }
-
-        data.cocktails.forEach(drink => {
-          cocktailGrid.innerHTML += createCard(drink, "cocktails");
-        });
-        data.beer.forEach(drink => {
-          beerGrid.innerHTML += createCard(drink, "beer");
-        });
-        data.equipment.forEach(eq => {
-          equipmentGrid.innerHTML += createCard(eq, "equipment");
-        });
-
-        // Event delegation for modal
-        document.body.addEventListener("click", function(e) {
-          const card = e.target.closest(".card");
-          if (card) {
-            const type = card.getAttribute("data-type");
-            const name = card.getAttribute("data-name");
-            let item;
-
-            if (type === "cocktails") {
-              item = data.cocktails.find(d => d.name === name);
-            } else if (type === "beer") {
-              item = data.beer.find(d => d.name === name);
-            } else {
-              item = data.equipment.find(d => d.name === name);
-            }
-
-            if (item) {
-              modalImg.src = `images/${type}/${item.image}`;
-              modalTitle.textContent = item.name;
-              modalDesc.textContent = item.short || "";
-              modalDetails.innerHTML = `
-                ${item.base ? `<strong>Base:</strong> ${item.base}<br>` : ""}
-                ${item.glass ? `<strong>Glass:</strong> ${item.glass}<br>` : ""}
-                ${item.ingredients ? `<strong>Ingredients:</strong> ${item.ingredients.join(", ")}<br>` : ""}
-                ${item.kegged ? `<strong>Kegged:</strong> ${item.kegged}` : ""}
-              `;
-              modal.style.display = "flex";
-            }
-          }
-        });
-
-        closeBtn.onclick = () => modal.style.display = "none";
-        window.onclick = e => { if (e.target === modal) modal.style.display = "none"; };
-
-      } catch (err) {
-        console.error("Error loading listings:", err);
+      function createCard(item, type) {
+        const imgPath = `images/${type}/${item.image}`;
+        return `
+          <div class="card" data-type="${type}" data-name="${item.name}">
+            <img src="${imgPath}" alt="${item.name}" onerror="this.src='images/coming-soon.jpg'">
+            <h3>${item.name}</h3>
+            <p>${item.short}</p>
+          </div>
+        `;
       }
-    }
 
-    loadListings();
-  </script>
+      data.cocktails.forEach(drink => {
+        cocktailGrid.innerHTML += createCard(drink, "cocktails");
+      });
+      data.beer.forEach(drink => {
+        beerGrid.innerHTML += createCard(drink, "beer");
+      });
+      data.equipment.forEach(eq => {
+        equipmentGrid.innerHTML += createCard(eq, "equipment");
+      });
+
+      // Modal click
+      document.body.addEventListener("click", function(e) {
+        const card = e.target.closest(".card");
+        if (card) {
+          const type = card.getAttribute("data-type");
+          const name = card.getAttribute("data-name");
+          let item;
+
+          if (type === "cocktails") {
+            item = data.cocktails.find(d => d.name === name);
+          } else if (type === "beer") {
+            item = data.beer.find(d => d.name === name);
+          } else {
+            item = data.equipment.find(d => d.name === name);
+          }
+
+          if (item) {
+            modalImg.src = `images/${type}/${item.image}`;
+            modalTitle.textContent = item.name;
+            modalDesc.textContent = item.short || "";
+            modalDetails.innerHTML = `
+              ${item.base ? `<strong>Base:</strong> ${item.base}<br>` : ""}
+              ${item.glass ? `<strong>Glass:</strong> ${item.glass}<br>` : ""}
+              ${item.ingredients ? `<strong>Ingredients:</strong> ${item.ingredients.join(", ")}<br>` : ""}
+              ${item.kegged ? `<strong>Kegged:</strong> ${item.kegged}` : ""}
+            `;
+            modal.style.display = "flex";
+          }
+        }
+      });
+
+      closeBtn.onclick = () => modal.style.display = "none";
+      window.onclick = e => { if (e.target === modal) modal.style.display = "none"; };
+
+    } catch (err) {
+      console.error("Error loading listings:", err);
+    }
+  }
+
+  loadListings();
+</script>
 </body>
 </html>
+
