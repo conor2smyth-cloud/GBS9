@@ -1,163 +1,235 @@
 [
   {
-    "name": "Cocktail Closeup Brown",
+    "name": "Cocktail Amber",
+    "image": "cocktail-amber.jpg",
+    "short": "A cocktail item: Cocktail Amber.",
     "base": "TBD",
     "glass": "TBD",
+    "status": "available",
+    "kegged": "no"
+  },
+  {
+    "name": "Cocktail Clear Spirit",
+    "image": "cocktail-clear-spirit.png",
+    "short": "A cocktail item: Cocktail Clear Spirit.",
+    "base": "TBD",
+    "glass": "TBD",
+    "status": "available",
+    "kegged": "no"
+  },
+  {
+    "name": "Cocktail Closeup Brown",
     "image": "cocktail-closeup-brown.jpg",
-    "short": "A rich brown cocktail served in style.",
+    "short": "A cocktail item: Cocktail Closeup Brown.",
+    "base": "TBD",
+    "glass": "TBD",
+    "status": "available",
+    "kegged": "no"
+  },
+  {
+    "name": "Cocktail Closeup Dark",
+    "image": "cocktail-closeup-dark.png",
+    "short": "A cocktail item: Cocktail Closeup Dark.",
+    "base": "TBD",
+    "glass": "TBD",
     "status": "available",
     "kegged": "no"
   },
   {
     "name": "Cocktail Closeup Orange",
+    "image": "cocktail-closeup-orange.jpg",
+    "short": "A cocktail item: Cocktail Closeup Orange.",
     "base": "TBD",
     "glass": "TBD",
-    "image": "cocktail-closeup-orange.jpg",
-    "short": "Bright citrus notes with an orange hue.",
+    "status": "available",
+    "kegged": "no"
+  },
+  {
+    "name": "Cocktail Closeup Red",
+    "image": "cocktail-closeup-red.png",
+    "short": "A cocktail item: Cocktail Closeup Red.",
+    "base": "TBD",
+    "glass": "TBD",
     "status": "available",
     "kegged": "no"
   },
   {
     "name": "Cocktail Dark Bitters",
+    "image": "cocktail-dark-bitters.jpg",
+    "short": "A cocktail item: Cocktail Dark Bitters.",
     "base": "TBD",
     "glass": "TBD",
-    "image": "cocktail-dark-bitters.jpg",
-    "short": "A darker blend with complex bitters.",
+    "status": "available",
+    "kegged": "no"
+  },
+  {
+    "name": "Cocktail Espresso Glass",
+    "image": "cocktail-espresso-glass.png",
+    "short": "A cocktail item: Cocktail Espresso Glass.",
+    "base": "TBD",
+    "glass": "TBD",
     "status": "available",
     "kegged": "no"
   },
   {
     "name": "Cocktail Fancy Garnish",
+    "image": "cocktail-fancy-garnish.jpg",
+    "short": "A cocktail item: Cocktail Fancy Garnish.",
     "base": "TBD",
     "glass": "TBD",
-    "image": "cocktail-fancy-garnish.jpg",
-    "short": "An elegant serve with a fancy garnish.",
+    "status": "available",
+    "kegged": "no"
+  },
+  {
+    "name": "Cocktail Fancy Pink",
+    "image": "cocktail-fancy-pink.png",
+    "short": "A cocktail item: Cocktail Fancy Pink.",
+    "base": "TBD",
+    "glass": "TBD",
     "status": "available",
     "kegged": "no"
   },
   {
     "name": "Cocktail Fizz Light",
+    "image": "cocktail-fizz-light.jpg",
+    "short": "A cocktail item: Cocktail Fizz Light.",
     "base": "TBD",
     "glass": "TBD",
-    "image": "cocktail-fizz-light.jpg",
-    "short": "Effervescent and refreshing, light fizz.",
     "status": "available",
     "kegged": "no"
   },
   {
     "name": "Cocktail Frothy Top",
+    "image": "cocktail-frothy-top.jpg",
+    "short": "A cocktail item: Cocktail Frothy Top.",
     "base": "TBD",
     "glass": "TBD",
-    "image": "cocktail-frothy-top.jpg",
-    "short": "Frothy topped cocktail with smooth texture.",
+    "status": "available",
+    "kegged": "no"
+  },
+  {
+    "name": "Cocktail Frothy White",
+    "image": "cocktail-frothy-white.png",
+    "short": "A cocktail item: Cocktail Frothy White.",
+    "base": "TBD",
+    "glass": "TBD",
     "status": "available",
     "kegged": "no"
   },
   {
     "name": "Cocktail Garnish Lime Orange",
+    "image": "cocktail-garnish-lime-orange.jpg",
+    "short": "A cocktail item: Cocktail Garnish Lime Orange.",
     "base": "TBD",
     "glass": "TBD",
-    "image": "cocktail-garnish-lime-orange.jpg",
-    "short": "Fresh lime and orange garnish combo.",
+    "status": "available",
+    "kegged": "no"
+  },
+  {
+    "name": "Cocktail Gin Tonic Clear",
+    "image": "cocktail-gin-tonic-clear.png",
+    "short": "A cocktail item: Cocktail Gin Tonic Clear.",
+    "base": "TBD",
+    "glass": "TBD",
     "status": "available",
     "kegged": "no"
   },
   {
     "name": "Cocktail Glass Tall Orange",
-    "base": "TBD",
-    "glass": "Tall",
     "image": "cocktail-glass-tall-orange.jpg",
-    "short": "Tall orange cocktail with vibrant flavor.",
+    "short": "A cocktail item: Cocktail Glass Tall Orange.",
+    "base": "TBD",
+    "glass": "TBD",
+    "status": "available",
+    "kegged": "no"
+  },
+  {
+    "name": "Cocktail Highball Green",
+    "image": "cocktail-highball-green.png",
+    "short": "A cocktail item: Cocktail Highball Green.",
+    "base": "TBD",
+    "glass": "TBD",
     "status": "available",
     "kegged": "no"
   },
   {
     "name": "Cocktail Hurricane Glass",
-    "base": "TBD",
-    "glass": "Hurricane",
     "image": "cocktail-hurricane-glass.jpg",
-    "short": "Served in a hurricane glass, bold and tropical.",
-    "status": "available",
-    "kegged": "no"
-  },
-  {
-    "name": "Cocktail Classic Sour",
-    "base": "Whiskey",
-    "glass": "Old Fashioned",
-    "image": "cocktail-classic-sour.jpg",
-    "short": "A timeless balance of whiskey, lemon, and sweetness.",
-    "status": "available",
-    "kegged": "yes"
-  },
-  {
-    "name": "Cocktail Espresso Martini",
-    "base": "Vodka",
-    "glass": "Martini",
-    "image": "cocktail-espresso-martini.jpg",
-    "short": "Silky, smooth, and rich with fresh espresso.",
-    "status": "available",
-    "kegged": "no"
-  },
-  {
-    "name": "Cocktail Gin Tonic",
-    "base": "Gin",
-    "glass": "Highball",
-    "image": "cocktail-gin-tonic.jpg",
-    "short": "Classic gin & tonic with citrus notes.",
-    "status": "available",
-    "kegged": "no"
-  },
-  {
-    "name": "Cocktail Highball Tall",
+    "short": "A cocktail item: Cocktail Hurricane Glass.",
     "base": "TBD",
-    "glass": "Highball",
-    "image": "cocktail-highball-tall.jpg",
-    "short": "Tall refreshing cocktail in a highball glass.",
+    "glass": "TBD",
     "status": "available",
     "kegged": "no"
   },
   {
-    "name": "Cocktail Margarita Salt",
-    "base": "Tequila",
-    "glass": "Coupe",
-    "image": "cocktail-margarita-salt.jpg",
-    "short": "Classic margarita with salted rim.",
-    "status": "available",
-    "kegged": "yes"
-  },
-  {
-    "name": "Cocktail Martini Garnish",
-    "base": "Vodka",
-    "glass": "Martini",
-    "image": "cocktail-martini-garnish.jpg",
-    "short": "Crisp martini with garnish.",
-    "status": "available",
-    "kegged": "no"
-  },
-  {
-    "name": "Cocktail Negroni Orange",
-    "base": "Gin",
-    "glass": "Old Fashioned",
-    "image": "cocktail-negroni-orange.jpg",
-    "short": "Classic negroni with orange twist.",
-    "status": "available",
-    "kegged": "no"
-  },
-  {
-    "name": "Cocktail Old Fashioned Dark",
-    "base": "Whiskey",
-    "glass": "Old Fashioned",
-    "image": "cocktail-old-fashioned-dark.jpg",
-    "short": "Deep and bold old fashioned style.",
-    "status": "available",
-    "kegged": "yes"
-  },
-  {
-    "name": "Cocktail Shaken Pink",
+    "name": "Cocktail Light Pink",
+    "image": "cocktail-light-pink.png",
+    "short": "A cocktail item: Cocktail Light Pink.",
     "base": "TBD",
-    "glass": "Coupe",
-    "image": "cocktail-shaken-pink.jpg",
-    "short": "A bright shaken pink cocktail.",
+    "glass": "TBD",
+    "status": "available",
+    "kegged": "no"
+  },
+  {
+    "name": "Cocktail Old Fashioned Classic",
+    "image": "cocktail-old-fashioned-classic.jpg",
+    "short": "A cocktail item: Cocktail Old Fashioned Classic.",
+    "base": "TBD",
+    "glass": "TBD",
+    "status": "available",
+    "kegged": "no"
+  },
+  {
+    "name": "Cocktail Old Fashioned Smoke",
+    "image": "cocktail-old-fashioned-smoke.jpg",
+    "short": "A cocktail item: Cocktail Old Fashioned Smoke.",
+    "base": "TBD",
+    "glass": "TBD",
+    "status": "available",
+    "kegged": "no"
+  },
+  {
+    "name": "Cocktail Pale Sour",
+    "image": "cocktail-pale-sour.png",
+    "short": "A cocktail item: Cocktail Pale Sour.",
+    "base": "TBD",
+    "glass": "TBD",
+    "status": "available",
+    "kegged": "no"
+  },
+  {
+    "name": "Cocktail Red Bitters",
+    "image": "cocktail-red-bitters.png",
+    "short": "A cocktail item: Cocktail Red Bitters.",
+    "base": "TBD",
+    "glass": "TBD",
+    "status": "available",
+    "kegged": "no"
+  },
+  {
+    "name": "Cocktail Red Garnish",
+    "image": "cocktail-red-garnish.png",
+    "short": "A cocktail item: Cocktail Red Garnish.",
+    "base": "TBD",
+    "glass": "TBD",
+    "status": "available",
+    "kegged": "no"
+  },
+  {
+    "name": "Cocktail Tall Red",
+    "image": "cocktail-tall-red.png",
+    "short": "A cocktail item: Cocktail Tall Red.",
+    "base": "TBD",
+    "glass": "TBD",
+    "status": "available",
+    "kegged": "no"
+  },
+  {
+    "name": "Cocktail Tall Yellow",
+    "image": "cocktail-tall-yellow.png",
+    "short": "A cocktail item: Cocktail Tall Yellow.",
+    "base": "TBD",
+    "glass": "TBD",
     "status": "available",
     "kegged": "no"
   }

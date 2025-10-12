@@ -1,0 +1,72 @@
+[
+  {
+    "name": "Bar Setup Front",
+    "image": "bar-setup-front.jpg",
+    "short": "A equipment item: Bar Setup Front.",
+    "usage": "bar setup",
+    "status": "in stock"
+  },
+  {
+    "name": "Bar Setup Inside",
+    "image": "bar-setup-inside.jpg",
+    "short": "A equipment item: Bar Setup Inside.",
+    "usage": "bar setup",
+    "status": "in stock"
+  },
+  {
+    "name": "Cocktail Classic Sour",
+    "image": "cocktail-classic-sour.jpg",
+    "short": "A equipment item: Cocktail Classic Sour.",
+    "usage": "bar setup",
+    "status": "in stock"
+  },
+  {
+    "name": "Cocktail Espresso Martini",
+    "image": "cocktail-espresso-martini.jpg",
+    "short": "A equipment item: Cocktail Espresso Martini.",
+    "usage": "bar setup",
+    "status": "in stock"
+  },
+  {
+    "name": "Cocktail Gin Tonic",
+    "image": "cocktail-gin-tonic.jpg",
+    "short": "A equipment item: Cocktail Gin Tonic.",
+    "usage": "bar setup",
+    "status": "in stock"
+  },
+  {
+    "name": "Cocktail Highball Tall",
+    "image": "cocktail-highball-tall.jpg",
+    "short": "A equipment item: Cocktail Highball Tall.",
+    "usage": "bar setup",
+    "status": "in stock"
+  },
+  {
+    "name": "Cocktail Margarita Salt",
+    "image": "cocktail-margarita-salt.jpg",
+    "short": "A equipment item: Cocktail Margarita Salt.",
+    "usage": "bar setup",
+    "status": "in stock"
+  },
+  {
+    "name": "Cocktail Martini Garnish",
+    "image": "cocktail-martini-garnish.jpg",
+    "short": "A equipment item: Cocktail Martini Garnish.",
+    "usage": "bar setup",
+    "status": "in stock"
+  },
+  {
+    "name": "Cocktail Negroni Orange",
+    "image": "cocktail-negroni-orange.jpg",
+    "short": "A equipment item: Cocktail Negroni Orange.",
+    "usage": "bar setup",
+    "status": "in stock"
+  },
+  {
+    "name": "Cocktail Shaken Pink",
+    "image": "cocktail-shaken-pink.jpg",
+    "short": "A equipment item: Cocktail Shaken Pink.",
+    "usage": "bar setup",
+    "status": "in stock"
+  }
+]

@@ -1,0 +1,37 @@
+[
+  {
+    "name": "Coors",
+    "image": "coors.jpg",
+    "short": "A beer item: Coors.",
+    "type": "lager",
+    "abv": "TBD"
+  },
+  {
+    "name": "Guinness",
+    "image": "guinness.jpg",
+    "short": "A beer item: Guinness.",
+    "type": "lager",
+    "abv": "TBD"
+  },
+  {
+    "name": "Harp",
+    "image": "harp.jpg",
+    "short": "A beer item: Harp.",
+    "type": "lager",
+    "abv": "TBD"
+  },
+  {
+    "name": "Heineken",
+    "image": "heineken.jpg",
+    "short": "A beer item: Heineken.",
+    "type": "lager",
+    "abv": "TBD"
+  },
+  {
+    "name": "Smithwicks",
+    "image": "smithwicks.jpg",
+    "short": "A beer item: Smithwicks.",
+    "type": "lager",
+    "abv": "TBD"
+  }
+]
