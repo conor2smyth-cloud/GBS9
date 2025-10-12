@@ -7,9 +7,51 @@
       "bio": ""
     },
     {
+      "name": "Cocktail Clear Spirit",
+      "image": "images/cocktails/cocktail-clear-spirit.jpg",
+      "image_webp": "images/cocktails/cocktail-clear-spirit.webp",
+      "bio": ""
+    },
+    {
+      "name": "Cocktail Closeup Brown",
+      "image": "images/cocktails/cocktail-closeup-brown.jpg",
+      "image_webp": "images/cocktails/cocktail-closeup-brown.webp",
+      "bio": ""
+    },
+    {
+      "name": "Cocktail Closeup Dark",
+      "image": "images/cocktails/cocktail-closeup-dark.jpg",
+      "image_webp": "images/cocktails/cocktail-closeup-dark.webp",
+      "bio": ""
+    },
+    {
+      "name": "Cocktail Closeup Orange",
+      "image": "images/cocktails/cocktail-closeup-orange.jpg",
+      "image_webp": "images/cocktails/cocktail-closeup-orange.webp",
+      "bio": ""
+    },
+    {
+      "name": "Cocktail Closeup Red",
+      "image": "images/cocktails/cocktail-closeup-red.jpg",
+      "image_webp": "images/cocktails/cocktail-closeup-red.webp",
+      "bio": ""
+    },
+    {
+      "name": "Cocktail Dark Bitters",
+      "image": "images/cocktails/cocktail-dark-bitters.jpg",
+      "image_webp": "images/cocktails/cocktail-dark-bitters.webp",
+      "bio": ""
+    },
+    {
       "name": "Cocktail Espresso Glass",
       "image": "images/cocktails/cocktail-espresso-glass.jpg",
       "image_webp": "images/cocktails/cocktail-espresso-glass.webp",
+      "bio": ""
+    },
+    {
+      "name": "Cocktail Fancy Garnish",
+      "image": "images/cocktails/cocktail-fancy-garnish.jpg",
+      "image_webp": "images/cocktails/cocktail-fancy-garnish.webp",
       "bio": ""
     },
     {
@@ -19,9 +61,69 @@
       "bio": ""
     },
     {
+      "name": "Cocktail Fizz Light",
+      "image": "images/cocktails/cocktail-fizz-light.jpg",
+      "image_webp": "images/cocktails/cocktail-fizz-light.webp",
+      "bio": ""
+    },
+    {
+      "name": "Cocktail Frothy Top",
+      "image": "images/cocktails/cocktail-frothy-top.jpg",
+      "image_webp": "images/cocktails/cocktail-frothy-top.webp",
+      "bio": ""
+    },
+    {
+      "name": "Cocktail Frothy White",
+      "image": "images/cocktails/cocktail-frothy-white.jpg",
+      "image_webp": "images/cocktails/cocktail-frothy-white.webp",
+      "bio": ""
+    },
+    {
+      "name": "Cocktail Garnish Lime Orange",
+      "image": "images/cocktails/cocktail-garnish-lime-orange.jpg",
+      "image_webp": "images/cocktails/cocktail-garnish-lime-orange.webp",
+      "bio": ""
+    },
+    {
+      "name": "Cocktail Gin Tonic Clear",
+      "image": "images/cocktails/cocktail-gin-tonic-clear.jpg",
+      "image_webp": "images/cocktails/cocktail-gin-tonic-clear.webp",
+      "bio": ""
+    },
+    {
+      "name": "Cocktail Glass Tall Orange",
+      "image": "images/cocktails/cocktail-glass-tall-orange.jpg",
+      "image_webp": "images/cocktails/cocktail-glass-tall-orange.webp",
+      "bio": ""
+    },
+    {
+      "name": "Cocktail Highball Green",
+      "image": "images/cocktails/cocktail-highball-green.jpg",
+      "image_webp": "images/cocktails/cocktail-highball-green.webp",
+      "bio": ""
+    },
+    {
+      "name": "Cocktail Hurricane Glass",
+      "image": "images/cocktails/cocktail-hurricane-glass.jpg",
+      "image_webp": "images/cocktails/cocktail-hurricane-glass.webp",
+      "bio": ""
+    },
+    {
       "name": "Cocktail Light Pink",
       "image": "images/cocktails/cocktail-light-pink.jpg",
       "image_webp": "images/cocktails/cocktail-light-pink.webp",
+      "bio": ""
+    },
+    {
+      "name": "Cocktail Old Fashioned Classic",
+      "image": "images/cocktails/cocktail-old-fashioned-classic.jpg",
+      "image_webp": "images/cocktails/cocktail-old-fashioned-classic.webp",
+      "bio": ""
+    },
+    {
+      "name": "Cocktail Old Fashioned Smoke",
+      "image": "images/cocktails/cocktail-old-fashioned-smoke.jpg",
+      "image_webp": "images/cocktails/cocktail-old-fashioned-smoke.webp",
       "bio": ""
     },
     {
@@ -37,12 +139,116 @@
       "bio": ""
     },
     {
+      "name": "Cocktail Red Garnish",
+      "image": "images/cocktails/cocktail-red-garnish.jpg",
+      "image_webp": "images/cocktails/cocktail-red-garnish.webp",
+      "bio": ""
+    },
+    {
+      "name": "Cocktail Tall Red",
+      "image": "images/cocktails/cocktail-tall-red.jpg",
+      "image_webp": "images/cocktails/cocktail-tall-red.webp",
+      "bio": ""
+    },
+    {
       "name": "Cocktail Tall Yellow",
       "image": "images/cocktails/cocktail-tall-yellow.jpg",
       "image_webp": "images/cocktails/cocktail-tall-yellow.webp",
       "bio": ""
     }
   ],
-  "beer": [],
-  "equipment": []
+  "beer": [
+    {
+      "name": "Coors",
+      "image": "images/beer/coors.jpg",
+      "image_webp": "images/beer/coors.webp",
+      "bio": ""
+    },
+    {
+      "name": "Guinness",
+      "image": "images/beer/guinness.jpg",
+      "image_webp": "images/beer/guinness.webp",
+      "bio": ""
+    },
+    {
+      "name": "Harp",
+      "image": "images/beer/harp.jpg",
+      "image_webp": "images/beer/harp.webp",
+      "bio": ""
+    },
+    {
+      "name": "Heineken",
+      "image": "images/beer/heineken.jpg",
+      "image_webp": "images/beer/heineken.webp",
+      "bio": ""
+    },
+    {
+      "name": "Smithwicks",
+      "image": "images/beer/smithwicks.jpg",
+      "image_webp": "images/beer/smithwicks.webp",
+      "bio": ""
+    }
+  ],
+  "equipment": [
+    {
+      "name": "Bar Setup Front",
+      "image": "images/equipment/bar-setup-front.jpg",
+      "image_webp": "images/equipment/bar-setup-front.webp",
+      "bio": ""
+    },
+    {
+      "name": "Bar Setup Inside",
+      "image": "images/equipment/bar-setup-inside.jpg",
+      "image_webp": "images/equipment/bar-setup-inside.webp",
+      "bio": ""
+    },
+    {
+      "name": "Cocktail Classic Sour",
+      "image": "images/equipment/cocktail-classic-sour.jpg",
+      "image_webp": "images/equipment/cocktail-classic-sour.webp",
+      "bio": ""
+    },
+    {
+      "name": "Cocktail Espresso Martini",
+      "image": "images/equipment/cocktail-espresso-martini.jpg",
+      "image_webp": "images/equipment/cocktail-espresso-martini.webp",
+      "bio": ""
+    },
+    {
+      "name": "Cocktail Gin Tonic",
+      "image": "images/equipment/cocktail-gin-tonic.jpg",
+      "image_webp": "images/equipment/cocktail-gin-tonic.webp",
+      "bio": ""
+    },
+    {
+      "name": "Cocktail Highball Tall",
+      "image": "images/equipment/cocktail-highball-tall.jpg",
+      "image_webp": "images/equipment/cocktail-highball-tall.webp",
+      "bio": ""
+    },
+    {
+      "name": "Cocktail Margarita Salt",
+      "image": "images/equipment/cocktail-margarita-salt.jpg",
+      "image_webp": "images/equipment/cocktail-margarita-salt.webp",
+      "bio": ""
+    },
+    {
+      "name": "Cocktail Martini Garnish",
+      "image": "images/equipment/cocktail-martini-garnish.jpg",
+      "image_webp": "images/equipment/cocktail-martini-garnish.webp",
+      "bio": ""
+    },
+    {
+      "name": "Cocktail Negroni Orange",
+      "image": "images/equipment/cocktail-negroni-orange.jpg",
+      "image_webp": "images/equipment/cocktail-negroni-orange.webp",
+      "bio": ""
+    },
+    {
+      "name": "Cocktail Shaken Pink",
+      "image": "images/equipment/cocktail-shaken-pink.jpg",
+      "image_webp": "images/equipment/cocktail-shaken-pink.webp",
+      "bio": ""
+    }
+  ]
 }
