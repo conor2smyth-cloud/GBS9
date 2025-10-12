@@ -3,37 +3,44 @@
     {
       "name": "Cocktail Amber",
       "image": "images/cocktails/cocktail-amber.jpg",
-      "image_webp": "images/cocktails/cocktail-amber.webp"
+      "image_webp": "images/cocktails/cocktail-amber.webp",
+      "bio": ""
     },
     {
       "name": "Cocktail Espresso Glass",
       "image": "images/cocktails/cocktail-espresso-glass.jpg",
-      "image_webp": "images/cocktails/cocktail-espresso-glass.webp"
+      "image_webp": "images/cocktails/cocktail-espresso-glass.webp",
+      "bio": ""
     },
     {
       "name": "Cocktail Fancy Pink",
       "image": "images/cocktails/cocktail-fancy-pink.jpg",
-      "image_webp": "images/cocktails/cocktail-fancy-pink.webp"
+      "image_webp": "images/cocktails/cocktail-fancy-pink.webp",
+      "bio": ""
     },
     {
       "name": "Cocktail Light Pink",
       "image": "images/cocktails/cocktail-light-pink.jpg",
-      "image_webp": "images/cocktails/cocktail-light-pink.webp"
+      "image_webp": "images/cocktails/cocktail-light-pink.webp",
+      "bio": ""
     },
     {
       "name": "Cocktail Pale Sour",
       "image": "images/cocktails/cocktail-pale-sour.jpg",
-      "image_webp": "images/cocktails/cocktail-pale-sour.webp"
+      "image_webp": "images/cocktails/cocktail-pale-sour.webp",
+      "bio": ""
     },
     {
       "name": "Cocktail Red Bitters",
       "image": "images/cocktails/cocktail-red-bitters.jpg",
-      "image_webp": "images/cocktails/cocktail-red-bitters.webp"
+      "image_webp": "images/cocktails/cocktail-red-bitters.webp",
+      "bio": ""
     },
     {
       "name": "Cocktail Tall Yellow",
       "image": "images/cocktails/cocktail-tall-yellow.jpg",
-      "image_webp": "images/cocktails/cocktail-tall-yellow.webp"
+      "image_webp": "images/cocktails/cocktail-tall-yellow.webp",
+      "bio": ""
     }
   ],
   "beer": [],

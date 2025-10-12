@@ -1,45 +1,217 @@
-:.container {
-  max-width: 1000px;
-  margin: auto;
-  padding: 20px;
+/* ===========================
+   GLOBAL STYLES
+   =========================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #111 0%, #1c1c1c 100%);
+  color: #f5f5f5;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+/* Accent Colors */
+:root {
+  --accent: #c0c0c0;   /* silver */
+  --highlight: #d4af37; /* gold */
+  --dark-bg: #1c1c1c;
+  --light-text: #f5f5f5;
+}
+
+/* ===========================
+   HEADER / NAVIGATION
+   =========================== */
+.site-header {
+  background: rgba(15, 15, 15, 0.95);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 10px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.nav-left,
+.nav-right {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.nav-left li a,
+.nav-right li a {
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--accent);
+  transition: color 0.2s ease;
+}
+
+.nav-left li a:hover,
+.nav-right li a:hover {
+  color: var(--highlight);
+}
+
+.logo img {
+  height: 60px;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.6));
+}
+
+/* ===========================
+   HERO / SECTIONS
+   =========================== */
+section {
+  padding: 60px 20px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+section h2 {
+  text-align: center;
+  font-size: 2rem;
+  text-transform: uppercase;
+  margin-bottom: 40px;
+  letter-spacing: 2px;
+  color: var(--highlight);
+}
+
+/* ===========================
+   CARDS (Cocktails, Equipment)
+   =========================== */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
 }
 
 .card {
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  padding: 15px;
-  text-align: center;
-  transition: transform 0.2s;
+  background: rgba(25, 25, 25, 0.9);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.card:hover { transform: scale(1.05); }
-.container {
-  max-width: 1000px;
-  margin: auto;
-  padding: 20px;
+.card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.8);
 }
 
-.grid {
+.card img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-bottom: 2px solid rgba(255,255,255,0.1);
+}
+
+.card h3 {
+  margin: 16px;
+  font-size: 1.2rem;
+  color: var(--light-text);
+}
+
+.card p {
+  margin: 0 16px 16px;
+  color: #ccc;
+  font-size: 0.95rem;
+}
+
+/* ===========================
+   LOOKBOOK / GALLERY
+   =========================== */
+.gallery-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
 }
 
-.card {
-  background: #fff;
+.gallery-grid img {
+  width: 100%;
   border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  padding: 15px;
-  text-align: center;
-  transition: transform 0.2s;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.card:hover { transform: scale(1.05); }
+.gallery-grid img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.7);
+}
 
+/* ===========================
+   BUTTONS
+   =========================== */
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 8px;
+  background: var(--highlight);
+  color: #000;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.2s ease;
+}
+
+.btn:hover {
+  background: var(--accent);
+  color: #111;
+}
+
+.nav-burger{display:none;background:none;border:0;color:#f5f5f5;font-size:1.6rem}
+.btn-mini{padding:6px 10px;border-radius:8px;background:var(--highlight);color:#000;font-weight:700}
+@media (max-width: 880px){
+  .nav-burger{display:block}
+  .nav-left,.nav-right{display:none;position:absolute;left:0;right:0;top:64px;background:rgba(15,15,15,.98);
+    padding:10px 16px;border-top:1px solid rgba(255,255,255,.08)}
+  .nav-left.show,.nav-right.show{display:flex;flex-direction:column;gap:10px}
+  .nav-container{position:relative}
+}
+
+
+/* ===========================
+   FOOTER
+   =========================== */
+footer {
+  background: #111;
+  color: #aaa;
+  text-align: center;
+  padding: 20px;
+  font-size: 0.9rem;
+}
+
+/* ===========================
+   RESPONSIVE NAV
+   =========================== */
+@media (max-width: 768px) {
+  .nav-left, .nav-right {
+    display: none;
+  }
+
+  .nav-container {
+    justify-content: center;
+  }
+
+  .logo img {
+    height: 50px;
+  }
+}
