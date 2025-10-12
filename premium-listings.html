@@ -1,244 +1,70 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Premium Listings | GBS9</title>
   <link rel="stylesheet" href="css/style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Montserrat:wght@600&display=swap" rel="stylesheet">
-  <style>
-    /* === General === */
-    body {
-      margin: 0;
-      font-family: 'Merriweather', serif;
-      background: linear-gradient(135deg, #2b1d1a, #1a0f0d);
-      color: #f5f5f5;
-      background-attachment: fixed;
-    }
-
-    a { text-decoration: none; color: inherit; }
-
-    h1, h2 {
-      font-family: 'Montserrat', sans-serif;
-      text-align: center;
-      margin: 1rem 0;
-    }
-
-    /* === Navbar === */
-    nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      background: linear-gradient(90deg, #4b2e2a, #2b1d1a);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.8rem 2rem;
-      z-index: 1000;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-    }
-
-    nav img {
-      height: 40px;
-    }
-
-    nav ul {
-      list-style: none;
-      display: flex;
-      gap: 1.5rem;
-      margin: 0;
-      padding: 0;
-    }
-
-    nav li a {
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 600;
-      color: #f5f5f5;
-      position: relative;
-    }
-
-    nav li a::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      bottom: -4px;
-      width: 0;
-      height: 2px;
-      background: #d4a373;
-      transition: width 0.3s;
-    }
-
-    nav li a:hover::after {
-      width: 100%;
-    }
-
-    /* === Cards === */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
-      padding: 7rem 2rem 2rem; /* padding top accounts for navbar */
-    }
-
-    .card {
-      background: rgba(255,255,255,0.05);
-      border-radius: 12px;
-      padding: 1rem;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.4);
-      transition: transform 0.3s, box-shadow 0.3s;
-      cursor: pointer;
-    }
-
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.6);
-    }
-
-    .card img {
-      width: 100%;
-      border-radius: 12px;
-      margin-bottom: 0.5rem;
-      filter: brightness(0.9) contrast(1.05);
-    }
-
-    .card h3 {
-      font-family: 'Montserrat', sans-serif;
-      margin: 0.5rem 0;
-    }
-
-    /* === Modal === */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.85);
-      justify-content: center;
-      align-items: center;
-      z-index: 2000;
-    }
-
-    .modal.open { display: flex; }
-
-    .modal-content {
-      background: #2b1d1a;
-      border-radius: 12px;
-      padding: 2rem;
-      max-width: 600px;
-      width: 90%;
-      text-align: center;
-      position: relative;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.7);
-    }
-
-    .modal-content img {
-      width: 100%;
-      border-radius: 12px;
-      margin-bottom: 1rem;
-    }
-
-    .modal-content h2 {
-      margin-bottom: 0.5rem;
-    }
-
-    .modal-content ul {
-      list-style: none;
-      padding: 0;
-    }
-
-    .modal-content ul li {
-      margin: 0.3rem 0;
-    }
-
-    .close-btn {
-      position: absolute;
-      top: 0.8rem;
-      right: 1rem;
-      font-size: 1.5rem;
-      cursor: pointer;
-      color: #fff;
-    }
-  </style>
+  <script defer src="js/header.js"></script>
+  <script defer src="js/premium.js"></script>
 </head>
 <body>
-  <!-- Navbar -->
-  <nav>
-    <img src="images/logo2.png" alt="GBS Logo">
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="menu.html">Menu</a></li>
-      <li><a href="premium-listings.html">Premium Listings</a></li>
-      <li><a href="lookbook.html">Lookbook</a></li>
-      <li><a href="services.html">Services</a></li>
-      <li><a href="tonights-event.html">Events</a></li>
-      <li><a href="contact.html">Contact</a></li>
-      <li><a href="admin.html">Admin</a></li>
-    </ul>
-  </nav>
+  <!-- NAVIGATION -->
+  <header class="navbar">
+    <div class="nav-left">
+      <a href="index.html"><img src="images/logo2.png" alt="GBS Logo" class="logo"></a>
+    </div>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="premium-listings.html" class="active">Premium Listings</a>
+      <a href="menu.html">Design Your Menu</a>
+      <a href="lookbook.html">Lookbook</a>
+      <a href="services.html">Services</a>
+      <a href="contact.html">Contact</a>
+      <a href="tonights-event.html" class="highlight">Tonight’s Event</a>
+      <a href="admin.html" class="highlight">Admin</a>
+    </nav>
+  </header>
 
-  <h1>Premium Cocktail Listings</h1>
-  <section class="grid" id="cocktailGrid"></section>
+  <main class="premium-layout">
+    <!-- FILTER SIDEBAR -->
+    <aside class="filters">
+      <h3>Filter By</h3>
+      <h4>Base Spirit</h4>
+      <label><input type="checkbox" value="Whiskey"> Whiskey</label><br>
+      <label><input type="checkbox" value="Vodka"> Vodka</label><br>
+      <label><input type="checkbox" value="Gin"> Gin</label><br>
+      <label><input type="checkbox" value="Rum"> Rum</label><br>
 
-  <!-- Modal -->
-  <div class="modal" id="cocktailModal">
+      <h4>Glass</h4>
+      <label><input type="checkbox" value="Martini"> Martini</label><br>
+      <label><input type="checkbox" value="Coupe"> Coupe</label><br>
+      <label><input type="checkbox" value="Old Fashioned"> Old Fashioned</label><br>
+      <label><input type="checkbox" value="Highball"> Highball</label><br>
+    </aside>
+
+    <!-- COCKTAIL GRID -->
+    <section class="cocktail-grid" id="cocktailGrid">
+      <!-- JS will inject cocktail cards here -->
+    </section>
+  </main>
+
+  <!-- MODAL -->
+  <div id="cocktailModal" class="modal">
     <div class="modal-content">
-      <span class="close-btn" id="closeModal">&times;</span>
-      <img id="modalImg" src="" alt="">
+      <span class="close">&times;</span>
+      <img id="modalImage" alt="Cocktail" />
       <h2 id="modalName"></h2>
-      <p id="modalShort"></p>
+      <p id="modalDescription"></p>
+      <h4>Ingredients</h4>
       <ul id="modalIngredients"></ul>
     </div>
   </div>
 
-  <script>
-    async function loadCocktails() {
-      try {
-        const res = await fetch("data/cocktails.json");
-        const cocktails = await res.json();
-        const grid = document.getElementById("cocktailGrid");
-
-        cocktails.forEach(c => {
-          const card = document.createElement("div");
-          card.className = "card";
-          card.innerHTML = `
-            <img src="images/cocktails/${c.image}" alt="${c.name}">
-            <h3>${c.name}</h3>
-            <p>${c.short}</p>
-          `;
-          card.addEventListener("click", () => openModal(c));
-          grid.appendChild(card);
-        });
-      } catch (err) {
-        console.error("Error loading cocktails:", err);
-      }
-    }
-
-    function openModal(c) {
-      document.getElementById("modalImg").src = "images/cocktails/" + c.image;
-      document.getElementById("modalName").textContent = c.name;
-      document.getElementById("modalShort").textContent = c.short;
-      const ingList = document.getElementById("modalIngredients");
-      ingList.innerHTML = "";
-      c.ingredients.forEach(i => {
-        const li = document.createElement("li");
-        li.textContent = i;
-        ingList.appendChild(li);
-      });
-      document.getElementById("cocktailModal").classList.add("open");
-    }
-
-    document.getElementById("closeModal").addEventListener("click", () => {
-      document.getElementById("cocktailModal").classList.remove("open");
-    });
-
-    window.addEventListener("click", (e) => {
-      if (e.target.id === "cocktailModal") {
-        document.getElementById("cocktailModal").classList.remove("open");
-      }
-    });
-
-    loadCocktails();
-  </script>
+  <footer>
+    <p>&copy; 2025 GBS9. All rights reserved.</p>
+  </footer>
 </body>
 </html>
+
 
