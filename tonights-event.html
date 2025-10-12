@@ -1,40 +1,254 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <<header class="navbar">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tonight’s Event - GBS9</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to bottom right, #1f1f1f, #2c2c2c);
+      color: #f5f5f5;
+    }
+    main {
+      max-width: 1000px;
+      margin: auto;
+      padding: 2rem;
+      text-align: center;
+    }
+    h1 {
+      margin-bottom: 2rem;
+      color: #ffcc66;
+      text-shadow: 0px 2px 6px rgba(0,0,0,0.6);
+    }
+
+    /* Passcode gate */
+    #gate {
+      text-align: center;
+      margin-top: 5rem;
+    }
+    #gate input {
+      padding: 0.6rem;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: 1px solid #ffcc66;
+      outline: none;
+      margin-right: 0.5rem;
+    }
+    #gate button {
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-radius: 8px;
+      background: #ffcc66;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* Accordion headers */
+    .accordion {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 2rem;
+      gap: 1rem;
+    }
+    .accordion button {
+      flex: 1;
+      padding: 1rem;
+      font-size: 1.2rem;
+      font-weight: bold;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #ffcc66;
+      cursor: pointer;
+      border-radius: 10px;
+      transition: background 0.3s;
+    }
+    .accordion button:hover {
+      background: rgba(255,204,102,0.15);
+    }
+
+    /* Accordion content */
+    .panel {
+      display: none;
+      margin-top: 1.5rem;
+      padding: 1.5rem;
+      background: rgba(255,255,255,0.05);
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.1);
+      text-align: left;
+    }
+    .panel.active {
+      display: block;
+      animation: fadeIn 0.4s ease;
+    }
+
+    /* Cocktail list */
+    .cocktail {
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .cocktail h3 {
+      margin: 0;
+      color: #ffe4b5;
+    }
+    .cocktail p {
+      margin: 0.3rem 0 0;
+      font-size: 0.9rem;
+      color: #ddd;
+    }
+
+    /* QR section */
+    .qr-container {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 1rem;
+    }
+    .qr-container img {
+      width: 150px;
+      height: 150px;
+      border: 3px solid #ffcc66;
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    /* Celebrate */
+    .celebrate {
+      text-align: center;
+    }
+    .celebrate a {
+      display: inline-block;
+      margin: 1rem 0;
+      padding: 0.8rem 1.5rem;
+      background: #ffcc66;
+      color: #000;
+      font-weight: bold;
+      border-radius: 8px;
+      text-decoration: none;
+    }
+    .celebrate input {
+      padding: 0.6rem;
+      width: 60%;
+      margin-right: 0.5rem;
+      border-radius: 8px;
+      border: 1px solid #ffcc66;
+    }
+    .celebrate button {
+      padding: 0.6rem 1rem;
+      border: none;
+      border-radius: 8px;
+      background: #ff9966;
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(-10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+  </style>
+</head>
+<body>
+
+<header class="navbar">
   <nav>
     <ul>
       <li><a href="index.html">Home</a></li>
       <li><a href="services.html">Services</a></li>
       <li><a href="premium-listings.html">Premium Listings</a></li>
-      <li class="logo">
-        <a href="index.html"><img src="images/logo2.png" alt="GBS Logo"></a>
-      </li>
+      <li class="logo"><a href="index.html"><img src="images/logo2.png" alt="GBS Logo" style="height:50px;"></a></li>
       <li><a href="menu.html">Design Your Menu</a></li>
       <li><a href="lookbook.html">Lookbook</a></li>
-      <li><a href="tonights-event.html">Tonight’s Event</a></li>
-      <li><a href="admin.html" class="highlight">Admin</a></li>
+      <li><a href="tonights-event.html" class="highlight">Tonight’s Event</a></li>
+      <li><a href="admin.html">Admin</a></li>
     </ul>
   </nav>
 </header>
 
+<main>
+  <h1>Tonight’s Event</h1>
 
+  <!-- Gate -->
+  <div id="gate">
+    <input type="password" id="passcode" placeholder="Enter Passcode">
+    <button onclick="checkPass()">Enter</button>
+    <p id="error" style="color:red; display:none;">Incorrect passcode.</p>
+  </div>
 
-  <main class="content">
-    <h2>Tonight’s Event</h2>
-    <div class="event-card">
-      <img src="images/equipment/event-bar-service.jpg" alt="Event Bar" class="event-img">
-      <div class="event-details">
-        <h3>Autumn Speakeasy Night</h3>
-        <p><strong>Date:</strong> October 15, 2025</p>
-        <p><strong>Location:</strong> The Green Barrel, Dublin</p>
-        <p>Step inside our speakeasy-inspired pop-up with seasonal cocktails, live music, and an unforgettable warm Irish welcome.</p>
+  <!-- Event Content -->
+  <div id="eventContent" style="display:none;">
+    <div class="accordion">
+      <button onclick="togglePanel('sipPanel')">🍸 Sip</button>
+      <button onclick="togglePanel('tipPanel')">💸 Tip</button>
+      <button onclick="togglePanel('celebratePanel')">🎶 Celebrate</button>
+    </div>
+
+    <div id="sipPanel" class="panel"></div>
+    <div id="tipPanel" class="panel">
+      <p>Thank you for joining us tonight! Your support keeps the cocktails flowing 🍹✨</p>
+      <div class="qr-container">
+        <div>
+          <p>Revolut</p>
+          <img src="images/qr-revolut.png" alt="Revolut QR">
+        </div>
+        <div>
+          <p>Apple Pay</p>
+          <img src="images/qr-applepay.png" alt="Apple Pay QR">
+        </div>
       </div>
     </div>
-  </main>
+    <div id="celebratePanel" class="panel celebrate">
+      <p>Keep the vibes going with our collaborative playlist!</p>
+      <a href="https://open.spotify.com/" target="_blank">🎵 Open Spotify Jam</a>
+      <div>
+        <input type="text" placeholder="Suggest a song...">
+        <button>Add</button>
+      </div>
+    </div>
+  </div>
+</main>
 
-  <footer>
-    <p>&copy; 2025 GBS9. All Rights Reserved.</p>
-  </footer>
+<script>
+  function checkPass() {
+    const input = document.getElementById('passcode').value;
+    if (input === '0000') {
+      document.getElementById('gate').style.display = 'none';
+      document.getElementById('eventContent').style.display = 'block';
+    } else {
+      document.getElementById('error').style.display = 'block';
+    }
+  }
+
+  function togglePanel(panelId) {
+    const panel = document.getElementById(panelId);
+    panel.classList.toggle("active");
+  }
+
+  // Load cocktails into Sip panel
+  async function loadCocktails() {
+    try {
+      const res = await fetch("data/cocktails.json");
+      const data = await res.json();
+      const sipPanel = document.getElementById("sipPanel");
+      sipPanel.innerHTML = "";
+      data.cocktails.slice(0,5).forEach(drink => {
+        sipPanel.innerHTML += `
+          <div class="cocktail">
+            <h3>${drink.name}</h3>
+            <p>${drink.short}</p>
+          </div>`;
+      });
+    } catch (err) {
+      console.error("Error loading cocktails:", err);
+    }
+  }
+  loadCocktails();
+</script>
 </body>
 </html>
+
