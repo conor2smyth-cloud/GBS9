@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Design Your Menu - GBS9</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="header.js" defer></script>
+  <style>
+    body { display: flex; flex-direction: column; align-items: center; margin: 0; padding: 0; }
+    h1 { margin: 1rem 0; }
+    #swipe-container {
+      position: relative;
+      width: 320px;
+      height: 480px;
+      overflow: hidden;
+    }
+    .card {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,.2);
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      overflow: hidden;
+      cursor: grab;
+      transition: transform 0.3s ease;
+    }
+    .card img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 1;
+    }
+    .card-info {
+      position: relative;
+      z-index: 2;
+      background: rgba(0,0,0,.6);
+      color: #fff;
+      width: 100%;
+      padding: 0.5rem;
+      text-align: center;
+    }
+    #match-popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0,0,0,0.8);
+      color: #fff;
+      font-size: 2rem;
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      z-index: 999;
+      animation: fade 1s ease;
+    }
+    @keyframes fade {
+      0% { opacity: 0; }
+      20% { opacity: 1; }
+      80% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <header id="site-header"></header>
+
+  <h1>Design Your Menu</h1>
+  <div id="swipe-container"></div>
+  <div id="match-popup">🍸 It's a match!</div>
+
+  <script>
+    async function loadCocktails() {
+      const res = await fetch('data/images.json');
+      const data = await res.json();
+      const container = document.getElementById('swipe-container');
+      const popup = document.getElementById('match-popup');
+
+      // Build cards (reverse so first is on top)
+      [...data.cocktails].reverse().forEach(cocktail => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <img src="${cocktail.image}" alt="${cocktail.name}">
+          <div class="card-info">
+            <h3>${cocktail.name}</h3>
+            <p>${cocktail.bio || "A unique handcrafted cocktail."}</p>
+          </div>
+        `;
+        container.appendChild(card);
+
+        let offsetX = 0;
+        card.addEventListener('mousedown', e => {
+          const startX = e.clientX;
+          function onMouseMove(ev) {
+            offsetX = ev.clientX - startX;
+            card.style.transform = `translateX(${offsetX}px) rotate(${offsetX/10}deg)`;
+          }
+          function onMouseUp() {
+            if (offsetX > 120) {
+              card.style.transform = `translateX(500px) rotate(30deg)`;
+              popup.style.display = 'block';
+              setTimeout(() => popup.style.display = 'none', 1000);
+              setTimeout(() => card.remove(), 300);
+            } else if (offsetX < -120) {
+              card.style.transform = `translateX(-500px) rotate(-30deg)`;
+              setTimeout(() => card.remove(), 300);
+            } else {
+              card.style.transform = `translateX(0) rotate(0)`;
+            }
+            document.removeEventListener('mousemove', onMouseMove);
+            document.removeEventListener('mouseup', onMouseUp);
+          }
+          document.addEventListener('mousemove', onMouseMove);
+          document.addEventListener('mouseup', onMouseUp);
+        });
+      });
+    }
+    loadCocktails();
+  </script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Premium Listings - GBS9</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="header.js" defer></script>
+  <style>
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,.1);
+      overflow: hidden;
+      transition: transform .2s;
+    }
+    .card:hover { transform: translateY(-4px); }
+    .card img { width: 100%; height: 200px; object-fit: cover; }
+    .card h3 { margin: .5rem; }
+    .card p { margin: .5rem; font-size: .9rem; color: #555; }
+  </style>
+</head>
+<body>
+  <header id="site-header"></header>
+
+  <main class="container">
+    <h1>Premium Listings</h1>
+    <div id="cocktail-list" class="grid"></div>
+  </main>
+
+  <script>
+    async function loadPremiumListings() {
+      const res = await fetch('data/images.json');
+      const data = await res.json();
+      const container = document.getElementById('cocktail-list');
+
+      data.cocktails.forEach(cocktail => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <img src="${cocktail.image}" alt="${cocktail.name}">
+          <h3>${cocktail.name}</h3>
+          <p>${cocktail.description || "A premium handcrafted cocktail."}</p>
+        `;
+        container.appendChild(card);
+      });
+    }
+    loadPremiumListings();
+  </script>
+</body>
+</html>

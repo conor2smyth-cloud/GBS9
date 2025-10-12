@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel – GBS9</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script defer src="js/header.js"></script>
+  <script defer src="js/footer.js"></script>
+</head>
+<body>
+  <div id="header"></div>
+
+  <main class="container">
+    <h1>Admin Panel</h1>
+    <p>Welcome to the event admin section. Use this page to coordinate staff, finances, and event tools.</p>
+
+    <section>
+      <h2>Staff Tools</h2>
+      <ul>
+        <li>Petty Cash Tracker</li>
+        <li>Future Events</li>
+        <li>To-Do List</li>
+        <li>Notes for Tonight</li>
+      </ul>
+    </section>
+
+<section class="admin-panel">
+  <h2>Manage Tonight’s Event</h2>
+  <p>
+    To update tonight’s event:
+  </p>
+  <ol>
+    <li>Open <code>data/settings.json</code> in GitHub</li>
+    <li>Edit the <b>eventCode</b>, <b>eventName</b>, and <b>eventDescription</b></li>
+    <li>Commit your changes → they’ll be live immediately</li>
+  </ol>
+  <p>
+    Guests will need the updated passcode on 
+    <a href="tonights-event.html">tonights-event.html</a> to unlock details.
+  </p>
+</section>
+
+
+    <section>
+      <h2>Data Flow Reference</h2>
+      <p>This diagram shows how cocktails, beers, and equipment flow from Excel into the site:</p>
+      <img src="images/process_flow.png" alt="Data Flow Diagram" style="max-width:600px; width:100%; border:1px solid #ccc; padding:10px; background:#fff;">
+      <ol>
+        <li>Edit the Excel file with cocktails, beers, and equipment.</li>
+        <li>Export to <code>cocktails.json</code> in <code>/data</code>.</li>
+        <li>Upload matching images to <code>/images/cocktails</code>, <code>/images/beer</code>, or <code>/images/equipment</code>.</li>
+        <li>The website auto-populates based on <code>cocktails.json</code>.</li>
+      </ol>
+    </section>
+  </main>
+
+  <div id="footer"></div>
+</body>
+</html>

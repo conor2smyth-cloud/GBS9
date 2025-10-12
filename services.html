@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Services - GBS9</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="header.js" defer></script>
+</head>
+<body>
+  <header id="site-header"></header>
+
+  <main class="container">
+    <h1>Our Equipment & Services</h1>
+    <div id="services-gallery" class="grid"></div>
+  </main>
+
+  <script>
+    async function loadServices() {
+      const res = await fetch('data/images.json');
+      const data = await res.json();
+      const gallery = document.getElementById('services-gallery');
+
+      data.equipment.forEach(eq => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <img src="${eq.image}" alt="${eq.name}">
+          <h3>${eq.name}</h3>
+        `;
+        gallery.appendChild(card);
+      });
+    }
+    loadServices();
+  </script>
+</body>
+</html>
