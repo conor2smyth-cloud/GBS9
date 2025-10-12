@@ -2,41 +2,64 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Admin - GBS9</title>
-  <link rel="stylesheet" href="css/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - GBS9</title>
+  <link rel="stylesheet" href="css/style.css?v=20251012">
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Montserrat:wght@600&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div id="site-header"></div>
-  <main class="admin-container">
-    <h1>Admin Dashboard</h1>
-
-    <section>
-      <h2>Image Pipeline</h2>
-      <p>Flow process:</p>
-      <ol>
-        <li>Upload images → <code>/images/_raw/cocktails</code>, <code>/beer</code>, or <code>/equipment</code></li>
-        <li>Run <code>python process_images.py</code></li>
-        <li>Outputs resized + watermarked images → <code>/images</code></li>
-        <li>Updates <code>data/images.json</code></li>
-        <li>Frontend pulls automatically from JSON</li>
-      </ol>
-    </section>
-
-    <section>
-      <h2>Excel Import (Future)</h2>
-      <p>Upload a cocktails Excel file here (coming soon).</p>
-    </section>
-
-    <section>
-      <h2>Staff Tools</h2>
+  <!-- Global Navigation -->
+  <header>
+    <nav class="nav-bar">
       <ul>
-        <li>💵 Petty Cash Tracker</li>
-        <li>📅 Future Events Planner</li>
-        <li>📝 To-Do List</li>
-        <li>🗒 Notes for Tonight</li>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="premium-listings.html">Premium Listings</a></li>
+        <li class="logo">
+          <a href="index.html"><img src="images/logo2.png" alt="GBS Logo"></a>
+        </li>
+        <li><a href="lookbook.html">Lookbook</a></li>
+        <li><a href="tonights-event.html" class="highlight">Tonight’s Event</a></li>
+        <li><a href="admin.html" class="active highlight">Admin</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="content">
+    <h2>Admin Dashboard</h2>
+    <p>Here’s where you manage everything behind the bar:</p>
+
+    <section class="admin-section">
+      <h3>1. Upload New Images</h3>
+      <p>Add cocktail, beer, or equipment photos to <code>images/_raw</code>. They’ll be processed automatically.</p>
+    </section>
+
+    <section class="admin-section">
+      <h3>2. Update Cocktails</h3>
+      <p>Edit the master file at <code>data/cocktails.json</code>. Each entry includes:</p>
+      <ul>
+        <li><strong>Name</strong> (Cocktail name)</li>
+        <li><strong>Base</strong> (e.g. Vodka, Whiskey)</li>
+        <li><strong>Glass</strong> (Martini, Coupe, Old Fashioned)</li>
+        <li><strong>Ingredients</strong> (Array of strings)</li>
+        <li><strong>Short</strong> (Brief blurb, also used for Tinder bios)</li>
       </ul>
     </section>
+
+    <section class="admin-section">
+      <h3>3. Import from Excel</h3>
+      <p>You can prepare a cocktail list in Excel. We’ll provide a script that automatically converts Excel into JSON for <code>data/cocktails.json</code>.</p>
+    </section>
+
+    <section class="admin-section">
+      <h3>4. Image Pipeline Flow</h3>
+      <img src="images/admin/flow-diagram.png" alt="Image Pipeline Diagram" class="admin-img">
+      <p><em>Reference diagram: Upload to <code>_raw</code> → Processing (resize, watermark, tint) → Final images in <code>/cocktails</code>, <code>/beer</code>, <code>/equipment</code>.</em></p>
+    </section>
   </main>
-  <script defer src="js/header.js"></script>
+
+  <footer>
+    <p>&copy; 2025 GBS9. All Rights Reserved.</p>
+  </footer>
 </body>
 </html>

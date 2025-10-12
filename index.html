@@ -1,59 +1,52 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>GBS9 — Mobile Bar</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GBS9 - Home</title>
+  <link rel="stylesheet" href="css/style.css?v=20251012">
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Montserrat:wght@600&display=swap" rel="stylesheet">
 </head>
 <body>
-  <!-- Shared header -->
-  <div id="header"></div>
+  <!-- Global Navigation -->
+  <header>
+    <nav class="nav-bar">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="premium-listings.html">Premium Listings</a></li>
+        <li class="logo">
+          <a href="index.html"><img src="images/logo2.png" alt="GBS Logo"></a>
+        </li>
+        <li><a href="lookbook.html">Lookbook</a></li>
+        <li><a href="tonights-event.html" class="highlight">Tonight’s Event</a></li>
+        <li><a href="admin.html" class="highlight">Admin</a></li>
+      </ul>
+    </nav>
+  </header>
 
   <!-- Hero -->
   <section class="hero">
-    <div class="hero-inner">
-      <h1>Premium Draft & Cocktail Bar, Anywhere</h1>
-      <p>Vorstadt-inspired design. Black & silver finish. A seamless guest experience for audiences 35–65 — simple, fast, delightful.</p>
-    </div>
+    <h1>Welcome to GBS9</h1>
+    <p>Premium bar services blending Irish warmth with NYC speakeasy vibes.</p>
   </section>
 
-  <!-- Main -->
-  <main class="container">
-    <h2>Explore</h2>
-    <div class="grid">
-      <a class="card" href="premium-listings.html">
-        <img src="images/cocktails/negroni.jpg" alt="">
-        <div class="meta">Premium Listings</div>
-      </a>
-      <a class="card" href="menu.html">
-        <img src="images/cocktails/espresso-martini.jpg" alt="">
-        <div class="meta">Design Your Menu</div>
-      </a>
-      <a class="card" href="lookbook.html">
-        <img src="images/cocktails/daiquiri.jpg" alt="">
-        <div class="meta">Lookbook</div>
-      </a>
-      <a class="card" href="services.html">
-        <img src="images/equipment/draft-system.jpg" alt="">
-        <div class="meta">Services & Equipment</div>
-      </a>
-      <a class="card" href="contact.html">
-        <img src="images/beer/guinness.jpg" alt="">
-        <div class="meta">Contact</div>
-      </a>
-      <a class="card" href="tonights-event.html">
-        <img src="images/cocktails/margarita.jpg" alt="">
-        <div class="meta">Tonight’s Event</div>
-      </a>
-    </div>
+  <main>
+    <section>
+      <h2>Our Services</h2>
+      <p>Explore our cocktail experiences, bar setups, and tailored event services.</p>
+      <a href="services.html" class="btn">Explore Services</a>
+    </section>
+
+    <section>
+      <h2>Discover Cocktails</h2>
+      <p>Browse our curated Premium Listings or build your own menu.</p>
+      <a href="premium-listings.html" class="btn">View Cocktails</a>
+    </section>
   </main>
 
-  <!-- Shared footer -->
-  <div id="footer"></div>
-
-  <!-- Scripts -->
-  <script src="js/header.js"></script>
-  <script src="js/footer.js"></script>
+  <footer>
+    <p>&copy; 2025 GBS9. All Rights Reserved.</p>
+  </footer>
 </body>
 </html>

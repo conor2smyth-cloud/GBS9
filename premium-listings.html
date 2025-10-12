@@ -5,66 +5,70 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Premium Listings | GBS9</title>
   <link rel="stylesheet" href="css/style.css">
-  <script defer src="js/header.js"></script>
-  <script defer src="js/premium.js"></script>
+  <script defer src="js/premium-listings.js"></script>
 </head>
 <body>
-  <!-- NAVIGATION -->
-  <header class="navbar">
-    <div class="nav-left">
-      <a href="index.html"><img src="images/logo2.png" alt="GBS Logo" class="logo"></a>
-    </div>
-    <nav class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="premium-listings.html" class="active">Premium Listings</a>
-      <a href="menu.html">Design Your Menu</a>
-      <a href="lookbook.html">Lookbook</a>
-      <a href="services.html">Services</a>
-      <a href="contact.html">Contact</a>
-      <a href="tonights-event.html" class="highlight">Tonight’s Event</a>
-      <a href="admin.html" class="highlight">Admin</a>
+  <!-- HEADER -->
+  <header>
+    <nav class="nav-bar">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="lookbook.html">Lookbook</a></li>
+        <li class="logo"><a href="index.html"><img src="images/logo2.png" alt="GBS Logo"></a></li>
+        <li><a href="menu.html">Design Your Menu</a></li>
+        <li><a href="tonights-event.html" class="highlight">Tonight’s Event</a></li>
+        <li><a href="admin.html" class="highlight">Admin</a></li>
+      </ul>
     </nav>
   </header>
 
-  <main class="premium-layout">
-    <!-- FILTER SIDEBAR -->
-    <aside class="filters">
-      <h3>Filter By</h3>
-      <h4>Base Spirit</h4>
-      <label><input type="checkbox" value="Whiskey"> Whiskey</label><br>
-      <label><input type="checkbox" value="Vodka"> Vodka</label><br>
-      <label><input type="checkbox" value="Gin"> Gin</label><br>
-      <label><input type="checkbox" value="Rum"> Rum</label><br>
-
-      <h4>Glass</h4>
-      <label><input type="checkbox" value="Martini"> Martini</label><br>
-      <label><input type="checkbox" value="Coupe"> Coupe</label><br>
-      <label><input type="checkbox" value="Old Fashioned"> Old Fashioned</label><br>
-      <label><input type="checkbox" value="Highball"> Highball</label><br>
+  <!-- MAIN LAYOUT -->
+  <main style="display: flex; padding: 2rem; gap: 2rem;">
+    
+    <!-- FILTER PANEL -->
+    <aside class="filter-panel">
+      <h3>Filter Cocktails</h3>
+      <label>
+        Base Spirit:
+        <select id="filter-base">
+          <option value="">All</option>
+          <option value="Whiskey">Whiskey</option>
+          <option value="Vodka">Vodka</option>
+          <option value="Gin">Gin</option>
+          <option value="Rum">Rum</option>
+        </select>
+      </label>
+      <br><br>
+      <label>
+        Glass Type:
+        <select id="filter-glass">
+          <option value="">All</option>
+          <option value="Martini">Martini</option>
+          <option value="Coupe">Coupe</option>
+          <option value="Old Fashioned">Old Fashioned</option>
+          <option value="Highball">Highball</option>
+        </select>
+      </label>
     </aside>
 
     <!-- COCKTAIL GRID -->
-    <section class="cocktail-grid" id="cocktailGrid">
-      <!-- JS will inject cocktail cards here -->
-    </section>
+    <section class="cocktail-grid" id="cocktail-list"></section>
+
   </main>
 
-  <!-- MODAL -->
-  <div id="cocktailModal" class="modal">
+  <!-- MODAL POPUP -->
+  <div id="cocktail-modal" class="modal">
     <div class="modal-content">
-      <span class="close">&times;</span>
-      <img id="modalImage" alt="Cocktail" />
-      <h2 id="modalName"></h2>
-      <p id="modalDescription"></p>
+      <span class="close-btn">&times;</span>
+      <h2 id="modal-name"></h2>
+      <img id="modal-image" src="" alt="">
+      <p id="modal-short"></p>
       <h4>Ingredients</h4>
-      <ul id="modalIngredients"></ul>
+      <ul id="modal-ingredients"></ul>
     </div>
   </div>
 
-  <footer>
-    <p>&copy; 2025 GBS9. All rights reserved.</p>
-  </footer>
 </body>
 </html>
-
 

@@ -3,62 +3,93 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Design Your Menu - GBS</title>
-  <link rel="stylesheet" href="css/style.css">
-  <script defer src="js/menu.js"></script>
+  <title>Design Your Menu</title>
+  <link rel="stylesheet" href="css/style.css?v=20251012">
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Montserrat:wght@600&display=swap" rel="stylesheet">
 </head>
 <body>
-
-  <!-- Navigation Header -->
+  <!-- Global Navigation -->
   <header>
-    <nav class="navbar">
-      <div class="nav-left">
-        <a href="index.html">Home</a>
-        <a href="services.html">Services</a>
-        <a href="premium-listings.html">Premium Listings</a>
-        <a href="lookbook.html">Lookbook</a>
-        <a href="contact.html">Contact</a>
-      </div>
-
-      <div class="logo-container">
-        <a href="index.html">
-          <img src="images/logo2.png" alt="GBS Logo" class="logo">
-        </a>
-      </div>
-
-      <div class="nav-right">
-        <a href="tonights-event.html" class="btn-highlight">Tonight's Event</a>
-        <a href="admin.html" class="btn-highlight">Admin</a>
-      </div>
+    <nav class="nav-bar">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="premium-listings.html">Premium Listings</a></li>
+        <li class="logo">
+          <a href="index.html"><img src="images/logo2.png" alt="GBS Logo"></a>
+        </li>
+        <li><a href="lookbook.html">Lookbook</a></li>
+        <li><a href="tonights-event.html" class="highlight">Tonight’s Event</a></li>
+        <li><a href="admin.html" class="highlight">Admin</a></li>
+      </ul>
     </nav>
   </header>
 
-  <!-- Main Section -->
-  <main class="tinder-container">
-    <h1>Design Your Own Menu</h1>
-    <p>Swipe or click to build your custom cocktail menu for tonight.</p>
-
-    <!-- Tinder Card -->
-    <div id="tinder-card" class="tinder-card">
-      <img id="cocktail-img" src="images/cocktails/cocktail1.jpg" alt="Cocktail">
-      <h3 id="cocktail-name">Cocktail Name</h3>
-      <p id="cocktail-bio">A short description about this cocktail goes here.</p>
-    </div>
-
-    <!-- Like / Dislike Buttons -->
-    <div class="tinder-buttons">
-      <button id="dislike">✖</button>
-      <button id="like">♥</button>
-    </div>
-
-    <!-- Custom Menu Section -->
-    <div class="custom-menu">
-      <h2>Your Menu</h2>
-      <div id="menu-list">
-        <p>No cocktails added yet. Start swiping!</p>
+  <main>
+    <h2>Design Your Own Menu</h2>
+    <div class="swipe-container">
+      <div id="cardStack" class="card-stack"></div>
+      <div class="swipe-buttons">
+        <button class="dislike" onclick="dislike()">✖</button>
+        <button class="like" onclick="like()">❤</button>
       </div>
     </div>
+
+    <section class="custom-menu" id="customMenu">
+      <h3>Your Custom Menu</h3>
+    </section>
   </main>
 
+  <footer>
+    <p>&copy; 2025 GBS9. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    let cocktails = [];
+    let currentIndex = 0;
+
+    async function loadCards() {
+      const res = await fetch("data/cocktails.json");
+      cocktails = await res.json();
+      renderCard();
+    }
+
+    function renderCard() {
+      const stack = document.getElementById("cardStack");
+      stack.innerHTML = "";
+      if (currentIndex < cocktails.length) {
+        const c = cocktails[currentIndex];
+        const card = document.createElement("div");
+        card.className = "swipe-card";
+        card.innerHTML = `
+          <img src="images/cocktails/${c.image}" alt="${c.name}">
+          <h3>${c.name}</h3>
+          <p>${c.short}</p>
+        `;
+        stack.appendChild(card);
+      } else {
+        stack.innerHTML = "<p>No more cocktails. Refresh to start again!</p>";
+      }
+    }
+
+    function like() {
+      const c = cocktails[currentIndex];
+      const menu = document.getElementById("customMenu");
+      menu.innerHTML += `
+        <div class="menu-item">
+          <span>${c.name} – ${c.short}</span>
+          <img src="images/cocktails/${c.image}" alt="${c.name}">
+        </div>`;
+      currentIndex++;
+      renderCard();
+    }
+
+    function dislike() {
+      currentIndex++;
+      renderCard();
+    }
+
+    loadCards();
+  </script>
 </body>
 </html>

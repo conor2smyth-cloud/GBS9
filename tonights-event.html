@@ -2,38 +2,44 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tonight’s Event - GBS9</title>
-  <link rel="stylesheet" href="css/style.css">
-  <script defer src="js/event.js"></script>
+  <link rel="stylesheet" href="css/style.css?v=20251012">
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Montserrat:wght@600&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header id="site-header"></header>
+  <!-- Global Navigation -->
+  <header>
+    <nav class="nav-bar">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="premium-listings.html">Premium Listings</a></li>
+        <li class="logo">
+          <a href="index.html"><img src="images/logo2.png" alt="GBS Logo"></a>
+        </li>
+        <li><a href="lookbook.html">Lookbook</a></li>
+        <li><a href="tonights-event.html" class="active highlight">Tonight’s Event</a></li>
+        <li><a href="admin.html" class="highlight">Admin</a></li>
+      </ul>
+    </nav>
+  </header>
 
-  <main class="container">
-    <h1>Tonight’s Event</h1>
-    <p>Please enter the event passcode to unlock details:</p>
-
-    <input type="password" id="passcode" placeholder="Enter passcode">
-    <button id="unlock-btn">Unlock</button>
-    <p id="error-message" style="color:red; display:none;">Incorrect code. Try again.</p>
-
-    <div id="event-details" style="display:none;">
-      <h2 id="event-name"></h2>
-      <p id="event-description"></p>
-
-      <div class="accordion">
-        <button class="accordion-btn">Sip</button>
-        <div class="accordion-panel">Enjoy curated cocktails designed by GBS experts.</div>
-
-        <button class="accordion-btn">Tip</button>
-        <div class="accordion-panel">Show appreciation to your bartender directly, digitally.</div>
-
-        <button class="accordion-btn">Celebrate</button>
-        <div class="accordion-panel">Raise a glass and mark the moment with GBS flair.</div>
+  <main class="content">
+    <h2>Tonight’s Event</h2>
+    <div class="event-card">
+      <img src="images/equipment/event-bar-service.jpg" alt="Event Bar" class="event-img">
+      <div class="event-details">
+        <h3>Autumn Speakeasy Night</h3>
+        <p><strong>Date:</strong> October 15, 2025</p>
+        <p><strong>Location:</strong> The Green Barrel, Dublin</p>
+        <p>Step inside our speakeasy-inspired pop-up with seasonal cocktails, live music, and an unforgettable warm Irish welcome.</p>
       </div>
     </div>
   </main>
 
-  <footer id="site-footer"></footer>
+  <footer>
+    <p>&copy; 2025 GBS9. All Rights Reserved.</p>
+  </footer>
 </body>
 </html>

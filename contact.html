@@ -3,30 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact – GBS9</title>
-  <link rel="stylesheet" href="css/style.css">
-  <script defer src="js/header.js"></script>
-  <script defer src="js/footer.js"></script>
+  <title>Contact - GBS9</title>
+  <link rel="stylesheet" href="css/style.css?v=20251012">
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Montserrat:wght@600&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div id="header"></div>
+  <!-- Global Navigation -->
+  <header>
+    <nav class="nav-bar">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="premium-listings.html">Premium Listings</a></li>
+        <li class="logo">
+          <a href="index.html"><img src="images/logo2.png" alt="GBS Logo"></a>
+        </li>
+        <li><a href="lookbook.html">Lookbook</a></li>
+        <li><a href="tonights-event.html" class="highlight">Tonight’s Event</a></li>
+        <li><a href="admin.html" class="highlight">Admin</a></li>
+      </ul>
+    </nav>
+  </header>
 
-  <section class="container">
-    <h1>Contact Us</h1>
-    <p class="small">We’d love to hear from you. Send us a message below or connect via social media.</p>
+  <main class="content">
+    <h2>Contact Us</h2>
     <form class="contact-form">
-      <input type="text" name="name" placeholder="Your Name" required>
-      <input type="email" name="email" placeholder="Your Email" required>
-      <textarea name="message" placeholder="Your Message" required></textarea>
-      <button type="submit">Send Message</button>
+      <label>Name</label>
+      <input type="text" name="name" placeholder="Your name" required>
+      <label>Email</label>
+      <input type="email" name="email" placeholder="you@example.com" required>
+      <label>Message</label>
+      <textarea name="message" rows="6" placeholder="Tell us about your event..." required></textarea>
+      <button type="submit" class="btn">Send Message</button>
     </form>
-    <div class="social-icons">
-      <a href="#"><img src="images/icons/facebook.png" alt="Facebook"></a>
-      <a href="#"><img src="images/icons/instagram.png" alt="Instagram"></a>
-      <a href="#"><img src="images/icons/twitter.png" alt="Twitter"></a>
-    </div>
-  </section>
+  </main>
 
-  <div id="footer"></div>
+  <footer>
+    <p>&copy; 2025 GBS9. All Rights Reserved.</p>
+  </footer>
 </body>
 </html>
