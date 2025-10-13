@@ -31,4 +31,18 @@ document.addEventListener("DOMContentLoaded", () => {
   burger.addEventListener("click", () => {
     nav.classList.toggle("open");
   });
+
+document.addEventListener("DOMContentLoaded", () => {
+  const nav = document.querySelector(".navbar nav ul");
+  const hamburger = document.createElement("div");
+  hamburger.classList.add("hamburger");
+  hamburger.innerHTML = "<div></div><div></div><div></div>";
+  document.querySelector(".navbar").appendChild(hamburger);
+
+  hamburger.addEventListener("click", () => {
+    nav.classList.toggle("show");
+  });
+});
+
+
 });

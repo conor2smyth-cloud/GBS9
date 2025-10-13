@@ -210,6 +210,49 @@ section {
   }
 }
 
+/* Sidebar default (desktop) */
+.sidebar {
+  width: 250px;
+  padding: 1rem;
+  background: rgba(255,255,255,0.05);
+  border-radius: 12px;
+  position: sticky;
+  top: 2rem;
+  height: fit-content;
+}
+
+/* Mobile dropdown */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    margin-bottom: 1rem;
+    position: relative;
+    top: unset;
+  }
+
+  .sidebar h3 {
+    cursor: pointer;
+    background: rgba(0,0,0,0.6);
+    padding: 0.7rem;
+    margin: 0;
+    border-radius: 8px;
+    text-align: center;
+  }
+
+  .sidebar .filters {
+    display: none;
+    margin-top: 0.5rem;
+    background: rgba(0,0,0,0.4);
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+  }
+
+  .sidebar.open .filters {
+    display: block;
+  }
+}
+
+
 /* === Footer === */
 footer {
   text-align: center;
