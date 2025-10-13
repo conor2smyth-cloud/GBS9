@@ -6,31 +6,85 @@
   <title>Premium Listings - GBS9</title>
   <link rel="stylesheet" href="css/style.css">
   <script src="js/header.js" defer></script>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to bottom right, #1f1f1f, #2c2c2c);
+      color: #f5f5f5;
+    }
+    main {
+      display: flex;
+      gap: 2rem;
+      max-width: 1200px;
+      margin: auto;
+      padding: 2rem;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: #ffcc66;
+    }
+    h2 {
+      color: #ff9966;
+      margin-top: 2rem;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      padding-bottom: 0.3rem;
+    }
+    .content {
+      flex: 3;
+    }
+    .filters {
+      flex: 1;
+      background: rgba(255,255,255,0.05);
+      padding: 1rem;
+      border-radius: 8px;
+      height: fit-content;
+      position: sticky;
+      top: 2rem;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+    .card {
+      background: rgba(255,255,255,0.06);
+      padding: 1rem;
+      border-radius: 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0px 6px 16px rgba(0,0,0,0.5);
+    }
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 0.5rem;
+    }
+  </style>
 </head>
 <body>
-<<<<<<< HEAD
-  <!-- Shared header -->
-=======
-  <!-- Shared Navigation -->
->>>>>>> 7cb03ef (Automated update via update_site.py)
+  <!-- Global Header -->
   <header id="site-header"></header>
 
-<<<<<<< HEAD
-  <main style="display: flex; gap: 2rem; max-width: 1200px; margin: auto; padding: 2rem;">
-    <!-- Listings -->
-    <div class="content" style="flex:3;">
-      <h1>Premium Listings</h1>
-=======
   <main>
-    <h1>Premium Listings</h1>
->>>>>>> 7cb03ef (Automated update via update_site.py)
+    <!-- Content -->
+    <div class="content">
+      <h1>Premium Listings</h1>
 
-    <section id="cocktails">
-      <h2>🍸 Cocktails</h2>
-      <div class="grid" id="cocktailGrid"></div>
-    </section>
+      <section id="cocktails">
+        <h2>🍸 Cocktails</h2>
+        <div class="grid" id="cocktailGrid"></div>
+      </section>
 
-<<<<<<< HEAD
       <section id="beer">
         <h2>🍺 Beer</h2>
         <div class="grid" id="beerGrid"></div>
@@ -42,140 +96,43 @@
       </section>
     </div>
 
-    <!-- Filters -->
-    <aside class="sidebar" style="flex:1;">
+    <!-- Sidebar Filters -->
+    <aside class="filters">
       <h3>Filter By</h3>
-      <div class="filters">
-        <div>
-          <strong>Base Spirit</strong><br>
-          <label><input type="checkbox" value="Whiskey" class="filter-base"> Whiskey</label><br>
-          <label><input type="checkbox" value="Vodka" class="filter-base"> Vodka</label><br>
-          <label><input type="checkbox" value="Rum" class="filter-base"> Rum</label>
-        </div>
-        <div>
-          <strong>Glass</strong><br>
-          <label><input type="checkbox" value="Martini" class="filter-glass"> Martini</label><br>
-          <label><input type="checkbox" value="Highball" class="filter-glass"> Highball</label><br>
-          <label><input type="checkbox" value="Old Fashioned" class="filter-glass"> Old Fashioned</label>
-        </div>
-        <div>
-          <strong>Flavour</strong><br>
-          <label><input type="checkbox" value="Citrus" class="filter-flavour"> Citrus</label><br>
-          <label><input type="checkbox" value="Sweet" class="filter-flavour"> Sweet</label><br>
-          <label><input type="checkbox" value="Bitter" class="filter-flavour"> Bitter</label>
-        </div>
+      <div>
+        <strong>Base Spirit</strong><br>
+        <label><input type="checkbox" value="Whiskey" class="filter-base"> Whiskey</label><br>
+        <label><input type="checkbox" value="Vodka" class="filter-base"> Vodka</label><br>
+        <label><input type="checkbox" value="Rum" class="filter-base"> Rum</label>
+      </div>
+      <div style="margin-top:1rem;">
+        <strong>Glass</strong><br>
+        <label><input type="checkbox" value="Martini" class="filter-glass"> Martini</label><br>
+        <label><input type="checkbox" value="Highball" class="filter-glass"> Highball</label><br>
+        <label><input type="checkbox" value="Old Fashioned" class="filter-glass"> Old Fashioned</label>
+      </div>
+      <div style="margin-top:1rem;">
+        <strong>Flavour</strong><br>
+        <label><input type="checkbox" value="Citrus" class="filter-flavour"> Citrus</label><br>
+        <label><input type="checkbox" value="Sweet" class="filter-flavour"> Sweet</label><br>
+        <label><input type="checkbox" value="Bitter" class="filter-flavour"> Bitter</label>
       </div>
     </aside>
   </main>
 
-  <!-- Modal -->
-  <div id="modal" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <img id="modalImg" src="" alt="">
-      <h3 id="modalTitle"></h3>
-      <p id="modalDesc"></p>
-      <p id="modalDetails"></p>
-    </div>
-  </div>
-=======
-    <section id="beer">
-      <h2>🍺 Beer</h2>
-      <div class="grid" id="beerGrid"></div>
-    </section>
-
-    <section id="equipment">
-      <h2>⚙️ Equipment</h2>
-      <div class="grid" id="equipmentGrid"></div>
-    </section>
-  </main>
->>>>>>> 7cb03ef (Automated update via update_site.py)
-
   <script>
     async function loadListings() {
-      try {
-        const res = await fetch('data/cocktails.json');
-        const data = await res.json();
+      const res = await fetch('data/cocktails.json');
+      const data = await res.json();
 
-        const cocktailGrid = document.getElementById('cocktailGrid');
-        const beerGrid = document.getElementById('beerGrid');
-        const equipmentGrid = document.getElementById('equipmentGrid');
-        const modal = document.getElementById("modal");
-        const modalImg = document.getElementById("modalImg");
-        const modalTitle = document.getElementById("modalTitle");
-        const modalDesc = document.getElementById("modalDesc");
-        const modalDetails = document.getElementById("modalDetails");
-        const closeBtn = document.querySelector(".close");
+      const cocktailGrid = document.getElementById('cocktailGrid');
+      const beerGrid = document.getElementById('beerGrid');
+      const equipmentGrid = document.getElementById('equipmentGrid');
 
-<<<<<<< HEAD
-        function createCard(item, type) {
-          if (item.image === "coming-soon.jpg") return "";
-          const imgPath = `images/${type}/${item.image}`;
-          return `
-            <div class="card" data-type="${type}" data-name="${item.name}" data-base="${item.base || ''}" data-glass="${item.glass || ''}" data-flavour="${item.flavour || ''}">
-              <img src="${imgPath}" alt="${item.name}" onerror="this.src='images/coming-soon.jpg'">
-              <h3>${item.name}</h3>
-              <p>${item.short || ''}</p>
-            </div>
-          `;
-        }
-
-        cocktailGrid.innerHTML = data.cocktails.map(d => createCard(d, "cocktails")).join("");
-        beerGrid.innerHTML = data.beer.map(d => createCard(d, "beer")).join("");
-        equipmentGrid.innerHTML = data.equipment.map(d => createCard(d, "equipment")).join("");
-
-        // Modal
-        document.body.addEventListener("click", function(e) {
-          const card = e.target.closest(".card");
-          if (card) {
-            const type = card.getAttribute("data-type");
-            const name = card.getAttribute("data-name");
-            let item;
-            if (type === "cocktails") item = data.cocktails.find(d => d.name === name);
-            else if (type === "beer") item = data.beer.find(d => d.name === name);
-            else item = data.equipment.find(d => d.name === name);
-
-            if (item) {
-              modalImg.src = `images/${type}/${item.image}`;
-              modalTitle.textContent = item.name;
-              modalDesc.textContent = item.short || "";
-              modalDetails.innerHTML = `
-                ${item.base ? `<strong>Base:</strong> ${item.base}<br>` : ""}
-                ${item.glass ? `<strong>Glass:</strong> ${item.glass}<br>` : ""}
-                ${item.ingredients ? `<strong>Ingredients:</strong> ${item.ingredients.join(", ")}<br>` : ""}
-                ${item.kegged ? `<strong>Kegged:</strong> ${item.kegged}` : ""}
-              `;
-              modal.style.display = "flex";
-            }
-          }
-        });
-        closeBtn.onclick = () => modal.style.display = "none";
-        window.onclick = e => { if (e.target === modal) modal.style.display = "none"; };
-
-        // Filters
-        const checkboxes = document.querySelectorAll(".filters input[type=checkbox]");
-        checkboxes.forEach(cb => cb.addEventListener("change", applyFilters));
-
-        function applyFilters() {
-          const activeBase = [...document.querySelectorAll(".filter-base:checked")].map(cb => cb.value);
-          const activeGlass = [...document.querySelectorAll(".filter-glass:checked")].map(cb => cb.value);
-          const activeFlavour = [...document.querySelectorAll(".filter-flavour:checked")].map(cb => cb.value);
-
-          document.querySelectorAll(".card").forEach(card => {
-            const matchBase = !activeBase.length || activeBase.includes(card.dataset.base);
-            const matchGlass = !activeGlass.length || activeGlass.includes(card.dataset.glass);
-            const matchFlavour = !activeFlavour.length || activeFlavour.includes(card.dataset.flavour);
-            card.style.display = (matchBase && matchGlass && matchFlavour) ? "" : "none";
-          });
-        }
-      } catch (err) {
-        console.error("Error loading listings:", err);
-      }
-=======
       function createCard(item, type) {
-        if (item.image === "coming-soon.jpg") return "";
+        if (item.image === "coming-soon.jpg") return ""; // skip placeholder
         return `
-          <div class="card">
+          <div class="card" data-base="${item.base || ''}" data-glass="${item.glass || ''}" data-flavour="${item.flavour || ''}">
             <img src="images/${type}/${item.image}" alt="${item.name}" onerror="this.src='images/coming-soon.jpg'">
             <h3>${item.name}</h3>
             <p>${item.short || ''}</p>
@@ -186,7 +143,24 @@
       cocktailGrid.innerHTML = data.cocktails.map(c => createCard(c, "cocktails")).join("");
       beerGrid.innerHTML = data.beer.map(b => createCard(b, "beer")).join("");
       equipmentGrid.innerHTML = data.equipment.map(e => createCard(e, "equipment")).join("");
->>>>>>> 7cb03ef (Automated update via update_site.py)
+
+      // Filter logic
+      const checkboxes = document.querySelectorAll(".filters input[type=checkbox]");
+      checkboxes.forEach(cb => cb.addEventListener("change", applyFilters));
+
+      function applyFilters() {
+        const activeBase = [...document.querySelectorAll(".filter-base:checked")].map(cb => cb.value);
+        const activeGlass = [...document.querySelectorAll(".filter-glass:checked")].map(cb => cb.value);
+        const activeFlavour = [...document.querySelectorAll(".filter-flavour:checked")].map(cb => cb.value);
+
+        document.querySelectorAll(".card").forEach(card => {
+          const matchBase = !activeBase.length || activeBase.includes(card.dataset.base);
+          const matchGlass = !activeGlass.length || activeGlass.includes(card.dataset.glass);
+          const matchFlavour = !activeFlavour.length || activeFlavour.includes(card.dataset.flavour);
+
+          card.style.display = (matchBase && matchGlass && matchFlavour) ? "" : "none";
+        });
+      }
     }
 
     loadListings();
