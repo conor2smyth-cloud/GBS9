@@ -155,100 +155,61 @@
 </head>
 <body>
 
-<header class="navbar">
-  <nav>
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="services.html">Services</a></li>
-      <li><a href="premium-listings.html">Premium Listings</a></li>
-      <li class="logo"><a href="index.html"><img src="images/logo2.png" alt="GBS Logo" style="height:50px;"></a></li>
-      <li><a href="menu.html">Design Your Menu</a></li>
-      <li><a href="lookbook.html">Lookbook</a></li>
-      <li><a href="tonights-event.html" class="highlight">Tonight’s Event</a></li>
-      <li><a href="admin.html">Admin</a></li>
-    </ul>
-  </nav>
-</header>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tonight’s Event - GBS9</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/header.js" defer></script>
+</head>
+<body>
+  <!-- Shared Navigation -->
+  <header id="site-header"></header>
 
-<main>
-  <h1>Tonight’s Event</h1>
+  <main>
+    <h1>Tonight’s Event</h1>
+    <p>Enter passcode to access: <input type="password" id="eventPass" maxlength="4"> 
+    <button onclick="checkPass()">Enter</button></p>
 
-  <!-- Gate -->
-  <div id="gate">
-    <input type="password" id="passcode" placeholder="Enter Passcode">
-    <button onclick="checkPass()">Enter</button>
-    <p id="error" style="color:red; display:none;">Incorrect passcode.</p>
-  </div>
-
-  <!-- Event Content -->
-  <div id="eventContent" style="display:none;">
-    <div class="accordion">
-      <button onclick="togglePanel('sipPanel')">🍸 Sip</button>
-      <button onclick="togglePanel('tipPanel')">💸 Tip</button>
-      <button onclick="togglePanel('celebratePanel')">🎶 Celebrate</button>
-    </div>
-
-    <div id="sipPanel" class="panel"></div>
-    <div id="tipPanel" class="panel">
-      <p>Thank you for joining us tonight! Your support keeps the cocktails flowing 🍹✨</p>
-      <div class="qr-container">
-        <div>
-          <p>Revolut</p>
-          <img src="images/qr-revolut.png" alt="Revolut QR">
+    <div id="eventContent" style="display:none;">
+      <div class="accordion">
+        <div class="accordion-item">
+          <button class="accordion-header">🍸 Sip</button>
+          <div class="accordion-body">
+            <h3>Cocktail Highlights</h3>
+            <ul id="cocktailList"></ul>
+          </div>
         </div>
-        <div>
-          <p>Apple Pay</p>
-          <img src="images/qr-applepay.png" alt="Apple Pay QR">
+
+        <div class="accordion-item">
+          <button class="accordion-header">💸 Tip</button>
+          <div class="accordion-body">
+            <p>Thank you for joining us tonight! If you’d like to tip, scan below:</p>
+            <img src="images/qr-revolut.png" alt="Revolut QR" width="150">
+            <img src="images/qr-applepay.png" alt="Apple Pay QR" width="150">
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-header">🎶 Celebrate</button>
+          <div class="accordion-body">
+            <p>Join our Spotify Jam playlist to add your favourite songs:</p>
+            <a href="https://open.spotify.com" target="_blank">🎧 Open Playlist</a>
+          </div>
         </div>
       </div>
     </div>
-    <div id="celebratePanel" class="panel celebrate">
-      <p>Keep the vibes going with our collaborative playlist!</p>
-      <a href="https://open.spotify.com/" target="_blank">🎵 Open Spotify Jam</a>
-      <div>
-        <input type="text" placeholder="Suggest a song...">
-        <button>Add</button>
-      </div>
-    </div>
-  </div>
-</main>
+  </main>
 
-<script>
-  function checkPass() {
-    const input = document.getElementById('passcode').value;
-    if (input === '0000') {
-      document.getElementById('gate').style.display = 'none';
-      document.getElementById('eventContent').style.display = 'block';
-    } else {
-      document.getElementById('error').style.display = 'block';
-    }
-  }
-
-  function togglePanel(panelId) {
-    const panel = document.getElementById(panelId);
-    panel.classList.toggle("active");
-  }
-
-  // Load cocktails into Sip panel
-  async function loadCocktails() {
-    try {
-      const res = await fetch("data/cocktails.json");
-      const data = await res.json();
-      const sipPanel = document.getElementById("sipPanel");
-      sipPanel.innerHTML = "";
-      data.cocktails.slice(0,5).forEach(drink => {
-        sipPanel.innerHTML += `
-          <div class="cocktail">
-            <h3>${drink.name}</h3>
-            <p>${drink.short}</p>
-          </div>`;
-      });
-    } catch (err) {
-      console.error("Error loading cocktails:", err);
-    }
-  }
-  loadCocktails();
-</script>
-</body>
-</html>
-
+  <script>
+    // Passcode
+    function checkPass() {
+      const pass = document.getElementById("eventPass").value;
+      if (pass === "0000") {
+        document.getElementById("eventContent").style.display = "block";
+      } else {
+        alert("Wrong passcode.");
+      }
+   

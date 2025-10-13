@@ -6,152 +6,68 @@
   <title>Services - GBS9</title>
   <link rel="stylesheet" href="css/style.css">
   <script src="js/header.js" defer></script>
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(to bottom right, #1f1f1f, #2c2c2c);
-      color: #f5f5f5;
-      margin: 0;
-    }
-    main {
-      max-width: 1000px;
-      margin: auto;
-      padding: 2rem;
-    }
-    h1 {
-      text-align: center;
-      color: #ffcc66;
-      margin-bottom: 1.5rem;
-    }
-    /* Accordion */
-    .accordion {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 8px;
-      margin-bottom: 1rem;
-      overflow: hidden;
-    }
-    .accordion button {
-      width: 100%;
-      text-align: left;
-      padding: 1rem;
-      background: none;
-      border: none;
-      outline: none;
-      font-size: 1.1rem;
-      color: #ffcc66;
-      cursor: pointer;
-    }
-    .accordion button:hover {
-      background: rgba(255,204,102,0.1);
-    }
-    .accordion-content {
-      display: none;
-      padding: 1rem;
-      background: rgba(0,0,0,0.2);
-    }
-    .accordion-content.open {
-      display: block;
-    }
-    /* Quiz */
-    #quiz {
-      margin-top: 3rem;
-      padding: 1rem;
-      background: rgba(255,255,255,0.05);
-      border-radius: 8px;
-    }
-    #quiz h2 {
-      color: #ff9966;
-    }
-    .question {
-      margin-bottom: 1rem;
-    }
-    .question strong {
-      display: block;
-      margin-bottom: 0.5rem;
-    }
-    #result {
-      margin-top: 1.5rem;
-      padding: 1rem;
-      background: rgba(255,204,102,0.15);
-      border-radius: 6px;
-    }
-  </style>
 </head>
 <body>
+  <!-- Shared Navigation -->
   <header id="site-header"></header>
 
   <main>
     <h1>Our Services</h1>
 
     <div class="accordion">
-      <button onclick="toggleAccordion(this)">🍸 Cocktail Service</button>
-      <div class="accordion-content">
-        <p>Signature cocktails tailored to your event. <a href="cocktail-service.html">Learn more →</a></p>
-      </div>
-    </div>
-
-    <div class="accordion">
-      <button onclick="toggleAccordion(this)">🍺 Draft Systems</button>
-      <div class="accordion-content">
-        <p>Portable tap systems for beer and cocktails. <a href="draft-systems.html">Learn more →</a></p>
-      </div>
-    </div>
-
-    <div class="accordion">
-      <button onclick="toggleAccordion(this)">🎉 Event Bartending</button>
-      <div class="accordion-content">
-        <p>Professional bartenders for weddings, birthdays, and more. <a href="event-bartending.html">Learn more →</a></p>
-      </div>
-    </div>
-
-    <div class="accordion">
-      <button onclick="toggleAccordion(this)">⚙️ Equipment Rental</button>
-      <div class="accordion-content">
-        <p>Everything you need to host: glassware, shakers, draft taps. <a href="equipment-rental.html">Learn more →</a></p>
-      </div>
-    </div>
-
-    <!-- Quiz -->
-    <section id="quiz">
-      <h2>Find the Right Service for Your Party</h2>
-      <form id="quizForm">
-        <div class="question">
-          <strong>1. What type of event are you hosting?</strong>
-          <label><input type="radio" name="q1" value="cocktail"> Birthday</label><br>
-          <label><input type="radio" name="q1" value="cocktail"> Wedding</label><br>
-          <label><input type="radio" name="q1" value="draft"> Corporate Event</label><br>
-          <label><input type="radio" name="q1" value="mixed"> Casual Party</label>
+      <div class="accordion-item">
+        <button class="accordion-header">🍸 Cocktail Service</button>
+        <div class="accordion-body">
+          <p>Professional cocktail service for any occasion. Mixology at its best!</p>
+          <a href="service-cocktail.html">Learn more →</a>
         </div>
-        <!-- Repeat for 10 questions (as we wrote earlier) -->
-        <button type="submit">See Recommendation</button>
-      </form>
-      <div id="result"></div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-header">🍺 Draft Systems</button>
+        <div class="accordion-body">
+          <p>Portable draft systems for beer and cocktails on tap.</p>
+          <a href="service-draft.html">Learn more →</a>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-header">🥂 Event Bartending</button>
+        <div class="accordion-body">
+          <p>Experienced bartenders to elevate your events.</p>
+          <a href="service-event.html">Learn more →</a>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-header">⚙️ Equipment Rental</button>
+        <div class="accordion-body">
+          <p>All the tools and setups you need for a flawless bar experience.</p>
+          <a href="service-equipment.html">Learn more →</a>
+        </div>
+      </div>
+    </div>
+
+    <section class="quiz">
+      <h2>🎉 Plan Your Party Quiz</h2>
+      <p>Answer 10 quick questions to get a tailored service recommendation.</p>
+      <button onclick="startQuiz()">Start Quiz</button>
     </section>
   </main>
 
   <script>
-    function toggleAccordion(button) {
-      const allContents = document.querySelectorAll('.accordion-content');
-      allContents.forEach(c => c.classList.remove('open'));
-      const content = button.nextElementSibling;
-      content.classList.add('open');
-    }
-
-    document.getElementById('quizForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const answers = [...new FormData(this).values()];
-      let cocktail = answers.filter(a => a === 'cocktail').length;
-      let draft = answers.filter(a => a === 'draft').length;
-      let mixed = answers.filter(a => a === 'mixed').length;
-
-      let recommendation = '';
-      if (cocktail > draft) recommendation = "We recommend our Cocktail Service 🍸";
-      else if (draft > cocktail) recommendation = "We recommend our Draft Systems 🍺";
-      else recommendation = "We recommend Event Bartending 🎉";
-
-      document.getElementById('result').innerHTML = `<p>${recommendation}</p>`;
+    // Accordion functionality
+    document.addEventListener("click", e => {
+      if (e.target.classList.contains("accordion-header")) {
+        document.querySelectorAll(".accordion-body").forEach(b => b.style.display = "none");
+        const body = e.target.nextElementSibling;
+        body.style.display = "block";
+      }
     });
+
+    function startQuiz() {
+      alert("Quiz will launch here. (Coming soon!)");
+    }
   </script>
 </body>
 </html>

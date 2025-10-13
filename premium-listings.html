@@ -8,20 +8,29 @@
   <script src="js/header.js" defer></script>
 </head>
 <body>
+<<<<<<< HEAD
   <!-- Shared header -->
+=======
+  <!-- Shared Navigation -->
+>>>>>>> 7cb03ef (Automated update via update_site.py)
   <header id="site-header"></header>
-<script src="js/header.js" defer></script>
 
+<<<<<<< HEAD
   <main style="display: flex; gap: 2rem; max-width: 1200px; margin: auto; padding: 2rem;">
     <!-- Listings -->
     <div class="content" style="flex:3;">
       <h1>Premium Listings</h1>
+=======
+  <main>
+    <h1>Premium Listings</h1>
+>>>>>>> 7cb03ef (Automated update via update_site.py)
 
-      <section id="cocktails">
-        <h2>🍸 Cocktails</h2>
-        <div class="grid" id="cocktailGrid"></div>
-      </section>
+    <section id="cocktails">
+      <h2>🍸 Cocktails</h2>
+      <div class="grid" id="cocktailGrid"></div>
+    </section>
 
+<<<<<<< HEAD
       <section id="beer">
         <h2>🍺 Beer</h2>
         <div class="grid" id="beerGrid"></div>
@@ -69,6 +78,18 @@
       <p id="modalDetails"></p>
     </div>
   </div>
+=======
+    <section id="beer">
+      <h2>🍺 Beer</h2>
+      <div class="grid" id="beerGrid"></div>
+    </section>
+
+    <section id="equipment">
+      <h2>⚙️ Equipment</h2>
+      <div class="grid" id="equipmentGrid"></div>
+    </section>
+  </main>
+>>>>>>> 7cb03ef (Automated update via update_site.py)
 
   <script>
     async function loadListings() {
@@ -86,6 +107,7 @@
         const modalDetails = document.getElementById("modalDetails");
         const closeBtn = document.querySelector(".close");
 
+<<<<<<< HEAD
         function createCard(item, type) {
           if (item.image === "coming-soon.jpg") return "";
           const imgPath = `images/${type}/${item.image}`;
@@ -149,10 +171,25 @@
       } catch (err) {
         console.error("Error loading listings:", err);
       }
+=======
+      function createCard(item, type) {
+        if (item.image === "coming-soon.jpg") return "";
+        return `
+          <div class="card">
+            <img src="images/${type}/${item.image}" alt="${item.name}" onerror="this.src='images/coming-soon.jpg'">
+            <h3>${item.name}</h3>
+            <p>${item.short || ''}</p>
+          </div>
+        `;
+      }
+
+      cocktailGrid.innerHTML = data.cocktails.map(c => createCard(c, "cocktails")).join("");
+      beerGrid.innerHTML = data.beer.map(b => createCard(b, "beer")).join("");
+      equipmentGrid.innerHTML = data.equipment.map(e => createCard(e, "equipment")).join("");
+>>>>>>> 7cb03ef (Automated update via update_site.py)
     }
 
     loadListings();
   </script>
 </body>
 </html>
-
