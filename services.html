@@ -8,66 +8,88 @@
   <script src="js/header.js" defer></script>
 </head>
 <body>
-  <!-- Shared Navigation -->
+  <!-- Global Header -->
   <header id="site-header"></header>
 
   <main>
     <h1>Our Services</h1>
+    <p class="intro">Explore what we offer — expand each section below to learn more about our services.</p>
 
+    <!-- Accordion -->
     <div class="accordion">
       <div class="accordion-item">
         <button class="accordion-header">🍸 Cocktail Service</button>
-        <div class="accordion-body">
-          <p>Professional cocktail service for any occasion. Mixology at its best!</p>
-          <a href="service-cocktail.html">Learn more →</a>
+        <div class="accordion-content">
+          <p>Our bartenders craft high-end cocktails with fresh ingredients, classic techniques, and a modern flair.</p>
+          <a href="cocktail-service.html" class="btn">View Details</a>
         </div>
       </div>
-
       <div class="accordion-item">
         <button class="accordion-header">🍺 Draft Systems</button>
-        <div class="accordion-body">
-          <p>Portable draft systems for beer and cocktails on tap.</p>
-          <a href="service-draft.html">Learn more →</a>
+        <div class="accordion-content">
+          <p>Mobile draft beer systems for events of any size, from intimate gatherings to full festivals.</p>
+          <a href="draft-systems.html" class="btn">View Details</a>
         </div>
       </div>
-
       <div class="accordion-item">
         <button class="accordion-header">🥂 Event Bartending</button>
-        <div class="accordion-body">
-          <p>Experienced bartenders to elevate your events.</p>
-          <a href="service-event.html">Learn more →</a>
+        <div class="accordion-content">
+          <p>Professional staff trained to deliver seamless hospitality for weddings, parties, and corporate events.</p>
+          <a href="event-bartending.html" class="btn">View Details</a>
         </div>
       </div>
-
       <div class="accordion-item">
         <button class="accordion-header">⚙️ Equipment Rental</button>
-        <div class="accordion-body">
-          <p>All the tools and setups you need for a flawless bar experience.</p>
-          <a href="service-equipment.html">Learn more →</a>
+        <div class="accordion-content">
+          <p>Everything you need for a full bar setup: shakers, glassware, mobile bars, and more.</p>
+          <a href="equipment-rental.html" class="btn">View Details</a>
         </div>
       </div>
     </div>
 
+    <!-- Quiz -->
     <section class="quiz">
-      <h2>🎉 Plan Your Party Quiz</h2>
-      <p>Answer 10 quick questions to get a tailored service recommendation.</p>
-      <button onclick="startQuiz()">Start Quiz</button>
+      <h2>🍻 What Do You Need for Your Party?</h2>
+      <form id="quizForm">
+        <p><strong>1.</strong> How many guests are you expecting?<br>
+          <input type="radio" name="q1" value="small"> Small (under 20)<br>
+          <input type="radio" name="q1" value="medium"> Medium (20-50)<br>
+          <input type="radio" name="q1" value="large"> Large (50+)
+        </p>
+        <p><strong>2.</strong> Do you want draft beer?<br>
+          <input type="radio" name="q2" value="yes"> Yes<br>
+          <input type="radio" name="q2" value="no"> No
+        </p>
+        <p><strong>3.</strong> Do you want signature cocktails?<br>
+          <input type="radio" name="q3" value="yes"> Yes<br>
+          <input type="radio" name="q3" value="no"> No
+        </p>
+        <!-- …repeat up to 10 simple Qs -->
+        <button type="submit" class="btn">Get Recommendation</button>
+      </form>
+      <div id="quizResult" class="quiz-result"></div>
     </section>
   </main>
 
   <script>
-    // Accordion functionality
-    document.addEventListener("click", e => {
-      if (e.target.classList.contains("accordion-header")) {
-        document.querySelectorAll(".accordion-body").forEach(b => b.style.display = "none");
-        const body = e.target.nextElementSibling;
-        body.style.display = "block";
-      }
+    // Accordion logic
+    document.querySelectorAll('.accordion-header').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const open = document.querySelector('.accordion-item.active');
+        if (open && open !== btn.parentElement) {
+          open.classList.remove('active');
+        }
+        btn.parentElement.classList.toggle('active');
+      });
     });
 
-    function startQuiz() {
-      alert("Quiz will launch here. (Coming soon!)");
-    }
+    // Quiz logic (basic placeholder)
+    document.getElementById('quizForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      document.getElementById('quizResult').innerHTML = `
+        <p>Thanks! Based on your answers, we recommend <strong>Cocktail Service + Draft Systems</strong>.</p>
+      `;
+    });
   </script>
 </body>
 </html>
