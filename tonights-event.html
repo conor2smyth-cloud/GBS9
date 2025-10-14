@@ -3,200 +3,46 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tonight’s Event - GBS9</title>
-  <link rel="stylesheet" href="css/style.css">
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(to bottom right, #1f1f1f, #2c2c2c);
-      color: #f5f5f5;
-    }
-    main {
-      max-width: 1000px;
-      margin: auto;
-      padding: 2rem;
-      text-align: center;
-    }
-    h1 {
-      margin-bottom: 2rem;
-      color: #ffcc66;
-      text-shadow: 0px 2px 6px rgba(0,0,0,0.6);
-    }
-
-    /* Passcode gate */
-    #gate {
-      text-align: center;
-      margin-top: 5rem;
-    }
-    #gate input {
-      padding: 0.6rem;
-      font-size: 1rem;
-      border-radius: 8px;
-      border: 1px solid #ffcc66;
-      outline: none;
-      margin-right: 0.5rem;
-    }
-    #gate button {
-      padding: 0.6rem 1.2rem;
-      border: none;
-      border-radius: 8px;
-      background: #ffcc66;
-      color: #000;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    /* Accordion headers */
-    .accordion {
-      display: flex;
-      justify-content: space-around;
-      margin-top: 2rem;
-      gap: 1rem;
-    }
-    .accordion button {
-      flex: 1;
-      padding: 1rem;
-      font-size: 1.2rem;
-      font-weight: bold;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.2);
-      color: #ffcc66;
-      cursor: pointer;
-      border-radius: 10px;
-      transition: background 0.3s;
-    }
-    .accordion button:hover {
-      background: rgba(255,204,102,0.15);
-    }
-
-    /* Accordion content */
-    .panel {
-      display: none;
-      margin-top: 1.5rem;
-      padding: 1.5rem;
-      background: rgba(255,255,255,0.05);
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.1);
-      text-align: left;
-    }
-    .panel.active {
-      display: block;
-      animation: fadeIn 0.4s ease;
-    }
-
-    /* Cocktail list */
-    .cocktail {
-      margin-bottom: 1rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-    }
-    .cocktail h3 {
-      margin: 0;
-      color: #ffe4b5;
-    }
-    .cocktail p {
-      margin: 0.3rem 0 0;
-      font-size: 0.9rem;
-      color: #ddd;
-    }
-
-    /* QR section */
-    .qr-container {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      margin-top: 1rem;
-    }
-    .qr-container img {
-      width: 150px;
-      height: 150px;
-      border: 3px solid #ffcc66;
-      border-radius: 10px;
-      background: #fff;
-    }
-
-    /* Celebrate */
-    .celebrate {
-      text-align: center;
-    }
-    .celebrate a {
-      display: inline-block;
-      margin: 1rem 0;
-      padding: 0.8rem 1.5rem;
-      background: #ffcc66;
-      color: #000;
-      font-weight: bold;
-      border-radius: 8px;
-      text-decoration: none;
-    }
-    .celebrate input {
-      padding: 0.6rem;
-      width: 60%;
-      margin-right: 0.5rem;
-      border-radius: 8px;
-      border: 1px solid #ffcc66;
-    }
-    .celebrate button {
-      padding: 0.6rem 1rem;
-      border: none;
-      border-radius: 8px;
-      background: #ff9966;
-      color: #fff;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    @keyframes fadeIn {
-      from {opacity: 0; transform: translateY(-10px);}
-      to {opacity: 1; transform: translateY(0);}
-    }
-  </style>
-</head>
-<body>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tonight’s Event - GBS9</title>
+  <title>Tonight's Event - GBS9</title>
   <link rel="stylesheet" href="css/style.css">
   <script src="js/header.js" defer></script>
 </head>
 <body>
-  <!-- Shared Navigation -->
   <header id="site-header"></header>
 
   <main>
-    <h1>Tonight’s Event</h1>
-    <p>Enter passcode to access: <input type="password" id="eventPass" maxlength="4"> 
-    <button onclick="checkPass()">Enter</button></p>
+    <h1>Tonight's Event</h1>
+    <p style="text-align:center;">Enter passcode to access event content.</p>
 
-    <div id="eventContent" style="display:none;">
+    <div id="passcodeSection" style="text-align:center; margin-top:2rem;">
+      <input type="password" id="passcode" placeholder="Enter passcode">
+      <button onclick="checkPasscode()">Submit</button>
+      <p id="errorMsg" style="color:red;"></p>
+    </div>
+
+    <div id="eventContent" style="display:none; margin-top:2rem;">
+      <!-- Accordion -->
       <div class="accordion">
         <div class="accordion-item">
-          <button class="accordion-header">🍸 Sip</button>
-          <div class="accordion-body">
-            <h3>Cocktail Highlights</h3>
+          <button class="accordion-header">Sip</button>
+          <div class="accordion-content">
+            <p>Tonight’s featured cocktails:</p>
             <ul id="cocktailList"></ul>
           </div>
         </div>
-
         <div class="accordion-item">
-          <button class="accordion-header">💸 Tip</button>
-          <div class="accordion-body">
-            <p>Thank you for joining us tonight! If you’d like to tip, scan below:</p>
+          <button class="accordion-header">Tip</button>
+          <div class="accordion-content">
+            <p>Thank you for supporting our bartenders! Scan one of the QR codes to leave a tip via Revolut or Apple Pay:</p>
             <img src="images/qr-revolut.png" alt="Revolut QR" width="150">
             <img src="images/qr-applepay.png" alt="Apple Pay QR" width="150">
           </div>
         </div>
-
         <div class="accordion-item">
-          <button class="accordion-header">🎶 Celebrate</button>
-          <div class="accordion-body">
-            <p>Join our Spotify Jam playlist to add your favourite songs:</p>
-            <a href="https://open.spotify.com" target="_blank">🎧 Open Playlist</a>
+          <button class="accordion-header">Celebrate</button>
+          <div class="accordion-content">
+            <p>Join our Spotify Jam playlist and add your favorite songs!</p>
+            <a href="https://open.spotify.com" target="_blank">Open Spotify Playlist</a>
           </div>
         </div>
       </div>
@@ -204,12 +50,26 @@
   </main>
 
   <script>
-    // Passcode
-    function checkPass() {
-      const pass = document.getElementById("eventPass").value;
-      if (pass === "0000") {
+    function checkPasscode() {
+      const input = document.getElementById("passcode").value;
+      if (input === "0000") {
+        document.getElementById("passcodeSection").style.display = "none";
         document.getElementById("eventContent").style.display = "block";
       } else {
-        alert("Wrong passcode.");
+        document.getElementById("errorMsg").textContent = "Incorrect passcode";
       }
-   
+    }
+
+    // Accordion toggle
+    document.addEventListener("click", e => {
+      if (e.target.classList.contains("accordion-header")) {
+        const item = e.target.parentElement;
+        document.querySelectorAll(".accordion-item").forEach(i => {
+          if (i !== item) i.classList.remove("active");
+        });
+        item.classList.toggle("active");
+      }
+    });
+  </script>
+</body>
+</html>

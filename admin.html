@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -8,48 +8,20 @@
   <script src="js/header.js" defer></script>
 </head>
 <body>
-  <!-- Global Header -->
-  <header class="navbar">
-    <div class="logo">
-      <a href="index.html"><img src="images/logo2.png" alt="GBS Logo"></a>
-    </div>
-    <button class="hamburger">☰</button>
-    <div class="overlay" id="overlay">
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="services.html">Services</a></li>
-        <li><a href="premium-listings.html">Premium Listings</a></li>
-        <li><a href="menu.html">Design Your Menu</a></li>
-        <li><a href="lookbook.html">Lookbook</a></li>
-        <li><a href="tonights-event.html">Tonight’s Event</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="admin.html" class="highlight">Admin</a></li>
-      </ul>
-    </div>
-  </header>
+  <header id="site-header"></header>
 
   <main>
-    <h1>Admin Panel</h1>
-    <p>Welcome to the admin section. Use the tools below to update cocktails, images, and listings.</p>
+    <h1>Admin Dashboard</h1>
+    <p>Upload new images to <code>images/_raw</code>, run the Python update script, and your site will refresh automatically.</p>
 
     <section>
-      <h2>Image Pipeline</h2>
-      <p>Drop new images into <code>images/_raw/</code> and run <code>update_site.py</code> to process them automatically.</p>
-    </section>
-
-    <section>
-      <h2>Excel Import</h2>
-      <p>Upload your Excel file of drinks to <code>data/</code>. Then run <code>generate_json.py</code> to refresh <code>cocktails.json</code>.</p>
-    </section>
-
-    <section>
-      <h2>Flow Reference</h2>
+      <h2>Process Overview</h2>
       <ol>
-        <li>Add raw images → <code>images/_raw/</code></li>
-        <li>Run <code>update_site.py</code></li>
-        <li>Prepare Excel list of cocktails</li>
-        <li>Run <code>generate_json.py</code></li>
-        <li>Commit & push to GitHub</li>
+        <li>Upload new cocktails, beer, or equipment images to <code>images/_raw</code>.</li>
+        <li>Run <code>python update_site.py</code> locally to resize, watermark, and compress.</li>
+        <li>The script updates <code>cocktails.json</code> automatically.</li>
+        <li>Commit & push to GitHub.</li>
+        <li>Visit <a href="premium-listings.html">Premium Listings</a> to see changes live.</li>
       </ol>
     </section>
   </main>
