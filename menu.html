@@ -6,208 +6,55 @@
   <title>Design Your Menu - GBS9</title>
   <link rel="stylesheet" href="css/style.css">
   <script src="js/header.js" defer></script>
-  <style>
-    body {
-      background: linear-gradient(to bottom right, #1f1f1f, #2c2c2c);
-      color: #f5f5f5;
-      font-family: 'Poppins', sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-    main {
-      max-width: 1000px;
-      margin: auto;
-      padding: 2rem;
-      text-align: center;
-    }
-    h1 {
-      margin-bottom: 0.5rem;
-      color: #ffcc66;
-    }
-    .description {
-      margin-bottom: 2rem;
-      font-size: 1rem;
-      opacity: 0.85;
-    }
-
-    /* Card stack */
-    #cardStack {
-      position: relative;
-      width: 320px;
-      height: 420px;
-      margin: 0 auto 1rem;
-      perspective: 1000px;
-    }
-    .card {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-      transition: transform 0.4s ease, opacity 0.4s ease;
-    }
-    .card img {
-      width: 100%;
-      height: 240px;
-      object-fit: cover;
-      border-radius: 12px;
-      margin-bottom: 1rem;
-      box-shadow: 0px 6px 20px rgba(0,0,0,0.5);
-    }
-    .card h2 {
-      margin: 0.5rem 0;
-      color: #fff;
-    }
-    .card p {
-      font-size: 0.9rem;
-      opacity: 0.85;
-    }
-
-    /* Buttons */
-    .buttons {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      margin-top: 1rem;
-    }
-    .buttons button {
-      background: #333;
-      border: none;
-      padding: 0.7rem 1.5rem;
-      border-radius: 30px;
-      font-size: 1rem;
-      color: #fff;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    .buttons button:hover {
-      background: #ffcc66;
-      color: #000;
-    }
-
-    /* Tabs */
-    .tabs {
-      margin-top: 3rem;
-    }
-    .tab-buttons {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      margin-bottom: 1rem;
-    }
-    .tab-buttons button {
-      padding: 0.6rem 1.2rem;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      background: #444;
-      color: #fff;
-      transition: 0.3s;
-    }
-    .tab-buttons button.active,
-    .tab-buttons button:hover {
-      background: #ffcc66;
-      color: #000;
-    }
-    .tab-content {
-      display: none;
-      text-align: left;
-    }
-    .tab-content.active {
-      display: block;
-    }
-    .menu-item {
-      display: flex;
-      align-items: center;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.15);
-      padding: 0.5rem 1rem;
-      margin-bottom: 0.5rem;
-      border-radius: 12px;
-    }
-    .menu-item img {
-      width: 50px;
-      height: 50px;
-      border-radius: 8px;
-      object-fit: cover;
-      margin-right: 1rem;
-      border: 2px solid #ffcc66;
-    }
-    .menu-item span {
-      font-weight: 600;
-      color: #fff;
-    }
-    .menu-item small {
-      display: block;
-      font-size: 0.8rem;
-      opacity: 0.75;
-    }
-  </style>
 </head>
 <body>
-  <div id="header"></div>
-
-<header class="navbar">
-  <nav>
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="services.html">Services</a></li>
-      <li><a href="premium-listings.html">Premium Listings</a></li>
-      <li class="logo"><a href="index.html"><img src="images/logo2.png" alt="GBS Logo" style="height:50px;"></a></li>
-      <li><a href="menu.html">Design Your Menu</a></li>
-      <li><a href="lookbook.html">Lookbook</a></li>
-      <li><a href="tonights-event.html" class="highlight">Tonight’s Event</a></li>
-      <li><a href="admin.html">Admin</a></li>
-    </ul>
-  </nav>
-</header>
-
+  <!-- Global Header -->
+  <header class="navbar">
+    <div class="logo">
+      <a href="index.html"><img src="images/logo2.png" alt="GBS Logo"></a>
+    </div>
+    <button class="hamburger">☰</button>
+    <div class="overlay" id="overlay">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="premium-listings.html">Premium Listings</a></li>
+        <li><a href="menu.html">Design Your Menu</a></li>
+        <li><a href="lookbook.html">Lookbook</a></li>
+        <li><a href="tonights-event.html">Tonight’s Event</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="admin.html" class="highlight">Admin</a></li>
+      </ul>
+    </div>
+  </header>
 
   <main>
     <h1>Design Your Menu</h1>
-    <p class="description">Swipe right (✅) to add a cocktail to your menu, or left (❌) to skip. Build your menu, then check your tabs below.</p>
+    <p style="text-align:center; margin-bottom:1.5rem; color:#ccc;">
+      Swipe through cocktails and build your own menu — click ✅ to add or ❌ to skip.
+    </p>
 
     <div id="cardStack"></div>
     <div class="buttons">
       <button onclick="dislikeCard()">❌ Dislike</button>
       <button onclick="likeCard()">✅ Like</button>
-      <button onclick="resetDeck()">🔄 Reset</button>
+      <button onclick="resetCards()">🔄 Reset</button>
     </div>
 
-    <!-- Tabs for Matches & Favourites -->
-    <div class="tabs">
-      <div class="tab-buttons">
-        <button class="active" onclick="openTab('matches')">Your Menu</button>
-        <button onclick="openTab('favourites')">Favourites</button>
-      </div>
-      <div id="matches" class="tab-content active">
-        <div id="menuList"></div>
-      </div>
-      <div id="favourites" class="tab-content">
-        <div id="favouritesList"></div>
-      </div>
-    </div>
+    <section id="yourMenu">
+      <h2>Your Menu</h2>
+      <div id="menuList"></div>
+    </section>
   </main>
 
   <script>
     let cocktails = [];
     let currentIndex = 0;
-    let menuList = [];
-    let favourites = [];
 
     async function loadCocktails() {
       try {
         const res = await fetch("data/cocktails.json");
-        const data = await res.json();
-        // flatten cocktails only
-        cocktails = data.cocktails.filter(d => d.image !== "coming-soon.jpg");
+        cocktails = await res.json();
         renderCard();
       } catch (err) {
         console.error("Error loading cocktails.json", err);
@@ -218,25 +65,21 @@
       const stack = document.getElementById("cardStack");
       stack.innerHTML = "";
       if (cocktails.length > 0) {
-        const drink = cocktails[currentIndex % cocktails.length]; // cycle continuously
+        const drink = cocktails[currentIndex % cocktails.length]; // loop through
         const card = document.createElement("div");
         card.className = "card";
         card.innerHTML = `
-          <img src="images/cocktails/${drink.image}" alt="${drink.name}">
+          <img src="images/cocktails/${drink.image}" alt="${drink.name}" onerror="this.src='images/coming-soon.jpg'">
           <h2>${drink.name}</h2>
           <p>${drink.short}</p>
         `;
         stack.appendChild(card);
-      } else {
-        stack.innerHTML = "<p>No cocktails available.</p>";
       }
     }
 
     function likeCard() {
       if (cocktails.length > 0) {
-        const drink = cocktails[currentIndex % cocktails.length];
-        menuList.push(drink);
-        updateMenuList();
+        addToMenu(cocktails[currentIndex % cocktails.length]);
         currentIndex++;
         renderCard();
       }
@@ -249,39 +92,24 @@
       }
     }
 
-    function resetDeck() {
+    function resetCards() {
       currentIndex = 0;
-      menuList = [];
-      updateMenuList();
+      document.getElementById("menuList").innerHTML = "";
       renderCard();
     }
 
-    function updateMenuList() {
-      const menuContainer = document.getElementById("menuList");
-      menuContainer.innerHTML = "";
-      menuList.forEach(drink => {
-        const item = document.createElement("div");
-        item.className = "menu-item";
-        item.innerHTML = `
-          <img src="images/cocktails/${drink.image}" alt="${drink.name}">
-          <div>
-            <span>${drink.name}</span>
-            <small>${drink.short}</small>
-          </div>
-        `;
-        menuContainer.appendChild(item);
-      });
-    }
-
-    function openTab(tabId) {
-      document.querySelectorAll(".tab-content").forEach(tab => {
-        tab.classList.remove("active");
-      });
-      document.querySelectorAll(".tab-buttons button").forEach(btn => {
-        btn.classList.remove("active");
-      });
-      document.getElementById(tabId).classList.add("active");
-      event.target.classList.add("active");
+    function addToMenu(drink) {
+      const menuList = document.getElementById("menuList");
+      const item = document.createElement("div");
+      item.className = "menu-item";
+      item.innerHTML = `
+        <img src="images/cocktails/${drink.image}" alt="${drink.name}" onerror="this.src='images/coming-soon.jpg'">
+        <div>
+          <span>${drink.name}</span>
+          <small>${drink.short}</small>
+        </div>
+      `;
+      menuList.appendChild(item);
     }
 
     loadCocktails();
