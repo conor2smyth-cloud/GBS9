@@ -37,93 +37,64 @@
   </main>
 
 <script>
-async function loadListings() {
-  try {
-    const res = await fetch('data/cocktails.json');
-    const data = await res.json();
+  async function loadListings() {
+    try {
+      const res = await fetch('data/cocktails.json');
+      const data = await res.json();
 
-    const cocktailGrid = document.getElementById('cocktailGrid');
-    const beerGrid = document.getElementById('beerGrid');
-    const equipmentGrid = document.getElementById('equipmentGrid');
-    const modal = document.getElementById("modal");
-    const modalImg = document.getElementById("modalImg");
-    const modalTitle = document.getElementById("modalTitle");
-    const modalDesc = document.getElementById("modalDesc");
-    const modalDetails = document.getElementById("modalDetails");
-    const closeBtn = document.querySelector(".close");
+      const cocktailGrid = document.getElementById('cocktailGrid');
+      const beerGrid = document.getElementById('beerGrid');
+      const equipmentGrid = document.getElementById('equipmentGrid');
+      const modal = document.getElementById("modal");
+      const modalImg = document.getElementById("modalImg");
+      const modalTitle = document.getElementById("modalTitle");
+      const modalDesc = document.getElementById("modalDesc");
+      const modalDetails = document.getElementById("modalDetails");
+      const closeBtn = document.querySelector(".close");
 
-    function createCard(item, type) {
-      if (item.image === "coming-soon.jpg") return "";
-      return `
-        <div class="card" data-type="${type}" data-name="${item.name}">
-          <img src="images/${type}/${item.image}" alt="${item.name}" 
-               onerror="this.src='images/coming-soon.jpg'">
-          <h3>${item.name}</h3>
-          <p>${item.short || ''}</p>
-          <button class="fav-btn">❤️ Add to Favourites</button>
-        </div>
-      `;
-    }
+      function createCard(item, type) {
+        return `
+          <div class="card" data-type="${type}" data-name="${item.name}">
+            <img src="images/${type}/${item.image}" alt="${item.name}" onerror="this.src='images/coming-soon.jpg'">
+            <h3>${item.name}</h3>
+            <p>${item.short}</p>
+          </div>
+        `;
+      }
 
-    cocktailGrid.innerHTML = data.cocktails.map(drink => createCard(drink, "cocktails")).join("");
-    beerGrid.innerHTML = data.beer.map(drink => createCard(drink, "beer")).join("");
-    equipmentGrid.innerHTML = data.equipment.map(eq => createCard(eq, "equipment")).join("");
+      cocktailGrid.innerHTML = data.cocktails.map(d => createCard(d, "cocktails")).join("");
+      beerGrid.innerHTML = data.beer.map(d => createCard(d, "beer")).join("");
+      equipmentGrid.innerHTML = data.equipment.map(d => createCard(d, "equipment")).join("");
 
-    // Delegation for card clicks (modal)
-    document.body.addEventListener("click", function(e) {
-      const card = e.target.closest(".card");
-      if (card && !e.target.classList.contains("fav-btn")) {
-        const type = card.getAttribute("data-type");
-        const name = card.getAttribute("data-name");
-        let item;
+      // Modal open/close
+      document.body.addEventListener("click", e => {
+        const card = e.target.closest(".card");
+        if (card) {
+          const type = card.getAttribute("data-type");
+          const name = card.getAttribute("data-name");
+          const item = data[type].find(d => d.name === name);
 
-        if (type === "cocktails") {
-          item = data.cocktails.find(d => d.name === name);
-        } else if (type === "beer") {
-          item = data.beer.find(d => d.name === name);
-        } else {
-          item = data.equipment.find(d => d.name === name);
-        }
-
-        if (item) {
           modalImg.src = `images/${type}/${item.image}`;
           modalTitle.textContent = item.name;
-          modalDesc.textContent = item.short || "";
+          modalDesc.textContent = item.short;
           modalDetails.innerHTML = `
             ${item.base ? `<strong>Base:</strong> ${item.base}<br>` : ""}
             ${item.glass ? `<strong>Glass:</strong> ${item.glass}<br>` : ""}
             ${item.ingredients ? `<strong>Ingredients:</strong> ${item.ingredients.join(", ")}<br>` : ""}
-            ${item.kegged ? `<strong>Kegged:</strong> ${item.kegged}` : ""}
           `;
           modal.style.display = "flex";
         }
-      }
-    });
+      });
 
-    // Close modal
-    closeBtn.onclick = () => modal.style.display = "none";
-    window.onclick = e => { if (e.target === modal) modal.style.display = "none"; };
+      closeBtn.onclick = () => modal.style.display = "none";
+      window.onclick = e => { if (e.target === modal) modal.style.display = "none"; };
+      window.addEventListener("keydown", e => { if (e.key === "Escape") modal.style.display = "none"; });
 
-    // Favourites
-    const favourites = [];
-    document.body.addEventListener("click", function(e) {
-      if (e.target.classList.contains("fav-btn")) {
-        const card = e.target.closest(".card");
-        const type = card.getAttribute("data-type");
-        const name = card.getAttribute("data-name");
-
-        if (!favourites.includes(name)) {
-          favourites.push(name);
-          alert(`${name} added to favourites!`);
-        }
-      }
-    });
-
-  } catch (err) {
-    console.error("Error loading listings:", err);
+    } catch (err) {
+      console.error("Error loading listings:", err);
+    }
   }
-}
-loadListings();
+  loadListings();
 </script>
 </body>
 </html>

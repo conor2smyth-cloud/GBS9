@@ -23,6 +23,11 @@
     <button onclick="likeCard()">✅ Like</button>
   </div>
 
+<div style="margin-top: 1rem;">
+  <button onclick="resetGame()">🔄 Reset Game</button>
+</div>
+
+
   <!-- Tabs -->
   <section id="results" style="margin-top:3rem;">
     <div class="tabs">
@@ -60,25 +65,21 @@
       const card = document.createElement("div");
       card.className = "card";
       card.innerHTML = `
-        <img src="images/cocktails/${drink.image}" alt="${drink.name}">
+        <img src="images/cocktails/${drink.image}" alt="${drink.name}" onerror="this.src='images/coming-soon.jpg'">
         <h2>${drink.name}</h2>
         <p>${drink.short}</p>
       `;
+      enableSwipe(card);
       stack.appendChild(card);
-
-      // Attach swipe gestures
-      const hammer = new Hammer(card);
-      hammer.on("swipeleft", () => dislikeCard());
-      hammer.on("swiperight", () => likeCard());
     } else {
-      stack.innerHTML = "<p>🎉 You've gone through all cocktails!</p>";
+      stack.innerHTML = "<p>🎉 You’ve seen all cocktails!</p>";
     }
   }
 
   function likeCard() {
     if (currentIndex < cocktails.length) {
       matchedMenu.push(cocktails[currentIndex]);
-      updateMatchedMenu();
+      updateMenuList("matchedList", matchedMenu);
       currentIndex++;
       renderCard();
     }
@@ -91,50 +92,58 @@
     }
   }
 
-  function addToFavourites(drink) {
-    if (!favourites.some(f => f.name === drink.name)) {
-      favourites.push(drink);
-      updateFavourites();
-    }
+  function addFavourite(drink) {
+    favourites.push(drink);
+    updateMenuList("favouritesList", favourites);
   }
 
-  function updateMatchedMenu() {
-    const container = document.getElementById("matched");
-    container.innerHTML = matchedMenu.map(d => `
-      <div class="menu-item">
-        <img src="images/cocktails/${d.image}" alt="${d.name}">
+  function updateMenuList(listId, items) {
+    const container = document.getElementById(listId);
+    container.innerHTML = "";
+    items.forEach(drink => {
+      const item = document.createElement("div");
+      item.className = "menu-item";
+      item.innerHTML = `
+        <img src="images/cocktails/${drink.image}" alt="${drink.name}">
         <div>
-          <span>${d.name}</span>
-          <small>${d.short}</small>
+          <span>${drink.name}</span>
+          <small>${drink.short}</small>
         </div>
-        <button onclick='addToFavourites(${JSON.stringify(d)})'>❤️</button>
-      </div>
-    `).join("");
-  }
-
-  function updateFavourites() {
-    const container = document.getElementById("favourites");
-    container.innerHTML = favourites.map(d => `
-      <div class="menu-item">
-        <img src="images/cocktails/${d.image}" alt="${d.name}">
-        <div>
-          <span>${d.name}</span>
-          <small>${d.short}</small>
-        </div>
-      </div>
-    `).join("");
-  }
-
-  // Tabs
-  document.querySelectorAll(".tab-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-
-      document.querySelectorAll(".tab-content").forEach(tab => tab.style.display = "none");
-      document.getElementById(btn.dataset.tab).style.display = "block";
+      `;
+      container.appendChild(item);
     });
-  });
+  }
+
+  function resetGame() {
+    currentIndex = 0;
+    matchedMenu = [];
+    favourites = [];
+    document.getElementById("matchedList").innerHTML = "";
+    document.getElementById("favouritesList").innerHTML = "";
+    renderCard();
+  }
+
+  // Swipe support
+  function enableSwipe(card) {
+    let startX = 0;
+    card.addEventListener("touchstart", e => startX = e.touches[0].clientX);
+    card.addEventListener("touchend", e => {
+      let diff = e.changedTouches[0].clientX - startX;
+      if (diff > 50) likeCard();
+      else if (diff < -50) dislikeCard();
+    });
+
+    // Desktop drag (optional)
+    let isDown = false;
+    card.addEventListener("mousedown", e => { isDown = true; startX = e.clientX; });
+    card.addEventListener("mouseup", e => {
+      if (!isDown) return;
+      let diff = e.clientX - startX;
+      if (diff > 50) likeCard();
+      else if (diff < -50) dislikeCard();
+      isDown = false;
+    });
+  }
 
   loadCocktails();
 </script>
