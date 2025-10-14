@@ -4,72 +4,170 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tonight's Event - GBS9</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=20251013">
   <script src="js/header.js" defer></script>
 </head>
 <body>
+  <!-- Global Header -->
   <header id="site-header"></header>
 
   <main>
-    <h1>Tonight's Event</h1>
-    <p style="text-align:center;">Enter passcode to access event content.</p>
+    <h1>Tonight’s Event</h1>
 
-    <div id="passcodeSection" style="text-align:center; margin-top:2rem;">
-      <input type="password" id="passcode" placeholder="Enter passcode">
-      <button onclick="checkPasscode()">Submit</button>
-      <p id="errorMsg" style="color:red;"></p>
-    </div>
+    <!-- Accordion -->
+    <div class="accordion">
+      <div class="accordion-item">
+        <button class="accordion-header">🍸 Sip</button>
+        <div class="accordion-content">
+          <h2>Cocktail Menu</h2>
+          <div id="eventMenu"></div>
+        </div>
+      </div>
 
-    <div id="eventContent" style="display:none; margin-top:2rem;">
-      <!-- Accordion -->
-      <div class="accordion">
-        <div class="accordion-item">
-          <button class="accordion-header">Sip</button>
-          <div class="accordion-content">
-            <p>Tonight’s featured cocktails:</p>
-            <ul id="cocktailList"></ul>
+      <div class="accordion-item">
+        <button class="accordion-header">💸 Tip</button>
+        <div class="accordion-content">
+          <p>Thank you for joining us! Tips are always appreciated and help our bartenders create unforgettable nights.</p>
+          <div class="qr-codes">
+            <div>
+              <h3>Revolut</h3>
+              <img src="images/qr-revolut.png" alt="Revolut QR" />
+            </div>
+            <div>
+              <h3>Apple Pay</h3>
+              <img src="images/qr-applepay.png" alt="Apple Pay QR" />
+            </div>
           </div>
         </div>
-        <div class="accordion-item">
-          <button class="accordion-header">Tip</button>
-          <div class="accordion-content">
-            <p>Thank you for supporting our bartenders! Scan one of the QR codes to leave a tip via Revolut or Apple Pay:</p>
-            <img src="images/qr-revolut.png" alt="Revolut QR" width="150">
-            <img src="images/qr-applepay.png" alt="Apple Pay QR" width="150">
-          </div>
-        </div>
-        <div class="accordion-item">
-          <button class="accordion-header">Celebrate</button>
-          <div class="accordion-content">
-            <p>Join our Spotify Jam playlist and add your favorite songs!</p>
-            <a href="https://open.spotify.com" target="_blank">Open Spotify Playlist</a>
-          </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-header">🎶 Celebrate</button>
+        <div class="accordion-content">
+          <p>Keep the party going! Join our curated <a href="https://open.spotify.com/" target="_blank">Spotify Jam Playlist</a> and add your favorite tracks.</p>
         </div>
       </div>
     </div>
   </main>
 
+  <!-- Floating Spin Wheel Button -->
+  <button id="spinWheelBtn">🎡 Not sure? Spin the Wheel!</button>
+
+  <!-- Modal -->
+  <div id="wheelModal" class="modal">
+    <div class="modal-content wheel-modal">
+      <button class="close-overlay">&times;</button>
+      <h2>Spin the Cocktail Wheel!</h2>
+      <canvas id="wheelCanvas" width="350" height="350"></canvas>
+      <button id="spinBtn" class="btn">Spin</button>
+      <p id="resultText"></p>
+    </div>
+  </div>
+
   <script>
-    function checkPasscode() {
-      const input = document.getElementById("passcode").value;
-      if (input === "0000") {
-        document.getElementById("passcodeSection").style.display = "none";
-        document.getElementById("eventContent").style.display = "block";
-      } else {
-        document.getElementById("errorMsg").textContent = "Incorrect passcode";
+    // Accordion toggle
+    document.querySelectorAll(".accordion-header").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const item = btn.parentElement;
+        const open = document.querySelector(".accordion-item.active");
+        if (open && open !== item) open.classList.remove("active");
+        item.classList.toggle("active");
+      });
+    });
+
+    // Load event menu (simple JSON example)
+    async function loadMenu() {
+      try {
+        const res = await fetch("data/cocktails.json");
+        const data = await res.json();
+        const container = document.getElementById("eventMenu");
+        container.innerHTML = data.cocktails.slice(0, 5).map(c => `
+          <div class="menu-entry">
+            <h3>${c.name}</h3>
+            <p><em>${c.short}</em></p>
+            <p>${c.ingredients ? c.ingredients.join(", ") : ""}</p>
+          </div>
+        `).join("");
+      } catch (err) {
+        console.error("Error loading cocktails:", err);
+      }
+    }
+    loadMenu();
+
+    // Spin the Wheel
+    const spinBtn = document.getElementById("spinBtn");
+    const resultText = document.getElementById("resultText");
+    const wheelCanvas = document.getElementById("wheelCanvas");
+    const ctx = wheelCanvas.getContext("2d");
+    const modal = document.getElementById("wheelModal");
+    const wheelBtn = document.getElementById("spinWheelBtn");
+    const closeOverlay = document.querySelector(".close-overlay");
+
+    let options = ["Whiskey Sour", "Espresso Martini", "Margarita", "Old Fashioned", "Gin & Tonic", "Rum Punch"];
+    let startAngle = 0;
+    let arc = Math.PI / (options.length / 2);
+    let spinAngle = 0;
+    let spinTime = 0;
+    let spinTimeTotal = 0;
+
+    function drawRouletteWheel() {
+      const outsideRadius = 150;
+      const textRadius = 120;
+      const insideRadius = 40;
+      ctx.clearRect(0,0,350,350);
+      ctx.strokeStyle = "black";
+      ctx.lineWidth = 2;
+      ctx.font = "14px Poppins";
+
+      for(let i=0; i<options.length; i++) {
+        let angle = startAngle + i*arc;
+        ctx.fillStyle = i % 2 ? "#ffcc66" : "#ff9966";
+        ctx.beginPath();
+        ctx.arc(175,175,outsideRadius, angle, angle+arc, false);
+        ctx.arc(175,175,insideRadius, angle+arc, angle, true);
+        ctx.fill();
+        ctx.save();
+        ctx.fillStyle = "#fff";
+        ctx.translate(175 + Math.cos(angle+arc/2)*textRadius,
+                      175 + Math.sin(angle+arc/2)*textRadius);
+        ctx.rotate(angle+arc/2+Math.PI/2);
+        ctx.fillText(options[i], -ctx.measureText(options[i]).width/2, 0);
+        ctx.restore();
       }
     }
 
-    // Accordion toggle
-    document.addEventListener("click", e => {
-      if (e.target.classList.contains("accordion-header")) {
-        const item = e.target.parentElement;
-        document.querySelectorAll(".accordion-item").forEach(i => {
-          if (i !== item) i.classList.remove("active");
-        });
-        item.classList.toggle("active");
+    function rotateWheel() {
+      spinTime += 30;
+      if(spinTime >= spinTimeTotal) {
+        stopRotateWheel();
+        return;
       }
+      const spinAngleInc = spinAngle - (spinTime/spinTimeTotal)*spinAngle;
+      startAngle += (spinAngleInc * Math.PI / 180);
+      drawRouletteWheel();
+      requestAnimationFrame(rotateWheel);
+    }
+
+    function stopRotateWheel() {
+      const degrees = startAngle * 180/Math.PI + 90;
+      const arcd = arc * 180/Math.PI;
+      const index = Math.floor((360 - degrees % 360) / arcd);
+      resultText.innerHTML = "You got: " + options[index];
+    }
+
+    spinBtn.addEventListener("click", () => {
+      spinAngle = Math.random()*10 + 10;
+      spinTime = 0;
+      spinTimeTotal = Math.random()*3000 + 4000;
+      rotateWheel();
     });
+
+    drawRouletteWheel();
+
+    // Modal open/close
+    wheelBtn.onclick = () => modal.style.display = "flex";
+    closeOverlay.onclick = () => modal.style.display = "none";
+    modal.onclick = e => { if (e.target === modal) modal.style.display = "none"; };
   </script>
 </body>
 </html>
