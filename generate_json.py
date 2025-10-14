@@ -1,44 +1,31 @@
-import os
 import json
+import os
 
-# Directories
-RAW_DIRS = {
-    "cocktails": "images/_raw/cocktails",
-    "beer": "images/_raw/beer",
-    "equipment": "images/_raw/equipment"
-}
-OUTPUT_JSON = "data/cocktails.json"
+def generate_combined_json():
+    # Load cocktails.json
+    with open("data/cocktails.json", "r", encoding="utf-8") as f:
+        cocktails = json.load(f)
 
-def generate_entries():
-    data = {"cocktails": [], "beer": [], "equipment": []}
+    # Beer and equipment placeholders (populate however you like)
+    beer = [
+        {"name": "Guinness", "image": "guinness.jpg", "short": "Iconic Irish stout"},
+        {"name": "Heineken", "image": "heineken.jpg", "short": "Crisp Dutch lager"}
+    ]
+    equipment = [
+        {"name": "Cocktail Shaker", "image": "shaker.jpg", "short": "Essential for mixing drinks"}
+    ]
 
-    for category, folder in RAW_DIRS.items():
-        if not os.path.exists(folder):
-            print(f"⚠️ Skipping missing folder: {folder}")
-            continue
+    # Create drinks.json with cocktails pulled directly
+    combined = {
+        "cocktails": cocktails,
+        "beer": beer,
+        "equipment": equipment
+    }
 
-        for filename in os.listdir(folder):
-            if filename.lower().endswith((".jpg", ".jpeg", ".png")):
-                name = os.path.splitext(filename)[0].replace("-", " ").title()
-                entry = {
-                    "name": name,
-                    "base": "Unknown" if category == "cocktails" else None,
-                    "glass": "Unknown" if category == "cocktails" else None,
-                    "image": filename,
-                    "ingredients": [],
-                    "short": f"{name} – coming soon!",
-                    "kegged": "No" if category in ["cocktails", "beer"] else None,
-                    "type": category
-                }
-                data[category].append(entry)
+    with open("data/drinks.json", "w", encoding="utf-8") as f:
+        json.dump(combined, f, indent=2, ensure_ascii=False)
 
-    return data
+    print("✅ drinks.json updated successfully!")
 
 if __name__ == "__main__":
-    data = generate_entries()
-    os.makedirs(os.path.dirname(OUTPUT_JSON), exist_ok=True)
-
-    with open(OUTPUT_JSON, "w") as f:
-        json.dump(data, f, indent=2)
-
-    print(f"✅ cocktails.json regenerated with {sum(len(v) for v in data.values())} entries")
+    generate_combined_json()

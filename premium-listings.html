@@ -13,6 +13,13 @@
   <main class="content-wrapper">
     <h1>Premium Listings</h1>
 
+<div class="intro" style="margin-bottom:2rem; text-align:center; color:#ddd;">
+  <p>✨ Welcome to our Premium Listings!  
+  Click any drink to learn more, or ❤️ swipe right/add to favourites to save it to your favourites menu in 'Build your Menu'.  
+  Use the filters on the right to refine your search.</p>
+</div>
+
+
     <section id="cocktails">
       <h2>🍸 Cocktails</h2>
       <div class="grid" id="cocktailGrid"></div>
@@ -29,28 +36,94 @@
     </section>
   </main>
 
-  <script>
-    async function loadListings() {
-      const res = await fetch("data/cocktails.json");
-      const data = await res.json();
+<script>
+async function loadListings() {
+  try {
+    const res = await fetch('data/cocktails.json');
+    const data = await res.json();
 
-      function createCard(item, type) {
-        if (item.image === "coming-soon.jpg") return "";
-        return `
-          <div class="card">
-            <img src="images/${type}/${item.image}" alt="${item.name}" onerror="this.src='images/coming-soon.jpg'">
-            <h3>${item.name}</h3>
-            <p>${item.short || ""}</p>
-          </div>
-        `;
-      }
+    const cocktailGrid = document.getElementById('cocktailGrid');
+    const beerGrid = document.getElementById('beerGrid');
+    const equipmentGrid = document.getElementById('equipmentGrid');
+    const modal = document.getElementById("modal");
+    const modalImg = document.getElementById("modalImg");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalDesc = document.getElementById("modalDesc");
+    const modalDetails = document.getElementById("modalDetails");
+    const closeBtn = document.querySelector(".close");
 
-      document.getElementById("cocktailGrid").innerHTML = data.cocktails.map(c => createCard(c, "cocktails")).join("");
-      document.getElementById("beerGrid").innerHTML = data.beer.map(b => createCard(b, "beer")).join("");
-      document.getElementById("equipmentGrid").innerHTML = data.equipment.map(e => createCard(e, "equipment")).join("");
+    function createCard(item, type) {
+      if (item.image === "coming-soon.jpg") return "";
+      return `
+        <div class="card" data-type="${type}" data-name="${item.name}">
+          <img src="images/${type}/${item.image}" alt="${item.name}" 
+               onerror="this.src='images/coming-soon.jpg'">
+          <h3>${item.name}</h3>
+          <p>${item.short || ''}</p>
+          <button class="fav-btn">❤️ Add to Favourites</button>
+        </div>
+      `;
     }
 
-    loadListings();
-  </script>
+    cocktailGrid.innerHTML = data.cocktails.map(drink => createCard(drink, "cocktails")).join("");
+    beerGrid.innerHTML = data.beer.map(drink => createCard(drink, "beer")).join("");
+    equipmentGrid.innerHTML = data.equipment.map(eq => createCard(eq, "equipment")).join("");
+
+    // Delegation for card clicks (modal)
+    document.body.addEventListener("click", function(e) {
+      const card = e.target.closest(".card");
+      if (card && !e.target.classList.contains("fav-btn")) {
+        const type = card.getAttribute("data-type");
+        const name = card.getAttribute("data-name");
+        let item;
+
+        if (type === "cocktails") {
+          item = data.cocktails.find(d => d.name === name);
+        } else if (type === "beer") {
+          item = data.beer.find(d => d.name === name);
+        } else {
+          item = data.equipment.find(d => d.name === name);
+        }
+
+        if (item) {
+          modalImg.src = `images/${type}/${item.image}`;
+          modalTitle.textContent = item.name;
+          modalDesc.textContent = item.short || "";
+          modalDetails.innerHTML = `
+            ${item.base ? `<strong>Base:</strong> ${item.base}<br>` : ""}
+            ${item.glass ? `<strong>Glass:</strong> ${item.glass}<br>` : ""}
+            ${item.ingredients ? `<strong>Ingredients:</strong> ${item.ingredients.join(", ")}<br>` : ""}
+            ${item.kegged ? `<strong>Kegged:</strong> ${item.kegged}` : ""}
+          `;
+          modal.style.display = "flex";
+        }
+      }
+    });
+
+    // Close modal
+    closeBtn.onclick = () => modal.style.display = "none";
+    window.onclick = e => { if (e.target === modal) modal.style.display = "none"; };
+
+    // Favourites
+    const favourites = [];
+    document.body.addEventListener("click", function(e) {
+      if (e.target.classList.contains("fav-btn")) {
+        const card = e.target.closest(".card");
+        const type = card.getAttribute("data-type");
+        const name = card.getAttribute("data-name");
+
+        if (!favourites.includes(name)) {
+          favourites.push(name);
+          alert(`${name} added to favourites!`);
+        }
+      }
+    });
+
+  } catch (err) {
+    console.error("Error loading listings:", err);
+  }
+}
+loadListings();
+</script>
 </body>
 </html>
