@@ -10,140 +10,149 @@
 <body>
   <header id="site-header"></header>
 
-  
-<main>
-  <h1>Design Your Menu</h1>
-  <p style="text-align:center; margin-bottom:1rem; color:#ddd;">
-    Swipe left ❌ to skip, swipe right ❤️ to save, or use the buttons below.
-  </p>
+  <main>
+    <h1>Design Your Menu</h1>
+    <p style="text-align:center; margin-bottom:1rem; color:#ddd;">
+      Swipe left ❌ to skip, swipe right ❤️ to save, or use the buttons below.
+    </p>
 
-  <div id="cardStack"></div>
-  <div class="buttons">
-    <button onclick="dislikeCard()">❌ Dislike</button>
-    <button onclick="likeCard()">✅ Like</button>
-  </div>
-
-<div style="margin-top: 1rem;">
-  <button onclick="resetGame()">🔄 Reset Game</button>
-</div>
-
-
-  <!-- Tabs -->
-  <section id="results" style="margin-top:3rem;">
-    <div class="tabs">
-      <button class="tab-btn active" data-tab="matched">Matched Menu</button>
-      <button class="tab-btn" data-tab="favourites">Favourites</button>
+    <div id="cardStack"></div>
+    <div class="buttons" style="text-align:center; margin-top:1rem;">
+      <button onclick="dislikeCard()">❌ Dislike</button>
+      <button onclick="likeCard()">✅ Like</button>
     </div>
-    <div class="tab-content" id="matched"></div>
-    <div class="tab-content" id="favourites" style="display:none;"></div>
-  </section>
-</main>
 
-<!-- Hammer.js for swipe -->
-<script src="https://hammerjs.github.io/dist/hammer.min.js"></script>
-<script>
-  let cocktails = [];
-  let currentIndex = 0;
-  let matchedMenu = [];
-  let favourites = [];
+    <div style="text-align:center; margin-top: 1rem;">
+      <button onclick="resetGame()">🔄 Reset Game</button>
+    </div>
 
-  async function loadCocktails() {
-    try {
-      const res = await fetch("data/cocktails.json");
-      cocktails = await res.json();
-      renderCard();
-    } catch (err) {
-      console.error("Error loading cocktails.json", err);
+    <!-- Tabs -->
+    <section id="results" style="margin-top:3rem;">
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="matched">Matched Menu</button>
+        <button class="tab-btn" data-tab="favourites">Favourites</button>
+      </div>
+      <div class="tab-content" id="matched"></div>
+      <div class="tab-content" id="favourites" style="display:none;"></div>
+    </section>
+  </main>
+
+  <script>
+    let cocktails = [];
+    let currentIndex = 0;
+    let matchedMenu = [];
+    let favourites = [];
+
+    async function loadCocktails() {
+      try {
+        const res = await fetch("data/cocktails.json");
+        cocktails = await res.json();
+        renderCard();
+      } catch (err) {
+        console.error("Error loading cocktails.json", err);
+      }
     }
-  }
 
-  function renderCard() {
-    const stack = document.getElementById("cardStack");
-    stack.innerHTML = "";
-    if (currentIndex < cocktails.length) {
-      const drink = cocktails[currentIndex];
-      const card = document.createElement("div");
-      card.className = "card";
-      card.innerHTML = `
-        <img src="images/cocktails/${drink.image}" alt="${drink.name}" onerror="this.src='images/coming-soon.jpg'">
-        <h2>${drink.name}</h2>
-        <p>${drink.short}</p>
-      `;
-      enableSwipe(card);
-      stack.appendChild(card);
-    } else {
-      stack.innerHTML = "<p>🎉 You’ve seen all cocktails!</p>";
+    function renderCard() {
+      const stack = document.getElementById("cardStack");
+      stack.innerHTML = "";
+      if (currentIndex < cocktails.length) {
+        const drink = cocktails[currentIndex];
+        const card = document.createElement("div");
+        card.className = "card";
+        card.style.textAlign = "center";
+        card.innerHTML = `
+          <img src="images/cocktails/${drink.image}" alt="${drink.name}" 
+               onerror="this.src='images/coming-soon.jpg'" 
+               style="max-width:250px; border-radius:12px; margin-bottom:1rem;">
+          <h2>${drink.name}</h2>
+          <p>${drink.short}</p>
+          <button onclick="addFavourite(cocktails[currentIndex])">⭐ Add to Favourites</button>
+        `;
+        enableSwipe(card);
+        stack.appendChild(card);
+      } else {
+        stack.innerHTML = "<p>🎉 You’ve seen all cocktails!</p>";
+      }
     }
-  }
 
-  function likeCard() {
-    if (currentIndex < cocktails.length) {
-      matchedMenu.push(cocktails[currentIndex]);
-      updateMenuList("matchedList", matchedMenu);
-      currentIndex++;
-      renderCard();
+    function likeCard() {
+      if (currentIndex < cocktails.length) {
+        matchedMenu.push(cocktails[currentIndex]);
+        updateMenuList("matched", matchedMenu);
+        currentIndex++;
+        renderCard();
+      }
     }
-  }
 
-  function dislikeCard() {
-    if (currentIndex < cocktails.length) {
-      currentIndex++;
-      renderCard();
+    function dislikeCard() {
+      if (currentIndex < cocktails.length) {
+        currentIndex++;
+        renderCard();
+      }
     }
-  }
 
-  function addFavourite(drink) {
-    favourites.push(drink);
-    updateMenuList("favouritesList", favourites);
-  }
+    function addFavourite(drink) {
+      favourites.push(drink);
+      updateMenuList("favourites", favourites);
+    }
 
-  function updateMenuList(listId, items) {
-    const container = document.getElementById(listId);
-    container.innerHTML = "";
-    items.forEach(drink => {
-      const item = document.createElement("div");
-      item.className = "menu-item";
-      item.innerHTML = `
-        <img src="images/cocktails/${drink.image}" alt="${drink.name}">
-        <div>
-          <span>${drink.name}</span>
+    function updateMenuList(listId, items) {
+      const container = document.getElementById(listId);
+      container.innerHTML = "";
+      items.forEach(drink => {
+        const item = document.createElement("div");
+        item.className = "menu-item";
+        item.style.marginBottom = "0.8rem";
+        item.innerHTML = `
+          <strong>${drink.name}</strong><br>
           <small>${drink.short}</small>
-        </div>
-      `;
-      container.appendChild(item);
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    function resetGame() {
+      currentIndex = 0;
+      matchedMenu = [];
+      favourites = [];
+      document.getElementById("matched").innerHTML = "";
+      document.getElementById("favourites").innerHTML = "";
+      renderCard();
+    }
+
+    // Swipe support
+    function enableSwipe(card) {
+      let startX = 0;
+      card.addEventListener("touchstart", e => startX = e.touches[0].clientX);
+      card.addEventListener("touchend", e => {
+        let diff = e.changedTouches[0].clientX - startX;
+        if (diff > 50) likeCard();
+        else if (diff < -50) dislikeCard();
+      });
+
+      let isDown = false;
+      card.addEventListener("mousedown", e => { isDown = true; startX = e.clientX; });
+      card.addEventListener("mouseup", e => {
+        if (!isDown) return;
+        let diff = e.clientX - startX;
+        if (diff > 50) likeCard();
+        else if (diff < -50) dislikeCard();
+        isDown = false;
+      });
+    }
+
+    // Tabs
+    document.addEventListener("click", e => {
+      if (e.target.classList.contains("tab-btn")) {
+        document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
+        e.target.classList.add("active");
+        document.querySelectorAll(".tab-content").forEach(c => c.style.display = "none");
+        document.getElementById(e.target.dataset.tab).style.display = "block";
+      }
     });
-  }
 
-  function resetGame() {
-    currentIndex = 0;
-    matchedMenu = [];
-    favourites = [];
-    document.getElementById("matchedList").innerHTML = "";
-    document.getElementById("favouritesList").innerHTML = "";
-    renderCard();
-  }
-
-  // Swipe support
-  function enableSwipe(card) {
-    let startX = 0;
-    card.addEventListener("touchstart", e => startX = e.touches[0].clientX);
-    card.addEventListener("touchend", e => {
-      let diff = e.changedTouches[0].clientX - startX;
-      if (diff > 50) likeCard();
-      else if (diff < -50) dislikeCard();
-    });
-
-    // Desktop drag (optional)
-    let isDown = false;
-    card.addEventListener("mousedown", e => { isDown = true; startX = e.clientX; });
-    card.addEventListener("mouseup", e => {
-      if (!isDown) return;
-      let diff = e.clientX - startX;
-      if (diff > 50) likeCard();
-      else if (diff < -50) dislikeCard();
-      isDown = false;
-    });
-  }
-
-  loadCocktails();
-</script>
+    loadCocktails();
+  </script>
+</body>
+</html>
