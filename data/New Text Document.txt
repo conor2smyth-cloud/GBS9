@@ -1,0 +1,43 @@
+{
+  "draft": [
+    { "name": "Guinness", "image": "guinness.jpg", "available": true },
+    { "name": "Heineken", "image": "heineken.jpg", "available": true },
+    { "name": "Coors", "image": "coors.jpg", "available": false },
+    { "name": "Harp", "image": "harp.jpg", "available": false },
+    { "name": "Smithwicks", "image": "smithwicks.jpg", "available": false }
+  ],
+  "spirits": [
+    { "name": "Vodka", "image": "vodka.jpg", "available": true },
+    { "name": "Whiskey", "image": "whiskey.jpg", "available": true },
+    { "name": "Gin", "image": "gin.jpg", "available": false },
+    { "name": "Rum", "image": "rum.jpg", "available": false },
+    { "name": "Tequila", "image": "tequila.jpg", "available": false }
+  ],
+  "cocktails": [
+    {
+      "name": "Whiskey Sour",
+      "image": "cocktail-whiskey-sour.jpg",
+      "ingredients": ["Whiskey", "Lemon Juice", "Simple Syrup"],
+      "available": true
+    },
+    {
+      "name": "Espresso Martini",
+      "image": "cocktail-espresso-martini.jpg",
+      "ingredients": ["Vodka", "Coffee Liqueur", "Espresso"],
+      "available": true
+    },
+    {
+      "name": "Margarita",
+      "image": "cocktail-margarita.jpg",
+      "ingredients": ["Tequila", "Cointreau", "Lime Juice"],
+      "available": false
+    }
+  ],
+  "mixers": [
+    { "name": "Coke", "image": "coke.jpg", "available": true },
+    { "name": "Tonic", "image": "tonic.jpg", "available": true },
+    { "name": "Soda Water", "image": "soda.jpg", "available": true },
+    { "name": "Ginger Ale", "image": "ginger-ale.jpg", "available": false },
+    { "name": "Orange Juice", "image": "oj.jpg", "available": false }
+  ]
+}
