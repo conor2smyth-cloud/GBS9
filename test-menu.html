@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Menu - GBS9</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/header.js" defer></script>
+  <style>
+    main { max-width: 1000px; margin: auto; padding: 2rem; }
+    .accordion { margin: 2rem 0; }
+    .accordion-item { border: 1px solid rgba(255,255,255,0.15); margin-bottom: 0.5rem; border-radius: 6px; overflow: hidden; }
+    .accordion-header { padding: 1rem; background: rgba(255,204,102,0.1); color: #ffcc66; cursor: pointer; }
+    .accordion-content { display: none; padding: 1rem; background: rgba(255,255,255,0.05); }
+    .accordion-item.active .accordion-content { display: block; }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
+    .card { background: rgba(255,255,255,0.06); padding: 1rem; border-radius: 8px; text-align: center; }
+    .card img { width: 100%; height: 150px; object-fit: cover; border-radius: 6px; margin-bottom: 0.5rem; }
+
+    .toggles { margin-top: 3rem; padding: 1rem; background: rgba(0,0,0,0.4); border-radius: 8px; }
+    .toggles h2 { margin-bottom: 1rem; color: #ffcc66; }
+    .toggle-list { display: flex; flex-wrap: wrap; gap: 1rem; }
+    .toggle-item { background: rgba(255,255,255,0.05); padding: 0.5rem 1rem; border-radius: 6px; }
+  </style>
+</head>
+<body>
+  <header id="site-header"></header>
+
+  <main>
+    <h1>Test Menu</h1>
+
+    <div class="accordion">
+      <div class="accordion-item">
+        <div class="accordion-header">🍺 Draft</div>
+        <div class="accordion-content" id="draft"></div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header">🥃 Spirits</div>
+        <div class="accordion-content" id="spirits"></div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header">🍸 Cocktails</div>
+        <div class="accordion-content" id="cocktails"></div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header">🥤 Mixers</div>
+        <div class="accordion-content" id="mixers"></div>
+      </div>
+    </div>
+
+    <!-- Toggles -->
+    <div class="toggles">
+      <h2>Admin Toggles (Test Only)</h2>
+      <div id="togglePanel" class="toggle-list"></div>
+    </div>
+  </main>
+
+  <script>
+    async function loadMenu() {
+      const res = await fetch("data/drinks.json");
+      const data = await res.json();
+
+      function renderGrid(items, containerId, type) {
+        const container = document.getElementById(containerId);
+        container.innerHTML = `
+          <div class="grid">
+            ${items.filter(i => i.available).map(i => `
+              <div class="card">
+                <img src="images/${type}/${i.image}" alt="${i.name}" onerror="this.src='images/coming-soon.jpg'">
+                <h3>${i.name}</h3>
+                ${i.ingredients ? `<p>${i.ingredients.join(", ")}</p>` : ""}
+              </div>
+            `).join("")}
+          </div>
+        `;
+      }
+
+      function renderToggles(items, type) {
+        return items.map((i, idx) => `
+          <div class="toggle-item">
+            <label>
+              <input type="checkbox" ${i.available ? "checked" : ""} 
+                onchange="toggleDrink('${type}', ${idx}, this.checked)">
+              ${i.name}
+            </label>
+          </div>
+        `).join("");
+      }
+
+      // Render sections
+      renderGrid(data.draft, "draft", "beer");
+      renderGrid(data.spirits, "spirits", "spirits");
+      renderGrid(data.cocktails, "cocktails", "cocktails");
+      renderGrid(data.mixers, "mixers", "mixers");
+
+      // Render toggles
+      document.getElementById("togglePanel").innerHTML = `
+        ${renderToggles(data.draft, "draft")}
+        ${renderToggles(data.spirits, "spirits")}
+        ${renderToggles(data.cocktails, "cocktails")}
+        ${renderToggles(data.mixers, "mixers")}
+      `;
+
+      // Save for global
+      window.menuData = data;
+    }
+
+    function toggleDrink(type, index, available) {
+      window.menuData[type][index].available = available;
+      // Re-render
+      loadMenu();
+    }
+
+    // Accordion logic
+    document.addEventListener("click", e => {
+      if (e.target.classList.contains("accordion-header")) {
+        const item = e.target.parentElement;
+        const openItem = document.querySelector(".accordion-item.active");
+        if (openItem && openItem !== item) openItem.classList.remove("active");
+        item.classList.toggle("active");
+      }
+    });
+
+    loadMenu();
+  </script>
+</body>
+</html>
