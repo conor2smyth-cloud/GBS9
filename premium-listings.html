@@ -6,7 +6,8 @@
   <title>Premium Listings - GBS9</title>
   <link rel="stylesheet" href="css/style.css">
   <script src="js/header.js" defer></script>
-  <!-- BENCHMARK VERSION: Stable baseline as of 2025-10-15. Remove this note on future updates. -->
+  <script src="js/popup.js" defer></script>
+  <!-- BENCHMARK VERSION: Stable baseline as of 2025-10-15 with global popup -->
   <style>
     main {
       display: flex;
@@ -29,6 +30,7 @@
       grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
       gap: 1.5rem;
     }
+
     .card {
       position: relative;
       background: rgba(255,255,255,0.06);
@@ -66,82 +68,23 @@
       font-size: 0.9rem;
     }
 
-    /* Modal */
-    .modal {
-      display: none;
+    /* Floating Filter Button (mobile) */
+    .filter-btn {
       position: fixed;
-      z-index: 2000;
-      left: 0; top: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.8);
-      justify-content: center;
-      align-items: center;
-    }
-    .modal-content {
-      background: rgba(20, 15, 10, 0.95);
-      padding: 2rem;
-      border-radius: 10px;
-      max-width: 75vw;
-      max-height: 75vh;
-      overflow-y: auto;
-      text-align: center;
-      border: 2px solid #b8860b;
-      position: relative;
-    }
-    .modal-slideshow {
-      position: relative;
-      margin-bottom: 1rem;
-    }
-    .modal-slideshow img {
-      max-width: 100%;
-      border-radius: 8px;
-    }
-    .prev, .next {
-      cursor: pointer;
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 2rem;
-      color: #ffcc66;
-      padding: 0.5rem;
-      user-select: none;
-    }
-    .prev { left: 10px; }
-    .next { right: 10px; }
-    .close {
-      position: absolute;
-      top: 15px;
-      right: 25px;
-      font-size: 2rem;
-      color: #ffcc66;
-      cursor: pointer;
-    }
-    .flavour-list {
-      margin: 1rem 0;
-    }
-    .flavour-list span {
-      display: inline-block;
-      margin: 0.3rem;
-      padding: 0.4rem 0.8rem;
-      border-radius: 20px;
-      background: rgba(255,255,255,0.1);
-      border: 1px solid #ffcc66;
-      color: #ffcc66;
-      font-size: 0.9rem;
-    }
-    .favourite-btn {
-      display: inline-block;
-      margin-top: 1rem;
-      padding: 0.6rem 1.2rem;
+      bottom: 20px;
+      right: 20px;
       background: #ffcc66;
-      border: none;
-      border-radius: 6px;
+      color: #000;
+      padding: 0.8rem 1.2rem;
+      border-radius: 30px;
       cursor: pointer;
       font-weight: bold;
-      color: #000;
+      z-index: 1100;
+      display: none;
     }
-    .favourite-btn:hover {
-      background: #ff9966;
+    @media (max-width: 768px) {
+      .filters { display: none; }
+      .filter-btn { display: block; }
     }
   </style>
 </head>
@@ -165,7 +108,7 @@
       </section>
     </div>
 
-    <!-- Sidebar Filters -->
+    <!-- Sidebar Filters (desktop only) -->
     <aside class="filters">
       <h3>Filter By</h3>
       <div><strong>Base Spirit</strong>
@@ -181,31 +124,13 @@
     </aside>
   </main>
 
-  <!-- Modal -->
-  <div id="modal" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <div class="modal-slideshow">
-        <span class="prev">&#10094;</span>
-        <span class="next">&#10095;</span>
-        <img id="modalImg" src="" alt="">
-      </div>
-      <h3 id="modalTitle"></h3>
-      <p id="modalDesc"></p>
-      <div class="flavour-list" id="modalFlavours"></div>
-      <button class="favourite-btn" id="addToFavBtn">❤️ Add to Favourites</button>
-    </div>
-  </div>
+  <!-- Floating Filter Button (mobile) -->
+  <div class="filter-btn" id="filterBtn">Set Filters</div>
 
   <script>
-    let allData = {};
-    let currentImages = [];
-    let currentImageIndex = 0;
-    let currentItem = null;
-
     async function loadListings() {
       const res = await fetch('data/cocktails.json');
-      allData = await res.json();
+      const data = await res.json();
 
       const cocktailGrid = document.getElementById('cocktailGrid');
       const beerGrid = document.getElementById('beerGrid');
@@ -220,73 +145,44 @@
           <h3>${item.name}</h3>
           <p>${item.short || ''}</p>
         `;
-        div.querySelector("img").addEventListener("click", () => openModal(item, type));
+        // Open Global Popup Modal on click
+        div.querySelector("img").addEventListener("click", () => {
+          const imgList = [`images/${type}/${item.image}`];
+          openPopup({
+            title: item.name,
+            desc: item.short || "",
+            images: imgList,
+            flavours: item.flavours || [],
+            favourite: true
+          });
+        });
         return div;
       }
 
-      allData.cocktails.forEach(drink => cocktailGrid.appendChild(createCard(drink, "cocktails")));
-      allData.beer.forEach(drink => beerGrid.appendChild(createCard(drink, "beer")));
-      allData.equipment.forEach(eq => equipmentGrid.appendChild(createCard(eq, "equipment")));
+      data.cocktails.forEach(drink => cocktailGrid.appendChild(createCard(drink, "cocktails")));
+      data.beer.forEach(drink => beerGrid.appendChild(createCard(drink, "beer")));
+      data.equipment.forEach(eq => equipmentGrid.appendChild(createCard(eq, "equipment")));
     }
 
-    function openModal(item, type) {
-      currentItem = item;
-
-      // Collect all matching images (supports -1, -2 naming)
-      currentImages = [];
-      const baseName = item.image.replace(/\.\w+$/, "");
-      const ext = item.image.split(".").pop();
-
-      let i = 1;
-      while (true) {
-        const testImg = `images/${type}/${baseName.replace(/-\d+$/, "")}-${i}.${ext}`;
-        const imgExists = document.createElement("img");
-        imgExists.src = testImg;
-        imgExists.onerror = () => {};
-        if (i === 1 || (imgExists.complete && imgExists.naturalWidth > 0)) {
-          currentImages.push(testImg);
-          i++;
-        } else break;
-      }
-
-      currentImageIndex = 0;
-      updateSlideshow();
-
-      document.getElementById("modalTitle").textContent = item.name;
-      document.getElementById("modalDesc").textContent = item.short || "";
-      document.getElementById("modalFlavours").innerHTML = 
-        (item.flavour && item.flavour.length)
-          ? item.flavour.map(f => `<span>${f}</span>`).join("")
-          : "";
-
-      document.getElementById("modal").style.display = "flex";
-
-      document.querySelector(".close").onclick = () => document.getElementById("modal").style.display = "none";
-      window.onclick = e => { if (e.target === document.getElementById("modal")) document.getElementById("modal").style.display = "none"; };
-
-      document.querySelector(".prev").onclick = () => changeImage(-1);
-      document.querySelector(".next").onclick = () => changeImage(1);
-
-      document.getElementById("addToFavBtn").onclick = () => addToFavourites(item);
-    }
-
-    function updateSlideshow() {
-      document.getElementById("modalImg").src = currentImages[currentImageIndex];
-    }
-
-    function changeImage(step) {
-      currentImageIndex = (currentImageIndex + step + currentImages.length) % currentImages.length;
-      updateSlideshow();
-    }
-
-    function addToFavourites(item) {
-      let favs = JSON.parse(localStorage.getItem("favourites")) || [];
-      if (!favs.find(f => f.name === item.name)) {
-        favs.push(item);
-        localStorage.setItem("favourites", JSON.stringify(favs));
-        alert(`${item.name} added to favourites!`);
-      }
-    }
+    // Floating filter button
+    document.getElementById("filterBtn").addEventListener("click", () => {
+      openPopup({
+        title: "Set Filters",
+        desc: "",
+        images: [],
+        favourite: false
+      });
+      document.getElementById("globalModalDesc").innerHTML = `
+        <h4>Filter Cocktails</h4>
+        <label><input type="checkbox" value="Whiskey" class="filter-base"> Whiskey</label><br>
+        <label><input type="checkbox" value="Vodka" class="filter-base"> Vodka</label><br>
+        <label><input type="checkbox" value="Rum" class="filter-base"> Rum</label><br>
+        <br>
+        <label><input type="checkbox" value="Martini" class="filter-glass"> Martini</label><br>
+        <label><input type="checkbox" value="Highball" class="filter-glass"> Highball</label><br>
+        <label><input type="checkbox" value="Old Fashioned" class="filter-glass"> Old Fashioned</label>
+      `;
+    });
 
     loadListings();
   </script>
