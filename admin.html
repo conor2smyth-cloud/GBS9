@@ -24,6 +24,26 @@
         <li>Visit <a href="premium-listings.html">Premium Listings</a> to see changes live.</li>
       </ol>
     </section>
+
+<div class="accordion-item">
+  <button class="accordion-header">📥 How to Import Cocktails from Excel</button>
+  <div class="accordion-content">
+    <ol style="margin-left:1.5rem;">
+      <li>Open <strong>cocktails.xlsx</strong> in Excel.</li>
+      <li>Use the 3 sheets: <code>cocktails</code>, <code>beer</code>, <code>equipment</code>.</li>
+      <li>Columns must be named:<br>
+        <code>Name | Base Spirit | Glass | Ingredients | Method / Blurb | Image Filename | Kegged | Type</code></li>
+      <li>Save the file.</li>
+      <li>Run this command in your project folder:<br>
+        <code>python import_excel.py</code></li>
+      <li>This will generate an updated <code>data/cocktails.json</code> for the site.</li>
+      <li>Commit and push to GitHub → updates appear automatically.</li>
+    </ol>
+    <p><strong>Tip:</strong> If you don’t have an image yet, set <code>Image Filename</code> to <code>coming-soon.jpg</code>.</p>
+  </div>
+</div>
+
+
   </main>
 </body>
 </html>
