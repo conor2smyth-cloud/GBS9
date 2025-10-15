@@ -112,132 +112,143 @@
 <body>
   <header id="site-header"></header>
 
-  <main>
-    <h1>Design Your Menu</h1>
-    <p style="text-align:center; margin-bottom:1rem; color:#ddd;">
-      Swipe left ❌ to skip, swipe right ❤️ to save, or use the buttons below.
-    </p>
+ <main>
+  <h1>Design Your Menu</h1>
+  <p style="text-align:center; margin-bottom:1rem; color:#ddd;">
+    Swipe left ❌ to skip, swipe right ❤️ to save, or use the buttons below.
+  </p>
 
-    <div id="cardStack"></div>
-    <div class="buttons">
-      <button onclick="dislikeCard()">❌ Dislike</button>
-      <button onclick="likeCard()">✅ Like</button>
+  <div id="cardStack"></div>
+
+  <div class="buttons">
+    <button onclick="dislikeCard()">❌ Dislike</button>
+    <button onclick="likeCard()">✅ Like</button>
+  </div>
+
+  <!-- Permanent results tabs -->
+  <section id="results" style="margin-top:3rem;">
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="matched">Matched Menu</button>
+      <button class="tab-btn" data-tab="favourites">Favourites</button>
     </div>
+    <div class="tab-content" id="matched"></div>
+    <div class="tab-content" id="favourites" style="display:none;"></div>
+  </section>
+</main>
 
-    <!-- Tabs -->
-    <section id="results" style="margin-top:3rem;">
-      <div class="tabs">
-        <button class="tab-btn active" data-tab="matched">Matched Menu</button>
-        <button class="tab-btn" data-tab="favourites">Favourites</button>
-      </div>
-      <div class="tab-content active" id="matched"></div>
-      <div class="tab-content" id="favourites"></div>
-    </section>
-  </main>
+<script>
+  let cocktails = [];
+  let pool = [];
+  let matchedMenu = [];
+  let favourites = [];
 
-  <script>
-    let cocktails = [];
-    let currentIndex = 0;
-    let matchedMenu = [];
-    let favourites = [];
-
-    async function loadCocktails() {
-      try {
-        const res = await fetch("data/cocktails.json");
-        cocktails = await res.json();
-        renderCard();
-      } catch (err) {
-        console.error("Error loading cocktails.json", err);
-      }
+  async function loadCocktails() {
+    try {
+      const res = await fetch("data/cocktails.json");
+      const data = await res.json();
+      cocktails = data.cocktails || data; // handles nested or flat JSON
+      pool = [...cocktails];              // fresh pool
+      console.log("Loaded cocktails:", pool);
+      renderCard();
+    } catch (err) {
+      console.error("Error loading cocktails.json", err);
     }
+  }
 
-    function renderCard() {
-      const stack = document.getElementById("cardStack");
-      stack.innerHTML = "";
-      if (cocktails.length > 0) {
-        const drink = cocktails[currentIndex % cocktails.length]; // cycle endlessly
-        const card = document.createElement("div");
-        card.className = "card";
-        card.innerHTML = `
-          <img src="images/cocktails/${drink.image}" alt="${drink.name}" onerror="this.src='images/coming-soon.jpg'">
-          <h2>${drink.name}</h2>
-          <p>${drink.short}</p>
-        `;
-        enableSwipe(card);
-        stack.appendChild(card);
-      }
+  function renderCard() {
+    const stack = document.getElementById("cardStack");
+    stack.innerHTML = "";
+    if (pool.length > 0) {
+      const drink = pool[0];
+      const card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML = `
+        <img src="images/cocktails/${drink.image}" 
+             alt="${drink.name}" 
+             onerror="this.src='images/coming-soon.jpg'">
+        <h2>${drink.name}</h2>
+        <p>${drink.short || ""}</p>
+      `;
+      enableSwipe(card);
+      stack.appendChild(card);
+    } else {
+      stack.innerHTML = "<p>🎉 No more cocktails available!</p>";
     }
+  }
 
-    function likeCard() {
-      if (cocktails.length > 0) {
-        matchedMenu.push(cocktails[currentIndex % cocktails.length]);
-        updateMenuList("matched", matchedMenu);
-        currentIndex++;
-        renderCard();
-      }
+  function likeCard() {
+    if (pool.length > 0) {
+      matchedMenu.push(pool[0]);
+      updateMenuList("matched", matchedMenu);
+      pool.shift(); // remove liked from pool
+      renderCard();
     }
+  }
 
-    function dislikeCard() {
-      if (cocktails.length > 0) {
-        currentIndex++;
-        renderCard();
-      }
+  function dislikeCard() {
+    if (pool.length > 0) {
+      // move disliked to end of pool
+      pool.push(pool.shift());
+      renderCard();
     }
+  }
 
-    function addFavourite(drink) {
+  function addFavourite(drink) {
+    if (!favourites.includes(drink)) {
       favourites.push(drink);
       updateMenuList("favourites", favourites);
     }
+  }
 
-    function updateMenuList(tabId, items) {
-      const container = document.getElementById(tabId);
-      container.innerHTML = "";
-      items.forEach(drink => {
-        const item = document.createElement("div");
-        item.className = "menu-item";
-        item.innerHTML = `
-          <img src="images/cocktails/${drink.image}" alt="${drink.name}">
-          <div>
-            <span>${drink.name}</span>
-            <small>${drink.short}</small>
-          </div>
-        `;
-        container.appendChild(item);
-      });
-    }
+  function updateMenuList(listId, items) {
+    const container = document.getElementById(listId);
+    container.innerHTML = "";
+    items.forEach(drink => {
+      const item = document.createElement("div");
+      item.className = "menu-item";
+      item.innerHTML = `
+        <img src="images/cocktails/${drink.image}" alt="${drink.name}">
+        <div>
+          <span>${drink.name}</span>
+          <small>${drink.short || ""}</small>
+        </div>
+      `;
+      container.appendChild(item);
+    });
+  }
 
-    // Swipe detection
-    function enableSwipe(card) {
-      let startX = 0;
-      card.addEventListener("touchstart", e => startX = e.touches[0].clientX);
-      card.addEventListener("touchend", e => {
-        let diff = e.changedTouches[0].clientX - startX;
-        if (diff > 50) likeCard();
-        else if (diff < -50) dislikeCard();
-      });
-      // Mouse swipe
-      let isDown = false;
-      card.addEventListener("mousedown", e => { isDown = true; startX = e.clientX; });
-      card.addEventListener("mouseup", e => {
-        if (!isDown) return;
-        let diff = e.clientX - startX;
-        if (diff > 50) likeCard();
-        else if (diff < -50) dislikeCard();
-        isDown = false;
-      });
-    }
-
-    // Tabs
-    document.addEventListener("click", e => {
-      if (e.target.classList.contains("tab-btn")) {
-        document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
-        e.target.classList.add("active");
-        document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
-        document.getElementById(e.target.dataset.tab).classList.add("active");
-      }
+  // Swipe/touch support
+  function enableSwipe(card) {
+    let startX = 0;
+    card.addEventListener("touchstart", e => startX = e.touches[0].clientX);
+    card.addEventListener("touchend", e => {
+      let diff = e.changedTouches[0].clientX - startX;
+      if (diff > 50) likeCard();
+      else if (diff < -50) dislikeCard();
     });
 
-    loadCocktails();
-  </script>
-</body>
-</html>
+    // Desktop mouse drag
+    let isDown = false;
+    card.addEventListener("mousedown", e => { isDown = true; startX = e.clientX; });
+    card.addEventListener("mouseup", e => {
+      if (!isDown) return;
+      let diff = e.clientX - startX;
+      if (diff > 50) likeCard();
+      else if (diff < -50) dislikeCard();
+      isDown = false;
+    });
+  }
+
+  // Tab switching
+  document.querySelectorAll(".tab-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+      document.querySelectorAll(".tab-content").forEach(c => c.style.display = "none");
+      btn.classList.add("active");
+      document.getElementById(btn.dataset.tab).style.display = "block";
+    });
+  });
+
+  loadCocktails();
+</script>
+
