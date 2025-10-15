@@ -506,6 +506,15 @@ section {
   cursor: grab;
 }
 
+.swipe-overlay {
+  position: absolute;
+  top: 40%;
+  font-size: 4rem;
+  color: #ffcc66;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
 
 
 /* === Footer === */
