@@ -22,36 +22,32 @@
       margin-bottom: 2rem;
       color: #ffcc66;
     }
+
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
       gap: 1.5rem;
+      margin-top: 1rem;
     }
+
     .card {
       background: rgba(255,255,255,0.06);
       padding: 1rem;
       border-radius: 12px;
       text-align: center;
+      cursor: pointer;
       transition: transform 0.25s ease, box-shadow 0.25s ease;
-      display: flex;
-      flex-direction: column;
     }
+
     .card img {
       width: 100%;
       height: 180px;
       object-fit: cover;
       border-radius: 10px;
       margin-bottom: 0.5rem;
-      background: #222; /* fallback placeholder */
+      display: block;
     }
-    .card h3 {
-      margin: 0.5rem 0;
-      color: #ffe4b5;
-    }
-    .card p {
-      font-size: 0.9rem;
-      color: #ccc;
-    }
+
     .card:hover { transform: translateY(-5px); }
 
     /* Sidebar Filters */
@@ -177,10 +173,9 @@
         return div;
       }
 
-      // Guard: only render if arrays exist
-      if (data.cocktails) data.cocktails.forEach(drink => cocktailGrid.appendChild(createCard(drink, "cocktails")));
-      if (data.beer) data.beer.forEach(drink => beerGrid.appendChild(createCard(drink, "beer")));
-      if (data.equipment) data.equipment.forEach(eq => equipmentGrid.appendChild(createCard(eq, "equipment")));
+      data.cocktails.forEach(drink => cocktailGrid.appendChild(createCard(drink, "cocktails")));
+      data.beer.forEach(drink => beerGrid.appendChild(createCard(drink, "beer")));
+      data.equipment.forEach(eq => equipmentGrid.appendChild(createCard(eq, "equipment")));
     }
 
     function openModal(item, type) {
@@ -197,3 +192,4 @@
   </script>
 </body>
 </html>
+
