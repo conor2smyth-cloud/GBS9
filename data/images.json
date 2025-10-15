@@ -1,27 +1,9 @@
 {
   "cocktails": [
     {
-      "name": "Cocktail Amber",
-      "image": "images/cocktails/cocktail-amber.jpg",
-      "image_webp": "images/cocktails/cocktail-amber.webp",
-      "bio": ""
-    },
-    {
-      "name": "Cocktail Clear Spirit",
-      "image": "images/cocktails/cocktail-clear-spirit.jpg",
-      "image_webp": "images/cocktails/cocktail-clear-spirit.webp",
-      "bio": ""
-    },
-    {
-      "name": "Cocktail Closeup Brown",
-      "image": "images/cocktails/cocktail-closeup-brown.jpg",
-      "image_webp": "images/cocktails/cocktail-closeup-brown.webp",
-      "bio": ""
-    },
-    {
-      "name": "Cocktail Closeup Dark",
-      "image": "images/cocktails/cocktail-closeup-dark.jpg",
-      "image_webp": "images/cocktails/cocktail-closeup-dark.webp",
+      "name": "Cocktail Cara Cara",
+      "image": "images/cocktails/cocktail-cara-cara.jpg",
+      "image_webp": "images/cocktails/cocktail-cara-cara.webp",
       "bio": ""
     },
     {
@@ -31,9 +13,15 @@
       "bio": ""
     },
     {
-      "name": "Cocktail Closeup Red",
-      "image": "images/cocktails/cocktail-closeup-red.jpg",
-      "image_webp": "images/cocktails/cocktail-closeup-red.webp",
+      "name": "Cocktail Cola Fizz 1",
+      "image": "images/cocktails/cocktail-cola-fizz-1.jpg",
+      "image_webp": "images/cocktails/cocktail-cola-fizz-1.webp",
+      "bio": ""
+    },
+    {
+      "name": "Cocktail Cola Fizz 2",
+      "image": "images/cocktails/cocktail-cola-fizz-2.jpg",
+      "image_webp": "images/cocktails/cocktail-cola-fizz-2.webp",
       "bio": ""
     },
     {
@@ -55,15 +43,39 @@
       "bio": ""
     },
     {
-      "name": "Cocktail Fancy Pink",
-      "image": "images/cocktails/cocktail-fancy-pink.jpg",
-      "image_webp": "images/cocktails/cocktail-fancy-pink.webp",
+      "name": "Cocktail Fig & Licorice Caiprinha 1",
+      "image": "images/cocktails/cocktail-fig-&-licorice-caiprinha-1.jpg",
+      "image_webp": "images/cocktails/cocktail-fig-&-licorice-caiprinha-1.webp",
+      "bio": ""
+    },
+    {
+      "name": "Cocktail Fig &Licorice Caiprinha 2",
+      "image": "images/cocktails/cocktail-fig-&licorice-caiprinha-2.jpg",
+      "image_webp": "images/cocktails/cocktail-fig-&licorice-caiprinha-2.webp",
       "bio": ""
     },
     {
       "name": "Cocktail Fizz Light",
       "image": "images/cocktails/cocktail-fizz-light.jpg",
       "image_webp": "images/cocktails/cocktail-fizz-light.webp",
+      "bio": ""
+    },
+    {
+      "name": "Cocktail Flaming Zombie",
+      "image": "images/cocktails/cocktail-flaming-zombie.jpg",
+      "image_webp": "images/cocktails/cocktail-flaming-zombie.webp",
+      "bio": ""
+    },
+    {
+      "name": "Cocktail French Fizz 1",
+      "image": "images/cocktails/cocktail-french-fizz-1.jpg",
+      "image_webp": "images/cocktails/cocktail-french-fizz-1.webp",
+      "bio": ""
+    },
+    {
+      "name": "Cocktail French Fizz 2",
+      "image": "images/cocktails/cocktail-french-fizz-2.jpg",
+      "image_webp": "images/cocktails/cocktail-french-fizz-2.webp",
       "bio": ""
     },
     {
@@ -109,27 +121,9 @@
       "bio": ""
     },
     {
-      "name": "Cocktail Light Pink",
-      "image": "images/cocktails/cocktail-light-pink.jpg",
-      "image_webp": "images/cocktails/cocktail-light-pink.webp",
-      "bio": ""
-    },
-    {
-      "name": "Cocktail Old Fashioned Classic",
-      "image": "images/cocktails/cocktail-old-fashioned-classic.jpg",
-      "image_webp": "images/cocktails/cocktail-old-fashioned-classic.webp",
-      "bio": ""
-    },
-    {
-      "name": "Cocktail Old Fashioned Smoke",
-      "image": "images/cocktails/cocktail-old-fashioned-smoke.jpg",
-      "image_webp": "images/cocktails/cocktail-old-fashioned-smoke.webp",
-      "bio": ""
-    },
-    {
-      "name": "Cocktail Pale Sour",
-      "image": "images/cocktails/cocktail-pale-sour.jpg",
-      "image_webp": "images/cocktails/cocktail-pale-sour.webp",
+      "name": "Cocktail Pina Colada",
+      "image": "images/cocktails/cocktail-pina-colada.jpg",
+      "image_webp": "images/cocktails/cocktail-pina-colada.webp",
       "bio": ""
     },
     {
@@ -139,9 +133,9 @@
       "bio": ""
     },
     {
-      "name": "Cocktail Red Garnish",
-      "image": "images/cocktails/cocktail-red-garnish.jpg",
-      "image_webp": "images/cocktails/cocktail-red-garnish.webp",
+      "name": "Cocktail Smoked Old Fashioned",
+      "image": "images/cocktails/cocktail-smoked-old-fashioned.jpg",
+      "image_webp": "images/cocktails/cocktail-smoked-old-fashioned.webp",
       "bio": ""
     },
     {
@@ -154,6 +148,12 @@
       "name": "Cocktail Tall Yellow",
       "image": "images/cocktails/cocktail-tall-yellow.jpg",
       "image_webp": "images/cocktails/cocktail-tall-yellow.webp",
+      "bio": ""
+    },
+    {
+      "name": "Cocktail Whiskey Sour",
+      "image": "images/cocktails/cocktail-whiskey-sour.jpg",
+      "image_webp": "images/cocktails/cocktail-whiskey-sour.webp",
       "bio": ""
     }
   ],
