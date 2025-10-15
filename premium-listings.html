@@ -16,8 +16,6 @@
       padding: 2rem;
     }
     .content { flex: 3; min-width: 0; }
-    .filters { flex: 1; max-width: 250px; }
-
     h1 {
       text-align: center;
       margin-bottom: 2rem;
@@ -29,7 +27,6 @@
       grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
       gap: 1.5rem;
     }
-
     .card {
       position: relative;
       background: rgba(255,255,255,0.06);
@@ -48,58 +45,51 @@
     }
     .card:hover { transform: translateY(-5px); }
 
-    /* Sidebar Filters */
-    .filters {
-      background: rgba(255,255,255,0.05);
-      padding: 1rem;
-      border-radius: 10px;
-      height: fit-content;
-    }
-    .filters h3 {
-      margin-bottom: 1rem;
-      color: #ffcc66;
-      border-bottom: 1px solid rgba(255,255,255,0.2);
-      padding-bottom: 0.5rem;
-    }
-    .filters label {
-      display: block;
-      margin: 0.3rem 0;
-      font-size: 0.9rem;
+    /* Floating filter button */
+    .filter-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #ffcc66;
+      color: #000;
+      padding: 0.8rem 1.2rem;
+      border: none;
+      border-radius: 50px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+      z-index: 1500;
     }
 
-    /* Modal */
-    .modal {
+    /* Filter overlay */
+    .filter-overlay {
       display: none;
       position: fixed;
-      z-index: 2000;
-      left: 0; top: 0;
+      top: 0; left: 0;
       width: 100%; height: 100%;
       background: rgba(0,0,0,0.8);
+      z-index: 1999;
       justify-content: center;
       align-items: center;
     }
-    .modal-content {
-      background: rgba(20, 15, 10, 0.95);
+    .filter-content {
+      background: rgba(20,15,10,0.95);
       padding: 2rem;
-      border-radius: 10px;
-      max-width: 600px;
+      border-radius: 12px;
       width: 90%;
-      text-align: center;
+      max-width: 400px;
+      color: #fff;
       border: 2px solid #b8860b;
+      text-align: left;
       position: relative;
     }
-    .modal-content img {
-      max-width: 100%;
-      border-radius: 8px;
+    .filter-content h3 {
       margin-bottom: 1rem;
-    }
-    .close {
-      position: absolute;
-      top: 15px;
-      right: 25px;
-      font-size: 2rem;
       color: #ffcc66;
-      cursor: pointer;
+    }
+    .filter-content label {
+      display: block;
+      margin: 0.5rem 0;
     }
   </style>
 </head>
@@ -122,9 +112,14 @@
         <div class="grid" id="equipmentGrid"></div>
       </section>
     </div>
+  </main>
 
-    <!-- Sidebar Filters -->
-    <aside class="filters">
+  <!-- Floating filter button -->
+  <button class="filter-btn" id="openFilters">Set Filters</button>
+
+  <!-- Filter overlay -->
+  <div class="filter-overlay" id="filterOverlay">
+    <div class="filter-content">
       <h3>Filter By</h3>
       <div><strong>Base Spirit</strong>
         <label><input type="checkbox" value="Whiskey" class="filter-base"> Whiskey</label>
@@ -136,8 +131,8 @@
         <label><input type="checkbox" value="Highball" class="filter-glass"> Highball</label>
         <label><input type="checkbox" value="Old Fashioned" class="filter-glass"> Old Fashioned</label>
       </div>
-    </aside>
-  </main>
+    </div>
+  </div>
 
   <!-- Modal -->
   <div id="modal" class="modal">
@@ -183,8 +178,32 @@
       document.getElementById("modalDesc").textContent = item.short || "";
       modal.style.display = "flex";
       document.querySelector(".close").onclick = () => modal.style.display = "none";
-      window.onclick = e => { if (e.target === modal) modal.style.display = "none"; };
+      window.onclick = e => {
+        if (e.target === modal) modal.style.display = "none";
+        if (e.target === filterOverlay) filterOverlay.style.display = "none";
+      };
+      document.getElementById("openFilters").style.display = "none"; // hide filter button when modal open
     }
+
+    // Filters overlay
+    const filterOverlay = document.getElementById("filterOverlay");
+    const openFilters = document.getElementById("openFilters");
+
+    openFilters.addEventListener("click", () => {
+      filterOverlay.style.display = "flex";
+    });
+
+    // Click outside closes filters
+    window.addEventListener("click", (e) => {
+      if (e.target === filterOverlay) {
+        filterOverlay.style.display = "none";
+      }
+    });
+
+    // Close modal re-shows filter button
+    document.querySelector(".close").addEventListener("click", () => {
+      document.getElementById("openFilters").style.display = "block";
+    });
 
     loadListings();
   </script>
