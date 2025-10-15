@@ -6,64 +6,130 @@
   <title>Services - GBS9</title>
   <link rel="stylesheet" href="css/style.css">
   <script src="js/header.js" defer></script>
+  <style>
+    main {
+      max-width: 1200px;
+      margin: auto;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    h1 {
+      color: #ffcc66;
+      margin-bottom: 2rem;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .service-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .service-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+    }
+
+    .service-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .service-body {
+      padding: 1rem;
+      flex: 1;
+    }
+
+    .service-body h2 {
+      margin: 0.5rem 0;
+      color: #ffcc66;
+    }
+
+    .service-body p {
+      font-size: 0.95rem;
+      color: #ddd;
+      margin-bottom: 1rem;
+    }
+
+    .service-body .btn {
+      display: inline-block;
+      padding: 0.6rem 1.2rem;
+      background: #ffcc66;
+      color: #000;
+      font-weight: bold;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .service-body .btn:hover {
+      background: #ff9966;
+    }
+  </style>
 </head>
 <body>
   <header id="site-header"></header>
 
   <main>
     <h1>Our Services</h1>
+    <p style="max-width:800px;margin:0 auto 2rem;color:#ccc;">
+      From cocktails to kegs, our team provides everything you need for a seamless event.  
+      Explore our services below and plan your perfect night.
+    </p>
 
-    <!-- Accordion -->
-    <div class="accordion">
-      <div class="accordion-item">
-        <button class="accordion-header">Cocktail Service</button>
-        <div class="accordion-content">
-          <p>Professional cocktail bartending for events big or small.</p>
-          <a href="cocktail-service.html">Learn more</a>
+    <div class="services-grid">
+      <!-- Cocktail Service -->
+      <div class="service-card">
+        <img src="images/services/cocktail-service.jpg" alt="Cocktail Service">
+        <div class="service-body">
+          <h2>Cocktail Service</h2>
+          <p>Expertly crafted cocktails, tailored menus, and professional bartenders for your event.</p>
+          <a href="plan-your-event.html" class="btn">Get Quote</a>
         </div>
       </div>
-      <div class="accordion-item">
-        <button class="accordion-header">Draft Systems</button>
-        <div class="accordion-content">
-          <p>Portable draft beer and cocktail systems for your party.</p>
-          <a href="draft-systems.html">Learn more</a>
+
+      <!-- Draft Systems -->
+      <div class="service-card">
+        <img src="images/services/draft-systems.jpg" alt="Draft Systems">
+        <div class="service-body">
+          <h2>Draft Systems</h2>
+          <p>Mobile draft systems with premium beers, wines, or cocktails – poured perfectly every time.</p>
+          <a href="plan-your-event.html" class="btn">Get Quote</a>
         </div>
       </div>
-      <div class="accordion-item">
-        <button class="accordion-header">Event Bartending</button>
-        <div class="accordion-content">
-          <p>Skilled bartenders available for private or corporate events.</p>
-          <a href="event-bartending.html">Learn more</a>
+
+      <!-- Event Bartending -->
+      <div class="service-card">
+        <img src="images/services/event-bartending.jpg" alt="Event Bartending">
+        <div class="service-body">
+          <h2>Event Bartending</h2>
+          <p>Friendly, skilled bartenders that bring energy, professionalism, and style to your event.</p>
+          <a href="plan-your-event.html" class="btn">Get Quote</a>
         </div>
       </div>
-      <div class="accordion-item">
-        <button class="accordion-header">Equipment Rental</button>
-        <div class="accordion-content">
-          <p>All the equipment you need for your own cocktail bar setup.</p>
-          <a href="equipment-rental.html">Learn more</a>
+
+      <!-- Equipment Rental -->
+      <div class="service-card">
+        <img src="images/services/equipment-rental.jpg" alt="Equipment Rental">
+        <div class="service-body">
+          <h2>Equipment Rental</h2>
+          <p>High-quality bar equipment and tools available for rent, so your event runs smoothly.</p>
+          <a href="plan-your-event.html" class="btn">Get Quote</a>
         </div>
       </div>
     </div>
-
-    <!-- Quiz placeholder -->
-    <section class="quiz">
-      <h2>Plan Your Party Quiz</h2>
-      <p>Answer 10 quick questions to get tailored recommendations.</p>
-      <button class="btn">Start Quiz</button>
-    </section>
   </main>
-
-  <script>
-    document.addEventListener("click", e => {
-      if (e.target.classList.contains("accordion-header")) {
-        const item = e.target.parentElement;
-        document.querySelectorAll(".accordion-item").forEach(i => {
-          if (i !== item) i.classList.remove("active");
-        });
-        item.classList.toggle("active");
-      }
-    });
-  </script>
 </body>
 </html>
-
