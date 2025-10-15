@@ -16,6 +16,7 @@
       padding: 2rem;
     }
     .content { flex: 3; min-width: 0; }
+
     h1 {
       text-align: center;
       margin-bottom: 2rem;
@@ -91,6 +92,54 @@
       display: block;
       margin: 0.5rem 0;
     }
+    .clear-filters {
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      background: #ffcc66;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      color: #000;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background: rgba(20, 15, 10, 0.95);
+      padding: 2rem;
+      border-radius: 10px;
+      width: 75%;
+      max-width: 800px;
+      max-height: 75%;
+      overflow-y: auto;
+      text-align: center;
+      border: 2px solid #b8860b;
+      position: relative;
+    }
+    .modal-content img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+    .close {
+      position: absolute;
+      top: 15px;
+      right: 25px;
+      font-size: 2rem;
+      color: #ffcc66;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -131,6 +180,12 @@
         <label><input type="checkbox" value="Highball" class="filter-glass"> Highball</label>
         <label><input type="checkbox" value="Old Fashioned" class="filter-glass"> Old Fashioned</label>
       </div>
+      <div><strong>Flavour</strong>
+        <label><input type="checkbox" value="Citrus" class="filter-flavour"> Citrus</label>
+        <label><input type="checkbox" value="Sweet" class="filter-flavour"> Sweet</label>
+        <label><input type="checkbox" value="Bitter" class="filter-flavour"> Bitter</label>
+      </div>
+      <button class="clear-filters" id="clearFilters">Clear All</button>
     </div>
   </div>
 
@@ -145,17 +200,30 @@
   </div>
 
   <script>
+    let allData = [];
+
     async function loadListings() {
       const res = await fetch('data/cocktails.json');
       const data = await res.json();
+      allData = data;
+      renderListings(data);
+    }
 
+    function renderListings(data) {
       const cocktailGrid = document.getElementById('cocktailGrid');
       const beerGrid = document.getElementById('beerGrid');
       const equipmentGrid = document.getElementById('equipmentGrid');
 
+      cocktailGrid.innerHTML = "";
+      beerGrid.innerHTML = "";
+      equipmentGrid.innerHTML = "";
+
       function createCard(item, type) {
         const div = document.createElement("div");
         div.className = "card";
+        div.dataset.base = item.base || "";
+        div.dataset.glass = item.glass || "";
+        div.dataset.flavour = item.flavour || "";
         div.innerHTML = `
           <img src="images/${type}/${item.image}" alt="${item.name}"
                onerror="this.src='images/coming-soon.jpg'">
@@ -177,17 +245,24 @@
       document.getElementById("modalTitle").textContent = item.name;
       document.getElementById("modalDesc").textContent = item.short || "";
       modal.style.display = "flex";
-      document.querySelector(".close").onclick = () => modal.style.display = "none";
+      document.querySelector(".close").onclick = () => {
+        modal.style.display = "none";
+        document.getElementById("openFilters").style.display = "block";
+      };
       window.onclick = e => {
-        if (e.target === modal) modal.style.display = "none";
+        if (e.target === modal) {
+          modal.style.display = "none";
+          document.getElementById("openFilters").style.display = "block";
+        }
         if (e.target === filterOverlay) filterOverlay.style.display = "none";
       };
-      document.getElementById("openFilters").style.display = "none"; // hide filter button when modal open
+      document.getElementById("openFilters").style.display = "none";
     }
 
     // Filters overlay
     const filterOverlay = document.getElementById("filterOverlay");
     const openFilters = document.getElementById("openFilters");
+    const clearFilters = document.getElementById("clearFilters");
 
     openFilters.addEventListener("click", () => {
       filterOverlay.style.display = "flex";
@@ -200,12 +275,35 @@
       }
     });
 
-    // Close modal re-shows filter button
-    document.querySelector(".close").addEventListener("click", () => {
-      document.getElementById("openFilters").style.display = "block";
+    // Apply filter logic
+    filterOverlay.addEventListener("change", () => applyFilters());
+
+    // Clear filters
+    clearFilters.addEventListener("click", () => {
+      document.querySelectorAll(".filter-content input").forEach(cb => cb.checked = false);
+      applyFilters();
     });
+
+    function applyFilters() {
+      const activeBase = [...document.querySelectorAll(".filter-base:checked")].map(cb => cb.value);
+      const activeGlass = [...document.querySelectorAll(".filter-glass:checked")].map(cb => cb.value);
+      const activeFlavour = [...document.querySelectorAll(".filter-flavour:checked")].map(cb => cb.value);
+
+      const filtered = {
+        cocktails: allData.cocktails.filter(c =>
+          (!activeBase.length || activeBase.includes(c.base)) &&
+          (!activeGlass.length || activeGlass.includes(c.glass)) &&
+          (!activeFlavour.length || activeFlavour.includes(c.flavour))
+        ),
+        beer: allData.beer,
+        equipment: allData.equipment
+      };
+
+      renderListings(filtered);
+    }
 
     loadListings();
   </script>
 </body>
 </html>
+
