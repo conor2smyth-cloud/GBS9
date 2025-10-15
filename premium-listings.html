@@ -6,7 +6,7 @@
   <title>Premium Listings - GBS9</title>
   <link rel="stylesheet" href="css/style.css">
   <script src="js/header.js" defer></script>
-  <!-- BENCHMARK VERSION: Stable baseline as of 2025-10-15. Remove this note on future updates. -->
+  <!-- BENCHMARK VERSION: Stable baseline with flavour support. -->
   <style>
     main {
       display: flex;
@@ -16,6 +16,7 @@
       padding: 2rem;
     }
     .content { flex: 3; min-width: 0; }
+    .filters { flex: 1; max-width: 250px; }
 
     h1 {
       text-align: center;
@@ -28,6 +29,7 @@
       grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
       gap: 1.5rem;
     }
+
     .card {
       position: relative;
       background: rgba(255,255,255,0.06);
@@ -46,61 +48,23 @@
     }
     .card:hover { transform: translateY(-5px); }
 
-    /* Floating filter button */
-    .filter-btn {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #ffcc66;
-      color: #000;
-      padding: 0.8rem 1.2rem;
-      border: none;
-      border-radius: 50px;
-      font-weight: bold;
-      cursor: pointer;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.4);
-      z-index: 1500;
+    /* Sidebar Filters */
+    .filters {
+      background: rgba(255,255,255,0.05);
+      padding: 1rem;
+      border-radius: 10px;
+      height: fit-content;
     }
-
-    /* Filter overlay */
-    .filter-overlay {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.8);
-      z-index: 1999;
-      justify-content: center;
-      align-items: center;
-    }
-    .filter-content {
-      background: rgba(20,15,10,0.95);
-      padding: 2rem;
-      border-radius: 12px;
-      width: 90%;
-      max-width: 400px;
-      color: #fff;
-      border: 2px solid #b8860b;
-      text-align: left;
-      position: relative;
-    }
-    .filter-content h3 {
+    .filters h3 {
       margin-bottom: 1rem;
       color: #ffcc66;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      padding-bottom: 0.5rem;
     }
-    .filter-content label {
+    .filters label {
       display: block;
-      margin: 0.5rem 0;
-    }
-    .clear-filters {
-      margin-top: 1rem;
-      padding: 0.5rem 1rem;
-      background: #ffcc66;
-      border: none;
-      border-radius: 6px;
-      font-weight: bold;
-      cursor: pointer;
-      color: #000;
+      margin: 0.3rem 0;
+      font-size: 0.9rem;
     }
 
     /* Modal */
@@ -118,17 +82,14 @@
       background: rgba(20, 15, 10, 0.95);
       padding: 2rem;
       border-radius: 10px;
-      width: 75%;
-      max-width: 800px;
-      max-height: 75%;
-      overflow-y: auto;
+      max-width: 600px;
+      width: 75%; /* modal now max 75% of screen */
       text-align: center;
       border: 2px solid #b8860b;
       position: relative;
     }
     .modal-content img {
       max-width: 100%;
-      height: auto;
       border-radius: 8px;
       margin-bottom: 1rem;
     }
@@ -139,6 +100,19 @@
       font-size: 2rem;
       color: #ffcc66;
       cursor: pointer;
+    }
+    .flavour-options {
+      margin-top: 1rem;
+    }
+    .flavour-options span {
+      display: inline-block;
+      background: rgba(255,204,102,0.1);
+      border: 1px solid #ffcc66;
+      border-radius: 6px;
+      padding: 0.3rem 0.8rem;
+      margin: 0.2rem;
+      font-size: 0.9rem;
+      color: #ffcc66;
     }
   </style>
 </head>
@@ -161,14 +135,9 @@
         <div class="grid" id="equipmentGrid"></div>
       </section>
     </div>
-  </main>
 
-  <!-- Floating filter button -->
-  <button class="filter-btn" id="openFilters">Set Filters</button>
-
-  <!-- Filter overlay -->
-  <div class="filter-overlay" id="filterOverlay">
-    <div class="filter-content">
+    <!-- Sidebar Filters -->
+    <aside class="filters">
       <h3>Filter By</h3>
       <div><strong>Base Spirit</strong>
         <label><input type="checkbox" value="Whiskey" class="filter-base"> Whiskey</label>
@@ -180,14 +149,8 @@
         <label><input type="checkbox" value="Highball" class="filter-glass"> Highball</label>
         <label><input type="checkbox" value="Old Fashioned" class="filter-glass"> Old Fashioned</label>
       </div>
-      <div><strong>Flavour</strong>
-        <label><input type="checkbox" value="Citrus" class="filter-flavour"> Citrus</label>
-        <label><input type="checkbox" value="Sweet" class="filter-flavour"> Sweet</label>
-        <label><input type="checkbox" value="Bitter" class="filter-flavour"> Bitter</label>
-      </div>
-      <button class="clear-filters" id="clearFilters">Clear All</button>
-    </div>
-  </div>
+    </aside>
+  </main>
 
   <!-- Modal -->
   <div id="modal" class="modal">
@@ -196,34 +159,22 @@
       <img id="modalImg" src="" alt="">
       <h3 id="modalTitle"></h3>
       <p id="modalDesc"></p>
+      <div id="modalFlavours" class="flavour-options"></div>
     </div>
   </div>
 
   <script>
-    let allData = [];
-
     async function loadListings() {
       const res = await fetch('data/cocktails.json');
       const data = await res.json();
-      allData = data;
-      renderListings(data);
-    }
 
-    function renderListings(data) {
       const cocktailGrid = document.getElementById('cocktailGrid');
       const beerGrid = document.getElementById('beerGrid');
       const equipmentGrid = document.getElementById('equipmentGrid');
 
-      cocktailGrid.innerHTML = "";
-      beerGrid.innerHTML = "";
-      equipmentGrid.innerHTML = "";
-
       function createCard(item, type) {
         const div = document.createElement("div");
         div.className = "card";
-        div.dataset.base = item.base || "";
-        div.dataset.glass = item.glass || "";
-        div.dataset.flavour = item.flavour || "";
         div.innerHTML = `
           <img src="images/${type}/${item.image}" alt="${item.name}"
                onerror="this.src='images/coming-soon.jpg'">
@@ -244,66 +195,26 @@
       document.getElementById("modalImg").src = `images/${type}/${item.image}`;
       document.getElementById("modalTitle").textContent = item.name;
       document.getElementById("modalDesc").textContent = item.short || "";
-      modal.style.display = "flex";
-      document.querySelector(".close").onclick = () => {
-        modal.style.display = "none";
-        document.getElementById("openFilters").style.display = "block";
-      };
-      window.onclick = e => {
-        if (e.target === modal) {
-          modal.style.display = "none";
-          document.getElementById("openFilters").style.display = "block";
-        }
-        if (e.target === filterOverlay) filterOverlay.style.display = "none";
-      };
-      document.getElementById("openFilters").style.display = "none";
-    }
 
-    // Filters overlay
-    const filterOverlay = document.getElementById("filterOverlay");
-    const openFilters = document.getElementById("openFilters");
-    const clearFilters = document.getElementById("clearFilters");
-
-    openFilters.addEventListener("click", () => {
-      filterOverlay.style.display = "flex";
-    });
-
-    // Click outside closes filters
-    window.addEventListener("click", (e) => {
-      if (e.target === filterOverlay) {
-        filterOverlay.style.display = "none";
+      // Flavours section
+      const flavourContainer = document.getElementById("modalFlavours");
+      flavourContainer.innerHTML = "";
+      if (item.flavour && item.flavour.length > 0) {
+        item.flavour.forEach(f => {
+          const span = document.createElement("span");
+          span.textContent = f;
+          flavourContainer.appendChild(span);
+        });
       }
-    });
 
-    // Apply filter logic
-    filterOverlay.addEventListener("change", () => applyFilters());
-
-    // Clear filters
-    clearFilters.addEventListener("click", () => {
-      document.querySelectorAll(".filter-content input").forEach(cb => cb.checked = false);
-      applyFilters();
-    });
-
-    function applyFilters() {
-      const activeBase = [...document.querySelectorAll(".filter-base:checked")].map(cb => cb.value);
-      const activeGlass = [...document.querySelectorAll(".filter-glass:checked")].map(cb => cb.value);
-      const activeFlavour = [...document.querySelectorAll(".filter-flavour:checked")].map(cb => cb.value);
-
-      const filtered = {
-        cocktails: allData.cocktails.filter(c =>
-          (!activeBase.length || activeBase.includes(c.base)) &&
-          (!activeGlass.length || activeGlass.includes(c.glass)) &&
-          (!activeFlavour.length || activeFlavour.includes(c.flavour))
-        ),
-        beer: allData.beer,
-        equipment: allData.equipment
-      };
-
-      renderListings(filtered);
+      modal.style.display = "flex";
+      document.querySelector(".close").onclick = () => modal.style.display = "none";
+      window.onclick = e => { if (e.target === modal) modal.style.display = "none"; };
     }
 
     loadListings();
   </script>
 </body>
 </html>
+
 
