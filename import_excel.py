@@ -18,7 +18,8 @@ def sheet_to_list(sheet):
             "short": str(row.get("Method / Blurb", "")).strip(),
             "image": str(row.get("Image Filename", "coming-soon.jpg")).strip(),
             "kegged": str(row.get("Kegged", "No")).strip(),
-            "type": str(row.get("Type", "cocktails")).strip()
+            "type": str(row.get("Type", "cocktails")).strip(),
+	    "flavour": str(row.get("Flavour", "")).strip(),
         }
         items.append(item)
     return items
