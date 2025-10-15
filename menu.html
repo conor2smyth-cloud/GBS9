@@ -156,24 +156,64 @@
   }
 
   function renderCard() {
-    const stack = document.getElementById("cardStack");
-    stack.innerHTML = "";
-    if (pool.length > 0) {
-      const drink = pool[0];
-      const card = document.createElement("div");
-      card.className = "card";
-      card.innerHTML = `
-        <img src="images/cocktails/${drink.image}" 
-             alt="${drink.name}" 
-             onerror="this.src='images/coming-soon.jpg'">
-        <h2>${drink.name}</h2>
-        <p>${drink.short || ""}</p>
-      `;
-      enableSwipe(card);
-      stack.appendChild(card);
-    } else {
-      stack.innerHTML = "<p>🎉 No more cocktails available!</p>";
-    }
+  const stack = document.getElementById("cardStack");
+  stack.innerHTML = "";
+  if (pool.length > 0) {
+    const drink = pool[0];
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `
+      <img class="swipe-img" src="images/cocktails/${drink.image}" 
+           alt="${drink.name}" 
+           onerror="this.src='images/coming-soon.jpg'">
+      <h2>${drink.name}</h2>
+      <p>${drink.short || ""}</p>
+    `;
+    stack.appendChild(card);
+
+    const img = card.querySelector(".swipe-img");
+    enableSwipe(img, card);
+  } else {
+    stack.innerHTML = "<p>🎉 No more cocktails available!</p>";
+  }
+}
+
+// Swipe/touch support with animations
+function enableSwipe(img, card) {
+  let startX = 0;
+
+  img.addEventListener("touchstart", e => startX = e.touches[0].clientX);
+  img.addEventListener("touchend", e => {
+    let diff = e.changedTouches[0].clientX - startX;
+    if (diff > 50) animateSwipe(card, "right");
+    else if (diff < -50) animateSwipe(card, "left");
+  });
+
+  // Desktop drag
+  let isDown = false;
+  img.addEventListener("mousedown", e => { isDown = true; startX = e.clientX; });
+  img.addEventListener("mouseup", e => {
+    if (!isDown) return;
+    let diff = e.clientX - startX;
+    if (diff > 50) animateSwipe(card, "right");
+    else if (diff < -50) animateSwipe(card, "left");
+    isDown = false;
+  });
+}
+
+function animateSwipe(card, direction) {
+  card.style.transition = "transform 0.4s ease, opacity 0.4s ease";
+  if (direction === "right") {
+    card.style.transform = "translateX(150%) rotate(15deg)";
+    likeCard();
+  } else {
+    card.style.transform = "translateX(-150%) rotate(-15deg)";
+    dislikeCard();
+  }
+  card.style.opacity = "0";
+  setTimeout(() => renderCard(), 400);
+}
+
   }
 
   function likeCard() {
