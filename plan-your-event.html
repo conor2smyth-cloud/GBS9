@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plan Your Event - GBS9</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/header.js" defer></script>
+  <style>
+    main {
+      max-width: 1100px;
+      margin: auto;
+      padding: 2rem;
+    }
+    h1 {
+      color: #ffcc66;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    p.intro {
+      text-align: center;
+      color: #ddd;
+      margin-bottom: 2rem;
+    }
+
+    /* Accordion */
+    .accordion {
+      margin: 1rem 0;
+    }
+    .accordion-item {
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+      overflow: hidden;
+    }
+    .accordion-header {
+      width: 100%;
+      padding: 1rem;
+      text-align: left;
+      background: rgba(255,204,102,0.1);
+      color: #ffcc66;
+      cursor: pointer;
+      font-size: 1.1rem;
+    }
+    .accordion-content {
+      display: none;
+      padding: 1rem;
+      background: rgba(255,255,255,0.05);
+      color: #ddd;
+    }
+    .accordion-item.active .accordion-content {
+      display: block;
+    }
+
+    /* Quiz */
+    .quiz {
+      margin-top: 2rem;
+      padding: 1rem;
+      background: rgba(255,255,255,0.05);
+      border-radius: 8px;
+    }
+    .quiz h2 {
+      color: #ffcc66;
+      margin-bottom: 1rem;
+    }
+    .quiz-question {
+      margin-bottom: 1rem;
+    }
+    .quiz-question label {
+      display: block;
+      margin: 0.3rem 0;
+    }
+
+    .quiz button {
+      margin-top: 1rem;
+      background: #ffcc66;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .quiz-result {
+      margin-top: 1rem;
+      padding: 1rem;
+      background: rgba(0,0,0,0.5);
+      border-radius: 6px;
+      color: #fff;
+    }
+
+    /* Quote form */
+    .quote-form {
+      margin-top: 2rem;
+      background: rgba(255,255,255,0.05);
+      padding: 1.5rem;
+      border-radius: 10px;
+    }
+    .quote-form label {
+      display: block;
+      margin: 0.5rem 0 0.2rem;
+    }
+    .quote-form input,
+    .quote-form textarea {
+      width: 100%;
+      padding: 0.6rem;
+      border: none;
+      border-radius: 6px;
+      margin-bottom: 1rem;
+    }
+    .quote-form button {
+      background: #ffcc66;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .quote-form button:hover {
+      background: #ff9966;
+    }
+  </style>
+</head>
+<body>
+  <header id="site-header"></header>
+
+  <main>
+    <h1>Plan Your Event</h1>
+    <p class="intro">Use our planner to design your perfect event. Explore options below, take the quick quiz, and request your personalised quote.</p>
+
+    <!-- Accordion Sections -->
+    <div class="accordion">
+      <div class="accordion-item">
+        <button class="accordion-header">🍸 Cocktails</button>
+        <div class="accordion-content">
+          <p>Browse curated cocktail menus and tailor them to your event theme.</p>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-header">🍺 Draft Systems</button>
+        <div class="accordion-content">
+          <p>Choose from mobile beer, wine, or cocktail draft systems.</p>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-header">🥃 Spirits</button>
+        <div class="accordion-content">
+          <p>Pick from a wide range of spirits to stock your bar for the night.</p>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-header">⚙️ Equipment</button>
+        <div class="accordion-content">
+          <p>Rent premium equipment to ensure smooth service all night long.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quiz -->
+    <div class="quiz">
+      <h2>Quick Event Quiz</h2>
+      <form id="quizForm">
+        <div class="quiz-question">
+          <p>1. How many guests will attend?</p>
+          <label><input type="radio" name="q1" value="small"> Under 20</label>
+          <label><input type="radio" name="q1" value="medium"> 20-50</label>
+          <label><input type="radio" name="q1" value="large"> 50+</label>
+        </div>
+        <div class="quiz-question">
+          <p>2. Preferred vibe?</p>
+          <label><input type="radio" name="q2" value="casual"> Casual</label>
+          <label><input type="radio" name="q2" value="elegant"> Elegant</label>
+          <label><input type="radio" name="q2" value="party"> Party</label>
+        </div>
+        <!-- ... continue up to Q10 -->
+        <button type="button" onclick="submitQuiz()">See Recommendation</button>
+      </form>
+      <div id="quizResult" class="quiz-result" style="display:none;"></div>
+    </div>
+
+    <!-- Quote Form -->
+    <div class="quote-form">
+      <h2 style="color:#ffcc66;">Request a Quote</h2>
+      <form>
+        <label for="name">Name</label>
+        <input type="text" id="name" required>
+        <label for="email">Email</label>
+        <input type="email" id="email" required>
+        <label for="event">Event Details</label>
+        <textarea id="event" rows="4" placeholder="Tell us about your event..."></textarea>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </main>
+
+  <script>
+    // Accordion logic
+    document.querySelectorAll(".accordion-header").forEach(header => {
+      header.addEventListener("click", () => {
+        const item = header.parentElement;
+        document.querySelectorAll(".accordion-item").forEach(i => i.classList.remove("active"));
+        item.classList.toggle("active");
+      });
+    });
+
+    // Quiz logic (basic demo)
+    function submitQuiz() {
+      const form = document.getElementById("quizForm");
+      const result = document.getElementById("quizResult");
+      let answers = {};
+      new FormData(form).forEach((v,k) => answers[k] = v);
+
+      // Simple recommendation logic placeholder
+      let recommendation = "We recommend a cocktail-focused package with a mix of spirits and draft.";
+      if (answers.q1 === "small" && answers.q2 === "casual") {
+        recommendation = "A simple bar setup with cocktails and a small draft system would be perfect.";
+      } else if (answers.q1 === "large" && answers.q2 === "party") {
+        recommendation = "Go big! We suggest multiple bartenders, cocktails on tap, and full equipment rental.";
+      }
+
+      result.textContent = recommendation;
+      result.style.display = "block";
+    }
+  </script>
+</body>
+</html>
