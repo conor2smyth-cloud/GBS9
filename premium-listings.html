@@ -6,7 +6,7 @@
   <title>Premium Listings - GBS9</title>
   <link rel="stylesheet" href="css/style.css">
   <script src="js/header.js" defer></script>
-  <!-- BENCHMARK VERSION: Modal test -->
+  <!-- BENCHMARK VERSION: Stable baseline as of 2025-10-15 with modal fix -->
   <style>
     main {
       display: flex;
@@ -25,11 +25,13 @@
     }
     .grid {
       display: grid;
+      width: 100%;
       grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
       gap: 1.5rem;
-      width: 100%;
     }
+
     .card {
+      position: relative;
       background: rgba(255,255,255,0.06);
       padding: 1rem;
       border-radius: 12px;
@@ -81,7 +83,7 @@
       padding: 2rem;
       border-radius: 10px;
       max-width: 600px;
-      width: 75%; /* limit modal size */
+      width: 75%; /* fixed max width */
       text-align: center;
       border: 2px solid #b8860b;
       position: relative;
@@ -165,7 +167,7 @@
           <h3>${item.name}</h3>
           <p>${item.short || ''}</p>
         `;
-        // modal trigger
+        // Open modal on click
         div.querySelector("img").addEventListener("click", () => openModal(item, type));
         return div;
       }
@@ -182,7 +184,7 @@
       document.getElementById("modalDesc").textContent = item.short || "";
       modal.style.display = "flex";
 
-      // close events
+      // close handlers
       document.querySelector(".close").onclick = () => modal.style.display = "none";
       window.onclick = e => { if (e.target === modal) modal.style.display = "none"; };
     }
@@ -191,6 +193,6 @@
   </script>
 </body>
 </html>
->
+
 
 
