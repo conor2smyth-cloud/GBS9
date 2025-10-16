@@ -6,7 +6,7 @@
   <title>Premium Listings - GBS9</title>
   <link rel="stylesheet" href="css/style.css">
   <script src="js/header.js" defer></script>
-  <!-- BENCHMARK VERSION: Stable baseline as of 2025-10-15 with modal fix -->
+  <!-- BENCHMARK VERSION: Stable baseline as of 2025-10-15. Remove this note on future updates. -->
   <style>
     main {
       display: flex;
@@ -83,7 +83,7 @@
       padding: 2rem;
       border-radius: 10px;
       max-width: 600px;
-      width: 75%; /* fixed max width */
+      width: 90%;
       text-align: center;
       border: 2px solid #b8860b;
       position: relative;
@@ -151,30 +151,39 @@
 
   <script>
     async function loadListings() {
-      const res = await fetch('data/cocktails.json');
-      const data = await res.json();
+      try {
+        const res = await fetch('data/cocktails.json');
+        const data = await res.json();
 
-      const cocktailGrid = document.getElementById('cocktailGrid');
-      const beerGrid = document.getElementById('beerGrid');
-      const equipmentGrid = document.getElementById('equipmentGrid');
+        // Defensive: support both flat and nested JSON
+        const cocktails = data.cocktails || data || [];
+        const beer = data.beer || [];
+        const equipment = data.equipment || [];
 
-      function createCard(item, type) {
-        const div = document.createElement("div");
-        div.className = "card";
-        div.innerHTML = `
-          <img src="images/${type}/${item.image}" alt="${item.name}"
-               onerror="this.src='images/coming-soon.jpg'">
-          <h3>${item.name}</h3>
-          <p>${item.short || ''}</p>
-        `;
-        // Open modal on click
-        div.querySelector("img").addEventListener("click", () => openModal(item, type));
-        return div;
+        const cocktailGrid = document.getElementById('cocktailGrid');
+        const beerGrid = document.getElementById('beerGrid');
+        const equipmentGrid = document.getElementById('equipmentGrid');
+
+        function createCard(item, type) {
+          const div = document.createElement("div");
+          div.className = "card";
+          div.innerHTML = `
+            <img src="images/${type}/${item.image}" alt="${item.name}"
+                 onerror="this.src='images/coming-soon.jpg'">
+            <h3>${item.name}</h3>
+            <p>${item.short || ''}</p>
+          `;
+          div.querySelector("img").addEventListener("click", () => openModal(item, type));
+          return div;
+        }
+
+        cocktails.forEach(drink => cocktailGrid.appendChild(createCard(drink, "cocktails")));
+        beer.forEach(drink => beerGrid.appendChild(createCard(drink, "beer")));
+        equipment.forEach(eq => equipmentGrid.appendChild(createCard(eq, "equipment")));
+
+      } catch (err) {
+        console.error("Error loading cocktails.json", err);
       }
-
-      data.cocktails.forEach(drink => cocktailGrid.appendChild(createCard(drink, "cocktails")));
-      data.beer.forEach(drink => beerGrid.appendChild(createCard(drink, "beer")));
-      data.equipment.forEach(eq => equipmentGrid.appendChild(createCard(eq, "equipment")));
     }
 
     function openModal(item, type) {
@@ -183,8 +192,6 @@
       document.getElementById("modalTitle").textContent = item.name;
       document.getElementById("modalDesc").textContent = item.short || "";
       modal.style.display = "flex";
-
-      // close handlers
       document.querySelector(".close").onclick = () => modal.style.display = "none";
       window.onclick = e => { if (e.target === modal) modal.style.display = "none"; };
     }
