@@ -1,21 +1,15 @@
 {
   "cocktails": [
     {
-      "name": "Cocktail Amaretto Sour",
-      "image": "images/cocktails/cocktail-amaretto-sour.jpg",
-      "image_webp": "images/cocktails/cocktail-amaretto-sour.webp",
+      "name": "Cocktail Amaretto Sour 1",
+      "image": "images/cocktails/cocktail-amaretto-sour-1.jpg",
+      "image_webp": "images/cocktails/cocktail-amaretto-sour-1.webp",
       "bio": ""
     },
     {
-      "name": "Cocktail Cara Cara",
-      "image": "images/cocktails/cocktail-cara-cara.jpg",
-      "image_webp": "images/cocktails/cocktail-cara-cara.webp",
-      "bio": ""
-    },
-    {
-      "name": "Cocktail Closeup Orange",
-      "image": "images/cocktails/cocktail-closeup-orange.jpg",
-      "image_webp": "images/cocktails/cocktail-closeup-orange.webp",
+      "name": "Cocktail Cara Cara 1",
+      "image": "images/cocktails/cocktail-cara-cara-1.jpg",
+      "image_webp": "images/cocktails/cocktail-cara-cara-1.webp",
       "bio": ""
     },
     {
@@ -43,9 +37,9 @@
       "bio": ""
     },
     {
-      "name": "Cocktail Espresso Martini",
-      "image": "images/cocktails/cocktail-espresso-martini.jpg",
-      "image_webp": "images/cocktails/cocktail-espresso-martini.webp",
+      "name": "Cocktail Espresso Martini 1",
+      "image": "images/cocktails/cocktail-espresso-martini-1.jpg",
+      "image_webp": "images/cocktails/cocktail-espresso-martini-1.webp",
       "bio": ""
     },
     {
@@ -67,12 +61,6 @@
       "bio": ""
     },
     {
-      "name": "Cocktail Fizz Light",
-      "image": "images/cocktails/cocktail-fizz-light.jpg",
-      "image_webp": "images/cocktails/cocktail-fizz-light.webp",
-      "bio": ""
-    },
-    {
       "name": "Cocktail Flaming Zombie",
       "image": "images/cocktails/cocktail-flaming-zombie.jpg",
       "image_webp": "images/cocktails/cocktail-flaming-zombie.webp",
@@ -91,6 +79,18 @@
       "bio": ""
     },
     {
+      "name": "Cocktail French Fizz 3",
+      "image": "images/cocktails/cocktail-french-fizz-3.jpg",
+      "image_webp": "images/cocktails/cocktail-french-fizz-3.webp",
+      "bio": ""
+    },
+    {
+      "name": "Cocktail French Fizz 4",
+      "image": "images/cocktails/cocktail-french-fizz-4.jpg",
+      "image_webp": "images/cocktails/cocktail-french-fizz-4.webp",
+      "bio": ""
+    },
+    {
       "name": "Cocktail Frothy Top",
       "image": "images/cocktails/cocktail-frothy-top.jpg",
       "image_webp": "images/cocktails/cocktail-frothy-top.webp",
@@ -103,9 +103,9 @@
       "bio": ""
     },
     {
-      "name": "Cocktail Gimlet",
-      "image": "images/cocktails/cocktail-gimlet.jpg",
-      "image_webp": "images/cocktails/cocktail-gimlet.webp",
+      "name": "Cocktail Gimlet 1",
+      "image": "images/cocktails/cocktail-gimlet-1.jpg",
+      "image_webp": "images/cocktails/cocktail-gimlet-1.webp",
       "bio": ""
     },
     {
@@ -133,27 +133,27 @@
       "bio": ""
     },
     {
-      "name": "Cocktail Pina Colada",
-      "image": "images/cocktails/cocktail-pina-colada.jpg",
-      "image_webp": "images/cocktails/cocktail-pina-colada.webp",
+      "name": "Cocktail Old Fashioned 1",
+      "image": "images/cocktails/cocktail-old-fashioned-1.jpg",
+      "image_webp": "images/cocktails/cocktail-old-fashioned-1.webp",
       "bio": ""
     },
     {
-      "name": "Cocktail Pornstar Martini",
-      "image": "images/cocktails/cocktail-pornstar-martini.jpg",
-      "image_webp": "images/cocktails/cocktail-pornstar-martini.webp",
+      "name": "Cocktail Pina Colada 1",
+      "image": "images/cocktails/cocktail-pina-colada-1.jpg",
+      "image_webp": "images/cocktails/cocktail-pina-colada-1.webp",
+      "bio": ""
+    },
+    {
+      "name": "Cocktail Pornstar Martini 4",
+      "image": "images/cocktails/cocktail-pornstar-martini-4.jpg",
+      "image_webp": "images/cocktails/cocktail-pornstar-martini-4.webp",
       "bio": ""
     },
     {
       "name": "Cocktail Red Bitters",
       "image": "images/cocktails/cocktail-red-bitters.jpg",
       "image_webp": "images/cocktails/cocktail-red-bitters.webp",
-      "bio": ""
-    },
-    {
-      "name": "Cocktail Smoked Old Fashioned",
-      "image": "images/cocktails/cocktail-smoked-old-fashioned.jpg",
-      "image_webp": "images/cocktails/cocktail-smoked-old-fashioned.webp",
       "bio": ""
     },
     {
@@ -169,15 +169,15 @@
       "bio": ""
     },
     {
-      "name": "Cocktail Whiskey Sour 2",
-      "image": "images/cocktails/cocktail-whiskey-sour-2.jpg",
-      "image_webp": "images/cocktails/cocktail-whiskey-sour-2.webp",
+      "name": "Cocktail Whiskey Sour 1",
+      "image": "images/cocktails/cocktail-whiskey-sour-1.jpg",
+      "image_webp": "images/cocktails/cocktail-whiskey-sour-1.webp",
       "bio": ""
     },
     {
-      "name": "Cocktail Whiskey Sour",
-      "image": "images/cocktails/cocktail-whiskey-sour.jpg",
-      "image_webp": "images/cocktails/cocktail-whiskey-sour.webp",
+      "name": "Cocktail Whiskey Sour 2",
+      "image": "images/cocktails/cocktail-whiskey-sour-2.jpg",
+      "image_webp": "images/cocktails/cocktail-whiskey-sour-2.webp",
       "bio": ""
     },
     {
@@ -187,15 +187,15 @@
       "bio": ""
     },
     {
-      "name": "Cocktails Pina Colada 1",
-      "image": "images/cocktails/cocktails-pina-colada-1.jpg",
-      "image_webp": "images/cocktails/cocktails-pina-colada-1.webp",
-      "bio": ""
-    },
-    {
       "name": "Cocktails Pina Colada 2",
       "image": "images/cocktails/cocktails-pina-colada-2.jpg",
       "image_webp": "images/cocktails/cocktails-pina-colada-2.webp",
+      "bio": ""
+    },
+    {
+      "name": "Cocktails Pina Colada 3",
+      "image": "images/cocktails/cocktails-pina-colada-3.jpg",
+      "image_webp": "images/cocktails/cocktails-pina-colada-3.webp",
       "bio": ""
     },
     {
