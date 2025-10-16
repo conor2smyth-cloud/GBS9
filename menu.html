@@ -137,6 +137,28 @@
 </main>
 
 <script>
+function loadFavourites() {
+  const favs = JSON.parse(localStorage.getItem("favourites") || "[]");
+  const container = document.getElementById("favourites");
+  container.innerHTML = "";
+
+  favs.forEach(drink => {
+    const div = document.createElement("div");
+    div.className = "menu-item";
+    div.innerHTML = `
+      <img src="images/cocktails/${drink.image}" alt="${drink.name}">
+      <div>
+        <span>${drink.name}</span>
+        <small>${drink.short || ""}</small>
+      </div>
+    `;
+    container.appendChild(div);
+  });
+}
+
+document.addEventListener("DOMContentLoaded", loadFavourites);
+
+
   let cocktails = [];
   let pool = [];
   let matchedMenu = [];
