@@ -6,7 +6,7 @@
   <title>Premium Listings - GBS9</title>
   <link rel="stylesheet" href="css/style.css">
   <script src="js/header.js" defer></script>
-  <!-- BENCHMARK VERSION: Stable baseline as of 2025-10-15. Remove this note on future updates. -->
+  <!-- BENCHMARK VERSION: Stable baseline with array-safety -->
   <style>
     main {
       display: flex;
@@ -29,7 +29,6 @@
       grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
       gap: 1.5rem;
     }
-
     .card {
       position: relative;
       background: rgba(255,255,255,0.06);
@@ -151,25 +150,29 @@
 
   <script>
     async function loadListings() {
-      const res = await fetch('data/drinks.json'); // ✅ now using drinks.json
+      const res = await fetch('data/drinks.json');
       const data = await res.json();
 
-      const cocktails = data.cocktails || [];
-      const beers = data.beer || [];
-      const equipment = data.equipment || [];
+      // Force into arrays
+      const cocktails = Array.isArray(data.cocktails) ? data.cocktails : [];
+      const beers = Array.isArray(data.beer) ? data.beer : [];
+      const equipment = Array.isArray(data.equipment) ? data.equipment : [];
 
       const cocktailGrid = document.getElementById('cocktailGrid');
       const beerGrid = document.getElementById('beerGrid');
       const equipmentGrid = document.getElementById('equipmentGrid');
 
       function createCard(item, type) {
+        const imageFile = item.image ? `images/${type}/${item.image}` : "images/coming-soon.jpg";
+        const shortText = item.short || (Array.isArray(item.ingredients) ? item.ingredients.join(", ") : "Description coming soon...");
+
         const div = document.createElement("div");
         div.className = "card";
         div.innerHTML = `
-          <img src="images/${type}/${item.image}" alt="${item.name}"
+          <img src="${imageFile}" alt="${item.name}"
                onerror="this.src='images/coming-soon.jpg'">
           <h3>${item.name}</h3>
-          <p>${item.short || ''}</p>
+          <p>${shortText}</p>
         `;
         div.querySelector("img").addEventListener("click", () => openModal(item, type));
         return div;
@@ -182,9 +185,10 @@
 
     function openModal(item, type) {
       const modal = document.getElementById("modal");
-      document.getElementById("modalImg").src = `images/${type}/${item.image}`;
+      document.getElementById("modalImg").src = `images/${type}/${item.image || 'coming-soon.jpg'}`;
       document.getElementById("modalTitle").textContent = item.name;
-      document.getElementById("modalDesc").textContent = item.short || "";
+      document.getElementById("modalDesc").textContent =
+        item.short || (Array.isArray(item.ingredients) ? item.ingredients.join(", ") : "No description available");
       modal.style.display = "flex";
       document.querySelector(".close").onclick = () => modal.style.display = "none";
       window.onclick = e => { if (e.target === modal) modal.style.display = "none"; };
@@ -194,5 +198,4 @@
   </script>
 </body>
 </html>
-
 
