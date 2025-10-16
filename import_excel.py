@@ -2,57 +2,64 @@ import pandas as pd
 import json
 import os
 
-def sheet_to_list(sheet, category):
-    """Convert a DataFrame into a list of dicts formatted for listings."""
+def sheet_to_list(sheet):
+    """Convert a DataFrame sheet into a list of dicts formatted for listings"""
     items = []
     for _, row in sheet.iterrows():
-        # Defensive read: replace NaN with empty strings
-        name = str(row.get("Name", "")).strip()
-        if not name:  # skip completely empty rows
-            continue
+        name = str(row["Name"]).strip()
+        base = str(row["Base Spirit"]).strip()
+        glass = str(row["Glass"]).strip()
+        ingredients_raw = str(row["Ingredients"]).strip()
+        method = str(row["Method / Blurb"]).strip()
+        image_filename = str(row["Image Filename"]).strip()
+        kegged = str(row["Kegged"]).strip()
+        type_ = str(row["Type"]).strip()
+        flavour = str(row["Flavour"]).strip()
+
+        # --- Clean ingredients into list ---
+        ingredients = []
+        if ingredients_raw and ingredients_raw.lower() != "nan":
+            # Split by "." or ";" or "," for safety
+            parts = [x.strip() for x in ingredients_raw.replace(";", ".").split(".") if x.strip()]
+            ingredients = parts
+
+        # --- Fallback image convention ---
+        if not image_filename or image_filename.lower() == "nan":
+            # auto-generate from name
+            slug = name.lower().replace(" ", "-")
+            image_filename = f"cocktail-{slug}.jpg"
 
         item = {
             "name": name,
-            "base": str(row.get("Base", "")).strip(),
-            "glass": str(row.get("Glass", "")).strip(),
-            "image": str(row.get("Image", "")).strip(),
-            "ingredients": str(row.get("Ingredients", "")).strip(),
-            "short": str(row.get("Short", "")).strip(),
-            "kegged": str(row.get("Kegged", "No")).strip(),
-            "type": category
+            "base": base,
+            "glass": glass,
+            "image": image_filename,
+            "ingredients": ingredients,
+            "short": method,       # ✅ this is your blurb
+            "kegged": kegged,
+            "type": type_,
+            "flavour": flavour
         }
         items.append(item)
     return items
 
-def import_excel_to_json(excel_file, output_file="data/cocktails.json"):
-    """Read Excel sheets and export to structured JSON for the site."""
-    try:
-        xls = pd.ExcelFile(excel_file)
+def generate_combined_json():
+    # Load Excel
+    xls = pd.ExcelFile("cocktails.xlsx")
 
-        cocktails = sheet_to_list(xls.parse("cocktails"), "cocktails") if "cocktails" in xls.sheet_names else []
-        beer = sheet_to_list(xls.parse("beer"), "beer") if "beer" in xls.sheet_names else []
-        equipment = sheet_to_list(xls.parse("equipment"), "equipment") if "equipment" in xls.sheet_names else []
-        glasses = sheet_to_list(xls.parse("glasses"), "glasses") if "glasses" in xls.sheet_names else []
-        snacks = sheet_to_list(xls.parse("snacks"), "snacks") if "snacks" in xls.sheet_names else []
-        misc = sheet_to_list(xls.parse("misc"), "misc") if "misc" in xls.sheet_names else []
+    all_data = {}
 
-        data = {
-            "cocktails": cocktails,
-            "beer": beer,
-            "equipment": equipment,
-            "glasses": glasses,
-            "snacks": snacks,
-            "misc": misc
-        }
+    # Each sheet becomes a section
+    for sheet_name in xls.sheet_names:
+        df = pd.read_excel(xls, sheet_name=sheet_name)
+        all_data[sheet_name.lower()] = sheet_to_list(df)
 
-        os.makedirs(os.path.dirname(output_file), exist_ok=True)
-        with open(output_file, "w", encoding="utf-8") as f:
-            json.dump(data, f, indent=2, ensure_ascii=False)
+    # Save to combined JSON
+    with open("data/drinks.json", "w", encoding="utf-8") as f:
+        json.dump(all_data, f, indent=2, ensure_ascii=False)
 
-        print(f"✅ JSON successfully written to {output_file}")
-    except Exception as e:
-        print(f"❌ Error: {e}")
+    print("✅ drinks.json generated successfully!")
 
 if __name__ == "__main__":
-    import_excel_to_json("data/drinks.xlsx")
+    generate_combined_json()
 
