@@ -43,6 +43,34 @@
   </div>
 </div>
 
+<section class="admin-guide">
+  <h2>How to Update Listings</h2>
+  <ol>
+    <li>Edit <strong>cocktails.xlsx</strong> in Excel.
+      <ul>
+        <li>Each sheet = category (Cocktails, Beer, Equipment, Glasses, Snacks, Misc).</li>
+        <li>Columns: <code>Name</code>, <code>Base</code>, <code>Glass</code>, <code>Image</code>, <code>Ingredients</code>, <code>Short</code>, <code>Flavours</code>.</li>
+        <li>Leave cells blank if unknown — the importer will convert them to <code>null</code>.</li>
+      </ul>
+    </li>
+    <li>Save the Excel file.</li>
+    <li>Run <code>python import_excel.py</code> locally. This generates:
+      <ul>
+        <li><code>data/cocktails.json</code> → used by Design Your Menu</li>
+        <li><code>data/drinks.json</code> → used by Premium Listings</li>
+      </ul>
+    </li>
+    <li>Commit & push the updated JSON files and any new images to GitHub.</li>
+    <li>Check the site:
+      <ul>
+        <li>If nothing shows, check the JSON in your browser — it must be valid.</li>
+        <li>If images are missing, make sure filenames match exactly in <code>/images/cocktails/</code>, <code>/images/beer/</code>, etc.</li>
+      </ul>
+    </li>
+  </ol>
+</section>
+
+
 
   </main>
 </body>

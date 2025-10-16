@@ -229,11 +229,11 @@
       {
         "name": "Amaretto Sour",
         "type": "cocktails",
-        "glass": NaN,
+        "glass": "Rocks",
         "ingredients": [
-          "nan"
+          "Amaretto; Lemon juice; Simple syrup; Bitters"
         ],
-        "kegged": NaN
+        "kegged": "No"
       },
       {
         "name": "Cara Cara",
