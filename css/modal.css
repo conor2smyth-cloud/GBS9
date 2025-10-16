@@ -1,17 +1,3 @@
-/* Modal container */
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 2000;
-  left: 0; top: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.8);
-  justify-content: center;
-  align-items: center;
-  padding: 1rem;
-}
-
-/* Modal content */
 .modal-content {
   background: rgba(20,15,10,0.95);
   padding: 2rem;
@@ -19,10 +5,13 @@
   width: 90%;
   max-width: 900px;
   max-height: 85%;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 0.8fr; /* left text + right image */
+  grid-template-rows: auto 1fr auto; /* title/desc, body, footer */
   border: 2px solid #b8860b;
+  position: relative;
   overflow: hidden;
+  gap: 1rem;
 }
 
 .close {
@@ -34,47 +23,34 @@
   cursor: pointer;
 }
 
-.modal-body {
-  display: flex;
-  gap: 2rem;
-  flex: 1;
-  overflow: hidden;
-}
-
+/* Left side text */
 .modal-text {
-  flex: 1;
+  grid-column: 1 / 2;
+  grid-row: 1 / span 3;
   text-align: left;
   overflow-y: auto;
+  padding-right: 1rem;
 }
 
+/* Right side image */
 .modal-image {
-  flex: 1;
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+  text-align: right;
+}
+.modal-image img {
+  width: 100%;
+  max-width: 200px; /* ~25% of modal */
+  border-radius: 8px;
+  border: 2px solid #ffcc66;
+}
+
+/* Right side footer: flavours + favourites */
+.modal-footer {
+  grid-column: 2 / 3;
+  grid-row: 3 / 4;
   text-align: center;
 }
-
-.modal-image img {
-  max-width: 100%;
-  max-height: 300px;
-  object-fit: contain;
-  border-radius: 8px;
-  margin-bottom: 1rem;
-}
-
-/* Gallery navigation */
-.gallery-nav {
-  background: rgba(0,0,0,0.6);
-  color: white;
-  border: none;
-  font-size: 2rem;
-  cursor: pointer;
-  padding: 0.2rem 0.6rem;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-}
-.gallery-nav.left { left: 5px; }
-.gallery-nav.right { right: 5px; }
-
 #addToFav {
   background: #ffcc66;
   color: #000;
