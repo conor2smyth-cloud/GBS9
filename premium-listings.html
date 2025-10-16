@@ -5,10 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Premium Listings - GBS9</title>
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/modal.css"> <!-- Global modal styles -->
   <script src="js/header.js" defer></script>
-  <script src="js/modal.js" defer></script> <!-- Global modal logic -->
-  <!-- BENCHMARK VERSION: Accordion + Grid + Global Modal -->
+  <!-- BENCHMARK VERSION: Accordion + Grid + Self-contained Modal -->
   <style>
     main {
       max-width: 1200px;
@@ -51,6 +49,7 @@
       gap: 1.5rem;
     }
     .card {
+      position: relative;
       background: rgba(255,255,255,0.06);
       padding: 1rem;
       border-radius: 12px;
@@ -66,6 +65,66 @@
       margin-bottom: 0.5rem;
     }
     .card:hover { transform: translateY(-5px); }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+    }
+    .modal-content {
+      background: rgba(20, 15, 10, 0.95);
+      border: 2px solid #b8860b;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      gap: 1.5rem;
+      width: 80%;
+      max-width: 900px;
+      height: 80%;
+      padding: 2rem;
+      color: #fff;
+      overflow: hidden;
+      position: relative;
+    }
+    .modal-text {
+      flex: 2;
+      text-align: left;
+      overflow-y: auto;
+    }
+    .modal-text h2 { margin-top: 0; color: #ffcc66; }
+    .modal-text p { margin: 0.5rem 0; }
+    .modal-text ul { padding-left: 1.2rem; }
+
+    .modal-image {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
+    .modal-image img {
+      width: 100%;
+      max-width: 200px;
+      border-radius: 8px;
+      border: 2px solid #b8860b;
+      margin-bottom: 1rem;
+    }
+    .close {
+      position: absolute;
+      top: 15px;
+      right: 25px;
+      font-size: 2rem;
+      color: #ffcc66;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -93,7 +152,24 @@
     </div>
   </main>
 
-  <!-- Global modal is pulled from modal.html via modal.js + modal.css -->
+  <!-- Premium Listings Modal -->
+  <div id="pl-modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <div class="modal-text">
+        <h2 id="pl-modalTitle"></h2>
+        <p id="pl-modalDesc"></p>
+        <p><strong>Glass:</strong> <span id="pl-modalGlass"></span></p>
+        <p><strong>Ingredients:</strong></p>
+        <ul id="pl-modalIngredients"></ul>
+      </div>
+      <div class="modal-image">
+        <img id="pl-modalImg" src="" alt="">
+        <button id="pl-addToFav">❤️ Add to Favourites</button>
+        <p><strong>Flavours:</strong> <span id="pl-modalFlavours"></span></p>
+      </div>
+    </div>
+  </div>
 
   <script>
     // Accordion toggle
@@ -103,6 +179,33 @@
         item.classList.toggle("active");
       }
     });
+
+    // Open Premium Listings Modal
+    function openPLModal(item, type) {
+      document.getElementById("pl-modalImg").src = `images/${type}/${item.image}`;
+      document.getElementById("pl-modalTitle").textContent = item.name;
+      document.getElementById("pl-modalDesc").textContent = item.short || "";
+      document.getElementById("pl-modalGlass").textContent = item.glass || "N/A";
+
+      const ingList = document.getElementById("pl-modalIngredients");
+      ingList.innerHTML = "";
+      (item.ingredients || []).forEach(i => {
+        const li = document.createElement("li");
+        li.textContent = i;
+        ingList.appendChild(li);
+      });
+
+      document.getElementById("pl-modal").style.display = "flex";
+    }
+
+    // Close modal
+    document.querySelector("#pl-modal .close").onclick = () =>
+      document.getElementById("pl-modal").style.display = "none";
+
+    window.onclick = e => {
+      const modal = document.getElementById("pl-modal");
+      if (e.target === modal) modal.style.display = "none";
+    };
 
     // JSON loader
     async function loadListings() {
@@ -122,8 +225,7 @@
             <h3>${item.name}</h3>
             <p>${item.short || ''}</p>
           `;
-          // Hook into global modal
-          div.querySelector("img").addEventListener("click", () => openModal(item, type));
+          div.querySelector("img").addEventListener("click", () => openPLModal(item, type));
           return div;
         }
 
@@ -138,4 +240,5 @@
   </script>
 </body>
 </html>
+
 
