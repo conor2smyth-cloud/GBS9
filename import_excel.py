@@ -1,71 +1,58 @@
 import pandas as pd
 import json
 import os
-import shutil
 
-def backup_file(filepath):
-    """Create a backup of the JSON file if it exists"""
-    if os.path.exists(filepath):
-        backup_path = filepath.replace(".json", "_backup.json")
-        shutil.copy(filepath, backup_path)
-        print(f"📦 Backup created: {backup_path}")
-
-def sheet_to_list(sheet):
-    """Convert a DataFrame into a list of dicts formatted for listings"""
+def sheet_to_list(sheet, category):
+    """Convert a DataFrame into a list of dicts formatted for listings."""
     items = []
-    sheet = sheet.where(pd.notnull(sheet), None)  # Replace NaN with None
-
     for _, row in sheet.iterrows():
-        item = {
-            "name": str(row.get("Name")).strip() if row.get("Name") else None,
-            "base": row.get("Base"),
-            "glass": row.get("Glass"),
-            "image": row.get("Image"),
-            "ingredients": [i.strip() for i in str(row.get("Ingredients")).split(".") if i.strip()] if row.get("Ingredients") else [],
-            "short": row.get("Short"),
-            "flavours": [f.strip() for f in str(row.get("Flavours")).split(",")] if row.get("Flavours") else [],
-            "kegged": row.get("Kegged"),
-            "type": sheet.name.lower() if hasattr(sheet, "name") else "misc"
-        }
-
-        # Skip empty rows
-        if not item["name"]:
+        # Defensive read: replace NaN with empty strings
+        name = str(row.get("Name", "")).strip()
+        if not name:  # skip completely empty rows
             continue
 
+        item = {
+            "name": name,
+            "base": str(row.get("Base", "")).strip(),
+            "glass": str(row.get("Glass", "")).strip(),
+            "image": str(row.get("Image", "")).strip(),
+            "ingredients": str(row.get("Ingredients", "")).strip(),
+            "short": str(row.get("Short", "")).strip(),
+            "kegged": str(row.get("Kegged", "No")).strip(),
+            "type": category
+        }
         items.append(item)
+    return items
 
-    # Remove duplicates by "name"
-    seen = set()
-    unique_items = []
-    for item in items:
-        if item["name"] not in seen:
-            unique_items.append(item)
-            seen.add(item["name"])
-    return unique_items
+def import_excel_to_json(excel_file, output_file="data/cocktails.json"):
+    """Read Excel sheets and export to structured JSON for the site."""
+    try:
+        xls = pd.ExcelFile(excel_file)
 
-def generate_from_excel():
-    xls = pd.ExcelFile("cocktails.xlsx")
-    data = {}
+        cocktails = sheet_to_list(xls.parse("cocktails"), "cocktails") if "cocktails" in xls.sheet_names else []
+        beer = sheet_to_list(xls.parse("beer"), "beer") if "beer" in xls.sheet_names else []
+        equipment = sheet_to_list(xls.parse("equipment"), "equipment") if "equipment" in xls.sheet_names else []
+        glasses = sheet_to_list(xls.parse("glasses"), "glasses") if "glasses" in xls.sheet_names else []
+        snacks = sheet_to_list(xls.parse("snacks"), "snacks") if "snacks" in xls.sheet_names else []
+        misc = sheet_to_list(xls.parse("misc"), "misc") if "misc" in xls.sheet_names else []
 
-    for sheet_name in xls.sheet_names:
-        sheet = xls.parse(sheet_name)
-        sheet.name = sheet_name
-        data[sheet_name.lower()] = sheet_to_list(sheet)
+        data = {
+            "cocktails": cocktails,
+            "beer": beer,
+            "equipment": equipment,
+            "glasses": glasses,
+            "snacks": snacks,
+            "misc": misc
+        }
 
-    # Back up before overwrite
-    backup_file("data/cocktails.json")
-    backup_file("data/drinks.json")
+        os.makedirs(os.path.dirname(output_file), exist_ok=True)
+        with open(output_file, "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=2, ensure_ascii=False)
 
-    # Save cocktails.json (only cocktails)
-    with open("data/cocktails.json", "w", encoding="utf-8") as f:
-        json.dump({"cocktails": data.get("cocktails", [])}, f, indent=2, ensure_ascii=False)
-
-    # Save drinks.json (everything)
-    with open("data/drinks.json", "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2, ensure_ascii=False)
-
-    print("✅ Export complete: cocktails.json and drinks.json updated")
+        print(f"✅ JSON successfully written to {output_file}")
+    except Exception as e:
+        print(f"❌ Error: {e}")
 
 if __name__ == "__main__":
-    generate_from_excel()
+    import_excel_to_json("data/drinks.xlsx")
 
