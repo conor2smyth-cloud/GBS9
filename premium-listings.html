@@ -152,7 +152,7 @@
   <script>
     async function loadListings() {
       try {
-        const res = await fetch('data/cocktails.json');
+        const res = await fetch('data/drinks.json');
         const data = await res.json();
 
         // Defensive: support both flat and nested JSON
@@ -182,7 +182,7 @@
         equipment.forEach(eq => equipmentGrid.appendChild(createCard(eq, "equipment")));
 
       } catch (err) {
-        console.error("Error loading cocktails.json", err);
+        console.error("Error loading drinks.json", err);
       }
     }
 
