@@ -1,32 +1,29 @@
-<!-- Global Modal -->
+<!-- ================== GLOBAL MODAL ================== -->
 <div id="modal" class="modal">
   <div class="modal-content">
     <span class="close">&times;</span>
 
-    <div class="modal-card">
-      <!-- Text column -->
-      <div class="modal-text">
-        <h2 id="modalTitle">Cocktail Name</h2>
-        <p id="modalDesc">A short description goes here.</p>
+    <!-- LEFT COLUMN: TEXT -->
+    <div class="modal-left">
+      <h2 id="modalTitle">Cocktail Name</h2>
+      <p id="modalDesc">This is where the cocktail blurb/description will appear.</p>
+      <p><strong>Glass:</strong> <span id="modalGlass">Coupe</span></p>
 
-        <p><strong>Glass:</strong> <span id="modalGlass">Coupe</span></p>
+      <p><strong>Ingredients:</strong></p>
+      <ul id="modalIngredients">
+        <li>Example Ingredient</li>
+        <li>Another Ingredient</li>
+      </ul>
+    </div>
 
-        <p><strong>Ingredients:</strong></p>
-        <ul id="modalIngredients">
-          <li>Tequila</li>
-          <li>Lime Juice</li>
-          <li>Triple Sec</li>
-        </ul>
+    <!-- RIGHT COLUMN: IMAGE + BUTTONS -->
+    <div class="modal-right">
+      <img id="modalImg" src="images/coming-soon.jpg" alt="Cocktail Image">
 
-        <p><strong>Flavours:</strong> <span id="modalFlavours">Strawberry, Passionfruit</span></p>
+      <button id="addToFav">❤️ Add to Favourites</button>
 
-        <button id="addToFav">❤️ Add to Favourites</button>
-      </div>
-
-      <!-- Image column -->
-      <div class="modal-image">
-        <img id="modalImg" src="images/cocktails/coming-soon.jpg" alt="Cocktail">
-      </div>
+      <p><strong>Flavours:</strong> <span id="modalFlavours">Strawberry, Passionfruit</span></p>
     </div>
   </div>
 </div>
+
