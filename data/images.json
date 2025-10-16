@@ -219,97 +219,49 @@
   ],
   "beer": [
     {
-      "name": "Brewdog Cans",
-      "image": "images/beer/brewdog-cans.jpg",
-      "image_webp": "images/beer/brewdog-cans.webp",
+      "name": "Beer Brewdog Cans",
+      "image": "images/beer/beer-brewdog-cans.jpg",
+      "image_webp": "images/beer/beer-brewdog-cans.webp",
       "bio": ""
     },
     {
-      "name": "Coors",
-      "image": "images/beer/coors.jpg",
-      "image_webp": "images/beer/coors.webp",
+      "name": "Beer Coors",
+      "image": "images/beer/beer-coors.jpg",
+      "image_webp": "images/beer/beer-coors.webp",
       "bio": ""
     },
     {
-      "name": "Guinness",
-      "image": "images/beer/guinness.jpg",
-      "image_webp": "images/beer/guinness.webp",
+      "name": "Beer Guinness",
+      "image": "images/beer/beer-guinness.jpg",
+      "image_webp": "images/beer/beer-guinness.webp",
       "bio": ""
     },
     {
-      "name": "Harp",
-      "image": "images/beer/harp.jpg",
-      "image_webp": "images/beer/harp.webp",
+      "name": "Beer Harp",
+      "image": "images/beer/beer-harp.jpg",
+      "image_webp": "images/beer/beer-harp.webp",
       "bio": ""
     },
     {
-      "name": "Heineken",
-      "image": "images/beer/heineken.jpg",
-      "image_webp": "images/beer/heineken.webp",
+      "name": "Beer Heineken",
+      "image": "images/beer/beer-heineken.jpg",
+      "image_webp": "images/beer/beer-heineken.webp",
       "bio": ""
     },
     {
-      "name": "Non Alcoholic Options",
-      "image": "images/beer/non-alcoholic-options.jpg",
-      "image_webp": "images/beer/non-alcoholic-options.webp",
+      "name": "Beer Non Alcoholic Options",
+      "image": "images/beer/beer-non-alcoholic-options.jpg",
+      "image_webp": "images/beer/beer-non-alcoholic-options.webp",
       "bio": ""
     },
     {
-      "name": "Smithwicks",
-      "image": "images/beer/smithwicks.jpg",
-      "image_webp": "images/beer/smithwicks.webp",
+      "name": "Beer Smithwicks",
+      "image": "images/beer/beer-smithwicks.jpg",
+      "image_webp": "images/beer/beer-smithwicks.webp",
       "bio": ""
     }
   ],
   "equipment": [
-    {
-      "name": "Bar Setup Inside",
-      "image": "images/equipment/bar-setup-inside.jpg",
-      "image_webp": "images/equipment/bar-setup-inside.webp",
-      "bio": ""
-    },
-    {
-      "name": "Beer Chiller",
-      "image": "images/equipment/beer-chiller.jpg",
-      "image_webp": "images/equipment/beer-chiller.webp",
-      "bio": ""
-    },
-    {
-      "name": "Cocktail & Draft Bars",
-      "image": "images/equipment/cocktail-&-draft-bars.jpg",
-      "image_webp": "images/equipment/cocktail-&-draft-bars.webp",
-      "bio": ""
-    },
-    {
-      "name": "Cocktail Gin Tonic",
-      "image": "images/equipment/cocktail-gin-tonic.jpg",
-      "image_webp": "images/equipment/cocktail-gin-tonic.webp",
-      "bio": ""
-    },
-    {
-      "name": "Cocktail Highball Tall",
-      "image": "images/equipment/cocktail-highball-tall.jpg",
-      "image_webp": "images/equipment/cocktail-highball-tall.webp",
-      "bio": ""
-    },
-    {
-      "name": "Cocktail Margarita Salt",
-      "image": "images/equipment/cocktail-margarita-salt.jpg",
-      "image_webp": "images/equipment/cocktail-margarita-salt.webp",
-      "bio": ""
-    },
-    {
-      "name": "Cocktail Martini Garnish",
-      "image": "images/equipment/cocktail-martini-garnish.jpg",
-      "image_webp": "images/equipment/cocktail-martini-garnish.webp",
-      "bio": ""
-    },
-    {
-      "name": "Cocktail Negroni Orange",
-      "image": "images/equipment/cocktail-negroni-orange.jpg",
-      "image_webp": "images/equipment/cocktail-negroni-orange.webp",
-      "bio": ""
-    },
     {
       "name": "Cocktail Shaken Pink",
       "image": "images/equipment/cocktail-shaken-pink.jpg",
@@ -317,9 +269,57 @@
       "bio": ""
     },
     {
-      "name": "Cocktail Station Prepped",
-      "image": "images/equipment/cocktail-station-prepped.jpg",
-      "image_webp": "images/equipment/cocktail-station-prepped.webp",
+      "name": "Equipment Beer Chiller",
+      "image": "images/equipment/equipment-beer-chiller.jpg",
+      "image_webp": "images/equipment/equipment-beer-chiller.webp",
+      "bio": ""
+    },
+    {
+      "name": "Equipment Cocktail & Draft Bars 2",
+      "image": "images/equipment/equipment-cocktail-&-draft-bars-2.jpg",
+      "image_webp": "images/equipment/equipment-cocktail-&-draft-bars-2.webp",
+      "bio": ""
+    },
+    {
+      "name": "Equipment Cocktail & Draft Bars",
+      "image": "images/equipment/equipment-cocktail-&-draft-bars.jpg",
+      "image_webp": "images/equipment/equipment-cocktail-&-draft-bars.webp",
+      "bio": ""
+    },
+    {
+      "name": "Equipment Cocktail & Draft Empty",
+      "image": "images/equipment/equipment-cocktail-&-draft-empty.jpg",
+      "image_webp": "images/equipment/equipment-cocktail-&-draft-empty.webp",
+      "bio": ""
+    },
+    {
+      "name": "Equipment Cocktail Bar Front",
+      "image": "images/equipment/equipment-cocktail-bar-front.jpg",
+      "image_webp": "images/equipment/equipment-cocktail-bar-front.webp",
+      "bio": ""
+    },
+    {
+      "name": "Equipment Cocktail Bar Plumbing",
+      "image": "images/equipment/equipment-cocktail-bar-plumbing.jpg",
+      "image_webp": "images/equipment/equipment-cocktail-bar-plumbing.webp",
+      "bio": ""
+    },
+    {
+      "name": "Equipment Cocktail Bar",
+      "image": "images/equipment/equipment-cocktail-bar.jpg",
+      "image_webp": "images/equipment/equipment-cocktail-bar.webp",
+      "bio": ""
+    },
+    {
+      "name": "Equipment Cocktail Station Prepped Side",
+      "image": "images/equipment/equipment-cocktail-station-prepped-side.jpg",
+      "image_webp": "images/equipment/equipment-cocktail-station-prepped-side.webp",
+      "bio": ""
+    },
+    {
+      "name": "Equipment Cocktail Station Prepped",
+      "image": "images/equipment/equipment-cocktail-station-prepped.jpg",
+      "image_webp": "images/equipment/equipment-cocktail-station-prepped.webp",
       "bio": ""
     }
   ]
