@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Premium Listings - GBS9</title>
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/modal.css"> <!-- New modal CSS -->
+  <link rel="stylesheet" href="css/modal.css"> <!-- Global modal styles -->
   <script src="js/header.js" defer></script>
-  <script src="js/modal.js" defer></script> <!-- Global modal -->
+  <script src="js/modal.js" defer></script> <!-- Global modal logic -->
   <!-- BENCHMARK VERSION: Accordion + Grid + Global Modal -->
   <style>
     main {
@@ -93,28 +93,7 @@
     </div>
   </main>
 
-  <!-- Global Modal -->
-  <div id="modal" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <div class="modal-grid">
-        <!-- Left side -->
-        <div class="modal-left">
-          <h2 id="modalTitle"></h2>
-          <p id="modalDesc"></p>
-          <p><strong>Glass:</strong> <span id="modalGlass"></span></p>
-          <p><strong>Ingredients:</strong></p>
-          <ul id="modalIngredients"></ul>
-        </div>
-        <!-- Right side -->
-        <div class="modal-right">
-          <img id="modalImg" src="" alt="Cocktail Image">
-          <p><strong>Flavours:</strong> <span id="modalFlavours"></span></p>
-          <button id="addToFav">❤️ Add to Favourites</button>
-        </div>
-      </div>
-    </div>
-  </div>
+  <!-- Global modal is pulled from modal.html via modal.js + modal.css -->
 
   <script>
     // Accordion toggle
@@ -143,6 +122,7 @@
             <h3>${item.name}</h3>
             <p>${item.short || ''}</p>
           `;
+          // Hook into global modal
           div.querySelector("img").addEventListener("click", () => openModal(item, type));
           return div;
         }
