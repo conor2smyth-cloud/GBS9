@@ -1,4 +1,4 @@
-/* Modal Overlay */
+/* Modal container */
 .modal {
   display: none;
   position: fixed;
@@ -11,105 +11,76 @@
   padding: 1rem;
 }
 
-/* Modal Content */
+/* Modal content */
 .modal-content {
-  display: flex;
-  flex-direction: row;
-  gap: 2rem;
-  background: rgba(20, 15, 10, 0.95);
+  background: rgba(20,15,10,0.95);
   padding: 2rem;
-  border-radius: 12px;
-  max-width: 70%;
-  max-height: 80%;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 900px;
+  max-height: 85%;
+  display: flex;
+  flex-direction: column;
   border: 2px solid #b8860b;
   overflow: hidden;
 }
 
-/* Left Column (text) */
+.close {
+  position: absolute;
+  top: 15px;
+  right: 25px;
+  font-size: 2rem;
+  color: #ffcc66;
+  cursor: pointer;
+}
+
+.modal-body {
+  display: flex;
+  gap: 2rem;
+  flex: 1;
+  overflow: hidden;
+}
+
 .modal-text {
   flex: 1;
   text-align: left;
   overflow-y: auto;
 }
 
-.modal-text h2 {
-  margin-top: 0;
-  color: #ffcc66;
-}
-
-.modal-text ul {
-  margin: 0.5rem 0 0;
-  padding-left: 1.2rem;
-}
-
-/* Right Column (image + buttons) */
-.modal-media {
+.modal-image {
   flex: 1;
   text-align: center;
 }
 
-.modal-gallery {
-  position: relative;
-}
-
-.modal-gallery img {
-  width: 100%;
-  max-width: 350px;
+.modal-image img {
+  max-width: 100%;
   max-height: 300px;
+  object-fit: contain;
   border-radius: 8px;
-  object-fit: cover;
+  margin-bottom: 1rem;
 }
 
-/* Gallery Navigation */
+/* Gallery navigation */
 .gallery-nav {
+  background: rgba(0,0,0,0.6);
+  color: white;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 0.2rem 0.6rem;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(0,0,0,0.5);
-  border: none;
-  color: #ffcc66;
-  font-size: 2rem;
-  cursor: pointer;
-  padding: 0 0.5rem;
-  border-radius: 4px;
 }
-
 .gallery-nav.left { left: 5px; }
 .gallery-nav.right { right: 5px; }
 
-/* Flavours + Favourites */
-.modal-media .extras {
-  margin-top: 1rem;
-}
-
 #addToFav {
-  margin-top: 0.5rem;
   background: #ffcc66;
+  color: #000;
   border: none;
   padding: 0.5rem 1rem;
   border-radius: 6px;
   cursor: pointer;
-  font-weight: bold;
-}
-
-#addToFav:hover {
-  background: #e6b84f;
-}
-
-/* Close Button */
-.close {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: 2rem;
-  color: #ffcc66;
-  cursor: pointer;
-}
-
-/* Mobile layout: stack */
-@media (max-width: 768px) {
-  .modal-content {
-    flex-direction: column;
-    max-width: 95%;
-  }
+  margin-top: 0.5rem;
 }
