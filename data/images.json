@@ -1,6 +1,12 @@
 {
   "cocktails": [
     {
+      "name": "Cocktail Amaretto Sour",
+      "image": "images/cocktails/cocktail-amaretto-sour.jpg",
+      "image_webp": "images/cocktails/cocktail-amaretto-sour.webp",
+      "bio": ""
+    },
+    {
       "name": "Cocktail Cara Cara",
       "image": "images/cocktails/cocktail-cara-cara.jpg",
       "image_webp": "images/cocktails/cocktail-cara-cara.webp",
@@ -34,6 +40,12 @@
       "name": "Cocktail Espresso Glass",
       "image": "images/cocktails/cocktail-espresso-glass.jpg",
       "image_webp": "images/cocktails/cocktail-espresso-glass.webp",
+      "bio": ""
+    },
+    {
+      "name": "Cocktail Espresso Martini",
+      "image": "images/cocktails/cocktail-espresso-martini.jpg",
+      "image_webp": "images/cocktails/cocktail-espresso-martini.webp",
       "bio": ""
     },
     {
@@ -88,6 +100,12 @@
       "name": "Cocktail Frothy White",
       "image": "images/cocktails/cocktail-frothy-white.jpg",
       "image_webp": "images/cocktails/cocktail-frothy-white.webp",
+      "bio": ""
+    },
+    {
+      "name": "Cocktail Gimlet",
+      "image": "images/cocktails/cocktail-gimlet.jpg",
+      "image_webp": "images/cocktails/cocktail-gimlet.webp",
       "bio": ""
     },
     {
@@ -151,13 +169,61 @@
       "bio": ""
     },
     {
+      "name": "Cocktail Whiskey Sour 2",
+      "image": "images/cocktails/cocktail-whiskey-sour-2.jpg",
+      "image_webp": "images/cocktails/cocktail-whiskey-sour-2.webp",
+      "bio": ""
+    },
+    {
       "name": "Cocktail Whiskey Sour",
       "image": "images/cocktails/cocktail-whiskey-sour.jpg",
       "image_webp": "images/cocktails/cocktail-whiskey-sour.webp",
       "bio": ""
+    },
+    {
+      "name": "Cocktails Assorted Cocktails",
+      "image": "images/cocktails/cocktails-assorted-cocktails.jpg",
+      "image_webp": "images/cocktails/cocktails-assorted-cocktails.webp",
+      "bio": ""
+    },
+    {
+      "name": "Cocktails Pina Colada 1",
+      "image": "images/cocktails/cocktails-pina-colada-1.jpg",
+      "image_webp": "images/cocktails/cocktails-pina-colada-1.webp",
+      "bio": ""
+    },
+    {
+      "name": "Cocktails Pina Colada 2",
+      "image": "images/cocktails/cocktails-pina-colada-2.jpg",
+      "image_webp": "images/cocktails/cocktails-pina-colada-2.webp",
+      "bio": ""
+    },
+    {
+      "name": "Cocktails Pornstar Martini 1",
+      "image": "images/cocktails/cocktails-pornstar-martini-1.jpg",
+      "image_webp": "images/cocktails/cocktails-pornstar-martini-1.webp",
+      "bio": ""
+    },
+    {
+      "name": "Cocktails Pornstar Martini 2",
+      "image": "images/cocktails/cocktails-pornstar-martini-2.jpg",
+      "image_webp": "images/cocktails/cocktails-pornstar-martini-2.webp",
+      "bio": ""
+    },
+    {
+      "name": "Cocktails Pornstar Martini 3",
+      "image": "images/cocktails/cocktails-pornstar-martini-3.jpg",
+      "image_webp": "images/cocktails/cocktails-pornstar-martini-3.webp",
+      "bio": ""
     }
   ],
   "beer": [
+    {
+      "name": "Brewdog Cans",
+      "image": "images/beer/brewdog-cans.jpg",
+      "image_webp": "images/beer/brewdog-cans.webp",
+      "bio": ""
+    },
     {
       "name": "Coors",
       "image": "images/beer/coors.jpg",
@@ -180,6 +246,12 @@
       "name": "Heineken",
       "image": "images/beer/heineken.jpg",
       "image_webp": "images/beer/heineken.webp",
+      "bio": ""
+    },
+    {
+      "name": "Non Alcoholic Options",
+      "image": "images/beer/non-alcoholic-options.jpg",
+      "image_webp": "images/beer/non-alcoholic-options.webp",
       "bio": ""
     },
     {
