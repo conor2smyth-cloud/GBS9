@@ -1,90 +1,74 @@
-/* Background overlay */
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 2000;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.8);
-  justify-content: center;
-  align-items: center;
-}
-
-/* Modal box */
 .modal-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  width: 80%;
-  max-width: 900px;
-  height: 80%;
-  max-height: 600px;
   background: rgba(20, 15, 10, 0.95);
-  border: 2px solid #b8860b;
-  border-radius: 12px;
   padding: 2rem;
+  border-radius: 10px;
+  max-width: 80%;
+  width: 100%;
+  max-height: 80%;
+  border: 2px solid #b8860b;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   overflow: hidden;
 }
 
-/* Left text column */
-.modal-left {
-  flex: 2;
-  text-align: left;
-  padding-right: 1.5rem;
-  color: #fff;
-}
-.modal-left h2 {
-  margin-top: 0;
-  margin-bottom: 1rem;
-  color: #ffcc66;
-}
-.modal-left p {
-  margin: 0.5rem 0;
-  font-size: 0.95rem;
-}
-.modal-left ul {
-  margin: 0.5rem 0 0;
-  padding-left: 1.2rem;
+.modal-grid {
+  display: grid;
+  grid-template-columns: 70% 30%;
+  gap: 1.5rem;
+  align-items: start;
 }
 
-/* Right image + buttons column */
-.modal-right {
-  flex: 1;
-  text-align: center;
+.modal-left {
+  text-align: left;
 }
+
+.modal-left h2 {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+  color: #ffcc66;
+}
+
+.modal-left p, .modal-left ul {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.modal-left ul {
+  list-style: disc;
+  margin-left: 1.5rem;
+}
+
+.modal-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .modal-right img {
   width: 100%;
-  max-width: 250px;
-  border-radius: 10px;
-  border: 2px solid #444;
+  max-width: 180px;
+  border-radius: 8px;
   margin-bottom: 1rem;
 }
-.modal-right button {
-  display: block;
-  margin: 0.5rem auto;
-  padding: 0.6rem 1rem;
-  border: none;
-  border-radius: 6px;
-  background: #ff3366;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-}
+
 .modal-right p {
-  margin-top: 0.5rem;
-  font-size: 0.9rem;
-  color: #ddd;
+  margin: 0.5rem 0;
 }
 
-/* Close button */
-.close {
-  position: absolute;
-  top: 15px;
-  right: 20px;
-  font-size: 2rem;
-  color: #ffcc66;
+#addToFav {
+  margin-top: 1rem;
+  background: #b8860b;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
   cursor: pointer;
+  transition: 0.3s;
+}
+
+#addToFav:hover {
+  background: #ffcc66;
+  color: #111;
 }
