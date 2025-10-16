@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+<link rel="stylesheet" href="css/modal.css">
+<script src="js/modal.js" defer></script>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Premium Listings - GBS9</title>
@@ -184,17 +188,22 @@
         const cocktailGrid = document.getElementById("cocktailGrid");
         const beerGrid = document.getElementById("beerGrid");
 
-        function createCard(item, type) {
-          const div = document.createElement("div");
-          div.className = "card";
-          div.innerHTML = `
-            <img src="images/${type}/${item.image}" alt="${item.name}" 
-                 onerror="this.src='images/coming-soon.jpg'">
-            <h3>${item.name}</h3>
-            <p>${item.short || ""}</p>
-          `;
-          div.querySelector("img").addEventListener("click", () => openModal(item, type));
-          return div;
+       function createCard(item, type) {
+  const div = document.createElement("div");
+  div.className = "card";
+  div.innerHTML = `
+    <img src="images/${type}/${item.image}" alt="${item.name}"
+         onerror="this.src='images/coming-soon.jpg'">
+    <h3>${item.name}</h3>
+    <p>${item.short || ''}</p>
+  `;
+
+  // Open the global modal when the image is clicked
+  div.querySelector("img").addEventListener("click", () => openModal(item, type));
+
+  return div;
+}
+
         }
 
         (data.cocktails || []).forEach(drink => cocktailGrid.appendChild(createCard(drink, "cocktails")));
@@ -206,6 +215,28 @@
     }
     loadListings();
   </script>
+
+<!-- Global Modal -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+
+    <div class="modal-gallery">
+      <button class="gallery-nav left">‹</button>
+      <img id="modalImg" src="" alt="">
+      <button class="gallery-nav right">›</button>
+    </div>
+
+    <h2 id="modalTitle"></h2>
+    <p id="modalDesc"></p>
+    <p><strong>Ingredients:</strong> <span id="modalIngredients"></span></p>
+    <p><strong>Flavours:</strong> <span id="modalFlavours"></span></p>
+
+    <button id="addToFav">❤️ Add to Favourites</button>
+  </div>
+</div>
+
+
 </body>
 </html>
 
