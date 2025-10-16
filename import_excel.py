@@ -2,44 +2,43 @@ import pandas as pd
 import json
 
 def sheet_to_list(sheet):
-    """Convert a DataFrame into a list of dicts formatted for listings"""
+    """Convert DataFrame into list of dicts for cocktails"""
     items = []
     for _, row in sheet.iterrows():
-        # Split flavours into a list if provided
-        flavour_list = []
-        if pd.notna(row.get("Flavour", None)):
-            flavour_list = [f.strip() for f in str(row["Flavour"]).split(",") if f.strip()]
-
-        # Split ingredients if string with periods
-        ingredients_list = []
-        if pd.notna(row.get("Ingredients", None)):
-            ingredients_list = [i.strip() for i in str(row["Ingredients"]).split(".") if i.strip()]
-
         items.append({
             "name": row["Name"],
-            "base": row.get("Base", ""),
-            "glass": row.get("Glass", ""),
-            "image": row.get("Image", ""),
-            "ingredients": ingredients_list,
-            "short": row.get("Short", ""),
+            "base": row["Base"],
+            "glass": row["Glass"],
+            "image": row["Image"],
+            "ingredients": [i.strip() for i in str(row["Ingredients"]).split(".") if i.strip()],
+            "short": row["Blurb"],
             "kegged": row.get("Kegged", "No"),
-            "type": row.get("Type", "cocktails"),
-            "flavour": flavour_list
+            "type": "cocktails",
+            "flavours": [f.strip() for f in str(row.get("Flavours", "")).split(",") if f.strip()]
         })
     return items
 
-def generate_combined_json(excel_file="cocktails.xlsx", output_file="data/cocktails.json"):
-    xls = pd.ExcelFile(excel_file)
-    combined = {
-        "cocktails": sheet_to_list(pd.read_excel(xls, "Cocktails")),
-        "beer": sheet_to_list(pd.read_excel(xls, "Beer")),
-        "equipment": sheet_to_list(pd.read_excel(xls, "Equipment"))
+def generate_json():
+    # Load Excel file
+    df = pd.read_excel("cocktails.xlsx", sheet_name=None)
+
+    cocktails = sheet_to_list(df["Cocktails"]) if "Cocktails" in df else []
+
+    # Save cocktails.json (used by Design Your Menu + Premium)
+    cocktails_output = {"cocktails": cocktails}
+    with open("data/cocktails.json", "w", encoding="utf-8") as f:
+        json.dump(cocktails_output, f, indent=2, ensure_ascii=False)
+    print("✅ cocktails.json updated!")
+
+    # Save drinks.json (combined format for Sips + global use)
+    drinks_output = {
+        "cocktails": cocktails,
+        "beer": [],        # placeholders until we wire Excel sheets for beer/equipment
+        "equipment": []
     }
-
-    with open(output_file, "w", encoding="utf-8") as f:
-        json.dump(combined, f, indent=2, ensure_ascii=False)
-
-    print(f"✅ JSON generated and saved to {output_file}")
+    with open("data/drinks.json", "w", encoding="utf-8") as f:
+        json.dump(drinks_output, f, indent=2, ensure_ascii=False)
+    print("✅ drinks.json updated!")
 
 if __name__ == "__main__":
-    generate_combined_json()
+    generate_json()
