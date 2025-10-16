@@ -1,4 +1,4 @@
-/* Base modal */
+/* Modal background */
 .modal {
   display: none;
   position: fixed;
@@ -10,19 +10,18 @@
   align-items: center;
 }
 
-/* Modal container */
+/* Modal box */
 .modal-content {
-  background: rgba(20, 15, 10, 0.95);
-  border: 2px solid #b8860b;
-  border-radius: 12px;
   width: 80%;
   height: 80%;
+  background: rgba(20,15,10,0.95);
+  border: 2px solid #b8860b;
+  border-radius: 12px;
+  padding: 1rem;
+  position: relative;
+  color: #fff;
   display: flex;
   flex-direction: column;
-  position: relative;
-  overflow: hidden; /* no scrollbars */
-  padding: 1rem;
-  color: #fff;
 }
 
 /* Close button */
@@ -35,16 +34,16 @@
   cursor: pointer;
 }
 
-/* Modal body: split layout */
-.modal-body {
-  display: flex;
-  flex: 1;
-  gap: 2rem;
+/* Card grid: text left, image right */
+.modal-card {
+  display: grid;
+  grid-template-columns: 70% 30%; /* 70% text, 30% image */
+  height: 100%;
+  gap: 1rem;
 }
 
-/* Left: text */
+/* Text section */
 .modal-text {
-  flex: 0 0 60%;
   text-align: left;
   overflow: hidden;
 }
@@ -60,18 +59,18 @@
   margin-bottom: 0.5rem;
 }
 
-/* Right: image */
+/* Image section */
 .modal-image {
-  flex: 0 0 40%;
   display: flex;
   justify-content: center;
   align-items: flex-start;
 }
 
 .modal-image img {
-  max-width: 90%;
-  max-height: 90%;
-  border-radius: 10px;
+  width: 100%;
+  height: auto;
+  max-height: 100%;
   border: 3px solid #ffcc66;
+  border-radius: 10px;
   object-fit: cover;
 }
