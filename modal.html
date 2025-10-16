@@ -3,24 +3,27 @@
   <div class="modal-content">
     <span class="close">&times;</span>
 
-    <!-- Left text -->
-    <div class="modal-text">
-      <h2 id="modalTitle"></h2>
-      <p id="modalDesc"></p>
-      <p><strong>Glass:</strong> <span id="modalGlass"></span></p>
-      <p><strong>Ingredients:</strong></p>
-      <ul id="modalIngredients"></ul>
-    </div>
+    <!-- Two-column layout -->
+    <div class="modal-body">
+      <!-- Left column: text -->
+      <div class="modal-text">
+        <h2 id="modalTitle"></h2>
+        <p id="modalDesc"></p>
 
-    <!-- Right image -->
-    <div class="modal-image">
-      <img id="modalImg" src="" alt="">
-    </div>
+        <p><strong>Glass:</strong> <span id="modalGlass"></span></p>
 
-    <!-- Footer under image -->
-    <div class="modal-footer">
-      <p><strong>Flavours:</strong> <span id="modalFlavours"></span></p>
-      <button id="addToFav">❤️ Add to Favourites</button>
+        <p><strong>Ingredients:</strong></p>
+        <ul id="modalIngredients"></ul>
+
+        <p><strong>Flavours:</strong> <span id="modalFlavours"></span></p>
+
+        <button id="addToFav">❤️ Add to Favourites</button>
+      </div>
+
+      <!-- Right column: image -->
+      <div class="modal-image">
+        <img id="modalImg" src="" alt="">
+      </div>
     </div>
   </div>
 </div>
