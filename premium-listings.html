@@ -6,98 +6,73 @@
   <title>Premium Listings - GBS9</title>
   <link rel="stylesheet" href="css/style.css">
   <script src="js/header.js" defer></script>
-  <!-- BENCHMARK VERSION: Stable baseline after Excel integration -->
+  <script src="js/modal.js" defer></script> <!-- global modal -->
+  <script src="js/filter.js" defer></script> <!-- global filter -->
+  <!-- BENCHMARK VERSION: Full rebuild 2025-10-15 -->
   <style>
     main {
-      display: flex;
-      gap: 2rem;
       max-width: 1200px;
       margin: auto;
       padding: 2rem;
     }
-    .content { flex: 3; min-width: 0; }
-    .filters { flex: 1; max-width: 250px; }
-
     h1 {
       text-align: center;
       margin-bottom: 2rem;
       color: #ffcc66;
     }
+    .accordion {
+      margin-bottom: 2rem;
+    }
+    .accordion button {
+      width: 100%;
+      background: rgba(255,255,255,0.1);
+      border: none;
+      padding: 1rem;
+      text-align: left;
+      font-size: 1.2rem;
+      color: #ffcc66;
+      cursor: pointer;
+    }
+    .accordion-content {
+      display: none;
+      padding: 1rem 0;
+    }
     .grid {
       display: grid;
-      width: 100%;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
     }
     .card {
       background: rgba(255,255,255,0.06);
-      padding: 1rem;
       border-radius: 12px;
+      padding: 1rem;
       text-align: center;
+      transition: transform 0.2s ease;
       cursor: pointer;
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
     .card img {
       width: 100%;
-      height: 180px;
+      height: 160px;
       object-fit: cover;
-      border-radius: 10px;
+      border-radius: 8px;
       margin-bottom: 0.5rem;
     }
     .card:hover { transform: translateY(-5px); }
 
-    /* Sidebar Filters */
-    .filters {
-      background: rgba(255,255,255,0.05);
-      padding: 1rem;
-      border-radius: 10px;
-      height: fit-content;
-    }
-    .filters h3 {
-      margin-bottom: 1rem;
-      color: #ffcc66;
-      border-bottom: 1px solid rgba(255,255,255,0.2);
-      padding-bottom: 0.5rem;
-    }
-    .filters label {
-      display: block;
-      margin: 0.3rem 0;
-      font-size: 0.9rem;
-    }
-
-    /* Modal */
-    .modal {
-      display: none;
+    /* Floating filter button */
+    .filter-btn {
       position: fixed;
-      z-index: 2000;
-      left: 0; top: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.8);
-      justify-content: center;
-      align-items: center;
-    }
-    .modal-content {
-      background: rgba(20, 15, 10, 0.95);
-      padding: 2rem;
-      border-radius: 10px;
-      max-width: 600px;
-      width: 90%;
-      text-align: center;
-      border: 2px solid #b8860b;
-      position: relative;
-    }
-    .modal-content img {
-      max-width: 100%;
-      border-radius: 8px;
-      margin-bottom: 1rem;
-    }
-    .close {
-      position: absolute;
-      top: 15px;
-      right: 25px;
-      font-size: 2rem;
-      color: #ffcc66;
+      bottom: 20px;
+      right: 20px;
+      background: #ffcc66;
+      border: none;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      font-size: 1.5rem;
       cursor: pointer;
+      z-index: 1500;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
   </style>
 </head>
@@ -105,97 +80,79 @@
   <header id="site-header"></header>
 
   <main>
-    <div class="content">
-      <h1>Premium Listings</h1>
-      <section id="cocktails">
-        <h2>🍸 Cocktails</h2>
-        <div class="grid" id="cocktailGrid"></div>
-      </section>
-      <section id="beer">
-        <h2>🍺 Beer</h2>
-        <div class="grid" id="beerGrid"></div>
-      </section>
-      <section id="equipment">
-        <h2>⚙️ Equipment</h2>
-        <div class="grid" id="equipmentGrid"></div>
-      </section>
-      <section id="misc">
-        <h2>🍴 Misc</h2>
-        <div class="grid" id="miscGrid"></div>
-      </section>
-    </div>
-
-    <!-- Sidebar Filters -->
-    <aside class="filters">
-      <h3>Filter By</h3>
-      <div><strong>Base Spirit</strong>
-        <label><input type="checkbox" value="Whiskey" class="filter-base"> Whiskey</label>
-        <label><input type="checkbox" value="Vodka" class="filter-base"> Vodka</label>
-        <label><input type="checkbox" value="Rum" class="filter-base"> Rum</label>
-      </div>
-      <div><strong>Glass</strong>
-        <label><input type="checkbox" value="Martini" class="filter-glass"> Martini</label>
-        <label><input type="checkbox" value="Highball" class="filter-glass"> Highball</label>
-        <label><input type="checkbox" value="Old Fashioned" class="filter-glass"> Old Fashioned</label>
-      </div>
-    </aside>
+    <h1>Premium Listings</h1>
+    <div id="listings"></div>
   </main>
 
-  <!-- Modal -->
-  <div id="modal" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <img id="modalImg" src="" alt="">
-      <h3 id="modalTitle"></h3>
-      <p id="modalDesc"></p>
-      <p id="modalIngredients" style="font-size:0.9rem; color:#ccc;"></p>
-    </div>
-  </div>
+  <!-- Floating filter -->
+  <button class="filter-btn" onclick="openFilter()">🔍</button>
+
+  <!-- Global Modal -->
+  <div id="modal" class="modal"></div>
 
   <script>
     async function loadListings() {
-      const res = await fetch('data/drinks.json');
-      const data = await res.json();
+      try {
+        const res = await fetch('data/drinks.json');
+        const data = await res.json();
 
-      const cocktailGrid = document.getElementById('cocktailGrid');
-      const beerGrid = document.getElementById('beerGrid');
-      const equipmentGrid = document.getElementById('equipmentGrid');
-      const miscGrid = document.getElementById('miscGrid');
+        // only cocktails + beer
+        const items = [...(data.cocktails || []), ...(data.beer || [])];
 
-      function createCard(item) {
-        const div = document.createElement("div");
-        div.className = "card";
-        div.innerHTML = `
-          <img src="images/${item.type}/${item.image}" alt="${item.name}"
-               onerror="this.src='images/coming-soon.jpg'">
-          <h3>${item.name}</h3>
-          <p>${item.short || ''}</p>
-        `;
-        div.querySelector("img").addEventListener("click", () => openModal(item));
-        return div;
+        // group by base spirit
+        const groups = {};
+        items.forEach(item => {
+          const base = item.base || "Other";
+          if (!groups[base]) groups[base] = [];
+          groups[base].push(item);
+        });
+
+        const container = document.getElementById("listings");
+        container.innerHTML = "";
+
+        for (const [base, drinks] of Object.entries(groups)) {
+          const section = document.createElement("div");
+          section.className = "accordion";
+
+          const btn = document.createElement("button");
+          btn.textContent = base;
+          btn.onclick = () => {
+            const content = section.querySelector(".accordion-content");
+            content.style.display = content.style.display === "block" ? "none" : "block";
+          };
+
+          const content = document.createElement("div");
+          content.className = "accordion-content";
+
+          const grid = document.createElement("div");
+          grid.className = "grid";
+
+          drinks.forEach(drink => {
+            const card = document.createElement("div");
+            card.className = "card";
+            card.innerHTML = `
+              <img src="images/cocktails/${drink.image}" alt="${drink.name}"
+                   onerror="this.src='images/coming-soon.jpg'">
+              <h3>${drink.name}</h3>
+              <p>${drink.short || ""}</p>
+            `;
+            card.querySelector("img").onclick = () => openModal(drink);
+            grid.appendChild(card);
+          });
+
+          content.appendChild(grid);
+          section.appendChild(btn);
+          section.appendChild(content);
+          container.appendChild(section);
+        }
+      } catch (err) {
+        console.error("Error loading drinks.json", err);
       }
-
-      data.cocktails.forEach(drink => cocktailGrid.appendChild(createCard(drink)));
-      data.beer.forEach(drink => beerGrid.appendChild(createCard(drink)));
-      data.equipment.forEach(eq => equipmentGrid.appendChild(createCard(eq)));
-      data.misc.forEach(m => miscGrid.appendChild(createCard(m)));
-    }
-
-    function openModal(item) {
-      const modal = document.getElementById("modal");
-      document.getElementById("modalImg").src = `images/${item.type}/${item.image}`;
-      document.getElementById("modalTitle").textContent = item.name;
-      document.getElementById("modalDesc").textContent = item.short || "";
-      document.getElementById("modalIngredients").textContent =
-        item.ingredients && item.ingredients.length ? "Ingredients: " + item.ingredients.join(", ") : "";
-
-      modal.style.display = "flex";
-      document.querySelector(".close").onclick = () => modal.style.display = "none";
-      window.onclick = e => { if (e.target === modal) modal.style.display = "none"; };
     }
 
     loadListings();
   </script>
 </body>
 </html>
+
 
