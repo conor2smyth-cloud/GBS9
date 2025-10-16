@@ -151,39 +151,33 @@
 
   <script>
     async function loadListings() {
-      try {
-        const res = await fetch('data/drinks.json');
-        const data = await res.json();
+      const res = await fetch('data/drinks.json'); // ✅ now using drinks.json
+      const data = await res.json();
 
-        // Defensive: support both flat and nested JSON
-        const cocktails = data.cocktails || data || [];
-        const beer = data.beer || [];
-        const equipment = data.equipment || [];
+      const cocktails = data.cocktails || [];
+      const beers = data.beer || [];
+      const equipment = data.equipment || [];
 
-        const cocktailGrid = document.getElementById('cocktailGrid');
-        const beerGrid = document.getElementById('beerGrid');
-        const equipmentGrid = document.getElementById('equipmentGrid');
+      const cocktailGrid = document.getElementById('cocktailGrid');
+      const beerGrid = document.getElementById('beerGrid');
+      const equipmentGrid = document.getElementById('equipmentGrid');
 
-        function createCard(item, type) {
-          const div = document.createElement("div");
-          div.className = "card";
-          div.innerHTML = `
-            <img src="images/${type}/${item.image}" alt="${item.name}"
-                 onerror="this.src='images/coming-soon.jpg'">
-            <h3>${item.name}</h3>
-            <p>${item.short || ''}</p>
-          `;
-          div.querySelector("img").addEventListener("click", () => openModal(item, type));
-          return div;
-        }
-
-        cocktails.forEach(drink => cocktailGrid.appendChild(createCard(drink, "cocktails")));
-        beer.forEach(drink => beerGrid.appendChild(createCard(drink, "beer")));
-        equipment.forEach(eq => equipmentGrid.appendChild(createCard(eq, "equipment")));
-
-      } catch (err) {
-        console.error("Error loading drinks.json", err);
+      function createCard(item, type) {
+        const div = document.createElement("div");
+        div.className = "card";
+        div.innerHTML = `
+          <img src="images/${type}/${item.image}" alt="${item.name}"
+               onerror="this.src='images/coming-soon.jpg'">
+          <h3>${item.name}</h3>
+          <p>${item.short || ''}</p>
+        `;
+        div.querySelector("img").addEventListener("click", () => openModal(item, type));
+        return div;
       }
+
+      cocktails.forEach(drink => cocktailGrid.appendChild(createCard(drink, "cocktails")));
+      beers.forEach(drink => beerGrid.appendChild(createCard(drink, "beer")));
+      equipment.forEach(eq => equipmentGrid.appendChild(createCard(eq, "equipment")));
     }
 
     function openModal(item, type) {
@@ -200,6 +194,5 @@
   </script>
 </body>
 </html>
-
 
 
