@@ -6,8 +6,7 @@
   <title>Premium Listings - GBS9</title>
   <link rel="stylesheet" href="css/style.css">
   <script src="js/header.js" defer></script>
-  <script src="js/modal.js" defer></script> <!-- global modal -->
-  <!-- BENCHMARK VERSION: Full rebuild 2025-10-15 -->
+  <!-- BENCHMARK VERSION: Stable grid + accordion baseline -->
   <style>
     main {
       max-width: 1200px;
@@ -19,60 +18,51 @@
       margin-bottom: 2rem;
       color: #ffcc66;
     }
-    .accordion {
-      margin-bottom: 2rem;
+    /* Accordion */
+    .accordion-item {
+      margin-bottom: 1rem;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 8px;
+      overflow: hidden;
     }
-    .accordion button {
-      width: 100%;
-      background: rgba(255,255,255,0.1);
-      border: none;
-      padding: 1rem;
-      text-align: left;
-      font-size: 1.2rem;
+    .accordion-header {
+      background: rgba(255,255,255,0.05);
       color: #ffcc66;
+      padding: 1rem;
       cursor: pointer;
+      font-weight: bold;
     }
     .accordion-content {
       display: none;
-      padding: 1rem 0;
+      padding: 1rem;
     }
+    .accordion-item.active .accordion-content {
+      display: block;
+    }
+    /* Grid */
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 1rem;
+      width: 100%;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5rem;
     }
     .card {
+      position: relative;
       background: rgba(255,255,255,0.06);
-      border-radius: 12px;
       padding: 1rem;
+      border-radius: 12px;
       text-align: center;
-      transition: transform 0.2s ease;
       cursor: pointer;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
     .card img {
       width: 100%;
-      height: 160px;
+      height: 180px;
       object-fit: cover;
-      border-radius: 8px;
+      border-radius: 10px;
       margin-bottom: 0.5rem;
     }
     .card:hover { transform: translateY(-5px); }
-
-    /* Floating filter button */
-    .filter-btn {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #ffcc66;
-      border: none;
-      border-radius: 50%;
-      width: 60px;
-      height: 60px;
-      font-size: 1.5rem;
-      cursor: pointer;
-      z-index: 1500;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    }
   </style>
 </head>
 <body>
@@ -80,75 +70,63 @@
 
   <main>
     <h1>Premium Listings</h1>
-    <div id="listings"></div>
+
+    <div class="accordion">
+      <!-- Cocktails -->
+      <div class="accordion-item">
+        <div class="accordion-header">🍸 Cocktails</div>
+        <div class="accordion-content">
+          <div class="grid" id="cocktailGrid"></div>
+        </div>
+      </div>
+
+      <!-- Beer -->
+      <div class="accordion-item">
+        <div class="accordion-header">🍺 Beer</div>
+        <div class="accordion-content">
+          <div class="grid" id="beerGrid"></div>
+        </div>
+      </div>
+    </div>
   </main>
 
-  <!-- Floating filter -->
-  <button class="filter-btn" onclick="openFilter()">🔍</button>
-
-  <!-- Global Modal -->
-  <div id="modal" class="modal"></div>
-
   <script>
+    // Accordion toggle
+    document.addEventListener("click", e => {
+      if (e.target.classList.contains("accordion-header")) {
+        const item = e.target.parentElement;
+        item.classList.toggle("active");
+      }
+    });
+
+    // JSON loader
     async function loadListings() {
       try {
-        const res = await fetch('data/drinks.json');
+        const res = await fetch("data/drinks.json");
         const data = await res.json();
 
-        // only cocktails + beer
-        const items = [...(data.cocktails || []), ...(data.beer || [])];
+        const cocktailGrid = document.getElementById("cocktailGrid");
+        const beerGrid = document.getElementById("beerGrid");
 
-        // group by base spirit
-        const groups = {};
-        items.forEach(item => {
-          const base = item.base || "Other";
-          if (!groups[base]) groups[base] = [];
-          groups[base].push(item);
-        });
-
-        const container = document.getElementById("listings");
-        container.innerHTML = "";
-
-        for (const [base, drinks] of Object.entries(groups)) {
-          const section = document.createElement("div");
-          section.className = "accordion";
-
-          const btn = document.createElement("button");
-          btn.textContent = base;
-          btn.onclick = () => {
-            const content = section.querySelector(".accordion-content");
-            content.style.display = content.style.display === "block" ? "none" : "block";
-          };
-
-          const content = document.createElement("div");
-          content.className = "accordion-content";
-
-          const grid = document.createElement("div");
-          grid.className = "grid";
-
-          drinks.forEach(drink => {
-            const card = document.createElement("div");
-            card.className = "card";
-            card.innerHTML = `
-              <img src="images/cocktails/${drink.image}" alt="${drink.name}"
-                   onerror="this.src='images/coming-soon.jpg'">
-              <h3>${drink.name}</h3>
-              <p>${drink.short || ""}</p>
-            `;
-            card.querySelector("img").onclick = () => openModal(drink);
-            grid.appendChild(card);
-          });
-
-          content.appendChild(grid);
-          section.appendChild(btn);
-          section.appendChild(content);
-          container.appendChild(section);
+        function createCard(item, type) {
+          const div = document.createElement("div");
+          div.className = "card";
+          div.innerHTML = `
+            <img src="images/${type}/${item.image}" alt="${item.name}" 
+                 onerror="this.src='images/coming-soon.jpg'">
+            <h3>${item.name}</h3>
+            <p>${item.short || ""}</p>
+          `;
+          return div;
         }
+
+        (data.cocktails || []).forEach(drink => cocktailGrid.appendChild(createCard(drink, "cocktails")));
+        (data.beer || []).forEach(drink => beerGrid.appendChild(createCard(drink, "beer")));
+
       } catch (err) {
         console.error("Error loading drinks.json", err);
       }
     }
-
     loadListings();
   </script>
 </body>
