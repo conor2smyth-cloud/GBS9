@@ -6,7 +6,7 @@
   <title>Premium Listings - GBS9</title>
   <link rel="stylesheet" href="css/style.css">
   <script src="js/header.js" defer></script>
-  <!-- BENCHMARK VERSION: Stable grid + accordion baseline -->
+  <!-- BENCHMARK VERSION: Accordion + Grid + Modal -->
   <style>
     main {
       max-width: 1200px;
@@ -18,6 +18,7 @@
       margin-bottom: 2rem;
       color: #ffcc66;
     }
+
     /* Accordion */
     .accordion-item {
       margin-bottom: 1rem;
@@ -39,6 +40,7 @@
     .accordion-item.active .accordion-content {
       display: block;
     }
+
     /* Grid */
     .grid {
       display: grid;
@@ -63,6 +65,44 @@
       margin-bottom: 0.5rem;
     }
     .card:hover { transform: translateY(-5px); }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+    }
+    .modal-content {
+      background: rgba(20, 15, 10, 0.95);
+      padding: 2rem;
+      border-radius: 10px;
+      max-width: 75%;
+      max-height: 75%;
+      width: 600px;
+      text-align: center;
+      border: 2px solid #b8860b;
+      position: relative;
+      overflow-y: auto;
+    }
+    .modal-content img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+    .close {
+      position: absolute;
+      top: 15px;
+      right: 25px;
+      font-size: 2rem;
+      color: #ffcc66;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -90,6 +130,19 @@
     </div>
   </main>
 
+  <!-- Modal -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <img id="modalImg" src="" alt="">
+      <h3 id="modalTitle"></h3>
+      <p id="modalDesc"></p>
+      <p><strong>Glass:</strong> <span id="modalGlass"></span></p>
+      <p><strong>Ingredients:</strong></p>
+      <ul id="modalIngredients"></ul>
+    </div>
+  </div>
+
   <script>
     // Accordion toggle
     document.addEventListener("click", e => {
@@ -98,6 +151,29 @@
         item.classList.toggle("active");
       }
     });
+
+    // Modal controls
+    const modal = document.getElementById("modal");
+    const closeBtn = modal.querySelector(".close");
+    closeBtn.onclick = () => modal.style.display = "none";
+    window.onclick = e => { if (e.target === modal) modal.style.display = "none"; };
+
+    function openModal(item, type) {
+      document.getElementById("modalImg").src = `images/${type}/${item.image}`;
+      document.getElementById("modalTitle").textContent = item.name;
+      document.getElementById("modalDesc").textContent = item.short || "";
+      document.getElementById("modalGlass").textContent = item.glass || "N/A";
+
+      const ingList = document.getElementById("modalIngredients");
+      ingList.innerHTML = "";
+      (item.ingredients || []).forEach(i => {
+        const li = document.createElement("li");
+        li.textContent = i;
+        ingList.appendChild(li);
+      });
+
+      modal.style.display = "flex";
+    }
 
     // JSON loader
     async function loadListings() {
@@ -117,6 +193,7 @@
             <h3>${item.name}</h3>
             <p>${item.short || ""}</p>
           `;
+          div.querySelector("img").addEventListener("click", () => openModal(item, type));
           return div;
         }
 
