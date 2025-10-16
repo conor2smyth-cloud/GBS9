@@ -263,27 +263,21 @@
   ],
   "equipment": [
     {
-      "name": "Bar Setup Front",
-      "image": "images/equipment/bar-setup-front.jpg",
-      "image_webp": "images/equipment/bar-setup-front.webp",
-      "bio": ""
-    },
-    {
       "name": "Bar Setup Inside",
       "image": "images/equipment/bar-setup-inside.jpg",
       "image_webp": "images/equipment/bar-setup-inside.webp",
       "bio": ""
     },
     {
-      "name": "Cocktail Classic Sour",
-      "image": "images/equipment/cocktail-classic-sour.jpg",
-      "image_webp": "images/equipment/cocktail-classic-sour.webp",
+      "name": "Beer Chiller",
+      "image": "images/equipment/beer-chiller.jpg",
+      "image_webp": "images/equipment/beer-chiller.webp",
       "bio": ""
     },
     {
-      "name": "Cocktail Espresso Martini",
-      "image": "images/equipment/cocktail-espresso-martini.jpg",
-      "image_webp": "images/equipment/cocktail-espresso-martini.webp",
+      "name": "Cocktail & Draft Bars",
+      "image": "images/equipment/cocktail-&-draft-bars.jpg",
+      "image_webp": "images/equipment/cocktail-&-draft-bars.webp",
       "bio": ""
     },
     {
@@ -320,6 +314,12 @@
       "name": "Cocktail Shaken Pink",
       "image": "images/equipment/cocktail-shaken-pink.jpg",
       "image_webp": "images/equipment/cocktail-shaken-pink.webp",
+      "bio": ""
+    },
+    {
+      "name": "Cocktail Station Prepped",
+      "image": "images/equipment/cocktail-station-prepped.jpg",
+      "image_webp": "images/equipment/cocktail-station-prepped.webp",
       "bio": ""
     }
   ]
