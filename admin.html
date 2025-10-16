@@ -44,6 +44,31 @@
 </div>
 
 <section class="admin-guide">
+  <h2>⚙️ How to Update Drinks & Equipment</h2>
+  <ol>
+    <li>Open <strong>data/drinks.xlsx</strong> and edit Cocktails, Beer, Equipment, Misc, Glasses, Snacks.</li>
+    <li>Save the Excel file.</li>
+    <li>Run in terminal: <code>python update_site.py</code></li>
+    <li>The script will:
+      <ul>
+        <li>Convert Excel → JSON (<code>drinks.json</code>)</li>
+        <li>Validate against <code>schema.json</code></li>
+        <li>If valid, automatically <strong>push updates to GitHub</strong></li>
+      </ul>
+    </li>
+    <li>If an error appears:
+      <ul>
+        <li><strong>Excel error</strong>: Check that all required columns are filled.</li>
+        <li><strong>Validation error</strong>: Check that <code>schema.json</code> requirements are met.</li>
+        <li><strong>Git error</strong>: Check internet, branch name, or repo access.</li>
+      </ul>
+    </li>
+  </ol>
+  <p>✅ Once finished, the site is automatically updated on GitHub Pages.</p>
+</section>
+
+
+<section class="admin-guide">
   <h2>How to Update Listings</h2>
   <ol>
     <li>Edit <strong>cocktails.xlsx</strong> in Excel.
