@@ -331,6 +331,20 @@ section {
 }
 
 
+/* Accordion body hidden by default */
+.accordion-body {
+  display: none;
+  padding: 1rem;
+  background: rgba(0,0,0,0.6);
+  border-radius: 0 0 8px 8px;
+  margin-top: -1rem; /* makes it tuck neatly under hero */
+}
+
+.accordion-item.open .accordion-body {
+  display: block;
+}
+
+
 /* === Footer === */
 footer {
   text-align: center;

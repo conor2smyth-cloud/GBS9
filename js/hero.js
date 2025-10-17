@@ -40,19 +40,23 @@ fetch('data/heroes.json')
         </div>
       `;
 
-      // Accordion toggle
-      if (hero.accordion === "yes") {
-        el.classList.add("accordion-header");
-        el.addEventListener("click", () => {
-          const item = el.closest(".accordion-item");
-          const open = item.classList.contains("open");
+ // Accordion toggle
+el.addEventListener("click", (e) => {
+  // Don’t toggle if clicking a button
+  if (e.target.tagName.toLowerCase() === "a") return;
 
-          // Close all
-          document.querySelectorAll(".accordion-item").forEach(i => i.classList.remove("open"));
+  const item = el.closest(".accordion-item");
+  if (!item) return;
 
-          // Toggle current
-          if (!open) item.classList.add("open");
-        });
+  const open = item.classList.contains("open");
+
+  // Close all accordions first
+  document.querySelectorAll(".accordion-item").forEach(i => i.classList.remove("open"));
+
+  // Toggle current
+  if (!open) item.classList.add("open");
+});
+
       }
     });
   })
