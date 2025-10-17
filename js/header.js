@@ -17,6 +17,10 @@ document.addEventListener("DOMContentLoaded", () => {
           <li><a href="premium-listings.html">Premium Listings</a></li>
           <li><a href="services.html">Services</a></li>
           <li><a href="plan-your-event.html">Plan Your Event</a></li>
+  	<li><a href="design-your-menu.html">Design your menu</a></li>
+  <li><a href="admin.html">Admin</a></li>
+
+
         </ul>
       </nav>
     </div>
