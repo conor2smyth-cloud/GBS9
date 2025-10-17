@@ -50,5 +50,9 @@ function renderHero(hero, el) {
         document.querySelectorAll(".accordion-item").forEach(i => i.classList.remove("open"));
 
         // Reopen if not already open
-        if (!open) item.classList.add("o
+        if (!open) item.classList.add("open");
+      });
+    }
+  }
+}
 
