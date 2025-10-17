@@ -1,6 +1,6 @@
 [
   {
-    "id": "cocktail-serv",
+    "id": "cocktail-services",
     "page": "services",
     "title": "Cocktail Services",
     "subtitle": "Expertly crafted cocktails made and served in your own venue from our fully mobile cocktail bar.",
@@ -36,7 +36,7 @@
     "button_link": "/contact.html"
   },
   {
-    "id": "event-bartend",
+    "id": "event-bartending",
     "page": "services",
     "title": "Event Bartending",
     "subtitle": "Professional service staff",
