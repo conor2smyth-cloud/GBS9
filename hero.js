@@ -1,25 +1,54 @@
-document.addEventListener("DOMContentLoaded", async () => {
-  try {
-    const res = await fetch("data/heroes.json");
-    const heroes = await res.json();
-
+// hero.js
+fetch('heroes_schema.json')
+  .then(res => res.json())
+  .then(data => {
     const page = document.body.dataset.page;
 
-    heroes
-      .filter(h => h.page === page)
-      .forEach(h => {
-        const heroEl = document.querySelector(`.hero[data-section="${h.section}"]`);
-        if (!heroEl) return;
+    data.filter(hero => hero.page === page).forEach(hero => {
+      const el = document.querySelector(`[data-hero="${hero.id}"]`);
+      if (!el) return;
 
-        heroEl.style.height = h.height;
-        heroEl.innerHTML = `
-          <img src="images/heroes/${h.image}" alt="${h.header}">
-          <h2>${h.header}</h2>
-        `;
+      // Background (image + gradient + fallback)
+      let bgParts = [];
+      if (hero.image_filename) {
+        bgParts.push(`url('images/hero/${hero.image_filename}')`);
+      }
+      if (hero.gradient) {
+        bgParts.push(hero.gradient);
+      }
+      if (bgParts.length === 0) {
+        bgParts.push("linear-gradient(135deg, #444, #222)");
+      }
+      el.style.backgroundImage = bgParts.join(",");
 
-        if (h.filter) heroEl.classList.add("with-filter");
-      });
-  } catch (err) {
-    console.error("Error loading heroes.json", err);
-  }
-});
+      // Classes
+      el.classList.add("hero-wrapper");
+      if (hero.style_class) el.classList.add(hero.style_class);
+
+      // Content
+      el.innerHTML = `
+        <div class="hero-content">
+          <h1>${hero.title || "Untitled"}</h1>
+          ${hero.subtitle ? `<p>${hero.subtitle}</p>` : ""}
+          ${hero.button_text && hero.button_link ? 
+            `<a href="${hero.button_link}" class="btn">${hero.button_text}</a>` : ""}
+        </div>
+      `;
+
+      // Accordion toggle
+      if (hero.accordion === "yes") {
+        el.classList.add("accordion-header");
+        el.addEventListener("click", () => {
+          const item = el.closest(".accordion-item");
+          const open = item.classList.contains("open");
+
+          // Close others
+          document.querySelectorAll(".accordion-item").forEach(i => i.classList.remove("open"));
+
+          // Toggle current
+          if (!open) item.classList.add("open");
+        });
+      }
+    });
+  });
+

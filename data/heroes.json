@@ -1,74 +1,41 @@
 [
   {
+    "id": "tonights",
+    "page": "tonights-event",
+    "parent": null,
+    "title": "Tonight’s Event",
+    "subtitle": "Sip, Tip, Celebrate",
+    "button_text": "",
+    "button_link": "",
+    "image_filename": "tonights-event.jpg",
+    "gradient": "linear-gradient(135deg, #111, #333)",
+    "style_class": "big-hero",
+    "accordion": "no"
+  },
+  {
+    "id": "sip",
+    "page": "tonights-event",
+    "parent": "tonights",
+    "title": "Sip",
+    "subtitle": "Enjoy curated cocktails",
+    "button_text": "View Cocktails",
+    "button_link": "cocktails.html",
+    "image_filename": "tonights-sip.jpg",
+    "gradient": "linear-gradient(135deg, #ff5f6d, #ffc371)",
+    "style_class": "sub-hero",
+    "accordion": "yes"
+  },
+  {
+    "id": "services",
     "page": "services",
-    "section": "cocktail-service",
-    "header": "\"Cocktail Service\"",
-    "image": "services-cocktail-service",
-    "filter": true,
-    "height": ""
-  },
-  {
-    "page": "services",
-    "section": "draft-systems",
-    "header": "\"Draft Systems\"",
-    "image": "services-draft-systems",
-    "filter": true,
-    "height": ""
-  },
-  {
-    "page": "premium-listings",
-    "section": "cocktails",
-    "header": "\"Cocktails\"",
-    "image": "premium-listings-cocktails",
-    "filter": true,
-    "height": ""
-  },
-  {
-    "page": "premium-listings",
-    "section": "beer",
-    "header": "\"Beer\"",
-    "image": "premium-listings-beer",
-    "filter": true,
-    "height": ""
-  },
-  {
-    "page": "design-your-menu",
-    "section": "design-your-menu",
-    "header": "\"Design your menu\"",
-    "image": "design-your-menu-design-your-menu",
-    "filter": true,
-    "height": ""
-  },
-  {
-    "page": "tonights-event",
-    "section": "tonights-event",
-    "header": "\"Tonight's event\"",
-    "image": "tonights-event-tonights-event",
-    "filter": true,
-    "height": ""
-  },
-  {
-    "page": "tonights-event",
-    "section": "sip",
-    "header": "\"Sip\"",
-    "image": "tonights-event-sip",
-    "filter": true,
-    "height": ""
-  },
-  {
-    "page": "tonights-event",
-    "section": "tip",
-    "header": "\"Tip\"",
-    "image": "tonights-event-tip",
-    "filter": true,
-    "height": ""
-  },
-  {
-    "page": "tonights-event",
-    "section": "celebrate",
-    "header": "\"Celebrate!\"",
-    "image": "tonights-event-celebrate",
-    "filter": true,
-    "height": ""
+    "parent": null,
+    "title": "Our Services",
+    "subtitle": "From cocktails to kegs…",
+    "button_text": "",
+    "button_link": "",
+    "image_filename": "services-header.jpg",
+    "gradient": "linear-gradient(135deg, #111, #333)",
+    "style_class": "big-hero",
+    "accordion": "no"
   }
 ]

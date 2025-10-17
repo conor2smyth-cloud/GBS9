@@ -3,13 +3,18 @@
   "items": {
     "type": "object",
     "properties": {
+      "id": { "type": "string" },
       "page": { "type": "string" },
-      "section": { "type": "string" },
-      "header": { "type": "string" },
-      "image": { "type": "string" },
-      "filter": { "type": "boolean" },
-      "height": { "type": "string" }
+      "parent": { "type": ["string", "null"] },
+      "title": { "type": "string" },
+      "subtitle": { "type": "string" },
+      "button_text": { "type": "string" },
+      "button_link": { "type": "string" },
+      "image_filename": { "type": "string" },
+      "gradient": { "type": "string" },
+      "style_class": { "type": "string" },
+      "accordion": { "type": "string", "enum": ["yes","no"] }
     },
-    "required": ["page", "section", "header", "image"]
+    "required": ["id", "page", "title"]
   }
 }
