@@ -59,7 +59,7 @@
     "subtitle": "Expertly crafted cocktails",
     "button_text": "Get Quote",
     "button_link": "plan-your-event.html",
-    "image_filename": "coming-soon.jpg",
+    "image_filename": "cocktails-clear-spirits.jpg",
     "gradient": "linear-gradient(135deg, #ff5f6d, #ffc371)",
     "style_class": "sub-hero",
     "accordion": "yes"
@@ -72,7 +72,7 @@
     "subtitle": "Portable draft systems & kegs",
     "button_text": "Get Quote",
     "button_link": "plan-your-event.html",
-    "image_filename": "coming-soon.jpg",
+    "image_filename": "equipment-draft-systems.jpg",
     "gradient": "linear-gradient(135deg, #00c6ff, #0072ff)",
     "style_class": "sub-hero",
     "accordion": "yes"
@@ -85,7 +85,7 @@
     "subtitle": "Professional bartenders for hire",
     "button_text": "Get Quote",
     "button_link": "plan-your-event.html",
-    "image_filename": "coming-soon.jpg",
+    "image_filename": "equipment-cocktail-&-draft-bars.jpg",
     "gradient": "linear-gradient(135deg, #f7971e, #ffd200)",
     "style_class": "sub-hero",
     "accordion": "yes"
