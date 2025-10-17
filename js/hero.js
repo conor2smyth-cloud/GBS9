@@ -1,133 +1,137 @@
+// hero.js — clean + auto-height accordion + left image + gradient flow
+
 document.addEventListener("DOMContentLoaded", async () => {
   try {
     const res = await fetch("data/heroes.json");
     const heroes = await res.json();
 
-    heroes.forEach(hero => {
+    heroes.forEach((hero) => {
       const wrapper = document.querySelector(`[data-hero="${hero.id}"]`);
       if (!wrapper) return;
 
-      // === Build Hero Header ===
+      // --- HERO HEADER (image on left, gradient background)
       wrapper.classList.add("hero-wrapper");
-      wrapper.style.backgroundImage = `url('images/hero/${hero.image}')`;
 
-      if (hero.gradient) {
-        wrapper.style.setProperty("--hero-gradient", hero.gradient);
-        wrapper.classList.add("with-gradient");
+      // Gradient continuity (prefer explicit gradient, else use accordion color)
+      if (hero.gradient && hero.gradient.trim()) {
+        wrapper.style.setProperty("--hero-gradient", hero.gradient.trim());
+      } else if (hero.accordion_color && hero.accordion_color.trim()) {
+        wrapper.style.setProperty("--hero-gradient", hero.accordion_color.trim());
       }
 
-      if (hero.style_class) {
-        wrapper.classList.add(hero.style_class);
-      }
+      // Build header DOM to avoid template-string pitfalls
+      wrapper.innerHTML = "";
+      const img = document.createElement("img");
+      img.alt = (hero.title || "").toString();
+      img.src = `images/hero/${encodeURIComponent(hero.image || "")}`;
+      wrapper.appendChild(img);
 
-    wrapper.innerHTML = `
-  <div class="hero-content">
-    <h2>${hero.title}</h2>
-  </div>
-`;
+      const content = document.createElement("div");
+      content.className = "hero-content";
+      content.innerHTML = `
+        <h2>${escapeHtml(hero.title || "")}</h2>
+      `;
+      wrapper.appendChild(content);
 
-
-      // === Build Accordion Body ===
+      // --- ACCORDION BODY
       const parentItem = wrapper.closest(".accordion-item");
       if (!parentItem) return;
 
       const body = parentItem.querySelector(".accordion-body");
-
       if (body) {
-   body.innerHTML = `
-  <div class="accordion-inner" style="
-    ${hero.accordion_bg ? `background-image:url('images/hero/${hero.accordion_bg}');` : ""}
-    ${hero.accordion_color ? `background-color:${hero.accordion_color};` : ""}
-  ">
-    ${hero.description ? `<p>${hero.description}</p>` : ""}
-    ${hero.subtitle ? `<p class="subtitle">${hero.subtitle}</p>` : ""}
-    ${
-      hero.button_enabled
-        ? `<a href="${hero.button_link}" class="btn">${hero.button_text}</a>`
-        : ""
-    }
-  </div>
-`;
+        // Clear and build inner container
+        body.innerHTML = "";
+        const inner = document.createElement("div");
+        inner.className = "accordion-inner";
+
+        // Set background (color +/or image) via style props (safe)
+        if (hero.accordion_bg && hero.accordion_bg.trim()) {
+          inner.style.backgroundImage = `url('images/hero/${encodeURIComponent(hero.accordion_bg.trim())}')`;
+          inner.style.backgroundSize = "cover";
+          inner.style.backgroundPosition = "center";
+        }
+        if (hero.accordion_color && hero.accordion_color.trim()) {
+          inner.style.backgroundColor = hero.accordion_color.trim();
+          // Keep header gradient visually in sync with accordion color if no explicit gradient
+          if (!hero.gradient || !hero.gradient.trim()) {
+            wrapper.style.setProperty("--hero-gradient", hero.accordion_color.trim());
+          }
+        }
+
+        // Description + optional subtitle + optional button
+        const parts = [];
+        if (hero.description && hero.description.trim()) {
+          parts.push(`<p>${escapeHtml(hero.description.trim())}</p>`);
+        }
+        if (hero.subtitle && hero.subtitle.trim()) {
+          parts.push(`<p class="subtitle">${escapeHtml(hero.subtitle.trim())}</p>`);
+        }
+        if (hero.button_enabled && hero.button_text && hero.button_link) {
+          parts.push(
+            `<a href="${safeHref(hero.button_link)}" class="btn">${escapeHtml(
+              hero.button_text
+            )}</a>`
+          );
+        }
+        inner.innerHTML = parts.join("\n");
+        body.appendChild(inner);
       }
 
-      // === Smooth Accordion Toggle ===
+      // --- SMOOTH AUTO-HEIGHT TOGGLE
       wrapper.addEventListener("click", () => {
-        const isOpen = parentItem.classList.contains("open");
-        const body = parentItem.querySelector(".accordion-body");
+        const bodyEl = parentItem.querySelector(".accordion-body");
+        if (!bodyEl) return;
 
-        if (!body) return;
+        const isOpen = parentItem.classList.contains("open");
 
         if (isOpen) {
-          // collapse
-          body.style.maxHeight = body.scrollHeight + "px";
+          // If currently 'auto', set to fixed height first so we can animate up
+          if (getComputedStyle(bodyEl).maxHeight === "none") {
+            bodyEl.style.maxHeight = bodyEl.scrollHeight + "px";
+          }
+          // next frame → animate to 0
           requestAnimationFrame(() => {
-            body.style.maxHeight = "0";
+            bodyEl.style.maxHeight = "0";
+            bodyEl.style.opacity = "0";
           });
           parentItem.classList.remove("open");
         } else {
-          // expand
-          body.style.maxHeight = body.scrollHeight + "px";
+          // Start from 0 → set to scrollHeight
+          bodyEl.style.opacity = "1";
+          bodyEl.style.maxHeight = bodyEl.scrollHeight + "px";
           parentItem.classList.add("open");
+
+          // After the transition, set to 'auto' so it can expand if content wraps/reflows
+          const onEnd = () => {
+            if (parentItem.classList.contains("open")) {
+              bodyEl.style.maxHeight = "none";
+            }
+            bodyEl.removeEventListener("transitionend", onEnd);
+          };
+          bodyEl.addEventListener("transitionend", onEnd);
         }
       });
     });
   } catch (err) {
     console.error("Error loading heroes.json", err);
   }
-
-// Accordion toggle
-wrapper.addEventListener("click", () => {
-  const isOpen = parentItem.classList.contains("open");
-  const body = parentItem.querySelector(".accordion-body");
-
-  if (!body) return;
-
- if (isOpen) {
-    body.style.maxHeight = body.scrollHeight + "px"; // set current height
-    requestAnimationFrame(() => {
-      body.style.maxHeight = "0";
-      body.style.opacity = "0";
-    });
-    parentItem.classList.remove("open");
-  } else {
-    body.style.maxHeight = body.scrollHeight + "px"; // expand to fit
-    body.style.opacity = "1";
-    parentItem.classList.add("open");
-  }
-
-
-    // Reset to auto after transition ends, so it resizes with content
-    body.addEventListener("transitionend", () => {
-      if (parentItem.classList.contains("open")) {
-        body.style.maxHeight = "none";
-      }
-    }, { once: true });
-  }
 });
 
-
-if (body) {
-  // Set accordion background color dynamically
-  if (hero.accordion_color) {
-    parentItem.style.setProperty("--accordion-bg", hero.accordion_color);
-    wrapper.style.setProperty("--hero-gradient", hero.accordion_color);
-  }
-
-  body.innerHTML = `
-    <div class="accordion-inner">
-      ${hero.description ? `<p>${hero.description}</p>` : ""}
-      ${hero.subtitle ? `<p class="subtitle">${hero.subtitle}</p>` : ""}
-      ${
-        hero.button_enabled
-          ? `<a href="${hero.button_link}" class="btn">${hero.button_text}</a>`
-          : ""
-      }
-    </div>
-  `;
+// --- helpers ---
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 }
 
-
-});
-
-
-});
+// keep relative links intact, encode spaces/unsafe chars
+function safeHref(href) {
+  try {
+    return encodeURI(String(href));
+  } catch {
+    return "#";
+  }
+}
