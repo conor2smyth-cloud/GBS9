@@ -66,6 +66,40 @@ def import_excel():
 
     print(f"[OK] Exported Excel -> {OUTPUT_JSON}")
 
+def import_excel():
+    xls = pd.ExcelFile(EXCEL_FILE)
+
+    # Existing drinks import...
+    output = {
+        "cocktails": sheet_to_list(pd.read_excel(xls, "Cocktails"), "cocktails"),
+        "beer": sheet_to_list(pd.read_excel(xls, "Beer"), "beer"),
+        "equipment": sheet_to_list(pd.read_excel(xls, "Equipment"), "equipment"),
+        "snacks": sheet_to_list(pd.read_excel(xls, "Snacks"), "snacks"),
+        "misc": sheet_to_list(pd.read_excel(xls, "Misc"), "misc"),
+        "glasses": sheet_to_list(pd.read_excel(xls, "Glasses"), "glasses"),
+    }
+
+    with open(OUTPUT_JSON, "w", encoding="utf-8") as f:
+        json.dump(output, f, indent=2, ensure_ascii=False)
+
+    # Heroes sheet -> heroes.json
+    if "Heroes" in xls.sheet_names:
+        heroes_df = pd.read_excel(xls, "Heroes").fillna("")
+        heroes = []
+        for _, row in heroes_df.iterrows():
+            heroes.append({
+                "page": str(row.get("Page", "")).strip(),
+                "section": str(row.get("Section", "")).strip(),
+                "header": str(row.get("Header Text", "")).strip(),
+                "image": str(row.get("Image Filename", "")).strip(),
+                "filter": str(row.get("Filter", "Y")).strip().upper() == "Y",
+                "height": str(row.get("Height", "250px")).strip(),
+            })
+
+        with open("data/heroes.json", "w", encoding="utf-8") as f:
+            json.dump(heroes, f, indent=2, ensure_ascii=False)
+
+
 
 if __name__ == "__main__":
     import_excel()
