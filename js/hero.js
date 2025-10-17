@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       const wrapper = document.querySelector(`[data-hero="${hero.id}"]`);
       if (!wrapper) return;
 
-      // Build Hero Header
+      // === Build Hero Header ===
       wrapper.classList.add("hero-wrapper");
       wrapper.style.backgroundImage = `url('images/hero/${hero.image}')`;
 
@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         </div>
       `;
 
-      // Build Accordion Body
+      // === Build Accordion Body ===
       const parentItem = wrapper.closest(".accordion-item");
       if (!parentItem) return;
 
@@ -48,6 +48,27 @@ document.addEventListener("DOMContentLoaded", async () => {
           </div>
         `;
       }
+
+      // === Smooth Accordion Toggle ===
+      wrapper.addEventListener("click", () => {
+        const isOpen = parentItem.classList.contains("open");
+        const body = parentItem.querySelector(".accordion-body");
+
+        if (!body) return;
+
+        if (isOpen) {
+          // collapse
+          body.style.maxHeight = body.scrollHeight + "px";
+          requestAnimationFrame(() => {
+            body.style.maxHeight = "0";
+          });
+          parentItem.classList.remove("open");
+        } else {
+          // expand
+          body.style.maxHeight = body.scrollHeight + "px";
+          parentItem.classList.add("open");
+        }
+      });
     });
   } catch (err) {
     console.error("Error loading heroes.json", err);
