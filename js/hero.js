@@ -7,10 +7,15 @@ document.addEventListener("DOMContentLoaded", async () => {
       const wrapper = document.querySelector(`[data-hero="${hero.id}"]`);
       if (!wrapper) return;
 
-      // Hero setup
+      // --- Build Hero Header ---
       wrapper.classList.add("hero-wrapper");
-      wrapper.style.setProperty("--hero-gradient", hero.gradient || "#1a1a1a");
-      wrapper.style.backgroundImage = hero.image ? `url('images/hero/${hero.image}')` : "none";
+      wrapper.style.backgroundImage = `url('images/hero/${hero.image}')`;
+
+      if (hero.gradient) {
+        wrapper.style.setProperty("--hero-gradient", hero.gradient);
+      }
+
+      if (hero.style_class) wrapper.classList.add(hero.style_class);
 
       wrapper.innerHTML = `
         <div class="hero-content">
@@ -18,48 +23,52 @@ document.addEventListener("DOMContentLoaded", async () => {
         </div>
       `;
 
-      // Accordion body
+      // --- Find accordion container ---
       const parentItem = wrapper.closest(".accordion-item");
+      if (!parentItem) return;
+
       const body = parentItem.querySelector(".accordion-body");
-      if (body) {
-        body.querySelector(".accordion-inner").innerHTML = `
-          ${hero.subtitle ? `<p class="subtitle">${hero.subtitle}</p>` : ""}
+      if (!body) return;
+
+      // --- Fill accordion body ---
+      body.innerHTML = `
+        <div class="accordion-inner"
+          style="
+            ${hero.accordion_bg ? `background-image:url('images/hero/${hero.accordion_bg}');` : ""}
+            ${hero.accordion_color ? `background-color:${hero.accordion_color};` : ""}
+          "
+        >
           ${hero.description ? `<p>${hero.description}</p>` : ""}
+          ${hero.subtitle ? `<p class="subtitle">${hero.subtitle}</p>` : ""}
           ${
             hero.button_enabled
               ? `<a href="${hero.button_link}" class="btn">${hero.button_text}</a>`
               : ""
           }
-        `;
-      }
+        </div>
+      `;
 
-      // Toggle
+      // --- Toggle accordion open/close when clicking hero ---
       wrapper.addEventListener("click", () => {
-        const isOpen = parentItem.classList.contains("open");
+        parentItem.classList.toggle("open");
 
-        if (isOpen) {
+        if (parentItem.classList.contains("open")) {
+          // expanding: set to scrollHeight
           body.style.maxHeight = body.scrollHeight + "px";
-          requestAnimationFrame(() => {
-            body.style.maxHeight = "0";
-            body.style.opacity = "0";
-          });
-          parentItem.classList.remove("open");
         } else {
-          parentItem.classList.add("open");
-          body.style.maxHeight = body.scrollHeight + "px";
-          body.style.opacity = "1";
+          // collapsing: reset to 0
+          body.style.maxHeight = "0px";
+        }
+      });
 
-          const onEnd = () => {
-            if (parentItem.classList.contains("open")) {
-              body.style.maxHeight = "none"; // natural height
-            }
-            body.removeEventListener("transitionend", onEnd);
-          };
-          body.addEventListener("transitionend", onEnd);
+      // --- Adjust height dynamically on window resize ---
+      window.addEventListener("resize", () => {
+        if (parentItem.classList.contains("open")) {
+          body.style.maxHeight = body.scrollHeight + "px";
         }
       });
     });
   } catch (err) {
-    console.error("Failed to load heroes.json", err);
+    console.error("Error loading heroes.json:", err);
   }
 });
