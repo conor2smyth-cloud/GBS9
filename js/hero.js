@@ -1,87 +1,61 @@
-// hero.js
-// Renders hero/banner sections with optional accordions + buttons
-
 document.addEventListener("DOMContentLoaded", async () => {
-  const page = document.body.dataset.page || "";
   try {
-    const response = await fetch("data/heroes.json");
-    const heroes = await response.json();
+    const res = await fetch("data/heroes.json");
+    const heroes = await res.json();
 
-    document.querySelectorAll("[data-hero]").forEach(el => {
-      const id = el.dataset.hero;
-      const hero = heroes.find(h => h.id === id && (h.page === page || h.page === "global"));
-      if (hero) renderHero(hero, el);
-    });
-  } catch (err) {
-    console.error("Error loading heroes.json:", err);
-  }
-});
+    heroes.forEach(hero => {
+      const wrapper = document.querySelector(`[data-hero="${hero.id}"]`);
+      if (!wrapper) return;
 
-// Escape unsafe text
-function escapeHtml(str) {
-  return String(str)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-}
+      // Build Hero Header
+      wrapper.classList.add("hero-wrapper");
+      wrapper.style.backgroundImage = `url('images/hero/${hero.image}')`;
 
-function renderHero(hero, el) {
-  const styleClass = hero.style_class || "";
-  const inlineHeight = hero.height ? `height:${escapeHtml(hero.height)};` : "";
-  const gradient = hero.gradient ? `${hero.gradient}, ` : "";
+      if (hero.gradient) {
+        wrapper.style.setProperty("--hero-gradient", hero.gradient);
+        wrapper.classList.add("with-gradient");
+      }
 
-  el.innerHTML = `
-    <div class="hero-wrapper ${escapeHtml(styleClass)}" 
-         style="background-image:${gradient}url('images/hero/${escapeHtml(hero.image)}'); ${inlineHeight}">
-      <div class="hero-content">
-        <h2>${escapeHtml(hero.title)}</h2>
-        ${hero.subtitle ? `<p>${escapeHtml(hero.subtitle)}</p>` : ""}
-      </div>
-    </div>
-  `;
+      if (hero.style_class) wrapper.classList.add(hero.style_class);
 
-  if (hero.accordion) {
-    const item = el.closest(".accordion-item");
-    if (item) {
-      const body = item.querySelector(".accordion-body");
+      // Inner hero content
+      wrapper.innerHTML = `
+        <div class="hero-content">
+          <h2>${hero.title}</h2>
+          ${hero.subtitle ? `<p>${hero.subtitle}</p>` : ""}
+          ${
+            hero.button_enabled
+              ? `<a href="${hero.button_link}" class="btn">${hero.button_text}</a>`
+              : ""
+          }
+        </div>
+      `;
+
+      // Build Accordion Body
+      const parentItem = wrapper.closest(".accordion-item");
+      if (!parentItem) return;
+
+      const body = parentItem.querySelector(".accordion-body");
       if (body) {
-        let buttonHtml = "";
-        if (hero.button_enabled && hero.button_text && hero.button_link) {
-          buttonHtml = `
-            <a href="${encodeURIComponent(hero.button_link)}" class="btn">
-              ${escapeHtml(hero.button_text)}
-            </a>
-          `;
-        }
-
-        // Build accordion background style
-        let bgStyle = "";
-        if (hero.accordion_bg && hero.accordion_color) {
-          bgStyle = `background: linear-gradient(${escapeHtml(hero.accordion_color)}, ${escapeHtml(hero.accordion_color)}), url('images/hero/${escapeHtml(hero.accordion_bg)}'); background-size: cover;`;
-        } else if (hero.accordion_bg) {
-          bgStyle = `background-image: url('images/hero/${escapeHtml(hero.accordion_bg)}'); background-size: cover;`;
-        } else if (hero.accordion_color) {
-          bgStyle = `background:${escapeHtml(hero.accordion_color)};`;
-        }
-
         body.innerHTML = `
-          <div class="accordion-inner" style="${bgStyle}">
-            <p>${escapeHtml(hero.description || "")}</p>
-            ${buttonHtml}
+          <div class="accordion-inner" style="
+            ${hero.accordion_bg ? `background-image:url('images/hero/${hero.accordion_bg}');` : ""}
+            ${hero.accordion_color ? `background-color:${hero.accordion_color};` : ""}
+          ">
+            <p>${hero.description || ""}</p>
           </div>
         `;
       }
 
-      el.addEventListener("click", (e) => {
-        if (e.target.tagName.toLowerCase() === "a") return; 
-        const open = item.classList.contains("open");
-        document.querySelectorAll(".accordion-item").forEach(i => i.classList.remove("open"));
-        if (!open) item.classList.add("open");
+      // Click handler → toggle accordion
+      wrapper.addEventListener("click", () => {
+        parentItem.classList.toggle("open");
       });
-    }
+    });
+  } catch (err) {
+    console.error("Error loading heroes:", err);
   }
-}
+});
+
 
 

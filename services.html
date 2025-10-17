@@ -1,71 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Services - GBS9</title>
-  <link rel="stylesheet" href="css/style.css">
-  <script src="js/header.js" defer></script>
-  <script src="js/hero.js" defer></script>
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body data-page="services">
-  <!-- Global header populated by header.js -->
-  <header></header>
+<body>
+  <!-- Global Header -->
+  <header id="site-header"></header>
 
   <main>
-    <!-- Top-level banner -->
-    <div data-hero="services"></div>
-
-    <section>
-      <p>
-        From cocktails to kegs, our team provides everything you need for a seamless event.  
-        Explore our services below and plan your perfect night.
-      </p>
-    </section>
-
-    <!-- Grid of service banners with accordion -->
-    <section class="services-grid">
+    <section class="services-grid accordion">
+      <!-- Cocktail Services -->
       <div class="accordion-item">
-        <div data-hero="cocktail-serv"></div>
-        <div class="accordion-body">
-          <p>Our bartenders craft signature cocktails to suit your event theme. 
-             Tailored menus, fresh ingredients, and stunning presentation guaranteed.</p>
-        </div>
+        <div class="hero-wrapper" data-hero="cocktail-serv"></div>
+        <div class="accordion-body"></div>
       </div>
 
-      <section class="services-grid">
-  <div class="accordion-item cocktail-serv">
-    <div data-hero="cocktail-serv"></div>
-    <div class="accordion-body">
-      <p>Our bartenders craft signature cocktails to suit your event theme. 
-         Tailored menus, fresh ingredients, and stunning presentation guaranteed.</p>
-    </div>
-  </div>
+      <!-- Draft Systems -->
+      <div class="accordion-item">
+        <div class="hero-wrapper" data-hero="draft-systems"></div>
+        <div class="accordion-body"></div>
+      </div>
 
-  <div class="accordion-item draft-systems">
-    <div data-hero="draft-systems"></div>
-    <div class="accordion-body">
-      <p>Portable draft systems and kegs for large parties. Quick setup, chilled to perfection.</p>
-    </div>
-  </div>
+      <!-- Event Bartending -->
+      <div class="accordion-item">
+        <div class="hero-wrapper" data-hero="event-bartend"></div>
+        <div class="accordion-body"></div>
+      </div>
 
-  <div class="accordion-item event-bartending">
-    <div data-hero="event-bartending"></div>
-    <div class="accordion-body">
-      <p>Hire experienced bartenders to run your event smoothly. From setup to cleanup, 
-         we provide the staff and the service.</p>
-    </div>
-  </div>
-
-  <div class="accordion-item recipes">
-    <div data-hero="recipes"></div>
-    <div class="accordion-body">
-      <p>Try our curated recipes — designed to impress guests and easy to adapt to your event theme.</p>
-    </div>
-  </div>
-
-
+      <!-- Recipes -->
+      <div class="accordion-item">
+        <div class="hero-wrapper" data-hero="recipes"></div>
+        <div class="accordion-body"></div>
+      </div>
     </section>
   </main>
+
+  <!-- Global Footer -->
+  <footer>
+    <p>&copy; 2025 GBS9 Events. All rights reserved.</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="header.js"></script>
+  <script src="hero.js"></script>
 </body>
 </html>
+
