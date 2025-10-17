@@ -74,4 +74,22 @@ document.addEventListener("DOMContentLoaded", async () => {
   } catch (err) {
     console.error("Error loading heroes.json", err);
   }
+
+// Accordion toggle
+wrapper.addEventListener("click", () => {
+  const isOpen = parentItem.classList.contains("open");
+  const body = parentItem.querySelector(".accordion-body");
+
+  if (!body) return;
+
+  if (isOpen) {
+    body.style.maxHeight = "0";
+    parentItem.classList.remove("open");
+  } else {
+    body.style.maxHeight = body.scrollHeight + "px";
+    parentItem.classList.add("open");
+  }
+});
+
+
 });
