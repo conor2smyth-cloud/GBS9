@@ -31,9 +31,9 @@
     "description": "Portable draft systems for large parties.",
     "accordion_color": "#222222",
     "accordion_bg": "",
-    "button_enabled": false,
-    "button_text": "",
-    "button_link": ""
+    "button_enabled": true,
+    "button_text": "Book Now",
+    "button_link": "/contact.html"
   },
   {
     "id": "event-bartend",
