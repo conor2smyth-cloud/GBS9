@@ -67,6 +67,65 @@
   <p>✅ Once finished, the site is automatically updated on GitHub Pages.</p>
 </section>
 
+<section class="admin-flow">
+  <h2>📋 Content Update Flow Process</h2>
+  <div class="accordion-item">
+    <div class="hero-wrapper">
+      <div class="hero-content">
+        <h3>How to Add or Update Content</h3>
+      </div>
+    </div>
+    <div class="accordion-body">
+      <div class="accordion-inner">
+        <ol>
+          <li><strong>Update Excel File</strong><br>
+            - Open <code>data/drinks.xlsx</code>.<br>
+            - Fill in sheets like <code>Cocktails</code>, <code>Beer</code>, etc.<br>
+            - For services or page headers, edit the <code>Heroes</code> sheet.<br>
+            - Required: <em>Page, Section, Title, Image Filename</em>.
+          </li>
+          <li><strong>Run Update Script</strong><br>
+            - Run <code>python update_site.py</code>.<br>
+            - Generates <code>data/drinks.json</code> (menus) and <code>data/heroes.json</code> (headers).<br>
+            - Validator ensures required fields are present.
+          </li>
+          <li><strong>Upload Images</strong><br>
+            - Place header images in <code>/images/hero/</code>.<br>
+            - Place drink/card images in <code>/images/</code>.<br>
+            - Filenames must exactly match Excel (case-sensitive).<br>
+            - Multiple slideshow images → separate with <code>;</code>.
+          </li>
+          <li><strong>Deploy Changes</strong><br>
+            - Script auto-commits and pushes to GitHub.<br>
+            - GitHub Pages rebuilds automatically.
+          </li>
+          <li><strong>Verify Frontend</strong><br>
+            - Open the site (e.g. <code>services.html</code>).<br>
+            - Check hero accordions load with images.<br>
+            - Click heroes/cards → modal opens with slideshow + info.
+          </li>
+        </ol>
+
+        <h4>⚠️ Things to Watch</h4>
+        <ul>
+          <li>Filenames must match Excel rows exactly.</li>
+          <li>JSON errors → check missing <code>id</code> or <code>title</code> in Excel.</li>
+          <li>Broken images → confirm file is in correct folder.</li>
+          <li>Modal not opening → ensure <code>data-title</code>, <code>data-description</code>, <code>data-image</code> are set.</li>
+        </ul>
+
+        <h4>🚀 Future Goals</h4>
+        <ul>
+          <li>Save favourites in <code>localStorage</code>.</li>
+          <li>Admin UI (edit without Excel).</li>
+          <li>Tinder-style Design Your Menu fully dynamic.</li>
+          <li>Different modal layouts for services vs drinks.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
 
 <section class="admin-guide">
   <h2>How to Update Listings</h2>

@@ -28,6 +28,8 @@ document.addEventListener("DOMContentLoaded", () => {
         <li style="--i:2"><a href="tonights-event.html">Tonight's Event</a></li>
         <li style="--i:3"><a href="premium-listings.html">Premium Listings</a></li>
         <li style="--i:4"><a href="menu.html">Design Your Menu</a></li>
+	<li style="--i:5"><a href="admin.html">Admin</a></li>
+
       </ul>
     </div>
   `;
