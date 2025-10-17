@@ -1,14 +1,14 @@
 <header>
+  <!-- Top Navbar -->
   <nav class="navbar">
     <div class="logo">
       <a href="index.html">
         <img src="images/logo.png" alt="GBS9 Logo">
       </a>
     </div>
-    <button class="nav-toggle" aria-label="Toggle navigation">
-      ☰
-    </button>
-    <ul class="nav-links">
+
+    <!-- Desktop Nav -->
+    <ul class="nav-links desktop-nav">
       <li><a href="index.html">Home</a></li>
       <li><a href="services.html">Services</a></li>
       <li><a href="premium-listings.html">Premium Listings</a></li>
@@ -17,35 +17,44 @@
       <li><a href="contact.html">Contact</a></li>
       <li><a href="tonights-event.html" class="highlight">Tonight’s Event</a></li>
     </ul>
+
+    <!-- Mobile Hamburger -->
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+      ☰
+    </button>
   </nav>
 
-<!-- Global Popup Modal -->
-<div id="globalModal" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <div class="modal-slideshow">
-      <span class="prev">&#10094;</span>
-      <span class="next">&#10095;</span>
-      <img id="globalModalImg" src="" alt="">
+  <!-- Mobile Overlay Navigation -->
+  <div class="overlay" id="overlay">
+    <button class="close-overlay" id="closeOverlay">&times;</button>
+    <ul>
+      <li style="--i:0"><a href="index.html">Home</a></li>
+      <li style="--i:1"><a href="services.html">Services</a></li>
+      <li style="--i:2"><a href="premium-listings.html">Premium Listings</a></li>
+      <li style="--i:3"><a href="menu.html">Design Your Menu</a></li>
+      <li style="--i:4"><a href="lookbook.html">Lookbook</a></li>
+      <li style="--i:5"><a href="contact.html">Contact</a></li>
+      <li style="--i:6"><a href="tonights-event.html" class="highlight">Tonight’s Event</a></li>
+    </ul>
+  </div>
+
+  <!-- 🌍 Global Slideshow Modal -->
+  <div id="globalModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <div class="modal-slideshow">
+        <span class="prev">&#10094;</span>
+        <span class="next">&#10095;</span>
+        <img id="globalModalImg" src="" alt="">
+      </div>
+      <h3 id="globalModalTitle"></h3>
+      <p id="globalModalDesc"></p>
+      <div class="flavour-list" id="globalModalFlavours"></div>
+      <button class="favourite-btn" id="globalAddToFavBtn">❤️ Add to Favourites</button>
     </div>
-    <h3 id="globalModalTitle"></h3>
-    <p id="globalModalDesc"></p>
-    <div class="flavour-list" id="globalModalFlavours"></div>
-    <button class="favourite-btn" id="globalAddToFavBtn">❤️ Add to Favourites</button>
   </div>
-</div>
 
-<!-- 🌍 Global Modal -->
-<div id="globalModal" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <img id="modalImg" src="" alt="">
-    <h3 id="modalTitle"></h3>
-    <p id="modalDesc"></p>
-    <button id="modalFavBtn" class="fav-btn">❤️ Add to Favourites</button>
-  </div>
-</div>
-<script src="js/modal.js" defer></script>
-
-
+  <!-- Scripts -->
+  <script src="js/header.js" defer></script>
+  <script src="js/modal.js" defer></script>
 </header>
