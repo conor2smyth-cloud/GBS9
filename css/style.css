@@ -81,6 +81,28 @@ header {
   background: #ffcc66;
 }
 
+/* === Accordion Buttons === */
+.accordion-inner .btn {
+  display: block;
+  width: 100%;
+  margin-top: 1rem;
+  padding: 0.8rem;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 6px;
+  background: rgba(255, 204, 102, 0.9);
+  color: #1a1a1a;
+  text-decoration: none;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.accordion-inner .btn:hover {
+  background: #ff9966;
+  transform: translateY(-2px);
+}
+
+
 /* === Section Headings === */
 h1, h2, h3 {
   font-family: 'Playfair Display', serif;
