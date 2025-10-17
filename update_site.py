@@ -55,3 +55,34 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+def main():
+    print("Step 1: Importing Excel -> JSON ...")
+    if run_command("python import_excel.py", stop_on_error=False) is None:
+        print("[ERROR] Failed to convert Excel into JSON. Check formatting.")
+        sys.exit(1)
+    print("[OK] Exported Excel -> data/drinks.json & data/heroes.json")
+
+    print("\nStep 2: Validating JSON ...")
+    if run_command("python validate_json.py", stop_on_error=False) is None:
+        print("[ERROR] Validation failed. Fix JSON before proceeding.")
+        sys.exit(1)
+
+    print("\nStep 3: Committing & pushing to GitHub ...")
+    run_command("git add .")
+    run_command('git commit -m "Auto-update JSON" || echo "No changes to commit"', stop_on_error=False)
+    push_result = run_command("git push", stop_on_error=False)
+
+    if push_result is None:
+        print("\n⚠️  Git push failed. Trying to set upstream automatically...")
+        upstream_result = run_command("git push --set-upstream origin main", stop_on_error=False)
+        if upstream_result is None:
+            print("\n❌ Git push failed completely. Check your GitHub connection or branch name.")
+            sys.exit(1)
+        else:
+            print("\n✅ Git push fixed with --set-upstream origin main")
+    else:
+        print("\n✅ Git push successful!")
+
+    print("\n🎉 Update complete. GitHub Pages will rebuild automatically.")
+

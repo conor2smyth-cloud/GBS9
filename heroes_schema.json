@@ -1,0 +1,15 @@
+{
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "page": { "type": "string" },
+      "section": { "type": "string" },
+      "header": { "type": "string" },
+      "image": { "type": "string" },
+      "filter": { "type": "boolean" },
+      "height": { "type": "string" }
+    },
+    "required": ["page", "section", "header", "image"]
+  }
+}

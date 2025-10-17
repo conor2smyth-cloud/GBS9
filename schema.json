@@ -1,12 +1,14 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Drinks Schema",
+  "title": "GBS9 Drinks",
   "type": "object",
+  "additionalProperties": false,
   "properties": {
     "cocktails": {
       "type": "array",
       "items": {
         "type": "object",
+        "additionalProperties": false,
         "properties": {
           "name": { "type": "string" },
           "type": { "type": "string", "enum": ["cocktails"] },
@@ -21,13 +23,14 @@
           "kegged": { "type": "string", "enum": ["Yes", "No"] },
           "flavour": { "type": "string" }
         },
-        "required": ["name", "type", "base", "glass", "ingredients", "short", "image"]
+        "required": ["name", "type", "image"]
       }
     },
     "beer": {
       "type": "array",
       "items": {
         "type": "object",
+        "additionalProperties": false,
         "properties": {
           "name": { "type": "string" },
           "type": { "type": "string", "enum": ["beer"] },
@@ -40,9 +43,23 @@
       "type": "array",
       "items": {
         "type": "object",
+        "additionalProperties": false,
         "properties": {
           "name": { "type": "string" },
           "type": { "type": "string", "enum": ["equipment"] },
+          "image": { "type": "string" }
+        },
+        "required": ["name", "type", "image"]
+      }
+    },
+    "snacks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string" },
+          "type": { "type": "string", "enum": ["snacks"] },
           "image": { "type": "string" }
         },
         "required": ["name", "type", "image"]
@@ -52,6 +69,7 @@
       "type": "array",
       "items": {
         "type": "object",
+        "additionalProperties": false,
         "properties": {
           "name": { "type": "string" },
           "type": { "type": "string", "enum": ["misc"] },
@@ -64,6 +82,7 @@
       "type": "array",
       "items": {
         "type": "object",
+        "additionalProperties": false,
         "properties": {
           "name": { "type": "string" },
           "type": { "type": "string", "enum": ["glasses"] },
@@ -71,20 +90,7 @@
         },
         "required": ["name", "type", "image"]
       }
-    },
-    "snacks": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "name": { "type": "string" },
-          "type": { "type": "string", "enum": ["snacks"] },
-          "image": { "type": "string" }
-        },
-        "required": ["name", "type", "image"]
-      }
     }
   },
-  "required": ["cocktails", "beer", "equipment"]
+  "required": ["cocktails", "beer", "equipment", "snacks", "misc", "glasses"]
 }
-
