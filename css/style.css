@@ -307,26 +307,17 @@ section {
 .tab-btn.active { background: #ffcc66; color: #1a1a1a; border-color: #ffcc66; font-weight: bold; }
 
 /* === Banner-Style Hero (Global System) === */
-/* === Hero Wrapper with Left-Aligned Image + Gradient === */
 .hero-wrapper {
   position: relative;
   width: 100%;
   height: 200px;
-  border-radius: 12px;
+  border-radius: 12px 12px 0 0;
   overflow: hidden;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: flex-start;
   background: linear-gradient(to right, rgba(0,0,0,0.7), var(--hero-gradient, #1a1a1a));
-}
-
-.hero-wrapper::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: inherit; /* gradient defined above */
-  z-index: 0;
 }
 
 .hero-wrapper img {
@@ -350,8 +341,8 @@ section {
   text-shadow: 0 2px 6px rgba(0,0,0,0.7);
 }
 
-/* Hero CTA Button */
-.hero-wrapper .btn {
+/* CTA button inside accordion */
+.accordion-inner .btn {
   display: inline-block;
   margin-top: 1rem;
   padding: 0.6rem 1.2rem;
@@ -362,10 +353,7 @@ section {
   text-decoration: none;
   transition: background 0.3s ease;
 }
-.hero-wrapper .btn:hover { background: #ff9966; }
-
-.big-hero { padding: 6rem 2rem; font-size: 3rem; }
-
+.accordion-inner .btn:hover { background: #ff9966; }
 
 /* === Services Vertical Accordion === */
 .services-accordion {
@@ -388,260 +376,29 @@ section {
   width: 100%;
   border: none;
   background: none;
-}
-
-.services-accordion .hero-wrapper {
-  width: 100%;
-  height: 200px; /* fixed preview height */
-  border-radius: 12px;
-  overflow: hidden;
-  cursor: pointer;
-  background-size: cover;
-  background-position: center;
-  position: relative;
-  display: flex;
-  align-items: flex-end;
-  padding: 1rem;
-}
-
-.services-accordion .hero-content h2 {
-  margin: 0;
-  font-size: 1.5rem;
-  color: #fff;
-  text-shadow: 0 2px 6px rgba(0,0,0,0.7);
-}
-
-.services-accordion .accordion-body {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.6s ease;
-}
-
-/* Make hero cards in grid consistent */
-.services-grid .hero-wrapper {
-  min-height: 200px;
-}
-
-
-/* Accordion body hidden by default */
-.accordion-body {
-  display: none;
-  padding: 1rem;
-  background: rgba(0,0,0,0.6);
-  border-radius: 0 0 8px 8px;
-  margin-top: -1rem; /* makes it tuck neatly under hero */
-}
-
-.accordion-item.open .accordion-body {
-  display: block;
-}
-
-
-/* Accordion container */
-.accordion-item {
-  position: relative;
-  overflow: hidden;
-  border-radius: 10px;
-  margin-bottom: 1rem;
-}
-
-/* Hidden state */
-.accordion-body {
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
-  padding: 0 1rem;
-  border-radius: 0 0 10px 10px;
-
-  /* Sliding reveal */
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: 
-    max-height 0.6s ease,
-    opacity 0.4s ease,
-    padding 0.4s ease,
-    transform 0.6s ease;
-}
-
-/* Open state */
-.accordion-item.open .accordion-body {
-  max-height: 300px; 
-  opacity: 1;
-  padding: 1rem;
-  transform: scaleX(1);
-}
-
-/* Cascade text effect */
-.accordion-body p {
-  opacity: 0;
-  transform: translateY
-
-/* === Hero Utility Classes === */
-
-/* Default hero wrapper */
-.hero-wrapper {
-  position: relative;
-  color: white;
-  text-align: center;
-  padding: 3rem 2rem;
-  margin-bottom: 1rem;
-  background-size: cover;
-  background-position: center;
-  cursor: pointer;
   border-radius: 12px;
   overflow: hidden;
 }
 
-/* Hero content */
-.hero-content {
-  position: relative;
-  z-index: 1;
-}
-
-.hero-wrapper::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(0,0,0,0.6), rgba(0,0,0,0.2));
-  z-index: 0;
-}
-
-.hero-wrapper h2 {
-  font-size: 2rem;
-  margin: 0;
-  color: #fff;
-  text-shadow: 0px 2px 6px rgba(0,0,0,0.7);
-}
-
-.hero-wrapper p {
-  font-size: 1.1rem;
-  opacity: 0.9;
-}
-
-/* === Variants === */
-
-/* Big hero for major banners */
-.big-hero {
-  padding: 6rem 2rem;
-  font-size: 3rem;
-  height: 400px;
-}
-
-/* Medium hero (default if not overridden) */
-.medium-hero {
-  padding: 4rem 2rem;
-  height: 300px;
-}
-
-/* Compact hero for sub-sections */
-.sub-hero {
-  padding: 2rem;
-  font-size: 1.5rem;
-  height: 200px;
-}
-
-/* Premium hero for highlighting featured sections */
-.premium-hero {
-  border: 3px solid #ffcc66;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.6);
-  height: 350px;
-}
-
-/* Tall hero - stretches further down */
-.tall-hero {
-  height: 500px;
-  padding: 8rem 2rem;
-}
-
-/* Wide hero - less padding, more horizontal emphasis */
-.wide-hero {
-  height: 250px;
-  padding: 2rem 4rem;
-}
-
-/* === Accordion Styling Enhancements === */
+/* Accordion body with auto-height animation */
 .accordion-body {
-  overflow: hidden;
   max-height: 0;
+  opacity: 0;
+  overflow: hidden;
   transition: max-height 0.6s ease, opacity 0.4s ease;
-  opacity: 0;
 }
 
 .accordion-item.open .accordion-body {
-  max-height: 600px; /* expand gracefully */
   opacity: 1;
-}
-
-.accordion-inner {
-  padding: 1.5rem;
-  border-radius: 8px;
-  color: #fff;
-  text-align: left;
-}
-
-/* === Services Page Grid === */
-.services-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
-  align-items: start;
-}
-
-.services-grid .accordion-item {
-  background: none;
-  border: none;
-  padding: 0;
-}
-
-
-/* Accordion animation */
-.accordion-item .accordion-body {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.6s ease, padding 0.4s ease;
-}
-
-.accordion-item.open .accordion-body {
-  max-height: 400px; /* expand size */
-  padding: 1rem;
-}
-
-.accordion-inner {
-  background-size: cover;
-  background-position: center;
-  border-radius: 8px;
-  padding: 1rem;
-  color: #fff;
-  animation: fadeIn 0.6s ease;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.accordion-inner .subtitle {
-  font-size: 1rem;
-  font-style: italic;
-  opacity: 0.85;
-  margin-top: 0.5rem;
-  margin-bottom: 1rem;
-}
-
-.accordion-body {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.6s ease;
-}
-
-.accordion-item.open .accordion-body {
-  max-height: 800px; /* enough to fit content, tweak as needed */
+  /* max-height is controlled by JS for auto sizing */
 }
 
 .accordion-inner {
   padding: 1rem;
-  border-radius: 8px;
+  border-radius: 0 0 12px 12px;
+  background: var(--accordion-bg, rgba(0,0,0,0.6));
   animation: cascadeDown 0.5s ease;
+  color: #fff;
 }
 
 @keyframes cascadeDown {
@@ -655,6 +412,13 @@ section {
   }
 }
 
+.accordion-inner .subtitle {
+  font-size: 1rem;
+  font-style: italic;
+  opacity: 0.85;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+}
 
 /* === Footer === */
 footer {

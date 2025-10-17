@@ -82,13 +82,51 @@ wrapper.addEventListener("click", () => {
 
   if (!body) return;
 
-  if (isOpen) {
-    body.style.maxHeight = "0";
+ if (isOpen) {
+    body.style.maxHeight = body.scrollHeight + "px"; // set current height
+    requestAnimationFrame(() => {
+      body.style.maxHeight = "0";
+      body.style.opacity = "0";
+    });
     parentItem.classList.remove("open");
   } else {
-    body.style.maxHeight = body.scrollHeight + "px";
+    body.style.maxHeight = body.scrollHeight + "px"; // expand to fit
+    body.style.opacity = "1";
     parentItem.classList.add("open");
   }
+
+
+    // Reset to auto after transition ends, so it resizes with content
+    body.addEventListener("transitionend", () => {
+      if (parentItem.classList.contains("open")) {
+        body.style.maxHeight = "none";
+      }
+    }, { once: true });
+  }
+});
+
+
+if (body) {
+  // Set accordion background color dynamically
+  if (hero.accordion_color) {
+    parentItem.style.setProperty("--accordion-bg", hero.accordion_color);
+    wrapper.style.setProperty("--hero-gradient", hero.accordion_color);
+  }
+
+  body.innerHTML = `
+    <div class="accordion-inner">
+      ${hero.description ? `<p>${hero.description}</p>` : ""}
+      ${hero.subtitle ? `<p class="subtitle">${hero.subtitle}</p>` : ""}
+      ${
+        hero.button_enabled
+          ? `<a href="${hero.button_link}" class="btn">${hero.button_text}</a>`
+          : ""
+      }
+    </div>
+  `;
+}
+
+
 });
 
 
