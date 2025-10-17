@@ -1,3 +1,6 @@
+// hero.js
+// Renders hero/banner sections with optional accordions + buttons
+
 document.addEventListener("DOMContentLoaded", async () => {
   const page = document.body.dataset.page || "";
   try {
@@ -15,14 +18,24 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 });
 
+// Escape HTML to prevent broken markup or script injection
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
 function renderHero(hero, el) {
   // Hero banner
   el.innerHTML = `
-    <div class="hero-wrapper ${String(hero.style_class || "")}" 
-         style="background-image:url('images/hero/${String(hero.image)}'); height:${String(hero.height)}">
+    <div class="hero-wrapper ${escapeHtml(hero.style_class || "")}" 
+         style="background-image:url('images/hero/${escapeHtml(hero.image)}'); height:${escapeHtml(hero.height)}">
       <div class="hero-content">
-        <h2>${String(hero.title)}</h2>
-        ${hero.subtitle ? `<p>${String(hero.subtitle)}</p>` : ""}
+        <h2>${escapeHtml(hero.title)}</h2>
+        ${hero.subtitle ? `<p>${escapeHtml(hero.subtitle)}</p>` : ""}
       </div>
     </div>
   `;
@@ -33,26 +46,38 @@ function renderHero(hero, el) {
     if (item) {
       const body = item.querySelector(".accordion-body");
       if (body) {
+        let buttonHtml = "";
+        if (
+          hero.button_enabled &&
+          hero.button_text &&
+          hero.button_link
+        ) {
+          buttonHtml = `
+            <a href="${encodeURIComponent(hero.button_link)}" class="btn">
+              ${escapeHtml(hero.button_text)}
+            </a>
+          `;
+        }
+
         body.innerHTML = `
-          <p>${String(hero.description || "")}</p>
-          ${hero.button_enabled ? `
-            <a href="${String(hero.button_link)}" class="btn">${String(hero.button_text)}</a>
-          ` : ""}
+          <p>${escapeHtml(hero.description || "")}</p>
+          ${buttonHtml}
         `;
       }
 
-      // Toggle on hero click
+      // Toggle accordion on hero click
       el.addEventListener("click", (e) => {
-        if (e.target.tagName.toLowerCase() === "a") return; // don’t close if clicking button
+        if (e.target.tagName.toLowerCase() === "a") return; // don’t toggle if clicking button
         const open = item.classList.contains("open");
 
-        // Close all
+        // Close all accordions
         document.querySelectorAll(".accordion-item").forEach(i => i.classList.remove("open"));
 
-        // Reopen if not already open
+        // Reopen current
         if (!open) item.classList.add("open");
       });
     }
   }
 }
+
 
