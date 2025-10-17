@@ -7,7 +7,7 @@
     "subtitle": "Sip, Tip, Celebrate",
     "button_text": "",
     "button_link": "",
-    "image_filename": "tonights-event.jpg",
+    "image_filename": "coming-soon.jpg",
     "gradient": "linear-gradient(135deg, #111, #333)",
     "style_class": "big-hero",
     "accordion": "no"
@@ -20,7 +20,7 @@
     "subtitle": "Enjoy curated cocktails",
     "button_text": "View Cocktails",
     "button_link": "cocktails.html",
-    "image_filename": "tonights-sip.jpg",
+    "image_filename": "coming-soon.jpg",
     "gradient": "linear-gradient(135deg, #ff5f6d, #ffc371)",
     "style_class": "sub-hero",
     "accordion": "yes"
@@ -33,7 +33,7 @@
     "subtitle": "From cocktails to kegs…",
     "button_text": "",
     "button_link": "",
-    "image_filename": "services-header.jpg",
+    "image_filename": "coming-soon.jpg",
     "gradient": "linear-gradient(135deg, #111, #333)",
     "style_class": "big-hero",
     "accordion": "no"
