@@ -78,28 +78,38 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
 
       // --- SMOOTH AUTO-HEIGHT TOGGLE
-      wrapper.addEventListener("click", () => {
-        const bodyEl = parentItem.querySelector(".accordion-body");
-        if (!bodyEl) return;
+     // --- SMOOTH AUTO-HEIGHT TOGGLE
+wrapper.addEventListener("click", () => {
+  const bodyEl = parentItem.querySelector(".accordion-body");
+  if (!bodyEl) return;
 
-        const isOpen = parentItem.classList.contains("open");
+  const isOpen = parentItem.classList.contains("open");
 
-        if (isOpen) {
-          // If currently 'auto', set to fixed height first so we can animate up
-          if (getComputedStyle(bodyEl).maxHeight === "none") {
-            bodyEl.style.maxHeight = bodyEl.scrollHeight + "px";
-          }
-          // next frame → animate to 0
-          requestAnimationFrame(() => {
-            bodyEl.style.maxHeight = "0";
-            bodyEl.style.opacity = "0";
-          });
-          parentItem.classList.remove("open");
-        } else {
-          // Start from 0 → set to scrollHeight
-          bodyEl.style.opacity = "1";
-          bodyEl.style.maxHeight = bodyEl.scrollHeight + "px";
-          parentItem.classList.add("open");
+  if (isOpen) {
+    // collapse
+    bodyEl.style.maxHeight = bodyEl.scrollHeight + "px"; // lock height first
+    requestAnimationFrame(() => {
+      bodyEl.style.maxHeight = "0";
+      bodyEl.style.opacity = "0";
+    });
+    parentItem.classList.remove("open");
+  } else {
+    // expand
+    parentItem.classList.add("open");
+    bodyEl.style.maxHeight = bodyEl.scrollHeight + "px";
+    bodyEl.style.opacity = "1";
+
+    // after animation → allow natural growth
+    const onEnd = () => {
+      if (parentItem.classList.contains("open")) {
+        bodyEl.style.maxHeight = "none";
+      }
+      bodyEl.removeEventListener("transitionend", onEnd);
+    };
+    bodyEl.addEventListener("transitionend", onEnd);
+  }
+});
+
 
           // After the transition, set to 'auto' so it can expand if content wraps/reflows
           const onEnd = () => {
