@@ -18,17 +18,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       if (hero.style_class) wrapper.classList.add(hero.style_class);
 
-      // Inner hero content
       wrapper.innerHTML = `
-        <div class="hero-content">
-          <h2>${hero.title}</h2>
-          ${hero.subtitle ? `<p>${hero.subtitle}</p>` : ""}
-          ${
-            hero.button_enabled
-              ? `<a href="${hero.button_link}" class="btn">${hero.button_text}</a>`
-              : ""
-          }
-        </div>
+  <div class="hero-content">
+    <h2>${hero.title}</h2>
+    ${hero.subtitle ? `<p>${hero.subtitle}</p>` : ""}
+  </div>
+`;
+
       `;
 
       // Build Accordion Body
@@ -36,14 +32,23 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (!parentItem) return;
 
       const body = parentItem.querySelector(".accordion-body");
+
       if (body) {
-        body.innerHTML = `
-          <div class="accordion-inner" style="
-            ${hero.accordion_bg ? `background-image:url('images/hero/${hero.accordion_bg}');` : ""}
-            ${hero.accordion_color ? `background-color:${hero.accordion_color};` : ""}
-          ">
-            <p>${hero.description || ""}</p>
-          </div>
+  body.innerHTML = `
+    <div class="accordion-inner" style="
+      ${hero.accordion_bg ? `background-image:url('images/hero/${hero.accordion_bg}');` : ""}
+      ${hero.accordion_color ? `background-color:${hero.accordion_color};` : ""}
+    ">
+      <p>${hero.description || ""}</p>
+      ${
+        hero.button_enabled
+          ? `<a href="${hero.button_link}" class="btn">${hero.button_text}</a>`
+          : ""
+      }
+    </div>
+  `;
+}
+
         `;
       }
 
