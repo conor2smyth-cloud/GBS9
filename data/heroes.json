@@ -10,7 +10,7 @@
     "image_filename": "coming-soon.jpg",
     "gradient": "linear-gradient(135deg, #111, #333)",
     "style_class": "big-hero",
-    "accordion": "no"
+    "accordion": "yes"
   },
   {
     "id": "sip",
@@ -36,6 +36,58 @@
     "image_filename": "coming-soon.jpg",
     "gradient": "linear-gradient(135deg, #111, #333)",
     "style_class": "big-hero",
-    "accordion": "no"
+    "accordion": "yes"
+  },
+  {
+    "id": "services",
+    "page": "services",
+    "parent": null,
+    "title": "Our Services",
+    "subtitle": "From cocktails to kegs…",
+    "button_text": "",
+    "button_link": "",
+    "image_filename": "coming-soon.jpg",
+    "gradient": "linear-gradient(135deg, #111, #333)",
+    "style_class": "big-hero",
+    "accordion": "yes"
+  },
+  {
+    "id": "cocktail-serv",
+    "page": "services",
+    "parent": null,
+    "title": "Cocktail Services",
+    "subtitle": "Expertly crafted cocktails",
+    "button_text": "Get Quote",
+    "button_link": "plan-your-event.html",
+    "image_filename": "coming-soon.jpg",
+    "gradient": "linear-gradient(135deg, #ff5f6d, #ffc371)",
+    "style_class": "sub-hero",
+    "accordion": "yes"
+  },
+  {
+    "id": "draft-systems",
+    "page": "services",
+    "parent": null,
+    "title": "Draft Systems",
+    "subtitle": "Portable draft systems & kegs",
+    "button_text": "Get Quote",
+    "button_link": "plan-your-event.html",
+    "image_filename": "coming-soon.jpg",
+    "gradient": "linear-gradient(135deg, #00c6ff, #0072ff)",
+    "style_class": "sub-hero",
+    "accordion": "yes"
+  },
+  {
+    "id": "event-bartending",
+    "page": "services",
+    "parent": null,
+    "title": "Event Bartending",
+    "subtitle": "Professional bartenders for hire",
+    "button_text": "Get Quote",
+    "button_link": "plan-your-event.html",
+    "image_filename": "coming-soon.jpg",
+    "gradient": "linear-gradient(135deg, #f7971e, #ffd200)",
+    "style_class": "sub-hero",
+    "accordion": "yes"
   }
 ]
