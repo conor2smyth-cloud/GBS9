@@ -9,8 +9,11 @@
   <script src="js/hero.js" defer></script>
 </head>
 <body data-page="services">
+  <!-- Global header populated by header.js -->
+  <header></header>
+
   <main>
-    <!-- Top-level banner -->
+    <!-- Page-level hero (top banner) -->
     <div data-hero="services"></div>
 
     <section>
@@ -20,18 +23,19 @@
       </p>
     </section>
 
-    <!-- Service sections as banners -->
+    <!-- Service subsections -->
     <section>
       <div data-hero="cocktail-serv"></div>
+      <div class="accordion-item">
+        <div class="accordion-body">
+          <p>Our bartenders craft signature cocktails to suit your event theme. 
+             Tailored menus, fresh ingredients, and stunning presentation guaranteed.</p>
+        </div>
+      </div>
     </section>
 
     <section>
       <div data-hero="draft-systems"></div>
-    </section>
-
-    <section>
-      <div data-hero="event-bartending"></div>
-    </section>
-  </main>
-</body>
-</html>
+      <div class="accordion-item">
+        <div class="accordion-body">
+          <p>Portable draft syst

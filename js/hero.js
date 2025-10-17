@@ -1,7 +1,12 @@
 // hero.js
-fetch('heroes_schema.json')
+fetch('data/heroes.json')
   .then(res => res.json())
   .then(data => {
+    if (!Array.isArray(data)) {
+      console.error("heroes.json did not return an array:", data);
+      return;
+    }
+
     const page = document.body.dataset.page;
 
     data.filter(hero => hero.page === page).forEach(hero => {
@@ -42,7 +47,7 @@ fetch('heroes_schema.json')
           const item = el.closest(".accordion-item");
           const open = item.classList.contains("open");
 
-          // Close others
+          // Close all
           document.querySelectorAll(".accordion-item").forEach(i => i.classList.remove("open"));
 
           // Toggle current
@@ -50,5 +55,5 @@ fetch('heroes_schema.json')
         });
       }
     });
-  });
-
+  })
+  .catch(err => console.error("Error loading heroes.json:", err));
