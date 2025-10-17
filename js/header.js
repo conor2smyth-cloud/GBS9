@@ -21,4 +21,11 @@ document.addEventListener("DOMContentLoaded", () => {
       </nav>
     </div>
   `;
+const header = document.querySelector("header");
+if (!header) {
+  // no header on this page, just exit silently
+  return;
+}
+
+
 });
