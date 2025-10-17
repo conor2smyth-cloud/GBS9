@@ -181,11 +181,78 @@
     });
 
     // Open Premium Listings Modal
+
+function openModal(item, type) {
+  const baseName = item.image.replace(".jpg", "");
+  let galleryImages = [ `images/${type}/${item.image}` ];
+
+  // Try to find numbered versions (e.g., -1, -2, -3)
+  for (let i = 1; i <= 5; i++) {
+    let testPath = `images/${type}/${baseName}-${i}.jpg`;
+    let testImg = new Image();
+    testImg.src = testPath;
+    testImg.onload = () => galleryImages.push(testPath);
+  }
+
+  let currentIndex = 0;
+  const modalImg = document.getElementById("modalImg");
+
+  function showImage(index) {
+    currentIndex = index;
+    modalImg.src = galleryImages[currentIndex];
+  }
+
+  document.querySelector(".gallery-nav.left").onclick = () => {
+    if (currentIndex > 0) showImage(currentIndex - 1);
+  };
+  document.querySelector(".gallery-nav.right").onclick = () => {
+    if (currentIndex < galleryImages.length - 1) showImage(currentIndex + 1);
+  };
+
+  // Fill modal text
+  document.getElementById("modalTitle").textContent = item.name;
+  document.getElementById("modalDesc").textContent = item.short || "";
+  document.getElementById("modalGlass").textContent = item.glass || "N/A";
+
+  const ingList = document.getElementById("modalIngredients");
+  ingList.innerHTML = "";
+  (item.ingredients || []).forEach(i => {
+    const li = document.createElement("li");
+    li.textContent = i;
+    ingList.appendChild(li);
+  });
+
+  // Open modal
+  showImage(0);
+  document.getElementById("modal").style.display = "flex";
+}
+
+
+function addToFavourites(item) {
+  let favs = JSON.parse(localStorage.getItem("favourites") || "[]");
+
+  // prevent duplicates
+  if (!favs.find(f => f.name === item.name)) {
+    favs.push(item);
+    localStorage.setItem("favourites", JSON.stringify(favs));
+    alert(`${item.name} added to favourites! ❤️`);
+  } else {
+    alert(`${item.name} is already in favourites!`);
+  }
+}
+
+document.getElementById("addToFav").addEventListener("click", () => {
+  if (window.currentItem) addToFavourites(window.currentItem);
+});
+
+
     function openPLModal(item, type) {
       document.getElementById("pl-modalImg").src = `images/${type}/${item.image}`;
       document.getElementById("pl-modalTitle").textContent = item.name;
       document.getElementById("pl-modalDesc").textContent = item.short || "";
       document.getElementById("pl-modalGlass").textContent = item.glass || "N/A";
+	window.currentItem = item; // so the button knows what to save
+
 
       const ingList = document.getElementById("pl-modalIngredients");
       ingList.innerHTML = "";

@@ -14,8 +14,7 @@
       ],
       "short": "Refreshingly fruity with vegetal notes.",
       "image": "cocktail-fresa-verde.jpg",
-      "kegged": "No",
-      "flavour": ""
+      "kegged": "No"
     },
     {
       "name": "Conquistador",
@@ -31,8 +30,7 @@
       ],
       "short": "Dry shake, double strain into coupe.",
       "image": "cocktail-conquistador.jpg",
-      "kegged": "No",
-      "flavour": ""
+      "kegged": "No"
     },
     {
       "name": "Luau",
@@ -49,8 +47,7 @@
       ],
       "short": "Shake and strain over pebble ice.",
       "image": "cocktail-luau.jpg",
-      "kegged": "No",
-      "flavour": ""
+      "kegged": "No"
     },
     {
       "name": "Rhubarbarita",
@@ -66,8 +63,7 @@
       ],
       "short": "Shake and fine strain.",
       "image": "cocktail-rhubarbarita.jpg",
-      "kegged": "No",
-      "flavour": ""
+      "kegged": "No"
     },
     {
       "name": "Pornstar Martini",
@@ -83,8 +79,7 @@
       ],
       "short": "A classic that needs no introduction!",
       "image": "pornstar-martini.jpg",
-      "kegged": "No",
-      "flavour": ""
+      "kegged": "No"
     },
     {
       "name": "Margarita",
@@ -99,7 +94,7 @@
       "short": "Classic Mexican favourite with many variations.",
       "image": "cocktail-margarita.jpg",
       "kegged": "No",
-      "flavour": "Strawberry; Passionfruit; Mango; Chili; Raspberry; Pineapple; Smokey; Frozen"
+      "flavour": "Strawberry; Passionfruit; Mango; Chili; Raspberry; Pineapple; Blackberry; Smokey; Frozen"
     },
     {
       "name": "Whiskey Sour",
@@ -115,8 +110,7 @@
       ],
       "short": "A classic that needs no introduction!",
       "image": "cocktail-whiskey-sour.jpg",
-      "kegged": "No",
-      "flavour": "Sour"
+      "kegged": "No"
     },
     {
       "name": "Old Fashioned",
@@ -145,8 +139,7 @@
       ],
       "short": "Refreshing and floral, elevates a gin.",
       "image": "cocktail-french-gimlet.jpg",
-      "kegged": "No",
-      "flavour": ""
+      "kegged": "No"
     },
     {
       "name": "Clover Club",
@@ -161,8 +154,7 @@
       ],
       "short": "Sweet and tart with a foamy head. Raspberry-forward.",
       "image": "cocktail-clover-club.jpg",
-      "kegged": "No",
-      "flavour": ""
+      "kegged": "No"
     },
     {
       "name": "Elderflower Fizz",
@@ -179,8 +171,7 @@
       ],
       "short": "An impressively foamy drink flavoured with elderflower.",
       "image": "cocktail-elderflower-fizz.jpg",
-      "kegged": "No",
-      "flavour": ""
+      "kegged": "No"
     },
     {
       "name": "Fig & Licorice Caipirinha",
@@ -195,8 +186,7 @@
       ],
       "short": "Showcases the taste of fresh figs with an earthy sweetness and freshness.",
       "image": "cocktail-fig-&-licorice-caipirinha.jpg",
-      "kegged": "No",
-      "flavour": ""
+      "kegged": "No"
     },
     {
       "name": "Caipirinha",
@@ -225,8 +215,7 @@
       ],
       "short": "Shake, strain.",
       "image": "cocktail-white-lady.jpg",
-      "kegged": "No",
-      "flavour": ""
+      "kegged": "No"
     },
     {
       "name": "Singapore Sling",
@@ -244,8 +233,7 @@
       ],
       "short": "7 ingredients combine to make this classic - worth the work.",
       "image": "cocktail-singapore-sling.jpg",
-      "kegged": "No",
-      "flavour": ""
+      "kegged": "No"
     },
     {
       "name": "Bon Bon",
@@ -277,8 +265,7 @@
       ],
       "short": "Delicously fruity, best with pot still rum.",
       "image": "cocktail-bahama-daiquiri.jpg",
-      "kegged": "No",
-      "flavour": ""
+      "kegged": "No"
     },
     {
       "name": "Bahama Mama",
@@ -294,8 +281,7 @@
       ],
       "short": "Fruity, tropical, refreshing.",
       "image": "cocktail-bahama-mama.jpg",
-      "kegged": "No",
-      "flavour": ""
+      "kegged": "No"
     },
     {
       "name": "Espresso Martini",
@@ -325,8 +311,7 @@
       ],
       "short": "Stir, strain over ice.",
       "image": "cocktail-negroni.jpg",
-      "kegged": "No",
-      "flavour": ""
+      "kegged": "No"
     },
     {
       "name": "Daiquiri",
@@ -356,8 +341,7 @@
       ],
       "short": "Who orders this?",
       "image": "cocktail-aviation.jpg",
-      "kegged": "No",
-      "flavour": ""
+      "kegged": "No"
     },
     {
       "name": "Mai Tai",
@@ -388,8 +372,7 @@
       ],
       "short": "It's pink!",
       "image": "cocktail-cosmopolitan.jpg",
-      "kegged": "No",
-      "flavour": ""
+      "kegged": "No"
     },
     {
       "name": "French Fizz",
@@ -405,8 +388,7 @@
       ],
       "short": "Elegant, sparkling and gin. Colour changing too.",
       "image": "cocktail-french-fizz.jpg",
-      "kegged": "No",
-      "flavour": ""
+      "kegged": "No"
     },
     {
       "name": "Amaretto Sour",
@@ -438,8 +420,355 @@
       ],
       "short": "Four types of orange combine for this taste of Florida",
       "image": "cocktail-cara-cara.jpg",
+      "kegged": "No"
+    },
+    {
+      "name": "Zombie",
+      "type": "cocktails",
+      "base": "Rum",
+      "glass": "Rocks",
+      "ingredients": [
+        "Rum",
+        "Orange Curacao",
+        "Grapefruit juice",
+        "Lemon juice",
+        "Lime juice",
+        "Pineapple juice",
+        "Orange juice",
+        "Passionfruit syrup",
+        "Grenadine",
+        "Velvet Falernum",
+        "Angostura Bitters"
+      ],
+      "short": "A tiki classic. A beast to make, and a beast to drink.",
+      "image": "cocktail-zombie.jpg",
+      "kegged": "No"
+    },
+    {
+      "name": "Cherry Sour",
+      "type": "cocktails",
+      "base": "Bourbon",
+      "glass": "Rocks",
+      "ingredients": [
+        "Bourbon",
+        "Disaronno",
+        "Lemon juice",
+        "Cherry syrup",
+        "Angostura Bitters",
+        "Shiraz",
+        "Egg white"
+      ],
+      "short": "Tart, full of fruity flavour with a whiskey backbone.",
+      "image": "cocktail-cherry-sour.jpg",
+      "kegged": "No"
+    },
+    {
+      "name": "Haka",
+      "type": "cocktails",
+      "base": "Beer",
+      "glass": "Wine glass",
+      "ingredients": [
+        "New Zealand Sauvignon Blanc",
+        "Elvis Juice",
+        "Passionfruit purée, Grapefruit bitters"
+      ],
+      "short": "Refreshingly different.",
+      "image": "cocktail-haka.jpg",
+      "kegged": "No"
+    },
+    {
+      "name": "Harvey Wallbanger",
+      "type": "cocktails",
+      "base": "Vodka",
+      "glass": "Rocks",
+      "ingredients": [
+        "Vodka",
+        "Orange juice"
+      ],
+      "short": "Refreshingly different.",
+      "image": "cocktail-harvey wallbanger.jpg",
+      "kegged": "No"
+    },
+    {
+      "name": "Boston Flip",
+      "type": "cocktails",
+      "base": "Rum",
+      "glass": "Rocks",
+      "ingredients": [
+        "Vodka",
+        "Orange juice"
+      ],
+      "short": "Refreshingly different.",
+      "image": "cocktail-boston flip.jpg",
+      "kegged": "No"
+    },
+    {
+      "name": "Black Russian",
+      "type": "cocktails",
+      "base": "Vodka",
+      "glass": "Rocks",
+      "ingredients": [
+        "Vodka",
+        "Coffee liqueur",
+        "Cola",
+        "Guinness"
+      ],
+      "short": "Refreshingly different.",
+      "image": "cocktail-black-russian.jpg",
+      "kegged": "No"
+    },
+    {
+      "name": "Gin House Blues",
+      "type": "cocktails",
+      "base": "Gin",
+      "glass": "Rocks",
+      "ingredients": [
+        "Vodka",
+        "Orange juice"
+      ],
+      "short": "Refreshingly different.",
+      "image": "cocktail-gin house blues.jpg",
+      "kegged": "No"
+    },
+    {
+      "name": "White Russian",
+      "type": "cocktails",
+      "base": "Vodka",
+      "glass": "Rocks",
+      "ingredients": [
+        "Vodka",
+        "Coffee liqueur",
+        "Half and half",
+        "Guinness"
+      ],
+      "short": "Refreshingly different.",
+      "image": "cocktail-white russian.jpg",
+      "kegged": "No"
+    },
+    {
+      "name": "Passion Grove Swizzle",
+      "type": "cocktails",
+      "base": "Rum",
+      "glass": "Rocks",
+      "ingredients": [
+        "Vodka",
+        "Orange juice"
+      ],
+      "short": "Refreshingly different.",
+      "image": "cocktail-passion grove swizzle.jpg",
+      "kegged": "No"
+    },
+    {
+      "name": "Apricot Flip",
+      "type": "cocktails",
+      "base": "Brandy",
+      "glass": "Rocks",
+      "ingredients": [
+        "Vodka",
+        "Orange juice"
+      ],
+      "short": "Refreshingly different.",
+      "image": "cocktail-apricot flip.jpg",
+      "kegged": "No"
+    },
+    {
+      "name": "Fosbury Flip",
+      "type": "cocktails",
+      "base": "Rum",
+      "glass": "Rocks",
+      "ingredients": [
+        "Vodka",
+        "Orange juice"
+      ],
+      "short": "Refreshingly different.",
+      "image": "cocktail-fosbury flip.jpg",
+      "kegged": "No"
+    },
+    {
+      "name": "A-Go Flip",
+      "type": "cocktails",
+      "base": "Whiskey",
+      "glass": "Rocks",
+      "ingredients": [
+        "Vodka",
+        "Orange juice"
+      ],
+      "short": "Refreshingly different.",
+      "image": "cocktail-a-go flip.jpg",
+      "kegged": "No"
+    },
+    {
+      "name": "Pedro's Eggnogg",
+      "type": "cocktails",
+      "base": "Whiskey",
+      "glass": "Rocks",
+      "ingredients": [
+        "Vodka",
+        "Orange juice"
+      ],
+      "short": "Refreshingly different.",
+      "image": "cocktail-pedro's eggnogg.jpg",
+      "kegged": "No"
+    },
+    {
+      "name": "Pear Drop",
+      "type": "cocktails",
+      "base": "Vodka",
+      "glass": "Rocks",
+      "ingredients": [
+        "Vodka",
+        "Passoa",
+        "Passionfruit purée",
+        "Lime juice",
+        "Apple juice"
+      ],
+      "short": "Refreshingly different.",
+      "image": "cocktail-pear drop.jpg",
+      "kegged": "No"
+    },
+    {
+      "name": "Elyx of Life",
+      "type": "cocktails",
+      "base": "Vodka",
+      "glass": "Rocks",
+      "ingredients": [
+        "Vodka",
+        "Midori",
+        "Mango purée",
+        "Lemon juice",
+        "Prosecco"
+      ],
+      "short": "Refreshingly different.",
+      "image": "cocktail-elyx of life.jpg",
+      "kegged": "No"
+    },
+    {
+      "name": "Raspberry Cobbler",
+      "type": "cocktails",
+      "base": "Vodka",
+      "glass": "Rocks",
+      "ingredients": [
+        "Vodka",
+        "Raspberry liqueur",
+        "Lime juice",
+        "Apple juice",
+        "Cider"
+      ],
+      "short": "Refreshingly different.",
+      "image": "cocktail-raspberry cobbler.jpg",
+      "kegged": "No"
+    },
+    {
+      "name": "Dark 'n' Stormy",
+      "type": "cocktails",
+      "base": "Rum",
+      "glass": "Rocks",
+      "ingredients": [
+        "Rum",
+        "Lime juice",
+        "Ginger beer"
+      ],
+      "short": "Refreshingly different.",
+      "image": "cocktail-dark 'n' stormy.jpg",
+      "kegged": "No"
+    },
+    {
+      "name": "French 75",
+      "type": "cocktails",
+      "base": "Gin",
+      "glass": "Rocks",
+      "ingredients": [
+        "Gin",
+        "Lemon juice",
+        "Simple syrup",
+        "Prosecco"
+      ],
+      "short": "Refreshingly different.",
+      "image": "cocktail-french 75.jpg",
       "kegged": "No",
-      "flavour": ""
+      "flavour": "Peach; Raspberry; Strawberry; Watermelon; Orange; Passionfruit"
+    },
+    {
+      "name": "Forbidden Fruit",
+      "type": "cocktails",
+      "base": "Vodka",
+      "glass": "Rocks",
+      "ingredients": [
+        "Vodka",
+        "St Germain",
+        "Lime juice",
+        "Pineapple juice"
+      ],
+      "short": "Refreshingly different.",
+      "image": "cocktail-forbidden fruit.jpg",
+      "kegged": "No"
+    },
+    {
+      "name": "Absinthe Minded",
+      "type": "cocktails",
+      "base": "Vodka",
+      "glass": "Rocks",
+      "ingredients": [
+        "Vodka",
+        "Orange juice"
+      ],
+      "short": "Refreshingly different.",
+      "image": "cocktail-absinthe minded.jpg",
+      "kegged": "No"
+    },
+    {
+      "name": "Gentleman's Lynchberg",
+      "type": "cocktails",
+      "base": "Bourbon",
+      "glass": "Rocks",
+      "ingredients": [
+        "Vodka",
+        "Orange juice"
+      ],
+      "short": "Refreshingly different.",
+      "image": "cocktail-gentleman's lynchberg.jpg",
+      "kegged": "No"
+    },
+    {
+      "name": "El Diablo",
+      "type": "cocktails",
+      "base": "Tequila",
+      "glass": "Rocks",
+      "ingredients": [
+        "Vodka",
+        "Orange juice"
+      ],
+      "short": "Refreshingly different.",
+      "image": "cocktail-el diablo.jpg",
+      "kegged": "No"
+    },
+    {
+      "name": "Magnificant Seven",
+      "type": "cocktails",
+      "base": "Rum",
+      "glass": "Rocks",
+      "ingredients": [
+        "Vodka",
+        "Orange juice"
+      ],
+      "short": "Refreshingly different.",
+      "image": "cocktail-magnificant seven.jpg",
+      "kegged": "No"
+    },
+    {
+      "name": "Gimlet",
+      "type": "cocktails",
+      "base": "Gin",
+      "glass": "Coupe",
+      "ingredients": [
+        "Gin",
+        "Lime juice",
+        "Simple syrup"
+      ],
+      "short": "Simple, elegant and customisable.",
+      "image": "cocktail-gimlet.jpg",
+      "kegged": "No",
+      "flavour": "Elderflower; Strawberry; Raspberry; Cucumber; Watermelon"
     }
   ],
   "beer": [],

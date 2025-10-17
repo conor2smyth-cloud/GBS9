@@ -1,26 +1,33 @@
 import json
-import sys
-from jsonschema import validate, ValidationError
+import os
+from jsonschema import Draft7Validator
 
-SCHEMA_FILE = "schema.json"
-DATA_FILE = "data/drinks.json"
+# Paths
+SCHEMA_FILE = "data/schema.json"
+JSON_FILE = "data/drinks.json"
 
 def validate_json():
-    try:
-        with open(SCHEMA_FILE, "r", encoding="utf-8") as f:
-            schema = json.load(f)
-        with open(DATA_FILE, "r", encoding="utf-8") as f:
-            data = json.load(f)
+    # Load schema
+    with open(SCHEMA_FILE, "r", encoding="utf-8") as f:
+        schema = json.load(f)
 
-        validate(instance=data, schema=schema)
-        print(f"[OK] {DATA_FILE} is valid against {SCHEMA_FILE}")
+    # Load JSON data
+    with open(JSON_FILE, "r", encoding="utf-8") as f:
+        data = json.load(f)
 
-    except ValidationError as e:
-        print("x Validation failed:", e.message)
-        sys.exit(1)
-    except Exception as e:
-        print("x Error:", e)
-        sys.exit(1)
+    # Validate
+    validator = Draft7Validator(schema)
+    errors = sorted(validator.iter_errors(data), key=lambda e: e.path)
+
+    if errors:
+        print("x Validation failed with the following issues:\n")
+        for err in errors:
+            # Path shows where in the JSON the error happened
+            path = " -> ".join([str(p) for p in err.path]) if err.path else "root"
+            print(f" - At {path}: {err.message}")
+        exit(1)
+    else:
+        print(f"[OK] {JSON_FILE} is valid against {SCHEMA_FILE}")
 
 if __name__ == "__main__":
     validate_json()
