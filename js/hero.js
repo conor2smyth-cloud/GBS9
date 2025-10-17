@@ -7,7 +7,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     const response = await fetch("data/heroes.json");
     const heroes = await response.json();
 
-    // Find all hero placeholders
     document.querySelectorAll("[data-hero]").forEach(el => {
       const id = el.dataset.hero;
       const hero = heroes.find(h => h.id === id && (h.page === page || h.page === "global"));
@@ -18,7 +17,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 });
 
-// Escape HTML to prevent broken markup or script injection
+// Escape unsafe text
 function escapeHtml(str) {
   return String(str)
     .replace(/&/g, "&amp;")
@@ -29,10 +28,13 @@ function escapeHtml(str) {
 }
 
 function renderHero(hero, el) {
-  // Hero banner
+  const styleClass = hero.style_class || "";
+  const inlineHeight = hero.height ? `height:${escapeHtml(hero.height)};` : "";
+  const gradient = hero.gradient ? `${hero.gradient}, ` : "";
+
   el.innerHTML = `
-    <div class="hero-wrapper ${escapeHtml(hero.style_class || "")}" 
-         style="background-image:url('images/hero/${escapeHtml(hero.image)}'); height:${escapeHtml(hero.height)}">
+    <div class="hero-wrapper ${escapeHtml(styleClass)}" 
+         style="background-image:${gradient}url('images/hero/${escapeHtml(hero.image)}'); ${inlineHeight}">
       <div class="hero-content">
         <h2>${escapeHtml(hero.title)}</h2>
         ${hero.subtitle ? `<p>${escapeHtml(hero.subtitle)}</p>` : ""}
@@ -40,18 +42,13 @@ function renderHero(hero, el) {
     </div>
   `;
 
-  // Accordion body (hidden until click)
   if (hero.accordion) {
     const item = el.closest(".accordion-item");
     if (item) {
       const body = item.querySelector(".accordion-body");
       if (body) {
         let buttonHtml = "";
-        if (
-          hero.button_enabled &&
-          hero.button_text &&
-          hero.button_link
-        ) {
+        if (hero.button_enabled && hero.button_text && hero.button_link) {
           buttonHtml = `
             <a href="${encodeURIComponent(hero.button_link)}" class="btn">
               ${escapeHtml(hero.button_text)}
@@ -59,21 +56,28 @@ function renderHero(hero, el) {
           `;
         }
 
+        // Build accordion background style
+        let bgStyle = "";
+        if (hero.accordion_bg && hero.accordion_color) {
+          bgStyle = `background: linear-gradient(${escapeHtml(hero.accordion_color)}, ${escapeHtml(hero.accordion_color)}), url('images/hero/${escapeHtml(hero.accordion_bg)}'); background-size: cover;`;
+        } else if (hero.accordion_bg) {
+          bgStyle = `background-image: url('images/hero/${escapeHtml(hero.accordion_bg)}'); background-size: cover;`;
+        } else if (hero.accordion_color) {
+          bgStyle = `background:${escapeHtml(hero.accordion_color)};`;
+        }
+
         body.innerHTML = `
-          <p>${escapeHtml(hero.description || "")}</p>
-          ${buttonHtml}
+          <div class="accordion-inner" style="${bgStyle}">
+            <p>${escapeHtml(hero.description || "")}</p>
+            ${buttonHtml}
+          </div>
         `;
       }
 
-      // Toggle accordion on hero click
       el.addEventListener("click", (e) => {
-        if (e.target.tagName.toLowerCase() === "a") return; // don’t toggle if clicking button
+        if (e.target.tagName.toLowerCase() === "a") return; 
         const open = item.classList.contains("open");
-
-        // Close all accordions
         document.querySelectorAll(".accordion-item").forEach(i => i.classList.remove("open"));
-
-        // Reopen current
         if (!open) item.classList.add("open");
       });
     }
