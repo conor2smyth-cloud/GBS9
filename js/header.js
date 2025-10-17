@@ -1,35 +1,56 @@
-// header.js
 document.addEventListener("DOMContentLoaded", () => {
-  const headerEl = document.querySelector("header");
-  if (!headerEl) {
-    console.warn("header.js: No <header> element found on this page.");
-    return;
-  }
+  const header = document.querySelector("header");
+  if (!header) return; // exit if page has no <header>
 
-  headerEl.innerHTML = `
+  // ✅ Inject header HTML
+  header.innerHTML = `
     <div class="navbar">
       <div class="logo">
-        <a href="index.html"><img src="images/logo.png" alt="GBS9 Logo"></a>
+        <a href="index.html"><img src="images/logo.png" alt="Logo"></a>
       </div>
       <nav>
-        <ul>
+        <ul class="desktop-nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="services.html">Services</a></li>
           <li><a href="tonights-event.html">Tonight's Event</a></li>
           <li><a href="premium-listings.html">Premium Listings</a></li>
-          <li><a href="services.html">Services</a></li>
-          <li><a href="plan-your-event.html">Plan Your Event</a></li>
-  	<li><a href="design-your-menu.html">Design your menu</a></li>
-  <li><a href="admin.html">Admin</a></li>
-
-
+          <li><a href="design-your-menu.html">Design Your Menu</a></li>
         </ul>
       </nav>
+      <button class="hamburger" id="hamburger">&#9776;</button>
+    </div>
+
+    <div class="overlay" id="overlay">
+      <button class="close-overlay" id="closeOverlay">&times;</button>
+      <ul>
+        <li style="--i:0"><a href="index.html">Home</a></li>
+        <li style="--i:1"><a href="services.html">Services</a></li>
+        <li style="--i:2"><a href="tonights-event.html">Tonight's Event</a></li>
+        <li style="--i:3"><a href="premium-listings.html">Premium Listings</a></li>
+        <li style="--i:4"><a href="design-your-menu.html">Design Your Menu</a></li>
+      </ul>
     </div>
   `;
-const header = document.querySelector("header");
-if (!header) {
-  // no header on this page, just exit silently
-  return;
-}
 
+  // ✅ Overlay toggle logic
+  const hamburger = document.getElementById("hamburger");
+  const overlay = document.getElementById("overlay");
+  const closeOverlay = document.getElementById("closeOverlay");
 
+  if (hamburger && overlay && closeOverlay) {
+    hamburger.addEventListener("click", () => {
+      overlay.classList.add("active");
+    });
+
+    closeOverlay.addEventListener("click", () => {
+      overlay.classList.remove("active");
+    });
+
+    // Close overlay when a nav link is clicked
+    overlay.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => {
+        overlay.classList.remove("active");
+      });
+    });
+  }
 });
