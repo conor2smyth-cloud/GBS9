@@ -506,42 +506,38 @@ section {
 }
 
 
-/* === Banner Hero Wrapper with Auto-Fade + Spotify Gradient === */
+/* === Banner Hero Wrapper (Base) === */
 .hero-wrapper {
   position: relative;
   width: 100%;
-  height: 200px; /* can be overridden by "height" field in JSON */
+  height: 200px; /* default for mobile */
   border-radius: 12px 12px 0 0;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  background: #1a1a1a; /* fallback if image missing */
+  background: #1a1a1a; /* fallback */
 }
 
 /* Hero image */
 .hero-wrapper img {
   height: 100%;
   width: auto;
-  object-fit: contain;   /* keeps aspect ratio, avoids stretch */
+  object-fit: contain;
   flex-shrink: 0;
   z-index: 0;
 }
 
-/* Gradient fade when image isn't wide enough */
+/* Right-edge fade (fills space if image not wide enough) */
 .hero-wrapper::after {
   content: "";
   position: absolute;
   top: 0; right: 0; bottom: 0; left: 50%;
-  background: linear-gradient(
-    to right,
-    rgba(0,0,0,0) 0%, 
-    #1a1a1a 100%
-  );
+  background: linear-gradient(to right, rgba(0,0,0,0) 0%, #1a1a1a 100%);
   z-index: 1;
 }
 
-/* Spotify-style text gradient overlay */
+/* Spotify-style text overlay gradient */
 .hero-wrapper::before {
   content: "";
   position: absolute;
@@ -555,19 +551,35 @@ section {
   z-index: 2;
 }
 
-/* Hero text */
+/* Text styling */
 .hero-content {
   position: relative;
-  z-index: 3; /* sits above gradients */
+  z-index: 3;
   padding-left: 1rem;
   color: #fff;
 }
-
 .hero-content h2 {
   margin: 0;
   font-size: 1.5rem;
   font-weight: bold;
   text-shadow: 0 2px 6px rgba(0,0,0,0.8);
+}
+
+/* === Responsive Heights === */
+@media (min-width: 768px) {
+  .hero-wrapper {
+    height: 250px; /* tablets */
+  }
+}
+@media (min-width: 1024px) {
+  .hero-wrapper {
+    height: 300px; /* desktops */
+  }
+}
+@media (min-width: 1440px) {
+  .hero-wrapper {
+    height: 350px; /* big screens */
+  }
 }
 
 
