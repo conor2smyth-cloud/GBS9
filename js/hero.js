@@ -71,4 +71,25 @@ document.addEventListener("DOMContentLoaded", async () => {
   } catch (err) {
     console.error("Error loading heroes.json", err);
   }
+
+  // --- Accordion toggle with dynamic height ---
+  document.querySelectorAll(".accordion-item .hero-wrapper").forEach(header => {
+    header.addEventListener("click", () => {
+      const item = header.closest(".accordion-item");
+      const body = item.querySelector(".accordion-body");
+
+      if (item.classList.contains("open")) {
+        // Collapse
+        body.style.maxHeight = body.scrollHeight + "px"; // lock current height
+        setTimeout(() => {
+          body.style.maxHeight = "0px";
+        }, 10);
+        item.classList.remove("open");
+      } else {
+        // Expand
+        body.style.maxHeight = body.scrollHeight + "px";
+        item.classList.add("open");
+      }
+    });
+  });
 });
