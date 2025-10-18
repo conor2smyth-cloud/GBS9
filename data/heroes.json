@@ -3,72 +3,84 @@
     "id": "cocktail-services",
     "page": "services",
     "title": "Cocktail Services",
-    "subtitle": "Expertly crafted cocktails made and served in your own venue from our fully mobile cocktail bar. Scroll through our extensive menu and press 'Add to Favourite' on any cocktail that takes your fancy! Or alternatively, design your menu using our Tinder-style menu builder. Simply swipe right on any of the cocktails you want to include on your menu.",
+    "subtitles": [
+      "Expertly crafted cocktails made and served in your own venue from our fully mobile cocktail bar. Scroll through our extensive menu and press 'Add to Favourite' on any cocktail that takes your fancy! Or alternatively, design your menu using our Tinder-style menu builder. Simply swipe right on any of the cocktails you want to include on your menu."
+    ],
+    "description": "Turn your home into a speakeasy for one special night.",
     "image": "cocktail-clear-spirit.jpg",
     "filter": true,
     "style_class": "premium-hero",
     "height": "",
     "gradient": "linear-gradient(135deg, rgba(0,0,0,0.7), rgba(0,0,0,0.2))",
-    "accordion": true,
-    "description": "Turn your home into a speakeasy for one special night.",
-    "accordion_color": "rgba(255,0,150,0.3)",
     "accordion_bg": "",
+    "accordion_color": "rgba(255,0,150,0.3)",
     "button_enabled": true,
-    "button_text": "Get Quote",
-    "button_link": "/contact.html"
+    "button_text_1": "Choose your cocktails",
+    "button_link_1": "",
+    "button_text_2": "",
+    "button_link_2": "/premium-listings.html"
   },
   {
     "id": "draft-systems",
     "page": "services",
     "title": "Draft Systems",
-    "subtitle": "Perfectly chilled beer, complete with foldable steel bar counter and glassware. We can cater for up to 120 people, with a choice of up to 4 different beers. We also offer cocktails on draft, as well as mixers.",
+    "subtitles": [
+      "Perfectly chilled beer, complete with foldable steel bar counter and glassware. We can cater for up to 120 people, with a choice of up to 4 different beers. We also offer cocktails on draft, as well as mixers."
+    ],
+    "description": "Portable draft systems for large parties.",
     "image": "equipment-draft-systems.jpg",
     "filter": true,
     "style_class": "sub-hero",
     "height": "220px",
     "gradient": "",
-    "accordion": true,
-    "description": "Portable draft systems for large parties.",
-    "accordion_color": "#222222",
     "accordion_bg": "",
+    "accordion_color": "#222222",
     "button_enabled": true,
-    "button_text": "Book Now",
-    "button_link": "/contact.html"
+    "button_text_1": "Book Now",
+    "button_link_1": "",
+    "button_text_2": "",
+    "button_link_2": "/premium-listings.html"
   },
   {
     "id": "event-bartending",
     "page": "services",
     "title": "Event Bartending",
-    "subtitle": "Professional service staff",
+    "subtitles": [
+      "Professional service staff"
+    ],
+    "description": "Staff your event with (mostly) friendly professional bartenders.",
     "image": "equipment-cocktail-&-draft-bars.jpg",
     "filter": true,
     "style_class": "wide-hero",
     "height": "",
     "gradient": "linear-gradient(135deg, #ff9966, #ff5f6d)",
-    "accordion": true,
-    "description": "Staff your event with (mostly) friendly professional bartenders.",
-    "accordion_color": "#111111",
     "accordion_bg": "",
+    "accordion_color": "#111111",
     "button_enabled": true,
-    "button_text": "Book Now",
-    "button_link": "/plan.html"
+    "button_text_1": "Book Now",
+    "button_link_1": "",
+    "button_text_2": "",
+    "button_link_2": "/plan.html"
   },
   {
     "id": "recipes",
     "page": "services",
     "title": "Recipes",
-    "subtitle": "Signature creations",
+    "subtitles": [
+      "Signature creations"
+    ],
+    "description": "Try out recipes curated for your event.",
     "image": "recipes.jpg",
     "filter": true,
     "style_class": "medium-hero",
     "height": "",
     "gradient": "",
-    "accordion": true,
-    "description": "Try out recipes curated for your event.",
-    "accordion_color": "rgba(0,0,0,0.6)",
     "accordion_bg": "",
+    "accordion_color": "rgba(0,0,0,0.6)",
     "button_enabled": false,
-    "button_text": "",
-    "button_link": ""
+    "button_text_1": "",
+    "button_link_1": "",
+    "button_text_2": "",
+    "button_link_2": ""
   }
 ]

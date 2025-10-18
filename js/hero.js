@@ -31,21 +31,28 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (!body) return;
 
       // --- Fill accordion body ---
-      body.innerHTML = `
-        <div class="accordion-inner"
-          style="
-            ${hero.accordion_bg ? `background-image:url('images/hero/${hero.accordion_bg}');` : ""}
-            ${hero.accordion_color ? `background-color:${hero.accordion_color};` : ""}
-          "
-        >
-          ${hero.description ? `<p>${hero.description}</p>` : ""}
-          ${hero.subtitle ? `<p class="subtitle">${hero.subtitle}</p>` : ""}
-          ${
-            hero.button_enabled
-              ? `<a href="${hero.button_link}" class="btn">${hero.button_text}</a>`
-              : ""
-          }
-        </div>
+     if (body) {
+  body.innerHTML = `
+    <div class="accordion-inner" style="
+      ${hero.accordion_bg ? `background-image:url('images/hero/${hero.accordion_bg}');` : ""}
+      ${hero.accordion_color ? `background-color:${hero.accordion_color};` : ""}
+    ">
+      <p>${hero.description || ""}</p>
+      ${hero.subtitles && hero.subtitles.length > 0
+        ? hero.subtitles.map(s => `<p class="subtitle">${s}</p>`).join("")
+        : ""}
+      <div class="button-group">
+        ${hero.button_enabled && hero.button_text_1 && hero.button_link_1
+          ? `<a href="${hero.button_link_1}" class="btn">${hero.button_text_1}</a>`
+          : ""}
+        ${hero.button_enabled && hero.button_text_2 && hero.button_link_2
+          ? `<a href="${hero.button_link_2}" class="btn secondary">${hero.button_text_2}</a>`
+          : ""}
+      </div>
+    
+  `;
+}
+
       `;
 
       // --- Toggle accordion open/close when clicking hero ---

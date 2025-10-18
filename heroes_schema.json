@@ -1,27 +1,30 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Heroes Schema",
   "type": "array",
   "items": {
     "type": "object",
-    "required": ["id", "page", "title", "image", "button_enabled", "accordion"],
+    "required": ["id", "title", "image"],
     "properties": {
       "id": { "type": "string" },
       "page": { "type": "string" },
       "title": { "type": "string" },
-      "subtitle": { "type": "string" },
+      "subtitles": {
+        "type": "array",
+        "items": { "type": "string" }
+      },
+      "description": { "type": "string" },
       "image": { "type": "string" },
       "filter": { "type": "boolean" },
       "style_class": { "type": "string" },
       "height": { "type": "string" },
       "gradient": { "type": "string" },
-      "accordion": { "type": "boolean" },
-      "description": { "type": "string" },
-      "accordion_color": { "type": "string" },
       "accordion_bg": { "type": "string" },
+      "accordion_color": { "type": "string" },
       "button_enabled": { "type": "boolean" },
-      "button_text": { "type": "string" },
-      "button_link": { "type": "string" }
+      "button_text_1": { "type": "string" },
+      "button_link_1": { "type": "string" },
+      "button_text_2": { "type": "string" },
+      "button_link_2": { "type": "string" }
     },
     "additionalProperties": false
   }

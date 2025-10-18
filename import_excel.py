@@ -12,18 +12,18 @@ def sheet_to_list(sheet, dtype):
         item = {
             "name": str(row.get("Name", "")).strip(),
             "type": dtype,
-            "base": str(row.get("Base Spirit", "")).strip() or "",
-            "glass": str(row.get("Glass", "")).strip() or "",
+            "base": str(row.get("Base Spirit", "")).strip() or None,
+            "glass": str(row.get("Glass", "")).strip() or None,
             "ingredients": [
                 i.strip() for i in str(row.get("Ingredients", "")).split(";") if i.strip()
             ],
             "short": str(row.get("Method / Blurb", "")).strip(),
             "image": str(row.get("Image Filename", "")).strip() or "coming-soon.jpg",
             "kegged": str(row.get("Kegged", "No")).strip(),
-            "flavour": str(row.get("Flavour", "")).strip() or ""
+            "flavour": str(row.get("Flavour", "")).strip() or None
         }
         # Drop empty fields so JSON is clean
-        item = {k: v for k, v in item.items() if v not in ["", "", "nan", "NaN"]}
+        item = {k: v for k, v in item.items() if v not in ["", None, "nan", "NaN"]}
         items.append(item)
     return items
 
@@ -31,10 +31,11 @@ def import_excel():
     if not os.path.exists(EXCEL_FILE):
         raise FileNotFoundError(f"[ERROR] Excel file not found: {EXCEL_FILE}")
 
+    # ✅ Define Excel file once
     xls = pd.ExcelFile(EXCEL_FILE)
 
-    # Drinks data
-    data = {
+    # === Drinks ===
+    output = {
         "cocktails": sheet_to_list(pd.read_excel(xls, "Cocktails"), "cocktails") if "Cocktails" in xls.sheet_names else [],
         "beer": sheet_to_list(pd.read_excel(xls, "Beer"), "beer") if "Beer" in xls.sheet_names else [],
         "equipment": sheet_to_list(pd.read_excel(xls, "Equipment"), "equipment") if "Equipment" in xls.sheet_names else [],
@@ -44,54 +45,46 @@ def import_excel():
     }
 
     with open(OUTPUT_JSON, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2, ensure_ascii=False)
+        json.dump(output, f, indent=2, ensure_ascii=False)
 
     print(f"[OK] Exported Excel -> {OUTPUT_JSON}")
 
-    # Heroes sheet
+    # === Heroes ===
     if "Heroes" in xls.sheet_names:
         heroes_df = pd.read_excel(xls, "Heroes").fillna("")
         heroes = []
         for _, row in heroes_df.iterrows():
-            # Button handling
-            enabled_raw = str(row.get("Button Enabled", "")).strip().upper()
-            btn_enabled = enabled_raw == "Y"
-            btn_text = str(row.get("Button Text", "")).strip()
-            btn_link = str(row.get("Button Link", "")).strip()
-            if not btn_text or not btn_link:
-                btn_enabled = False
-
-            # Visual settings
-            style_class = str(row.get("Style Class", "")).strip()
-            height = str(row.get("Height", "")).strip()
-            gradient = str(row.get("Gradient", "")).strip()
-            acc_color = str(row.get("Accordion Color", "")).strip()
-            acc_bg = str(row.get("Accordion Background", "")).strip()
+            subtitles = [
+                str(row.get("Subtitle 1", "")).strip(),
+                str(row.get("Subtitle 2", "")).strip(),
+                str(row.get("Subtitle 3", "")).strip()
+            ]
+            subtitles = [s for s in subtitles if s]  # remove empties
 
             heroes.append({
                 "id": str(row.get("ID", "")).strip(),
                 "page": str(row.get("Page", "")).strip(),
                 "title": str(row.get("Title", "")).strip(),
-                "subtitle": str(row.get("Subtitle", "")).strip(),
+                "subtitles": subtitles,
+                "description": str(row.get("Description", "")).strip(),
                 "image": str(row.get("Image Filename", "")).strip(),
                 "filter": str(row.get("Filter", "Y")).strip().upper() == "Y",
-                "style_class": style_class if style_class else "",
-                "height": height if height else "",
-                "gradient": gradient if gradient else "",
-                "accordion": str(row.get("Accordion", "Y")).strip().upper() == "Y",
-                "description": str(row.get("Description", "")).strip(),
-                "accordion_color": acc_color if acc_color else "",
-                "accordion_bg": acc_bg if acc_bg else "",
-                "button_enabled": btn_enabled,
-                "button_text": btn_text,
-                "button_link": btn_link
+                "style_class": str(row.get("Style Class", "")).strip(),
+                "height": str(row.get("Height", "250px")).strip(),
+                "gradient": str(row.get("Gradient", "")).strip(),
+                "accordion_bg": str(row.get("Accordion Background", "")).strip(),
+                "accordion_color": str(row.get("Accordion Color", "")).strip(),
+                "button_enabled": str(row.get("Button Enabled", "Y")).strip().upper() == "Y",
+                "button_text_1": str(row.get("Button Text 1", "")).strip(),
+                "button_link_1": str(row.get("Button Link 1", "")).strip(),
+                "button_text_2": str(row.get("Button Text 2", "")).strip(),
+                "button_link_2": str(row.get("Button Link 2", "")).strip()
             })
 
         with open("data/heroes.json", "w", encoding="utf-8") as f:
             json.dump(heroes, f, indent=2, ensure_ascii=False)
 
-        print(f"[OK] Exported Heroes -> data/heroes.json")
+        print("[OK] Exported Excel -> data/heroes.json")
 
 if __name__ == "__main__":
     import_excel()
-

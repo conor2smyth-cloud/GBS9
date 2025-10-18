@@ -476,9 +476,10 @@ section {
 .accordion-inner .subtitle {
   font-size: 1rem;
   font-style: italic;
-  margin: 0.5rem 0 1rem;
   opacity: 0.85;
+  margin: 0.5rem 0;
 }
+
 
 /* Cascade animation */
 @keyframes cascadeDown {
