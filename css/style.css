@@ -480,6 +480,18 @@ section {
   margin: 0.5rem 0;
 }
 
+/* Button row inside accordion */
+.btn-row {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.btn-row .btn {
+  flex: 1;
+  text-align: center;
+}
+
 
 /* Cascade animation */
 @keyframes cascadeDown {
