@@ -481,16 +481,16 @@ section {
 }
 
 /* Button row inside accordion */
-.btn-row {
+.button-row {
   display: flex;
   gap: 1rem;
   margin-top: 1rem;
 }
-
-.btn-row .btn {
+.button-row .btn {
   flex: 1;
   text-align: center;
 }
+
 
 
 /* Cascade animation */

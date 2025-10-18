@@ -1,31 +1,32 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Heroes",
   "type": "array",
   "items": {
     "type": "object",
-    "required": ["id", "title", "image"],
     "properties": {
       "id": { "type": "string" },
       "page": { "type": "string" },
       "title": { "type": "string" },
-      "subtitles": {
-        "type": "array",
-        "items": { "type": "string" }
-      },
-      "description": { "type": "string" },
+      "subtitle_1": { "type": "string" },
+      "subtitle_2": { "type": "string" },
+      "subtitle_3": { "type": "string" },
       "image": { "type": "string" },
       "filter": { "type": "boolean" },
       "style_class": { "type": "string" },
       "height": { "type": "string" },
       "gradient": { "type": "string" },
-      "accordion_bg": { "type": "string" },
+      "accordion": { "type": "string" },
+      "description": { "type": "string" },
       "accordion_color": { "type": "string" },
+      "accordion_bg": { "type": "string" },
       "button_enabled": { "type": "boolean" },
       "button_text_1": { "type": "string" },
       "button_link_1": { "type": "string" },
       "button_text_2": { "type": "string" },
       "button_link_2": { "type": "string" }
     },
+    "required": ["id", "title", "page", "image"],
     "additionalProperties": false
   }
 }
