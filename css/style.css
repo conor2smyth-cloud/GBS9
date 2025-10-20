@@ -417,6 +417,77 @@ section {
 @media (min-width: 1024px) { .hero-wrapper { height: 300px; } }
 @media (min-width: 1440px) { .hero-wrapper { height: 350px; } }
 
+
+/* === Tabs Navigation === */
+.tab-nav {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.tab-btn {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,204,102,0.4);
+  color: #f5f5f5;
+  padding: 0.6rem 1.2rem;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.tab-btn:hover {
+  background: rgba(255,204,102,0.2);
+  color: #ffcc66;
+}
+
+.tab-btn.active {
+  background: #ffcc66;
+  color: #1a1a1a;
+  font-weight: bold;
+}
+
+/* === Tab Panels === */
+.tab-content {
+  position: relative;
+  max-width: 800px;
+  margin: auto;
+}
+
+.tab-panel {
+  display: none;
+  background: rgba(0,0,0,0.6);
+  padding: 2rem;
+  border-radius: 12px;
+  animation: fadeIn 0.6s ease;
+}
+
+.tab-panel.active {
+  display: block;
+}
+
+/* Cascade text animation */
+.cascade {
+  opacity: 0;
+  transform: translateY(15px);
+  animation: cascadeDown 0.6s ease forwards;
+}
+
+.cascade:nth-child(1) { animation-delay: 0.2s; }
+.cascade:nth-child(2) { animation-delay: 0.4s; }
+.cascade:nth-child(3) { animation-delay: 0.6s; }
+
+@keyframes cascadeDown {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.98); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+
+
 /* === Footer === */
 footer {
   text-align: center;
