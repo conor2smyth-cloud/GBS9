@@ -154,6 +154,79 @@
   </ol>
 </section>
 
+<section>
+  <h2>Tonight’s Event Setup</h2>
+  <p>Select which drinks are available tonight. These will populate the Sip tab + Roulette in Tonight’s Event.</p>
+
+  <div id="tonight-setup"></div>
+
+  <button id="saveTonightBtn" class="btn">💾 Save Tonight’s Menu</button>
+  <button id="printTonightBtn" class="btn">🖨️ Print Tonight’s Menu</button>
+</section>
+
+<script src="js/admin.js" defer></script>
+
+<section id="admin">
+  <h2>Admin Panel</h2>
+
+  <!-- Example toggle list -->
+  <div id="adminDrinksToggle"></div>
+
+  <!-- Print button -->
+  <button id="printMenuBtn" class="btn">🖨️ Print Tonight’s Menu</button>
+</section>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // Load drinks from JSON
+  fetch("data/drinks.json")
+    .then(res => res.json())
+    .then(data => {
+      const container = document.getElementById("adminDrinksToggle");
+      const tonight = JSON.parse(localStorage.getItem("tonight") || "{}");
+      tonight.sip = tonight.sip || [];
+
+      // Combine drinks arrays
+      const allDrinks = [
+        ...data.cocktails.map(d => ({ ...d, type: "cocktail" })),
+        ...data.beer.map(d => ({ ...d, type: "beer" })),
+        ...data.spirits.map(d => ({ ...d, type: "spirit" })),
+        ...data.mixers.map(d => ({ ...d, type: "mixer" })),
+      ];
+
+      // Render checkboxes
+      container.innerHTML = allDrinks.map(drink => {
+        const checked = tonight.sip.find(d => d.name === drink.name) ? "checked" : "";
+        return `
+          <label>
+            <input type="checkbox" data-name="${drink.name}" data-type="${drink.type}" ${checked}>
+            ${drink.name} (${drink.type})
+          </label><br>
+        `;
+      }).join("");
+
+      // Update localStorage when toggles change
+      container.querySelectorAll("input[type=checkbox]").forEach(cb => {
+        cb.addEventListener("change", e => {
+          const name = e.target.dataset.name;
+          const type = e.target.dataset.type;
+          if (e.target.checked) {
+            tonight.sip.push({ name, type });
+          } else {
+            tonight.sip = tonight.sip.filter(d => d.name !== name);
+          }
+          localStorage.setItem("tonight", JSON.stringify(tonight));
+        });
+      });
+    });
+
+  // Print button action
+  document.getElementById("printMenuBtn").addEventListener("click", () => {
+    window.open("print-menu.html", "_blank");
+  });
+});
+</script>
+
 
 
   </main>

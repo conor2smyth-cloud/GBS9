@@ -1,0 +1,39 @@
+/* === Print Menu Styling === */
+body {
+  font-family: 'Merriweather', serif;
+  color: #222;
+  background: #fff;
+  margin: 2rem;
+}
+
+h1 {
+  text-align: center;
+  color: #000;
+  margin-bottom: 2rem;
+}
+
+h2 {
+  margin-top: 2rem;
+  border-bottom: 2px solid #000;
+  padding-bottom: 0.3rem;
+  font-size: 1.3rem;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0;
+}
+
+li {
+  font-size: 1rem;
+  padding: 0.2rem 0;
+}
+
+/* Print friendly — no buttons, no instructions */
+@media print {
+  button, .btn, .print-help {
+    display: none !important;
+  }
+}
+

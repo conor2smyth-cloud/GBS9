@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tonight’s Event Menu</title>
+  <link rel="stylesheet" href="css/print.css">
+  <style>
+    /* Inline helper styles */
+    .print-help {
+      background: #f8f5e9;
+      border: 1px solid #ccc;
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      color: #333;
+    }
+    @media print {
+      .print-help {
+        display: none; /* Hide instructions when printing */
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Tonight’s Menu</h1>
+
+  <!-- ✅ Instructions for you (hidden on print) -->
+  <div class="print-help">
+    <strong>Printing Instructions:</strong><br>
+    - On desktop: Press <kbd>Ctrl + P</kbd> (Windows/Linux) or <kbd>Cmd + P</kbd> (Mac).<br>
+    - In the print dialog, select your printer or “Save as PDF”.<br>
+    - Recommended sizes: A4 Portrait for standard menus, or A5 Portrait for smaller menus.<br>
+    - You can adjust the size in the “More settings → Paper size” dropdown.<br>
+    - Borders and buttons will be hidden automatically.
+  </div>
+
+  <!-- ✅ Auto-populated menu container -->
+  <div id="printMenuContent"></div>
+
+  <script>
+    // Load tonight’s menu from localStorage
+    document.addEventListener("DOMContentLoaded", () => {
+      const tonight = JSON.parse(localStorage.getItem("tonight") || "{}");
+      const container = document.getElementById("printMenuContent");
+
+      if (!tonight.sip || tonight.sip.length === 0) {
+        container.innerHTML = "<p>No drinks have been selected for tonight’s menu yet.</p>";
+        return;
+      }
+
+      let html = "";
+      html += `<h2>Cocktails</h2><ul>`;
+      tonight.sip.filter(d => d.type === "cocktail").forEach(drink => {
+        html += `<li>${drink.name}</li>`;
+      });
+      html += `</ul>`;
+
+      html += `<h2>Beer</h2><ul>`;
+      tonight.sip.filter(d => d.type === "beer").forEach(drink => {
+        html += `<li>${drink.name}</li>`;
+      });
+      html += `</ul>`;
+
+      html += `<h2>Spirits & Mixers</h2><ul>`;
+      tonight.sip.filter(d => d.type === "spirit").forEach(drink => {
+        html += `<li>${drink.name}</li>`;
+      });
+      html += `</ul>`;
+
+      container.innerHTML = html;
+    });
+  </script>
+</body>
+</html>
