@@ -74,6 +74,22 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // --- Save to Firestore ---
+   // --- Save to Firestore ---
   function saveSelection(category, id, enabled) {
-    const ref = db.collection("tonightMenu").
+    const ref = db.collection("tonightMenu").doc(category);
+
+    if (enabled) {
+      ref.set(
+        { [id]: true },
+        { merge: true }
+      );
+    } else {
+      ref.set(
+        { [id]: false },
+        { merge: true }
+      );
+    }
+  }
+
+}); // <-- closes DOMContentLoaded listener
+
