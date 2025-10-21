@@ -1,146 +1,125 @@
-// admin.js
-// Handles Admin Panel for Tonight's Event
+// Admin.js
+document.addEventListener("DOMContentLoaded", () => {
+  // Firebase setup
+  const db = firebase.firestore();
+  const auth = firebase.auth();
 
-import { auth, db } from "./firebase.js";
-import {
-  signInWithEmailAndPassword,
-  signOut,
-  onAuthStateChanged,
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  const emailEl = document.getElementById("adminEmail");
+  const passEl = document.getElementById("adminPass");
+  const signInBtn = document.getElementById("signInBtn");
+  const signOutBtn = document.getElementById("signOutBtn");
+  const whoami = document.getElementById("whoami");
 
-import {
-  doc,
-  setDoc,
-  getDoc,
-  onSnapshot
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const saveTonightBtn = document.getElementById("saveTonightBtn");
+  const previewMenuBtn = document.getElementById("previewMenuBtn");
+  const printMenuBtn = document.getElementById("printMenuBtn");
 
-// --- Elements ---
-const emailInput = document.getElementById("adminEmail");
-const passInput = document.getElementById("adminPass");
-const signInBtn = document.getElementById("signInBtn");
-const signOutBtn = document.getElementById("signOutBtn");
-const whoami = document.getElementById("whoami");
+  // ---- AUTH ----
+  signInBtn.addEventListener("click", async () => {
+    try {
+      const userCred = await auth.signInWithEmailAndPassword(
+        emailEl.value,
+        passEl.value
+      );
+      whoami.textContent = `✅ Logged in as ${userCred.user.email}`;
+      signInBtn.style.display = "none";
+      signOutBtn.style.display = "inline-block";
+      document.getElementById("adminTabs").style.display = "flex";
+      document.getElementById("adminActions").style.display = "block";
+    } catch (err) {
+      whoami.textContent = `❌ Login failed: ${err.message}`;
+    }
+  });
 
-const tabs = document.getElementById("adminTabs");
-const actions = document.getElementById("adminActions");
-const saveBtn = document.getElementById("saveTonightBtn");
-
-// Containers for checkboxes
-const cocktailsBox = document.getElementById("cocktails");
-const beerBox = document.getElementById("beer");
-const spiritsBox = document.getElementById("spirits");
-const mixersBox = document.getElementById("mixers");
-
-// Success message
-const notif = document.createElement("div");
-notif.id = "adminNotif";
-notif.style.position = "fixed";
-notif.style.bottom = "1rem";
-notif.style.right = "1rem";
-notif.style.padding = "0.8rem 1.2rem";
-notif.style.borderRadius = "6px";
-notif.style.display = "none";
-notif.style.zIndex = "2000";
-notif.style.background = "#28a745";
-notif.style.color = "#fff";
-document.body.appendChild(notif);
-
-function showNotif(msg) {
-  notif.innerText = msg;
-  notif.style.display = "block";
-  setTimeout(() => (notif.style.display = "none"), 3000);
-}
-
-// --- Auth ---
-signInBtn?.addEventListener("click", async () => {
-  try {
-    await signInWithEmailAndPassword(auth, emailInput.value, passInput.value);
-  } catch (err) {
-    alert("❌ Login failed: " + err.message);
-  }
-});
-
-signOutBtn?.addEventListener("click", async () => {
-  await signOut(auth);
-});
-
-// Listen for auth changes
-onAuthStateChanged(auth, user => {
-  if (user) {
-    whoami.innerText = `Signed in as ${user.email}`;
-    signInBtn.style.display = "none";
-    signOutBtn.style.display = "inline-block";
-    tabs.style.display = "flex";
-    actions.style.display = "block";
-    loadDrinks(); // Load checkboxes once logged in
-  } else {
-    whoami.innerText = "";
+  signOutBtn.addEventListener("click", async () => {
+    await auth.signOut();
+    whoami.textContent = "Signed out.";
     signInBtn.style.display = "inline-block";
     signOutBtn.style.display = "none";
-    tabs.style.display = "none";
-    actions.style.display = "none";
-  }
-});
-
-// --- Drinks Data Loader ---
-async function loadDrinks() {
-  const res = await fetch("data/drinks.json");
-  const data = await res.json();
-
-  const snap = await getDoc(doc(db, "tonight", "menu"));
-  const tonight = snap.exists() ? snap.data() : { cocktails: [], beer: [], spirits: [], mixers: [] };
-
-  renderCheckboxes("cocktails", data.cocktails, tonight.cocktails);
-  renderCheckboxes("beer", data.beer, tonight.beer);
-  renderCheckboxes("spirits", data.spirits, tonight.spirits);
-  renderCheckboxes("mixers", data.mixers || [], tonight.mixers || []);
-}
-
-function renderCheckboxes(category, drinks, selected) {
-  const box = document.getElementById(category);
-  if (!box) return;
-  box.innerHTML = `<div class="checkbox-grid">` +
-    drinks.map(d => {
-      const checked = selected?.includes(d.name) ? "checked" : "";
-      return `<label class="${checked ? "checked" : ""}">
-        <input type="checkbox" data-cat="${category}" value="${d.name}" ${checked}>
-        ${d.name}
-      </label>`;
-    }).join("") + `</div>`;
-
-  // Toggle checked state
-  box.querySelectorAll("input[type=checkbox]").forEach(cb => {
-    cb.addEventListener("change", e => {
-      const label = e.target.closest("label");
-      if (e.target.checked) label.classList.add("checked");
-      else label.classList.remove("checked");
-    });
+    document.getElementById("adminTabs").style.display = "none";
+    document.getElementById("adminActions").style.display = "none";
   });
-}
 
-// --- Save Menu to Firestore ---
-saveBtn?.addEventListener("click", async () => {
-  const tonight = {
-    cocktails: getChecked("cocktails"),
-    beer: getChecked("beer"),
-    spirits: getChecked("spirits"),
-    mixers: getChecked("mixers")
-  };
+  // ---- DRINKS TOGGLE ----
+  async function loadDrinks() {
+    const res = await fetch("data/drinks.json");
+    const drinks = await res.json();
 
-  await setDoc(doc(db, "tonight", "menu"), tonight);
-  showNotif("✅ Tonight’s menu saved & live!");
-});
+    const categories = {
+      cocktails: document.getElementById("cocktails"),
+      beer: document.getElementById("beer"),
+      spirits: document.getElementById("spirits"),
+      mixers: document.getElementById("mixers")
+    };
 
-function getChecked(category) {
-  const box = document.getElementById(category);
-  return [...box.querySelectorAll("input[type=checkbox]:checked")].map(cb => cb.value);
-}
+    Object.values(categories).forEach(c => (c.innerHTML = "")); // clear
 
-// --- Realtime Updates (guest pages auto-refresh) ---
-onSnapshot(doc(db, "tonight", "menu"), snap => {
-  if (snap.exists()) {
-    console.log("🔥 Tonight’s menu updated:", snap.data());
+    // Render checkboxes
+    function render(drink, type) {
+      return `
+        <label>
+          <input type="checkbox" data-name="${drink.name}" data-type="${type}">
+          ${drink.name}
+        </label>
+      `;
+    }
+
+    drinks.cocktails.forEach(d =>
+      categories.cocktails.insertAdjacentHTML("beforeend", render(d, "cocktail"))
+    );
+    drinks.beer.forEach(d =>
+      categories.beer.insertAdjacentHTML("beforeend", render(d, "beer"))
+    );
+    drinks.spirits.forEach(d =>
+      categories.spirits.insertAdjacentHTML("beforeend", render(d, "spirit"))
+    );
+    drinks.mixers.forEach(d =>
+      categories.mixers.insertAdjacentHTML("beforeend", render(d, "mixer"))
+    );
+
+    // Load Firestore selections
+    db.collection("tonight").doc("menu").get().then(doc => {
+      if (doc.exists) {
+        const selected = doc.data().drinks || [];
+        document.querySelectorAll("input[type=checkbox]").forEach(cb => {
+          if (selected.find(d => d.name === cb.dataset.name)) {
+            cb.checked = true;
+          }
+        });
+      }
+    });
   }
+
+  loadDrinks();
+
+  // ---- SAVE MENU ----
+  saveTonightBtn.addEventListener("click", async () => {
+    const selected = [];
+    document.querySelectorAll("input[type=checkbox]:checked").forEach(cb => {
+      selected.push({
+        name: cb.dataset.name,
+        type: cb.dataset.type
+      });
+    });
+
+    try {
+      await db.collection("tonight").doc("menu").set({
+        drinks: selected,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      alert("✅ Tonight’s menu saved & live!");
+    } catch (err) {
+      alert("❌ Save failed: " + err.message);
+    }
+  });
+
+  // ---- PREVIEW & PRINT ----
+  previewMenuBtn.addEventListener("click", () => {
+    window.open("tonights-event.html", "_blank");
+  });
+
+  printMenuBtn.addEventListener("click", () => {
+    window.open("print-menu.html", "_blank");
+  });
 });
 
