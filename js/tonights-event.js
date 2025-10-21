@@ -1,8 +1,8 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
-import { getFirestore, collection, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
+  apiKey: "AIzaSyAJJbNG4BUDZPWdOBh1ahsKXJ0KizkPmKs",
   authDomain: "gbs9-9d0a8.firebaseapp.com",
   projectId: "gbs9-9d0a8",
   storageBucket: "gbs9-9d0a8.firebasestorage.app",
@@ -14,31 +14,42 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-async function renderMenu() {
-  const menuDiv = document.getElementById("menu");
-  const tonightSnap = await getDocs(collection(db, "tonightMenu"));
-  if (tonightSnap.empty) {
-    menuDiv.innerHTML = "<p>No menu set for tonight yet.</p>";
-    return;
-  }
+const menuContainer = document.getElementById("menuContainer");
 
-  const grouped = {};
-  for (const t of tonightSnap.docs) {
-    const { category, drinkId } = t.data();
-    const drinkSnap = await getDoc(doc(db, category, drinkId));
-    if (drinkSnap.exists()) {
-      if (!grouped[category]) grouped[category] = [];
-      grouped[category].push(drinkSnap.data().name);
+document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    const snapshot = await getDocs(collection(db, "tonightMenu"));
+    if (snapshot.empty) {
+      menuContainer.innerHTML = "<p class='empty'>No drinks selected for tonight yet 🍹</p>";
+      return;
     }
-  }
 
-  menuDiv.innerHTML = Object.entries(grouped)
-    .map(([cat, drinks]) => `
-      <div class="category">
-        <h2>${cat}</h2>
-        <ul>${drinks.map(d => `<li>${d}</li>`).join("")}</ul>
-      </div>
+    const drinks = [];
+    snapshot.forEach(doc => drinks.push(doc.data()));
+
+    // Group drinks by category
+    const grouped = drinks.reduce((acc, drink) => {
+      if (!acc[drink.category]) acc[drink.category] = [];
+      acc[drink.category].push(drink);
+      return acc;
+    }, {});
+
+    renderMenu(grouped);
+  } catch (err) {
+    console.error("Error loading tonight’s menu:", err);
+    menuContainer.innerHTML = "<p class='error'>Failed to load menu. Please try again later.</p>";
+  }
+});
+
+function renderMenu(data) {
+  menuContainer.innerHTML = Object.entries(data)
+    .map(([category, drinks]) => `
+      <section class="menu-category">
+        <h2>${category.charAt(0).toUpperCase() + category.slice(1)}</h2>
+        <ul>
+          ${drinks.map(d => `<li>${d.name}</li>`).join("")}
+        </ul>
+      </section>
     `).join("");
 }
 
-document.addEventListener("DOMContentLoaded", renderMenu);

@@ -1,16 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tonight’s Menu | GBS9</title>
-  <link rel="stylesheet" href="css/event.css">
+  <link rel="stylesheet" href="event.css" />
+  <script type="module" src="js/tonights-event.js" defer></script>
 </head>
 <body>
-  <h1>🍸 Tonight’s Menu 🍺</h1>
-  <div id="menu"></div>
+  <header>
+    <h1>🍸 Tonight’s Menu</h1>
+    <p>Curated exclusively for tonight’s event</p>
+  </header>
 
-  <script type="module" src="js/tonights-event.js"></script>
+  <main id="menuContainer">
+    <p class="loading">Loading menu...</p>
+  </main>
+
+  <footer>
+    <p>Follow us @GBS9 | <a href="tel:+3530000000">Call to book</a></p>
+  </footer>
 </body>
 </html>
-
-
