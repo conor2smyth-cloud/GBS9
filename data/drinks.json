@@ -2,778 +2,794 @@
   "cocktails": [
     {
       "name": "Fresa Verde",
-      "type": "cocktails",
-      "base": "Tequila",
+      "base_spirit": "Tequila",
       "glass": "Coupe",
-      "ingredients": [
-        "Blanco Tequila",
-        "Lime juice",
-        "Pomegranate Molasses",
-        "Strawberries",
-        "Green pepper"
-      ],
-      "short": "Refreshingly fruity with vegetal notes.",
-      "image": "cocktail-fresa-verde.jpg",
-      "kegged": "No"
+      "ingredients": "Blanco Tequila; Lime juice; Pomegranate Molasses; Strawberries; Green pepper",
+      "method_/_blurb": "Refreshingly fruity with vegetal notes.",
+      "image_filename": "cocktail-fresa-verde.jpg",
+      "kegged": "No",
+      "type": "cocktails",
+      "flavour": ""
     },
     {
       "name": "Conquistador",
-      "type": "cocktails",
-      "base": "Rum",
+      "base_spirit": "Rum",
       "glass": "Coupe",
-      "ingredients": [
-        "Matusalem Gran Reserva",
-        "Blanco Tequila",
-        "Simple syrup",
-        "Lemon juice",
-        "Egg white"
-      ],
-      "short": "Dry shake, double strain into coupe.",
-      "image": "cocktail-conquistador.jpg",
-      "kegged": "No"
+      "ingredients": "Matusalem Gran Reserva; Blanco Tequila; Simple syrup; Lemon juice; Egg white",
+      "method_/_blurb": "Dry shake, double strain into coupe.",
+      "image_filename": "cocktail-conquistador.jpg",
+      "kegged": "No",
+      "type": "cocktails",
+      "flavour": ""
     },
     {
       "name": "Luau",
-      "type": "cocktails",
-      "base": "Rum",
+      "base_spirit": "Rum",
       "glass": "Pebble glass",
-      "ingredients": [
-        "Wray & Nephew",
-        "Appleton V/X",
-        "El Dorado 15",
-        "Lime juice",
-        "Orgeat",
-        "Bitters"
-      ],
-      "short": "Shake and strain over pebble ice.",
-      "image": "cocktail-luau.jpg",
-      "kegged": "No"
+      "ingredients": "Wray & Nephew; Appleton V/X; El Dorado 15; Lime juice; Orgeat; Bitters",
+      "method_/_blurb": "Shake and strain over pebble ice.",
+      "image_filename": "cocktail-luau.jpg",
+      "kegged": "No",
+      "type": "cocktails",
+      "flavour": ""
     },
     {
       "name": "Rhubarbarita",
-      "type": "cocktails",
-      "base": "Tequila",
+      "base_spirit": "Tequila",
       "glass": "Coupe",
-      "ingredients": [
-        "Blanco Tequila",
-        "Lemon juice",
-        "Grand Marnier",
-        "Rhubarb purée",
-        "Grenadine"
-      ],
-      "short": "Shake and fine strain.",
-      "image": "cocktail-rhubarbarita.jpg",
-      "kegged": "No"
+      "ingredients": "Blanco Tequila; Lemon juice; Grand Marnier; Rhubarb purée; Grenadine",
+      "method_/_blurb": "Shake and fine strain.",
+      "image_filename": "cocktail-rhubarbarita.jpg",
+      "kegged": "No",
+      "type": "cocktails",
+      "flavour": ""
     },
     {
       "name": "Pornstar Martini",
-      "type": "cocktails",
-      "base": "Vodka",
+      "base_spirit": "Vodka",
       "glass": "Coupe",
-      "ingredients": [
-        "Vodka",
-        "Passoa",
-        "Passionfruit purée",
-        "Orange juice",
-        "Egg white"
-      ],
-      "short": "A classic that needs no introduction!",
-      "image": "pornstar-martini.jpg",
-      "kegged": "No"
+      "ingredients": "Vodka; Passoa; Passionfruit purée; Orange juice; Egg white",
+      "method_/_blurb": "A classic that needs no introduction!",
+      "image_filename": "pornstar-martini.jpg",
+      "kegged": "No",
+      "type": "cocktails",
+      "flavour": ""
     },
     {
       "name": "Margarita",
-      "type": "cocktails",
-      "base": "Tequila",
+      "base_spirit": "Tequila",
       "glass": "Coupe",
-      "ingredients": [
-        "Tequila",
-        "Lime juice",
-        "Triple sec"
-      ],
-      "short": "Classic Mexican favourite with many variations.",
-      "image": "cocktail-margarita.jpg",
+      "ingredients": "Tequila; Lime juice; Triple sec",
+      "method_/_blurb": "Classic Mexican favourite with many variations.",
+      "image_filename": "cocktail-margarita.jpg",
       "kegged": "No",
+      "type": "cocktails",
       "flavour": "Strawberry; Passionfruit; Mango; Chili; Raspberry; Pineapple; Blackberry; Smokey; Frozen"
     },
     {
       "name": "Whiskey Sour",
-      "type": "cocktails",
-      "base": "Whiskey",
+      "base_spirit": "Whiskey",
       "glass": "Old Fashioned",
-      "ingredients": [
-        "Whiskey",
-        "Lemon juice",
-        "Simple syrup",
-        "Egg white",
-        "Bitters"
-      ],
-      "short": "A classic that needs no introduction!",
-      "image": "cocktail-whiskey-sour.jpg",
-      "kegged": "No"
+      "ingredients": "Whiskey; Lemon juice; Simple syrup; Egg white; Bitters",
+      "method_/_blurb": "A classic that needs no introduction!",
+      "image_filename": "cocktail-whiskey-sour.jpg",
+      "kegged": "No",
+      "type": "cocktails",
+      "flavour": ""
     },
     {
       "name": "Old Fashioned",
-      "type": "cocktails",
-      "base": "Whiskey",
+      "base_spirit": "Whiskey",
       "glass": "Old Fashioned",
-      "ingredients": [
-        "Whiskey",
-        "Sugar",
-        "Bitters"
-      ],
-      "short": "Tart and full of flavour, with a frothy head.",
-      "image": "cocktail-whiskey-sour.jpg",
+      "ingredients": "Whiskey; Sugar; Bitters",
+      "method_/_blurb": "Tart and full of flavour, with a frothy head.",
+      "image_filename": "cocktail-whiskey-sour.jpg",
       "kegged": "No",
+      "type": "cocktails",
       "flavour": "Irish; Bourbon; Grapefruit; Cherry"
     },
     {
       "name": "French Gimlet",
-      "type": "cocktails",
-      "base": "Gin",
+      "base_spirit": "Gin",
       "glass": "Coupe",
-      "ingredients": [
-        "Gin",
-        "Elderflower liqueur",
-        "Lime juice"
-      ],
-      "short": "Refreshing and floral, elevates a gin.",
-      "image": "cocktail-french-gimlet.jpg",
-      "kegged": "No"
+      "ingredients": "Gin; Elderflower liqueur; Lime juice",
+      "method_/_blurb": "Refreshing and floral, elevates a gin.",
+      "image_filename": "cocktail-french-gimlet.jpg",
+      "kegged": "No",
+      "type": "cocktails",
+      "flavour": ""
     },
     {
       "name": "Clover Club",
-      "type": "cocktails",
-      "base": "Gin",
+      "base_spirit": "Gin",
       "glass": "Coupe",
-      "ingredients": [
-        "Gin",
-        "Lemon juice",
-        "Raspberry syrup",
-        "Egg white"
-      ],
-      "short": "Sweet and tart with a foamy head. Raspberry-forward.",
-      "image": "cocktail-clover-club.jpg",
-      "kegged": "No"
+      "ingredients": "Gin; Lemon juice; Raspberry syrup; Egg white",
+      "method_/_blurb": "Sweet and tart with a foamy head. Raspberry-forward.",
+      "image_filename": "cocktail-clover-club.jpg",
+      "kegged": "No",
+      "type": "cocktails",
+      "flavour": ""
     },
     {
       "name": "Elderflower Fizz",
-      "type": "cocktails",
-      "base": "Gin",
+      "base_spirit": "Gin",
       "glass": "Highball",
-      "ingredients": [
-        "Gin",
-        "St Germain",
-        "Lemon juice",
-        "Simple syrup",
-        "Egg white",
-        "Soda water"
-      ],
-      "short": "An impressively foamy drink flavoured with elderflower.",
-      "image": "cocktail-elderflower-fizz.jpg",
-      "kegged": "No"
+      "ingredients": "Gin; St Germain; Lemon juice; Simple syrup; Egg white; Soda water",
+      "method_/_blurb": "An impressively foamy drink flavoured with elderflower.",
+      "image_filename": "cocktail-elderflower-fizz.jpg",
+      "kegged": "No",
+      "type": "cocktails",
+      "flavour": ""
     },
     {
       "name": "Fig & Licorice Caipirinha",
-      "type": "cocktails",
-      "base": "Cachaça",
+      "base_spirit": "Cachaça",
       "glass": "Old Fashioned",
-      "ingredients": [
-        "Cachaça",
-        "Fresh fig",
-        "Licorice syrup",
-        "Lime"
-      ],
-      "short": "Showcases the taste of fresh figs with an earthy sweetness and freshness.",
-      "image": "cocktail-fig-&-licorice-caipirinha.jpg",
-      "kegged": "No"
+      "ingredients": "Cachaça; Fresh fig; Licorice syrup; Lime",
+      "method_/_blurb": "Showcases the taste of fresh figs with an earthy sweetness and freshness.",
+      "image_filename": "cocktail-fig-&-licorice-caipirinha.jpg",
+      "kegged": "No",
+      "type": "cocktails",
+      "flavour": ""
     },
     {
       "name": "Caipirinha",
-      "type": "cocktails",
-      "base": "Cachaça",
+      "base_spirit": "Cachaça",
       "glass": "Old Fashioned",
-      "ingredients": [
-        "Cachaça",
-        "Lime",
-        "Sugar"
-      ],
-      "short": "A refreshing Brazilian classic.",
-      "image": "cocktail-caipirinha.jpg",
+      "ingredients": "Cachaça; Lime; Sugar",
+      "method_/_blurb": "A refreshing Brazilian classic.",
+      "image_filename": "cocktail-caipirinha.jpg",
       "kegged": "No",
+      "type": "cocktails",
       "flavour": "Vanilla and passionfruit; Raspberry; Strawberry; Mango; Pineapple; Banana"
     },
     {
       "name": "White Lady",
-      "type": "cocktails",
-      "base": "Gin",
+      "base_spirit": "Gin",
       "glass": "Coupe",
-      "ingredients": [
-        "Gin",
-        "Triple sec",
-        "Lemon juice"
-      ],
-      "short": "Shake, strain.",
-      "image": "cocktail-white-lady.jpg",
-      "kegged": "No"
+      "ingredients": "Gin; Triple sec; Lemon juice",
+      "method_/_blurb": "Shake, strain.",
+      "image_filename": "cocktail-white-lady.jpg",
+      "kegged": "No",
+      "type": "cocktails",
+      "flavour": ""
     },
     {
       "name": "Singapore Sling",
-      "type": "cocktails",
-      "base": "Gin",
+      "base_spirit": "Gin",
       "glass": "Rocks",
-      "ingredients": [
-        "Gin",
-        "Cherry brandy",
-        "Cointreau",
-        "Bénédictine",
-        "Pineapple juice",
-        "Grenadine",
-        "Bitters"
-      ],
-      "short": "7 ingredients combine to make this classic - worth the work.",
-      "image": "cocktail-singapore-sling.jpg",
-      "kegged": "No"
+      "ingredients": "Gin; Cherry brandy; Cointreau; Bénédictine; Pineapple juice; Grenadine; Bitters",
+      "method_/_blurb": "7 ingredients combine to make this classic - worth the work.",
+      "image_filename": "cocktail-singapore-sling.jpg",
+      "kegged": "No",
+      "type": "cocktails",
+      "flavour": ""
     },
     {
       "name": "Bon Bon",
-      "type": "cocktails",
-      "base": "Vodka",
+      "base_spirit": "Vodka",
       "glass": "Coupe",
-      "ingredients": [
-        "Vodka",
-        "Butterscotch liqueur",
-        "Lemon juice",
-        "Vanilla syrup"
-      ],
-      "short": "Taste like the childhood treat - even better when flavoured.",
-      "image": "cocktail-bon-bon.jpg",
+      "ingredients": "Vodka; Butterscotch liqueur; Lemon juice; Vanilla syrup",
+      "method_/_blurb": "Taste like the childhood treat - even better when flavoured.",
+      "image_filename": "cocktail-bon-bon.jpg",
       "kegged": "No",
+      "type": "cocktails",
       "flavour": "Strawberry; Lemon"
     },
     {
       "name": "Bahama Daiquiri",
-      "type": "cocktails",
-      "base": "Rum",
+      "base_spirit": "Rum",
       "glass": "Coupe",
-      "ingredients": [
-        "Rum",
-        "Coconut rum",
-        "Coffee liqueur",
-        "Pineapple juice",
-        "Lime juice"
-      ],
-      "short": "Delicously fruity, best with pot still rum.",
-      "image": "cocktail-bahama-daiquiri.jpg",
-      "kegged": "No"
+      "ingredients": "Rum; Coconut rum; Coffee liqueur; Pineapple juice; Lime juice",
+      "method_/_blurb": "Delicously fruity, best with pot still rum.",
+      "image_filename": "cocktail-bahama-daiquiri.jpg",
+      "kegged": "No",
+      "type": "cocktails",
+      "flavour": ""
     },
     {
       "name": "Bahama Mama",
-      "type": "cocktails",
-      "base": "Rum",
+      "base_spirit": "Rum",
       "glass": "Coupe",
-      "ingredients": [
-        "Rum",
-        "Coconut rum",
-        "Pineapple juice",
-        "Orange juice",
-        "Grenadine"
-      ],
-      "short": "Fruity, tropical, refreshing.",
-      "image": "cocktail-bahama-mama.jpg",
-      "kegged": "No"
+      "ingredients": "Rum; Coconut rum; Pineapple juice; Orange juice; Grenadine",
+      "method_/_blurb": "Fruity, tropical, refreshing.",
+      "image_filename": "cocktail-bahama-mama.jpg",
+      "kegged": "No",
+      "type": "cocktails",
+      "flavour": ""
     },
     {
       "name": "Espresso Martini",
-      "type": "cocktails",
-      "base": "Vodka",
+      "base_spirit": "Vodka",
       "glass": "Coupe",
-      "ingredients": [
-        "Vodka",
-        "Coffee liqueur",
-        "Espresso",
-        "Sugar syrup"
-      ],
-      "short": "The only way to drink cold coffee.",
-      "image": "cocktail-espresso-martini.jpg",
+      "ingredients": "Vodka; Coffee liqueur; Espresso; Sugar syrup",
+      "method_/_blurb": "The only way to drink cold coffee.",
+      "image_filename": "cocktail-espresso-martini.jpg",
       "kegged": "No",
+      "type": "cocktails",
       "flavour": "Hazelnut; Vanilla; Rum; Chocolate Orange; Pecan"
     },
     {
       "name": "Negroni",
-      "type": "cocktails",
-      "base": "Gin",
+      "base_spirit": "Gin",
       "glass": "Old Fashioned",
-      "ingredients": [
-        "Gin",
-        "Campari",
-        "Sweet vermouth"
-      ],
-      "short": "Stir, strain over ice.",
-      "image": "cocktail-negroni.jpg",
-      "kegged": "No"
+      "ingredients": "Gin; Campari; Sweet vermouth",
+      "method_/_blurb": "Stir, strain over ice.",
+      "image_filename": "cocktail-negroni.jpg",
+      "kegged": "No",
+      "type": "cocktails",
+      "flavour": ""
     },
     {
       "name": "Daiquiri",
-      "type": "cocktails",
-      "base": "Rum",
+      "base_spirit": "Rum",
       "glass": "Coupe",
-      "ingredients": [
-        "Rum",
-        "Lime juice",
-        "Simple syrup"
-      ],
-      "short": "Simple, tasty way to showcase a rum.",
-      "image": "cocktail-daiquiri.jpg",
+      "ingredients": "Rum; Lime juice; Simple syrup",
+      "method_/_blurb": "Simple, tasty way to showcase a rum.",
+      "image_filename": "cocktail-daiquiri.jpg",
       "kegged": "No",
+      "type": "cocktails",
       "flavour": "Nuclear; Strawberry; Raspberry; Pineapple; Frozen; Mango; Banana"
     },
     {
       "name": "Aviation",
-      "type": "cocktails",
-      "base": "Gin",
+      "base_spirit": "Gin",
       "glass": "Coupe",
-      "ingredients": [
-        "Gin",
-        "Maraschino liqueur",
-        "Crème de Violette",
-        "Lemon juice"
-      ],
-      "short": "Who orders this?",
-      "image": "cocktail-aviation.jpg",
-      "kegged": "No"
+      "ingredients": "Gin; Maraschino liqueur; Crème de Violette; Lemon juice",
+      "method_/_blurb": "Who orders this?",
+      "image_filename": "cocktail-aviation.jpg",
+      "kegged": "No",
+      "type": "cocktails",
+      "flavour": ""
     },
     {
       "name": "Mai Tai",
-      "type": "cocktails",
-      "base": "Rum",
+      "base_spirit": "Rum",
       "glass": "Old Fashioned",
-      "ingredients": [
-        "Rum",
-        "Lime juice",
-        "Orange curaçao",
-        "Orgeat"
-      ],
-      "short": "Incredible tiki classic, nutty almond combined with lime.",
-      "image": "cocktail-mai-tai.jpg",
+      "ingredients": "Rum; Lime juice; Orange curaçao; Orgeat",
+      "method_/_blurb": "Incredible tiki classic, nutty almond combined with lime.",
+      "image_filename": "cocktail-mai-tai.jpg",
       "kegged": "No",
+      "type": "cocktails",
       "flavour": "Mango; Pineapple"
     },
     {
       "name": "Cosmopolitan",
-      "type": "cocktails",
-      "base": "Vodka",
+      "base_spirit": "Vodka",
       "glass": "Coupe",
-      "ingredients": [
-        "Vodka",
-        "Triple sec",
-        "Cranberry juice",
-        "Lime juice"
-      ],
-      "short": "It's pink!",
-      "image": "cocktail-cosmopolitan.jpg",
-      "kegged": "No"
+      "ingredients": "Vodka; Triple sec; Cranberry juice; Lime juice",
+      "method_/_blurb": "It's pink!",
+      "image_filename": "cocktail-cosmopolitan.jpg",
+      "kegged": "No",
+      "type": "cocktails",
+      "flavour": ""
     },
     {
       "name": "French Fizz",
-      "type": "cocktails",
-      "base": "Gin",
+      "base_spirit": "Gin",
       "glass": "Flute",
-      "ingredients": [
-        "Gin",
-        "St Germain",
-        "Lemon juice",
-        "Simple syrup",
-        "Prosecco"
-      ],
-      "short": "Elegant, sparkling and gin. Colour changing too.",
-      "image": "cocktail-french-fizz.jpg",
-      "kegged": "No"
+      "ingredients": "Gin; St Germain; Lemon juice; Simple syrup; Prosecco",
+      "method_/_blurb": "Elegant, sparkling and gin. Colour changing too.",
+      "image_filename": "cocktail-french-fizz.jpg",
+      "kegged": "No",
+      "type": "cocktails",
+      "flavour": ""
     },
     {
       "name": "Amaretto Sour",
-      "type": "cocktails",
-      "base": "Amaretto",
+      "base_spirit": "Amaretto",
       "glass": "Rocks",
-      "ingredients": [
-        "Amaretto",
-        "Lemon juice",
-        "Simple syrup",
-        "Bitters"
-      ],
-      "short": "A delicously sweet guilty pleasure.",
-      "image": "cocktail-amaretto-sour.jpg",
+      "ingredients": "Amaretto; Lemon juice; Simple syrup; Bitters",
+      "method_/_blurb": "A delicously sweet guilty pleasure.",
+      "image_filename": "cocktail-amaretto-sour.jpg",
       "kegged": "No",
+      "type": "cocktails",
       "flavour": "Bourbon"
     },
     {
       "name": "Cara Cara",
-      "type": "cocktails",
-      "base": "Vodka",
+      "base_spirit": "Vodka",
       "glass": "Coupe",
-      "ingredients": [
-        "Vodka",
-        "Cointreau",
-        "Lemon juice",
-        "Clementine juice",
-        "Orange syrup"
-      ],
-      "short": "Four types of orange combine for this taste of Florida",
-      "image": "cocktail-cara-cara.jpg",
-      "kegged": "No"
+      "ingredients": "Vodka; Cointreau; Lemon juice; Clementine juice; Orange syrup",
+      "method_/_blurb": "Four types of orange combine for this taste of Florida",
+      "image_filename": "cocktail-cara-cara.jpg",
+      "kegged": "No",
+      "type": "cocktails",
+      "flavour": ""
     },
     {
       "name": "Zombie",
-      "type": "cocktails",
-      "base": "Rum",
+      "base_spirit": "Rum",
       "glass": "Rocks",
-      "ingredients": [
-        "Rum",
-        "Orange Curacao",
-        "Grapefruit juice",
-        "Lemon juice",
-        "Lime juice",
-        "Pineapple juice",
-        "Orange juice",
-        "Passionfruit syrup",
-        "Grenadine",
-        "Velvet Falernum",
-        "Angostura Bitters"
-      ],
-      "short": "A tiki classic. A beast to make, and a beast to drink.",
-      "image": "cocktail-zombie.jpg",
-      "kegged": "No"
+      "ingredients": "Rum; Orange Curacao; Grapefruit juice; Lemon juice; Lime juice; Pineapple juice; Orange juice; Passionfruit syrup; Grenadine; Velvet Falernum; Angostura Bitters",
+      "method_/_blurb": "A tiki classic. A beast to make, and a beast to drink.",
+      "image_filename": "cocktail-zombie.jpg",
+      "kegged": "No",
+      "type": "cocktails",
+      "flavour": ""
     },
     {
       "name": "Cherry Sour",
-      "type": "cocktails",
-      "base": "Bourbon",
+      "base_spirit": "Bourbon",
       "glass": "Rocks",
-      "ingredients": [
-        "Bourbon",
-        "Disaronno",
-        "Lemon juice",
-        "Cherry syrup",
-        "Angostura Bitters",
-        "Shiraz",
-        "Egg white"
-      ],
-      "short": "Tart, full of fruity flavour with a whiskey backbone.",
-      "image": "cocktail-cherry-sour.jpg",
-      "kegged": "No"
+      "ingredients": "Bourbon; Disaronno; Lemon juice; Cherry syrup; Angostura Bitters; Shiraz; Egg white",
+      "method_/_blurb": "Tart, full of fruity flavour with a whiskey backbone.",
+      "image_filename": "cocktail-cherry-sour.jpg",
+      "kegged": "No",
+      "type": "cocktails",
+      "flavour": ""
     },
     {
       "name": "Haka",
-      "type": "cocktails",
-      "base": "Beer",
+      "base_spirit": "Beer",
       "glass": "Wine glass",
-      "ingredients": [
-        "New Zealand Sauvignon Blanc",
-        "Elvis Juice",
-        "Passionfruit purée, Grapefruit bitters"
-      ],
-      "short": "Refreshingly different.",
-      "image": "cocktail-haka.jpg",
-      "kegged": "No"
+      "ingredients": "New Zealand Sauvignon Blanc; Elvis Juice; Passionfruit purée, Grapefruit bitters",
+      "method_/_blurb": "Refreshingly different.",
+      "image_filename": "cocktail-haka.jpg",
+      "kegged": "No",
+      "type": "cocktails",
+      "flavour": ""
     },
     {
       "name": "Harvey Wallbanger",
-      "type": "cocktails",
-      "base": "Vodka",
+      "base_spirit": "Vodka",
       "glass": "Rocks",
-      "ingredients": [
-        "Vodka",
-        "Orange juice"
-      ],
-      "short": "Refreshingly different.",
-      "image": "cocktail-harvey wallbanger.jpg",
-      "kegged": "No"
+      "ingredients": "Vodka; Orange juice",
+      "method_/_blurb": "Refreshingly different.",
+      "image_filename": "cocktail-harvey wallbanger.jpg",
+      "kegged": "No",
+      "type": "cocktails",
+      "flavour": ""
     },
     {
       "name": "Boston Flip",
-      "type": "cocktails",
-      "base": "Rum",
+      "base_spirit": "Rum",
       "glass": "Rocks",
-      "ingredients": [
-        "Vodka",
-        "Orange juice"
-      ],
-      "short": "Refreshingly different.",
-      "image": "cocktail-boston flip.jpg",
-      "kegged": "No"
+      "ingredients": "Vodka; Orange juice",
+      "method_/_blurb": "Refreshingly different.",
+      "image_filename": "cocktail-boston flip.jpg",
+      "kegged": "No",
+      "type": "cocktails",
+      "flavour": ""
     },
     {
       "name": "Black Russian",
-      "type": "cocktails",
-      "base": "Vodka",
+      "base_spirit": "Vodka",
       "glass": "Rocks",
-      "ingredients": [
-        "Vodka",
-        "Coffee liqueur",
-        "Cola",
-        "Guinness"
-      ],
-      "short": "Refreshingly different.",
-      "image": "cocktail-black-russian.jpg",
-      "kegged": "No"
+      "ingredients": "Vodka; Coffee liqueur; Cola; Guinness",
+      "method_/_blurb": "Refreshingly different.",
+      "image_filename": "cocktail-black-russian.jpg",
+      "kegged": "No",
+      "type": "cocktails",
+      "flavour": ""
     },
     {
       "name": "Gin House Blues",
-      "type": "cocktails",
-      "base": "Gin",
+      "base_spirit": "Gin",
       "glass": "Rocks",
-      "ingredients": [
-        "Vodka",
-        "Orange juice"
-      ],
-      "short": "Refreshingly different.",
-      "image": "cocktail-gin house blues.jpg",
-      "kegged": "No"
+      "ingredients": "Vodka; Orange juice",
+      "method_/_blurb": "Refreshingly different.",
+      "image_filename": "cocktail-gin house blues.jpg",
+      "kegged": "No",
+      "type": "cocktails",
+      "flavour": ""
     },
     {
       "name": "White Russian",
-      "type": "cocktails",
-      "base": "Vodka",
+      "base_spirit": "Vodka",
       "glass": "Rocks",
-      "ingredients": [
-        "Vodka",
-        "Coffee liqueur",
-        "Half and half",
-        "Guinness"
-      ],
-      "short": "Refreshingly different.",
-      "image": "cocktail-white russian.jpg",
-      "kegged": "No"
+      "ingredients": "Vodka; Coffee liqueur; Half and half; Guinness",
+      "method_/_blurb": "Refreshingly different.",
+      "image_filename": "cocktail-white russian.jpg",
+      "kegged": "No",
+      "type": "cocktails",
+      "flavour": ""
     },
     {
       "name": "Passion Grove Swizzle",
-      "type": "cocktails",
-      "base": "Rum",
+      "base_spirit": "Rum",
       "glass": "Rocks",
-      "ingredients": [
-        "Vodka",
-        "Orange juice"
-      ],
-      "short": "Refreshingly different.",
-      "image": "cocktail-passion grove swizzle.jpg",
-      "kegged": "No"
+      "ingredients": "Vodka; Orange juice",
+      "method_/_blurb": "Refreshingly different.",
+      "image_filename": "cocktail-passion grove swizzle.jpg",
+      "kegged": "No",
+      "type": "cocktails",
+      "flavour": ""
     },
     {
       "name": "Apricot Flip",
-      "type": "cocktails",
-      "base": "Brandy",
+      "base_spirit": "Brandy",
       "glass": "Rocks",
-      "ingredients": [
-        "Vodka",
-        "Orange juice"
-      ],
-      "short": "Refreshingly different.",
-      "image": "cocktail-apricot flip.jpg",
-      "kegged": "No"
+      "ingredients": "Vodka; Orange juice",
+      "method_/_blurb": "Refreshingly different.",
+      "image_filename": "cocktail-apricot flip.jpg",
+      "kegged": "No",
+      "type": "cocktails",
+      "flavour": ""
     },
     {
       "name": "Fosbury Flip",
-      "type": "cocktails",
-      "base": "Rum",
+      "base_spirit": "Rum",
       "glass": "Rocks",
-      "ingredients": [
-        "Vodka",
-        "Orange juice"
-      ],
-      "short": "Refreshingly different.",
-      "image": "cocktail-fosbury flip.jpg",
-      "kegged": "No"
+      "ingredients": "Vodka; Orange juice",
+      "method_/_blurb": "Refreshingly different.",
+      "image_filename": "cocktail-fosbury flip.jpg",
+      "kegged": "No",
+      "type": "cocktails",
+      "flavour": ""
     },
     {
       "name": "A-Go Flip",
-      "type": "cocktails",
-      "base": "Whiskey",
+      "base_spirit": "Whiskey",
       "glass": "Rocks",
-      "ingredients": [
-        "Vodka",
-        "Orange juice"
-      ],
-      "short": "Refreshingly different.",
-      "image": "cocktail-a-go flip.jpg",
-      "kegged": "No"
+      "ingredients": "Vodka; Orange juice",
+      "method_/_blurb": "Refreshingly different.",
+      "image_filename": "cocktail-a-go flip.jpg",
+      "kegged": "No",
+      "type": "cocktails",
+      "flavour": ""
     },
     {
       "name": "Pedro's Eggnogg",
-      "type": "cocktails",
-      "base": "Whiskey",
+      "base_spirit": "Whiskey",
       "glass": "Rocks",
-      "ingredients": [
-        "Vodka",
-        "Orange juice"
-      ],
-      "short": "Refreshingly different.",
-      "image": "cocktail-pedro's eggnogg.jpg",
-      "kegged": "No"
+      "ingredients": "Vodka; Orange juice",
+      "method_/_blurb": "Refreshingly different.",
+      "image_filename": "cocktail-pedro's eggnogg.jpg",
+      "kegged": "No",
+      "type": "cocktails",
+      "flavour": ""
     },
     {
       "name": "Pear Drop",
-      "type": "cocktails",
-      "base": "Vodka",
+      "base_spirit": "Vodka",
       "glass": "Rocks",
-      "ingredients": [
-        "Vodka",
-        "Passoa",
-        "Passionfruit purée",
-        "Lime juice",
-        "Apple juice"
-      ],
-      "short": "Refreshingly different.",
-      "image": "cocktail-pear drop.jpg",
-      "kegged": "No"
+      "ingredients": "Vodka; Passoa; Passionfruit purée; Lime juice; Apple juice",
+      "method_/_blurb": "Refreshingly different.",
+      "image_filename": "cocktail-pear drop.jpg",
+      "kegged": "No",
+      "type": "cocktails",
+      "flavour": ""
     },
     {
       "name": "Elyx of Life",
-      "type": "cocktails",
-      "base": "Vodka",
+      "base_spirit": "Vodka",
       "glass": "Rocks",
-      "ingredients": [
-        "Vodka",
-        "Midori",
-        "Mango purée",
-        "Lemon juice",
-        "Prosecco"
-      ],
-      "short": "Refreshingly different.",
-      "image": "cocktail-elyx of life.jpg",
-      "kegged": "No"
+      "ingredients": "Vodka; Midori; Mango purée; Lemon juice; Prosecco",
+      "method_/_blurb": "Refreshingly different.",
+      "image_filename": "cocktail-elyx of life.jpg",
+      "kegged": "No",
+      "type": "cocktails",
+      "flavour": ""
     },
     {
       "name": "Raspberry Cobbler",
-      "type": "cocktails",
-      "base": "Vodka",
+      "base_spirit": "Vodka",
       "glass": "Rocks",
-      "ingredients": [
-        "Vodka",
-        "Raspberry liqueur",
-        "Lime juice",
-        "Apple juice",
-        "Cider"
-      ],
-      "short": "Refreshingly different.",
-      "image": "cocktail-raspberry cobbler.jpg",
-      "kegged": "No"
+      "ingredients": "Vodka; Raspberry liqueur; Lime juice; Apple juice; Cider",
+      "method_/_blurb": "Refreshingly different.",
+      "image_filename": "cocktail-raspberry cobbler.jpg",
+      "kegged": "No",
+      "type": "cocktails",
+      "flavour": ""
     },
     {
       "name": "Dark 'n' Stormy",
-      "type": "cocktails",
-      "base": "Rum",
+      "base_spirit": "Rum",
       "glass": "Rocks",
-      "ingredients": [
-        "Rum",
-        "Lime juice",
-        "Ginger beer"
-      ],
-      "short": "Refreshingly different.",
-      "image": "cocktail-dark 'n' stormy.jpg",
-      "kegged": "No"
+      "ingredients": "Rum; Lime juice; Ginger beer",
+      "method_/_blurb": "Refreshingly different.",
+      "image_filename": "cocktail-dark 'n' stormy.jpg",
+      "kegged": "No",
+      "type": "cocktails",
+      "flavour": ""
     },
     {
       "name": "French 75",
-      "type": "cocktails",
-      "base": "Gin",
+      "base_spirit": "Gin",
       "glass": "Rocks",
-      "ingredients": [
-        "Gin",
-        "Lemon juice",
-        "Simple syrup",
-        "Prosecco"
-      ],
-      "short": "Refreshingly different.",
-      "image": "cocktail-french 75.jpg",
+      "ingredients": "Gin; Lemon juice; Simple syrup; Prosecco",
+      "method_/_blurb": "Refreshingly different.",
+      "image_filename": "cocktail-french 75.jpg",
       "kegged": "No",
+      "type": "cocktails",
       "flavour": "Peach; Raspberry; Strawberry; Watermelon; Orange; Passionfruit"
     },
     {
       "name": "Forbidden Fruit",
-      "type": "cocktails",
-      "base": "Vodka",
+      "base_spirit": "Vodka",
       "glass": "Rocks",
-      "ingredients": [
-        "Vodka",
-        "St Germain",
-        "Lime juice",
-        "Pineapple juice"
-      ],
-      "short": "Refreshingly different.",
-      "image": "cocktail-forbidden fruit.jpg",
-      "kegged": "No"
+      "ingredients": "Vodka; St Germain; Lime juice; Pineapple juice",
+      "method_/_blurb": "Refreshingly different.",
+      "image_filename": "cocktail-forbidden fruit.jpg",
+      "kegged": "No",
+      "type": "cocktails",
+      "flavour": ""
     },
     {
       "name": "Absinthe Minded",
-      "type": "cocktails",
-      "base": "Vodka",
+      "base_spirit": "Vodka",
       "glass": "Rocks",
-      "ingredients": [
-        "Vodka",
-        "Orange juice"
-      ],
-      "short": "Refreshingly different.",
-      "image": "cocktail-absinthe minded.jpg",
-      "kegged": "No"
+      "ingredients": "Vodka; Orange juice",
+      "method_/_blurb": "Refreshingly different.",
+      "image_filename": "cocktail-absinthe minded.jpg",
+      "kegged": "No",
+      "type": "cocktails",
+      "flavour": ""
     },
     {
       "name": "Gentleman's Lynchberg",
-      "type": "cocktails",
-      "base": "Bourbon",
+      "base_spirit": "Bourbon",
       "glass": "Rocks",
-      "ingredients": [
-        "Vodka",
-        "Orange juice"
-      ],
-      "short": "Refreshingly different.",
-      "image": "cocktail-gentleman's lynchberg.jpg",
-      "kegged": "No"
+      "ingredients": "Vodka; Orange juice",
+      "method_/_blurb": "Refreshingly different.",
+      "image_filename": "cocktail-gentleman's lynchberg.jpg",
+      "kegged": "No",
+      "type": "cocktails",
+      "flavour": ""
     },
     {
       "name": "El Diablo",
-      "type": "cocktails",
-      "base": "Tequila",
+      "base_spirit": "Tequila",
       "glass": "Rocks",
-      "ingredients": [
-        "Vodka",
-        "Orange juice"
-      ],
-      "short": "Refreshingly different.",
-      "image": "cocktail-el diablo.jpg",
-      "kegged": "No"
+      "ingredients": "Vodka; Orange juice",
+      "method_/_blurb": "Refreshingly different.",
+      "image_filename": "cocktail-el diablo.jpg",
+      "kegged": "No",
+      "type": "cocktails",
+      "flavour": ""
     },
     {
       "name": "Magnificant Seven",
-      "type": "cocktails",
-      "base": "Rum",
+      "base_spirit": "Rum",
       "glass": "Rocks",
-      "ingredients": [
-        "Vodka",
-        "Orange juice"
-      ],
-      "short": "Refreshingly different.",
-      "image": "cocktail-magnificant seven.jpg",
-      "kegged": "No"
+      "ingredients": "Vodka; Orange juice",
+      "method_/_blurb": "Refreshingly different.",
+      "image_filename": "cocktail-magnificant seven.jpg",
+      "kegged": "No",
+      "type": "cocktails",
+      "flavour": ""
     },
     {
       "name": "Gimlet",
-      "type": "cocktails",
-      "base": "Gin",
+      "base_spirit": "Gin",
       "glass": "Coupe",
-      "ingredients": [
-        "Gin",
-        "Lime juice",
-        "Simple syrup"
-      ],
-      "short": "Simple, elegant and customisable.",
-      "image": "cocktail-gimlet.jpg",
+      "ingredients": "Gin; Lime juice; Simple syrup",
+      "method_/_blurb": "Simple, elegant and customisable.",
+      "image_filename": "cocktail-gimlet.jpg",
       "kegged": "No",
+      "type": "cocktails",
       "flavour": "Elderflower; Strawberry; Raspberry; Cucumber; Watermelon"
     }
   ],
-  "beer": [],
+  "beer": [
+    {
+      "name": "Guinness",
+      "type": "",
+      "image": "",
+      "abv": "",
+      "blurb": ""
+    },
+    {
+      "name": "Coors",
+      "type": "",
+      "image": "",
+      "abv": "",
+      "blurb": ""
+    },
+    {
+      "name": "Heineken",
+      "type": "",
+      "image": "",
+      "abv": "",
+      "blurb": ""
+    },
+    {
+      "name": "Smithwicks",
+      "type": "",
+      "image": "",
+      "abv": "",
+      "blurb": ""
+    },
+    {
+      "name": "Harp",
+      "type": "",
+      "image": "",
+      "abv": "",
+      "blurb": ""
+    },
+    {
+      "name": "Murphys",
+      "type": "",
+      "image": "",
+      "abv": "",
+      "blurb": ""
+    },
+    {
+      "name": "Beamish",
+      "type": "",
+      "image": "",
+      "abv": "",
+      "blurb": ""
+    },
+    {
+      "name": "Carlsberg",
+      "type": "",
+      "image": "",
+      "abv": "",
+      "blurb": ""
+    }
+  ],
+  "spirits": [
+    {
+      "name": "Smirnoff",
+      "base": "",
+      "abv_(%)": "",
+      "cost": "",
+      "image_filename": "",
+      "country": "",
+      "blurb": ""
+    },
+    {
+      "name": "Gordons",
+      "base": "",
+      "abv_(%)": "",
+      "cost": "",
+      "image_filename": "",
+      "country": "",
+      "blurb": ""
+    },
+    {
+      "name": "Hendricks",
+      "base": "",
+      "abv_(%)": "",
+      "cost": "",
+      "image_filename": "",
+      "country": "",
+      "blurb": ""
+    },
+    {
+      "name": "Bacardi",
+      "base": "",
+      "abv_(%)": "",
+      "cost": "",
+      "image_filename": "",
+      "country": "",
+      "blurb": ""
+    },
+    {
+      "name": "Jameson",
+      "base": "",
+      "abv_(%)": "",
+      "cost": "",
+      "image_filename": "",
+      "country": "",
+      "blurb": ""
+    },
+    {
+      "name": "Powers",
+      "base": "",
+      "abv_(%)": "",
+      "cost": "",
+      "image_filename": "",
+      "country": "",
+      "blurb": ""
+    },
+    {
+      "name": "Paddy",
+      "base": "",
+      "abv_(%)": "",
+      "cost": "",
+      "image_filename": "",
+      "country": "",
+      "blurb": ""
+    },
+    {
+      "name": "Hennessy",
+      "base": "",
+      "abv_(%)": "",
+      "cost": "",
+      "image_filename": "",
+      "country": "",
+      "blurb": ""
+    },
+    {
+      "name": "Huzzar",
+      "base": "",
+      "abv_(%)": "",
+      "cost": "",
+      "image_filename": "",
+      "country": "",
+      "blurb": ""
+    }
+  ],
+  "misc": [
+    {
+      "name": "Coca Cola",
+      "image": "",
+      "price": "",
+      "blurb": ""
+    },
+    {
+      "name": "Fanta Orange",
+      "image": "",
+      "price": "",
+      "blurb": ""
+    },
+    {
+      "name": "Fanta Lemon",
+      "image": "",
+      "price": "",
+      "blurb": ""
+    },
+    {
+      "name": "Club Lemon",
+      "image": "",
+      "price": "",
+      "blurb": ""
+    },
+    {
+      "name": "Club Orange",
+      "image": "",
+      "price": "",
+      "blurb": ""
+    },
+    {
+      "name": "7 Up",
+      "image": "",
+      "price": "",
+      "blurb": ""
+    },
+    {
+      "name": "Sprite",
+      "image": "",
+      "price": "",
+      "blurb": ""
+    },
+    {
+      "name": "Tonic water",
+      "image": "",
+      "price": "",
+      "blurb": ""
+    },
+    {
+      "name": "Schweppes Tonic",
+      "image": "",
+      "price": "",
+      "blurb": ""
+    },
+    {
+      "name": "Schweppes Slimline Tonic",
+      "image": "",
+      "price": "",
+      "blurb": ""
+    },
+    {
+      "name": "Slimline tonic",
+      "image": "",
+      "price": "",
+      "blurb": ""
+    },
+    {
+      "name": "Ginger ale",
+      "image": "",
+      "price": "",
+      "blurb": ""
+    },
+    {
+      "name": "Lucozade",
+      "image": "",
+      "price": "",
+      "blurb": ""
+    },
+    {
+      "name": "Red Bull",
+      "image": "",
+      "price": "",
+      "blurb": ""
+    }
+  ],
   "equipment": [],
-  "snacks": [],
   "glasses": [],
-  "misc": []
+  "snacks": []
 }
