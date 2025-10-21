@@ -5,342 +5,78 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin - GBS9</title>
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/admin.css">
   <script src="js/header.js" defer></script>
 </head>
 <body>
   <header id="site-header"></header>
-
   <main>
-
-
-<section class="admin-help">
-  <h2>Admin SOP – Tonight’s Event Setup</h2>
-  <div class="faq">
-    <h3>Q: How do I add cocktails to tonight’s event?</h3>
-    <p>A: Scroll down to the <strong>Drinks Selector</strong>. Tick the drinks you want. They will appear in the guest-facing menu under <em>Tonight’s Event > Sip</em>.</p>
-
-    <h3>Q: How do I print tonight’s menu?</h3>
-    <p>A: Click <strong>“Print Menu”</strong>. This opens a printable version in a new tab. Use <kbd>Ctrl+P</kbd> or <kbd>Cmd+P</kbd> to print.</p>
-
-    <h3>Q: Can I hide a drink later?</h3>
-    <p>A: Yes. Untick it in the <strong>Drinks Selector</strong>. It will disappear from the guest menu immediately.</p>
-  </div>
-</section>
-
-/* css/admin.css */
-/* Tabs */
-.admin-tabs{display:flex;gap:1rem;margin:1rem 0}
-.admin-tabs .tab-btn{background:rgba(255,255,255,.05);border:1px solid rgba(255,204,102,.4);padding:.6rem 1.2rem;border-radius:6px;color:#f5f5f5;cursor:pointer;transition:.3s}
-.admin-tabs .tab-btn.active{background:#ffcc66;color:#1a1a1a;border-color:#ffcc66;font-weight:700}
-/* Tab content */
-.tab-content{display:none}.tab-content.active{display:block}
-/* Checkbox grid */
-.checkbox-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1rem}
-.checkbox-grid label{background:rgba(255,255,255,.05);border:1px solid rgba(255,204,102,.4);padding:.6rem;border-radius:8px;display:flex;align-items:center;gap:.5rem;cursor:pointer}
-.checkbox-grid label input{margin:0}
-.checkbox-grid label.checked{outline:2px solid #ffcc66}
-
-/* Small SOP helper */
-.admin-help{background:rgba(255,255,255,.04);border:1px solid rgba(255,204,102,.3);border-radius:10px;padding:1rem;margin:1rem 0}
-.admin-help h3{margin:.6rem 0}
-
-
-
-<section class="admin-help">
-  <h2>Admin SOP – Tonight’s Event Setup</h2>
-  <div class="faq">
-    <h3>Q: How do I add cocktails to tonight’s event?</h3>
-    <p>A: Use the tabs below. Tick the drinks you want. They will appear in the guest menu under <em>Tonight’s Event > Sip</em>.</p>
-
-    <h3>Q: How do I print tonight’s menu?</h3>
-    <p>A: Click <strong>“Print Menu”</strong>. This opens a printable version in a new tab. Use <kbd>Ctrl+P</kbd> or <kbd>Cmd+P</kbd> to print.</p>
-  </div>
-</section>
-
-
-<link rel="stylesheet" href="css/admin.css">
-
-<section class="admin-help">
-  <h2>Admin SOP – Tonight’s Event Setup</h2>
-  <h3>Q: How do I add cocktails to tonight’s event?</h3>
-  <p>A: Sign in below. Use the tabs to open a category. Tick drinks to enable. Click <strong>Save</strong>. The Sip tab updates live.</p>
-  <h3>Q: How do I print tonight’s menu?</h3>
-  <p>A: Click <strong>Print Menu</strong> to open the print page, then press <kbd>Ctrl+P</kbd> / <kbd>Cmd+P</kbd>.</p>
-</section>
-
-<!-- Auth -->
-<section>
-  <h3>Admin Sign In</h3>
-  <div id="authBox">
-    <input id="adminEmail" type="email" placeholder="Email">
-    <input id="adminPass" type="password" placeholder="Password">
-    <button id="signInBtn" class="btn">Sign In</button>
-    <button id="signOutBtn" class="btn" style="display:none">Sign Out</button>
-  </div>
-  <small id="whoami"></small>
-</section>
-
-<!-- Tabs -->
-<div class="admin-tabs" id="adminTabs" style="display:none">
-  <button class="tab-btn active" data-tab="cocktails">Cocktails</button>
-  <button class="tab-btn" data-tab="beer">Beer</button>
-  <button class="tab-btn" data-tab="spirits">Spirits</button>
-  <button class="tab-btn" data-tab="mixers">Mixers</button>
-</div>
-
-<!-- Tab content panes -->
-<div id="cocktails" class="tab-content active"></div>
-<div id="beer" class="tab-content"></div>
-<div id="spirits" class="tab-content"></div>
-<div id="mixers" class="tab-content"></div>
-
-<!-- Actions -->
-<div id="adminActions" style="display:none; margin-top:1rem;">
-  <button id="saveTonightBtn" class="btn">💾 Save Tonight’s Menu</button>
-  <button id="printMenuBtn" class="btn">🖨️ Print Menu</button>
-  <button id="previewMenuBtn" class="btn">👀 Preview Menu</button>
-</div>
-
-<!-- Firebase + App scripts (order matters) -->
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-<script src="js/firebase.js"></script>
-<script src="js/admin.js" defer></script>
-
-
-<div class="admin-tabs">
-  <button class="tab-btn active" data-tab="cocktails">Cocktails</button>
-  <button class="tab-btn" data-tab="beer">Beer</button>
-  <button class="tab-btn" data-tab="spirits">Spirits</button>
-  <button class="tab-btn" data-tab="mixers">Mixers</button>
-</div>
-
-<div id="cocktails" class="tab-content active"></div>
-<div id="beer" class="tab-content"></div>
-<div id="spirits" class="tab-content"></div>
-<div id="mixers" class="tab-content"></div>
-
-
     <h1>Admin Dashboard</h1>
-    <p>Upload new images to <code>images/_raw</code>, run the Python update script, and your site will refresh automatically.</p>
 
-    <section>
-      <h2>Process Overview</h2>
-      <ol>
-        <li>Upload new cocktails, beer, or equipment images to <code>images/_raw</code>.</li>
-        <li>Run <code>python update_site.py</code> locally to resize, watermark, and compress.</li>
-        <li>The script updates <code>cocktails.json</code> automatically.</li>
-        <li>Commit & push to GitHub.</li>
-        <li>Visit <a href="premium-listings.html">Premium Listings</a> to see changes live.</li>
-      </ol>
+    <!-- SOP / FAQ -->
+    <section class="admin-help">
+      <h2>Admin SOP – Tonight’s Event</h2>
+      <ul class="toc">
+        <li><a href="#faq-add">How do I add cocktails?</a></li>
+        <li><a href="#faq-print">How do I print tonight’s menu?</a></li>
+        <li><a href="#faq-hide">Can I hide a drink later?</a></li>
+      </ul>
+
+      <div id="faq-add">
+        <h3>Q: How do I add cocktails to tonight’s event?</h3>
+        <p>A: Sign in, open the tabs, tick the drinks you want. Click <strong>Save</strong>. Guests will see them instantly under <em>Tonight’s Event > Sip</em>.</p>
+      </div>
+
+      <div id="faq-print">
+        <h3>Q: How do I print tonight’s menu?</h3>
+        <p>A: Click <strong>Print Menu</strong>. This opens a printable view. Use <kbd>Ctrl+P</kbd> or <kbd>Cmd+P</kbd>.</p>
+      </div>
+
+      <div id="faq-hide">
+        <h3>Q: Can I hide a drink later?</h3>
+        <p>A: Yes. Untick it and click <strong>Save</strong>. Guests will no longer see it.</p>
+      </div>
     </section>
 
-<div class="accordion-item">
-  <button class="accordion-header">📥 How to Import Cocktails from Excel</button>
-  <div class="accordion-content">
-    <ol style="margin-left:1.5rem;">
-      <li>Open <strong>cocktails.xlsx</strong> in Excel.</li>
-      <li>Use the 3 sheets: <code>cocktails</code>, <code>beer</code>, <code>equipment</code>.</li>
-      <li>Columns must be named:<br>
-        <code>Name | Base Spirit | Glass | Ingredients | Method / Blurb | Image Filename | Kegged | Type</code></li>
-      <li>Save the file.</li>
-      <li>Run this command in your project folder:<br>
-        <code>python import_excel.py</code></li>
-      <li>This will generate an updated <code>data/cocktails.json</code> for the site.</li>
-      <li>Commit and push to GitHub → updates appear automatically.</li>
-    </ol>
-    <p><strong>Tip:</strong> If you don’t have an image yet, set <code>Image Filename</code> to <code>coming-soon.jpg</code>.</p>
-  </div>
-</div>
-
-<section class="admin-guide">
-  <h2>⚙️ How to Update Drinks & Equipment</h2>
-  <ol>
-    <li>Open <strong>data/drinks.xlsx</strong> and edit Cocktails, Beer, Equipment, Misc, Glasses, Snacks.</li>
-    <li>Save the Excel file.</li>
-    <li>Run in terminal: <code>python update_site.py</code></li>
-    <li>The script will:
-      <ul>
-        <li>Convert Excel → JSON (<code>drinks.json</code>)</li>
-        <li>Validate against <code>schema.json</code></li>
-        <li>If valid, automatically <strong>push updates to GitHub</strong></li>
-      </ul>
-    </li>
-    <li>If an error appears:
-      <ul>
-        <li><strong>Excel error</strong>: Check that all required columns are filled.</li>
-        <li><strong>Validation error</strong>: Check that <code>schema.json</code> requirements are met.</li>
-        <li><strong>Git error</strong>: Check internet, branch name, or repo access.</li>
-      </ul>
-    </li>
-  </ol>
-  <p>✅ Once finished, the site is automatically updated on GitHub Pages.</p>
-</section>
-
-<section class="admin-flow">
-  <h2>📋 Content Update Flow Process</h2>
-  <div class="accordion-item">
-    <div class="hero-wrapper">
-      <div class="hero-content">
-        <h3>How to Add or Update Content</h3>
+    <!-- Auth -->
+    <section>
+      <h2>Admin Sign In</h2>
+      <div id="authBox">
+        <input id="adminEmail" type="email" placeholder="Email">
+        <input id="adminPass" type="password" placeholder="Password">
+        <button id="signInBtn" class="btn">Sign In</button>
+        <button id="signOutBtn" class="btn" style="display:none">Sign Out</button>
       </div>
+      <small id="whoami"></small>
+    </section>
+
+    <!-- Tabs -->
+    <div class="admin-tabs" id="adminTabs" style="display:none">
+      <button class="tab-btn active" data-tab="cocktails">Cocktails</button>
+      <button class="tab-btn" data-tab="beer">Beer</button>
+      <button class="tab-btn" data-tab="spirits">Spirits</button>
+      <button class="tab-btn" data-tab="mixers">Mixers</button>
     </div>
-    <div class="accordion-body">
-      <div class="accordion-inner">
-        <ol>
-          <li><strong>Update Excel File</strong><br>
-            - Open <code>data/drinks.xlsx</code>.<br>
-            - Fill in sheets like <code>Cocktails</code>, <code>Beer</code>, etc.<br>
-            - For services or page headers, edit the <code>Heroes</code> sheet.<br>
-            - Required: <em>Page, Section, Title, Image Filename</em>.
-          </li>
-          <li><strong>Run Update Script</strong><br>
-            - Run <code>python update_site.py</code>.<br>
-            - Generates <code>data/drinks.json</code> (menus) and <code>data/heroes.json</code> (headers).<br>
-            - Validator ensures required fields are present.
-          </li>
-          <li><strong>Upload Images</strong><br>
-            - Place header images in <code>/images/hero/</code>.<br>
-            - Place drink/card images in <code>/images/</code>.<br>
-            - Filenames must exactly match Excel (case-sensitive).<br>
-            - Multiple slideshow images → separate with <code>;</code>.
-          </li>
-          <li><strong>Deploy Changes</strong><br>
-            - Script auto-commits and pushes to GitHub.<br>
-            - GitHub Pages rebuilds automatically.
-          </li>
-          <li><strong>Verify Frontend</strong><br>
-            - Open the site (e.g. <code>services.html</code>).<br>
-            - Check hero accordions load with images.<br>
-            - Click heroes/cards → modal opens with slideshow + info.
-          </li>
-        </ol>
 
-        <h4>⚠️ Things to Watch</h4>
-        <ul>
-          <li>Filenames must match Excel rows exactly.</li>
-          <li>JSON errors → check missing <code>id</code> or <code>title</code> in Excel.</li>
-          <li>Broken images → confirm file is in correct folder.</li>
-          <li>Modal not opening → ensure <code>data-title</code>, <code>data-description</code>, <code>data-image</code> are set.</li>
-        </ul>
+    <!-- Tab content panes -->
+    <div id="cocktails" class="tab-content active"></div>
+    <div id="beer" class="tab-content"></div>
+    <div id="spirits" class="tab-content"></div>
+    <div id="mixers" class="tab-content"></div>
 
-        <h4>🚀 Future Goals</h4>
-        <ul>
-          <li>Save favourites in <code>localStorage</code>.</li>
-          <li>Admin UI (edit without Excel).</li>
-          <li>Tinder-style Design Your Menu fully dynamic.</li>
-          <li>Different modal layouts for services vs drinks.</li>
-        </ul>
-      </div>
+    <!-- Actions -->
+    <div id="adminActions" style="display:none; margin-top:1rem;">
+      <button id="saveTonightBtn" class="btn">💾 Save Tonight’s Menu</button>
+      <button id="printMenuBtn" class="btn">🖨️ Print Menu</button>
+      <button id="previewMenuBtn" class="btn">👀 Preview Menu</button>
     </div>
-  </div>
-</section>
-
-
-<section class="admin-guide">
-  <h2>How to Update Listings</h2>
-  <ol>
-    <li>Edit <strong>cocktails.xlsx</strong> in Excel.
-      <ul>
-        <li>Each sheet = category (Cocktails, Beer, Equipment, Glasses, Snacks, Misc).</li>
-        <li>Columns: <code>Name</code>, <code>Base</code>, <code>Glass</code>, <code>Image</code>, <code>Ingredients</code>, <code>Short</code>, <code>Flavours</code>.</li>
-        <li>Leave cells blank if unknown — the importer will convert them to <code>null</code>.</li>
-      </ul>
-    </li>
-    <li>Save the Excel file.</li>
-    <li>Run <code>python import_excel.py</code> locally. This generates:
-      <ul>
-        <li><code>data/cocktails.json</code> → used by Design Your Menu</li>
-        <li><code>data/drinks.json</code> → used by Premium Listings</li>
-      </ul>
-    </li>
-    <li>Commit & push the updated JSON files and any new images to GitHub.</li>
-    <li>Check the site:
-      <ul>
-        <li>If nothing shows, check the JSON in your browser — it must be valid.</li>
-        <li>If images are missing, make sure filenames match exactly in <code>/images/cocktails/</code>, <code>/images/beer/</code>, etc.</li>
-      </ul>
-    </li>
-  </ol>
-</section>
-
-<section>
-  <h2>Tonight’s Event Setup</h2>
-  <p>Select which drinks are available tonight. These will populate the Sip tab + Roulette in Tonight’s Event.</p>
-
-  <div id="tonight-setup"></div>
-
-  <button id="saveTonightBtn" class="btn">💾 Save Tonight’s Menu</button>
-  <button id="printTonightBtn" class="btn">🖨️ Print Tonight’s Menu</button>
-</section>
-
-<script src="js/admin.js" defer></script>
-
-<section id="admin">
-  <h2>Admin Panel</h2>
-
-  <!-- Example toggle list -->
-  <div id="adminDrinksToggle"></div>
-
-  <!-- Print button -->
-  <button id="printMenuBtn" class="btn">🖨️ Print Tonight’s Menu</button>
-</section>
-
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  // Load drinks from JSON
-  fetch("data/drinks.json")
-    .then(res => res.json())
-    .then(data => {
-      const container = document.getElementById("adminDrinksToggle");
-      const tonight = JSON.parse(localStorage.getItem("tonight") || "{}");
-      tonight.sip = tonight.sip || [];
-
-      // Combine drinks arrays
-      const allDrinks = [
-        ...data.cocktails.map(d => ({ ...d, type: "cocktail" })),
-        ...data.beer.map(d => ({ ...d, type: "beer" })),
-        ...data.spirits.map(d => ({ ...d, type: "spirit" })),
-        ...data.mixers.map(d => ({ ...d, type: "mixer" })),
-      ];
-
-      // Render checkboxes
-      container.innerHTML = allDrinks.map(drink => {
-        const checked = tonight.sip.find(d => d.name === drink.name) ? "checked" : "";
-        return `
-          <label>
-            <input type="checkbox" data-name="${drink.name}" data-type="${drink.type}" ${checked}>
-            ${drink.name} (${drink.type})
-          </label><br>
-        `;
-      }).join("");
-
-      // Update localStorage when toggles change
-      container.querySelectorAll("input[type=checkbox]").forEach(cb => {
-        cb.addEventListener("change", e => {
-          const name = e.target.dataset.name;
-          const type = e.target.dataset.type;
-          if (e.target.checked) {
-            tonight.sip.push({ name, type });
-          } else {
-            tonight.sip = tonight.sip.filter(d => d.name !== name);
-          }
-          localStorage.setItem("tonight", JSON.stringify(tonight));
-        });
-      });
-    });
-
-  // Print button action
-  document.getElementById("printMenuBtn").addEventListener("click", () => {
-    window.open("print-menu.html", "_blank");
-  });
-});
-</script>
-
-
-
   </main>
+
+  <!-- Firebase + App scripts (order matters) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script src="js/firebase.js"></script>
+  <script src="js/admin.js" defer></script>
 </body>
 </html>
-
