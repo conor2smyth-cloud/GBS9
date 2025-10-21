@@ -1,118 +1,114 @@
+import pandas as pd
+import json
 import subprocess
 import sys
+import os
+import shutil
 
-# Run a shell command and capture output
-def run_command(cmd, stop_on_error=True):
-    try:
-        result = subprocess.run(cmd, check=True, capture_output=True, text=True, shell=True)
-        return result.stdout.strip()
-    except subprocess.CalledProcessError as e:
-        print(f"\n[ERROR] Command failed: {cmd}")
-        if e.stdout:
-            print("STDOUT:\n", e.stdout.strip())
-        if e.stderr:
-            print("STDERR:\n", e.stderr.strip())
-        if stop_on_error:
-            sys.exit(1)
-        return None
-
+EXCEL_FILE = "data/drinks.xlsx"
+JSON_FILE = "data/drinks.json"
+IMAGES_SRC = "data/images"
+IMAGES_DEST = "assets/drinks"
 
 def main():
     print("Step 1: Importing Excel -> JSON ...")
-    if run_command("python import_excel.py", stop_on_error=False) is None:
-        print("[ERROR] Failed to convert Excel into JSON. Check formatting.")
-        sys.exit(1)
-    print("[OK] Exported Excel -> data/drinks.json")
 
+    try:
+        # Load Excel workbook
+        xls = pd.ExcelFile(EXCEL_FILE)
+
+        # Normalize columns: lower-case + underscores
+        def normalize_columns(df):
+            df.columns = [c.strip().lower().replace(" ", "_") for c in df.columns]
+            return df
+
+        # Helper to safely parse each sheet
+        def parse_sheet(sheet_name):
+            if sheet_name in xls.sheet_names:
+                df = xls.parse(sheet_name).fillna("")
+                df = normalize_columns(df)
+                return df.to_dict(orient="records")
+            else:
+                print(f"[WARN] Sheet '{sheet_name}' not found in Excel. Using empty list.")
+                return []
+
+        # Parse categories
+        cocktails = parse_sheet("Cocktails")
+        beer = parse_sheet("Beer")
+        spirits = parse_sheet("Spirits")
+        misc = parse_sheet("Misc")
+        equipment = parse_sheet("Equipment")
+        glasses = parse_sheet("Glasses")
+        snacks = parse_sheet("Snacks")
+
+        # Build structure
+        drinks_data = {
+            "cocktails": cocktails,
+            "beer": beer,
+            "spirits": spirits,
+            "misc": misc,
+            "equipment": equipment,
+            "glasses": glasses,
+            "snacks": snacks
+        }
+
+        # Save JSON
+        with open(JSON_FILE, "w", encoding="utf-8") as f:
+            json.dump(drinks_data, f, indent=2, ensure_ascii=False)
+
+        print(f"[OK] Exported Excel -> {JSON_FILE}")
+
+    except Exception as e:
+        print(f"[ERROR] Excel import failed: {e}")
+        sys.exit(1)
+
+    # Step 2: Validate JSON
     print("\nStep 2: Validating JSON ...")
-    if run_command("python validate_json.py", stop_on_error=False) is None:
-        print("[ERROR] Validation failed. Fix JSON before proceeding.")
+    try:
+        subprocess.check_call([sys.executable, "validate_json.py"])
+    except subprocess.CalledProcessError:
+        print("[ERROR] Validation failed.")
         sys.exit(1)
-    print("[OK] data/drinks.json is valid against schema.json")
 
-    print("\nStep 3: Committing & pushing to GitHub ...")
+    # Step 3: Sync images
+    print("\nStep 3: Syncing images ...")
+    if not os.path.exists(IMAGES_DEST):
+        os.makedirs(IMAGES_DEST)
 
-    # Stage and commit changes
-    run_command("git add .")
-    run_command('git commit -m "Auto-update drinks.json" || echo "No changes to commit"', stop_on_error=False)
+    copied, missing = 0, []
+    for root, _, files in os.walk(IMAGES_SRC):
+        for file in files:
+            src_path = os.path.join(root, file)
+            dest_path = os.path.join(IMAGES_DEST, file)
 
-    # Try normal push
-    push_result = run_command("git push", stop_on_error=False)
+            if not os.path.exists(dest_path):
+                shutil.copy2(src_path, dest_path)
+                copied += 1
 
-    if push_result is None:  # Push failed, try upstream fix
-        print("\n[WARNING] Git push failed. Trying to set upstream automatically...")
-        upstream_result = run_command("git push --set-upstream origin main", stop_on_error=False)
-        if upstream_result is None:
-            print("\n[ERROR] Git push failed completely. Check your GitHub connection or branch name.")
-            sys.exit(1)
-        else:
-            print("\n[OK] Git push fixed with --set-upstream origin main")
-    else:
-        print("\n[OK] Git push successful!")
+    print(f"[OK] Copied {copied} new images to {IMAGES_DEST}")
+    if missing:
+        print(f"[WARN] Missing images: {missing}")
 
-    print("\nUpdate complete. GitHub Pages will rebuild automatically.")
+    # Step 4: Upload to Firestore
+    print("\nStep 4: Uploading drinks.json to Firestore ...")
+    try:
+        subprocess.check_call(["node", "uploadDrinks.js"])
+    except subprocess.CalledProcessError:
+        print("[ERROR] Firestore upload failed.")
+        sys.exit(1)
 
+    # Step 5: Git commit + push
+    print("\nStep 5: Committing + pushing changes ...")
+    try:
+        subprocess.check_call(["git", "add", JSON_FILE, IMAGES_DEST])
+        subprocess.check_call(["git", "commit", "-m", "Update drinks and assets"])
+        subprocess.check_call(["git", "push"])
+        print("[OK] Changes pushed to GitHub")
+    except subprocess.CalledProcessError:
+        print("[WARN] Git push failed. Please check manually.")
+
+    print("\n🎉 Update complete!")
 
 if __name__ == "__main__":
     main()
 
-def main():
-    print("Step 1: Importing Excel -> JSON ...")
-    if run_command("python import_excel.py", stop_on_error=False) is None:
-        print("[ERROR] Failed to convert Excel into JSON. Check formatting.")
-        sys.exit(1)
-    print("[OK] Exported Excel -> data/drinks.json & data/heroes.json")
-
-    print("\nStep 2: Validating JSON ...")
-    if run_command("python validate_json.py", stop_on_error=False) is None:
-        print("[ERROR] Validation failed. Fix JSON before proceeding.")
-        sys.exit(1)
-
-    print("\nStep 3: Committing & pushing to GitHub ...")
-    run_command("git add .")
-    run_command('git commit -m "Auto-update JSON" || echo "No changes to commit"', stop_on_error=False)
-    push_result = run_command("git push", stop_on_error=False)
-
-    if push_result is None:
-        print("\n⚠️  Git push failed. Trying to set upstream automatically...")
-        upstream_result = run_command("git push --set-upstream origin main", stop_on_error=False)
-        if upstream_result is None:
-            print("\n❌ Git push failed completely. Check your GitHub connection or branch name.")
-            sys.exit(1)
-        else:
-            print("\n✅ Git push fixed with --set-upstream origin main")
-    else:
-        print("\n✅ Git push successful!")
-
-    print("\n🎉 Update complete. GitHub Pages will rebuild automatically.")
-
-import firebase_admin
-from firebase_admin import credentials, firestore
-import json
-
-# Load Firestore service account
-cred = credentials.Certificate("gbs9-service-key.json")
-firebase_admin.initialize_app(cred)
-db = firestore.client()
-
-# Load drinks.json
-with open("data/drinks.json", "r", encoding="utf-8") as f:
-    drinks_data = json.load(f)
-
-# Define collections to push
-collections = ["cocktails", "beer", "spirits", "mixers"]
-
-for col in collections:
-    if col in drinks_data:
-        col_ref = db.collection(col)
-
-        # Wipe existing collection
-        docs = col_ref.stream()
-        for doc in docs:
-            doc.reference.delete()
-
-        # Add updated drinks
-        for drink in drinks_data[col]:
-            col_ref.add(drink)
-
-print("✅ Drinks pushed to Firestore!")

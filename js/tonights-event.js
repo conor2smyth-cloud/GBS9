@@ -1,43 +1,77 @@
-// tonights-event.js
-document.addEventListener("DOMContentLoaded", () => {
-  const db = firebase.firestore();
-  const menuList = document.getElementById("menuList");
+// js/tonights-event.js
 
-  // Listen for real-time updates
-  db.collection("tonightMenu").doc("current").onSnapshot(async (doc) => {
-    if (!doc.exists) {
-      menuList.innerHTML = "<p>No drinks selected yet.</p>";
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("✅ tonights-event.js loaded");
+
+  const db = firebase.firestore();
+  const menuContainer = document.getElementById("tonightMenu");
+
+  if (!menuContainer) {
+    console.warn("⚠️ No #tonightMenu container found in HTML");
+    return;
+  }
+
+  // Collections we care about
+  const categories = ["cocktails", "beer", "spirits", "mixers"];
+
+  // ------------------------
+  // Render menu dynamically
+  // ------------------------
+  function renderMenu(drinksByCat) {
+    if (!drinksByCat) {
+      menuContainer.innerHTML = "<p>No drinks selected for tonight.</p>";
       return;
     }
 
-    const tonightData = doc.data();
-    menuList.innerHTML = "";
+    menuContainer.innerHTML = categories.map(cat => {
+      const ids = drinksByCat[cat] || [];
+      if (!ids.length) return "";
 
-    // Loop categories
-    for (const [cat, ids] of Object.entries(tonightData)) {
-      if (!ids.length) continue;
+      return `
+        <section class="menu-section">
+          <h2>${cat.charAt(0).toUpperCase() + cat.slice(1)}</h2>
+          <ul class="menu-list" id="menu-${cat}"></ul>
+        </section>
+      `;
+    }).join("");
 
-      const catDiv = document.createElement("div");
-      catDiv.innerHTML = `<h3 style="margin-top:1rem;">${cat.toUpperCase()}</h3>`;
+    // Now fetch details for each drink
+    categories.forEach(cat => {
+      const ids = drinksByCat[cat] || [];
+      if (!ids.length) return;
 
-      // Fetch each selected drink
-      for (const id of ids) {
-        const dSnap = await db.collection(cat).doc(id).get();
-        if (!dSnap.exists) continue;
+      const ul = document.getElementById(`menu-${cat}`);
+      ids.forEach(id => {
+        db.collection(cat).doc(id).get().then(doc => {
+          if (!doc.exists) return;
+          const d = doc.data();
 
-        const d = dSnap.data();
-        const item = document.createElement("div");
-        item.className = "menu-item";
-        item.innerHTML = `
-          <strong>${d.name}</strong><br>
-          <em>${d.ingredients?.join(", ") || ""}</em><br>
-          <span>${d.short || ""}</span>
-        `;
-        catDiv.appendChild(item);
+          const flavours = d.flavour 
+            ? `<p class="flavours"><strong>Flavours:</strong> ${d.flavour}</p>`
+            : "";
+
+          ul.innerHTML += `
+            <li class="menu-item">
+              <h3>${d.name || "Unnamed"}</h3>
+              ${d.ingredients ? `<p><strong>Ingredients:</strong> ${d.ingredients.join(", ")}</p>` : ""}
+              ${d.short ? `<p>${d.short}</p>` : ""}
+              ${flavours}
+            </li>
+          `;
+        });
+      });
+    });
+  }
+
+  // ------------------------
+  // Live listener for tonight's menu
+  // ------------------------
+  db.collection("tonight").doc("menu")
+    .onSnapshot(doc => {
+      if (!doc.exists) {
+        menuContainer.innerHTML = "<p>Tonight’s menu not set yet.</p>";
+        return;
       }
-
-      menuList.appendChild(catDiv);
-    }
-  });
+      renderMenu(doc.data().drinks);
+    });
 });
-

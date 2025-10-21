@@ -1,96 +1,102 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "GBS9 Drinks",
+  "title": "Drinks Schema",
   "type": "object",
-  "additionalProperties": false,
   "properties": {
     "cocktails": {
       "type": "array",
       "items": {
         "type": "object",
-        "additionalProperties": false,
         "properties": {
           "name": { "type": "string" },
-          "type": { "type": "string", "enum": ["cocktails"] },
-          "base": { "type": "string" },
+          "type": { "type": "string" },
+          "base_spirit": { "type": "string" },
           "glass": { "type": "string" },
-          "ingredients": {
-            "type": "array",
-            "items": { "type": "string" }
-          },
-          "short": { "type": "string" },
-          "image": { "type": "string" },
-          "kegged": { "type": "string", "enum": ["Yes", "No"] },
+          "ingredients": { "type": "string" },
+          "method_blurb": { "type": "string" },
+          "image_filename": { "type": "string" },
+          "kegged": { "type": "string" },
           "flavour": { "type": "string" }
         },
-        "required": ["name", "type", "image"]
+        "required": ["name"]
       }
     },
     "beer": {
       "type": "array",
       "items": {
         "type": "object",
-        "additionalProperties": false,
         "properties": {
           "name": { "type": "string" },
-          "type": { "type": "string", "enum": ["beer"] },
+          "type": { "type": "string" },
+          "abv": { "type": "string" },
+          "blurb": { "type": "string" },
           "image": { "type": "string" }
         },
-        "required": ["name", "type", "image"]
+        "required": ["name"]
       }
     },
-    "equipment": {
+    "spirits": {
       "type": "array",
       "items": {
         "type": "object",
-        "additionalProperties": false,
         "properties": {
           "name": { "type": "string" },
-          "type": { "type": "string", "enum": ["equipment"] },
-          "image": { "type": "string" }
+          "base": { "type": "string" },
+          "abv": { "type": "string" },
+          "cost": { "type": "string" },
+          "image_filename": { "type": "string" },
+          "country": { "type": "string" },
+          "blurb": { "type": "string" }
         },
-        "required": ["name", "type", "image"]
-      }
-    },
-    "snacks": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "name": { "type": "string" },
-          "type": { "type": "string", "enum": ["snacks"] },
-          "image": { "type": "string" }
-        },
-        "required": ["name", "type", "image"]
+        "required": ["name"]
       }
     },
     "misc": {
       "type": "array",
       "items": {
         "type": "object",
-        "additionalProperties": false,
         "properties": {
           "name": { "type": "string" },
-          "type": { "type": "string", "enum": ["misc"] },
+          "price": { "type": "string" },
+          "blurb": { "type": "string" },
           "image": { "type": "string" }
         },
-        "required": ["name", "type", "image"]
+        "required": ["name"]
+      }
+    },
+    "equipment": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "image": { "type": "string" }
+        },
+        "required": ["name"]
       }
     },
     "glasses": {
       "type": "array",
       "items": {
         "type": "object",
-        "additionalProperties": false,
         "properties": {
           "name": { "type": "string" },
-          "type": { "type": "string", "enum": ["glasses"] },
           "image": { "type": "string" }
         },
-        "required": ["name", "type", "image"]
+        "required": ["name"]
+      }
+    },
+    "snacks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "image": { "type": "string" }
+        },
+        "required": ["name"]
       }
     }
   },
-  "required": ["cocktails", "beer", "equipment", "snacks", "misc", "glasses"]
+  "required": ["cocktails", "beer", "spirits", "misc", "equipment", "glasses", "snacks"]
 }
