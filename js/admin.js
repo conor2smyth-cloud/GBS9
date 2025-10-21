@@ -3,28 +3,30 @@ import { db } from "./firebase.js";
 import {
   collection,
   getDocs,
-  setDoc,
+  addDoc,
   deleteDoc,
   doc,
-  onSnapshot
+  onSnapshot,
+  query,
+  where
 } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-firestore.js";
 
 const menuContainer = document.getElementById("menuContainer");
 const clearButton = document.getElementById("clearMenuBtn");
 
 async function loadAdminMenu() {
-  const collections = ["cocktails", "beer", "spirits", "misc"];
+  const categories = ["cocktails", "beer", "spirits", "misc"];
 
-  // Cache all active drink IDs from tonightMenu
+  // Read tonightMenu and collect active drink IDs
   const tonightSnap = await getDocs(collection(db, "tonightMenu"));
-  let activeIds = tonightSnap.docs.map(d => d.id);
+  let activeDrinkIds = tonightSnap.docs.map(d => d.data().drinkId);
 
-  for (const col of collections) {
-    const snap = await getDocs(collection(db, col));
-    snap.forEach(docSnap => {
-      const data = docSnap.data();
-      const drinkId = docSnap.id; // use Firestore's own ID
-      const isActive = activeIds.includes(drinkId);
+  for (const category of categories) {
+    const drinksSnap = await getDocs(collection(db, category));
+    drinksSnap.forEach(drinkSnap => {
+      const data = drinkSnap.data();
+      const drinkId = drinkSnap.id;
+      const isActive = activeDrinkIds.includes(drinkId);
 
       const div = document.createElement("div");
       div.className = "drink-item";
@@ -35,17 +37,26 @@ async function loadAdminMenu() {
       const toggle = document.createElement("input");
       toggle.type = "checkbox";
       toggle.dataset.id = drinkId;
+      toggle.dataset.category = category;
       toggle.checked = isActive;
 
       toggle.addEventListener("change", async () => {
         if (toggle.checked) {
-          await setDoc(doc(db, "tonightMenu", drinkId), { active: true });
+          await addDoc(collection(db, "tonightMenu"), {
+            drinkId: drinkId,
+            category: category
+          });
         } else {
           const confirmOff = confirm(`Remove "${data.name}" from Tonight's Menu?`);
           if (confirmOff) {
-            await deleteDoc(doc(db, "tonightMenu", drinkId));
+            // Find and delete matching tonightMenu doc
+            const q = query(collection(db, "tonightMenu"), where("drinkId", "==", drinkId));
+            const snap = await getDocs(q);
+            snap.forEach(async (docSnap) => {
+              await deleteDoc(doc(db, "tonightMenu", docSnap.id));
+            });
           } else {
-            toggle.checked = true; // revert to ON
+            toggle.checked = true; // revert if cancelled
           }
         }
       });
@@ -55,17 +66,17 @@ async function loadAdminMenu() {
     });
   }
 
-  // Realtime updates
+  // Realtime listener for live updates
   onSnapshot(collection(db, "tonightMenu"), (snapshot) => {
-    activeIds = snapshot.docs.map(d => d.id);
+    activeDrinkIds = snapshot.docs.map(d => d.data().drinkId);
     document.querySelectorAll(".drink-item input[type=checkbox]").forEach(cb => {
       const id = cb.dataset.id;
-      cb.checked = activeIds.includes(id);
+      cb.checked = activeDrinkIds.includes(id);
     });
   });
 }
 
-// Clear button
+// Clear all tonightMenu entries
 clearButton.addEventListener("click", async () => {
   const ok = confirm("Clear the entire Tonight's Menu?");
   if (!ok) return;
