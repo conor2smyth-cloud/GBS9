@@ -16,8 +16,12 @@ const db = firebase.firestore();
 // --- Categories to display ---
 const categories = ["cocktails", "beer", "spirits", "misc"];
 
-// --- Load drinks and build toggles ---
-function loadAdminToggles() {
+// --- Load admin toggles ---
+async function loadAdminToggles() {
+  // Fetch tonight’s menu first
+  const tonightSnapshot = await db.collection("tonightMenu").get();
+  const tonightIds = new Set(tonightSnapshot.docs.map(doc => doc.id));
+
   categories.forEach(cat => {
     db.collection(cat).get().then(snapshot => {
       const container = document.getElementById(cat);
@@ -28,9 +32,11 @@ function loadAdminToggles() {
         <div class="checkbox-grid">
           ${snapshot.docs.map(doc => {
             const d = doc.data();
+            const docId = `${cat}_${doc.id}`;
+            const checked = tonightIds.has(docId) ? "checked" : "";
             return `
               <label>
-                <input type="checkbox" data-cat="${cat}" data-id="${doc.id}">
+                <input type="checkbox" data-cat="${cat}" data-id="${doc.id}" ${checked}>
                 ${d.name || "Unnamed"}
               </label>
             `;
@@ -50,7 +56,9 @@ function loadAdminToggles() {
 
 // --- Save into tonightMenu ---
 function saveSelection(category, id, enabled) {
-  const ref = db.collection("tonightMenu").doc(`${category}_${id}`);
+  const docId = `${category}_${id}`;
+  const ref = db.collection("tonightMenu").doc(docId);
+
   if (enabled) {
     ref.set({ category, drinkId: id, enabled: true })
       .then(() => console.log(`✅ Added ${id} from ${category}`))
@@ -64,3 +72,4 @@ function saveSelection(category, id, enabled) {
 
 // --- Run ---
 document.addEventListener("DOMContentLoaded", loadAdminToggles);
+

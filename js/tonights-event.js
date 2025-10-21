@@ -1,77 +1,70 @@
-// js/tonights-event.js
+// --- Firebase Init ---
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT_ID.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
 
-document.addEventListener("DOMContentLoaded", () => {
-  console.log("✅ tonights-event.js loaded");
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
+const db = firebase.firestore();
 
-  const db = firebase.firestore();
-  const menuContainer = document.getElementById("tonightMenu");
+// --- Render menu ---
+async function renderMenu() {
+  const container = document.getElementById("menuContainer");
+  if (!container) return;
 
-  if (!menuContainer) {
-    console.warn("⚠️ No #tonightMenu container found in HTML");
-    return;
-  }
+  container.innerHTML = "<p>Loading menu...</p>";
 
-  // Collections we care about
-  const categories = ["cocktails", "beer", "spirits", "mixers"];
-
-  // ------------------------
-  // Render menu dynamically
-  // ------------------------
-  function renderMenu(drinksByCat) {
-    if (!drinksByCat) {
-      menuContainer.innerHTML = "<p>No drinks selected for tonight.</p>";
+  try {
+    // Get tonight’s selected drinks
+    const tonightSnapshot = await db.collection("tonightMenu").get();
+    if (tonightSnapshot.empty) {
+      container.innerHTML = "<p>No menu set yet. Please check back later.</p>";
       return;
     }
 
-    menuContainer.innerHTML = categories.map(cat => {
-      const ids = drinksByCat[cat] || [];
-      if (!ids.length) return "";
+    // Group drinks by category
+    const grouped = {};
+    for (const doc of tonightSnapshot.docs) {
+      const { category, drinkId } = doc.data();
 
+      if (!grouped[category]) grouped[category] = [];
+
+      // Fetch drink details from the category collection
+      const drinkDoc = await db.collection(category).doc(drinkId).get();
+      if (drinkDoc.exists) {
+        grouped[category].push(drinkDoc.data());
+      }
+    }
+
+    // Render grouped menu
+    container.innerHTML = Object.keys(grouped).map(cat => {
       return `
         <section class="menu-section">
           <h2>${cat.charAt(0).toUpperCase() + cat.slice(1)}</h2>
-          <ul class="menu-list" id="menu-${cat}"></ul>
+          <div class="menu-grid">
+            ${grouped[cat].map(drink => `
+              <div class="menu-item">
+                ${drink.image ? `<img src="assets/drinks/${drink.image}" alt="${drink.name}">` : ""}
+                <h3>${drink.name || "Unnamed"}</h3>
+                ${drink.blurb ? `<p>${drink.blurb}</p>` : ""}
+              </div>
+            `).join("")}
+          </div>
         </section>
       `;
     }).join("");
 
-    // Now fetch details for each drink
-    categories.forEach(cat => {
-      const ids = drinksByCat[cat] || [];
-      if (!ids.length) return;
-
-      const ul = document.getElementById(`menu-${cat}`);
-      ids.forEach(id => {
-        db.collection(cat).doc(id).get().then(doc => {
-          if (!doc.exists) return;
-          const d = doc.data();
-
-          const flavours = d.flavour 
-            ? `<p class="flavours"><strong>Flavours:</strong> ${d.flavour}</p>`
-            : "";
-
-          ul.innerHTML += `
-            <li class="menu-item">
-              <h3>${d.name || "Unnamed"}</h3>
-              ${d.ingredients ? `<p><strong>Ingredients:</strong> ${d.ingredients.join(", ")}</p>` : ""}
-              ${d.short ? `<p>${d.short}</p>` : ""}
-              ${flavours}
-            </li>
-          `;
-        });
-      });
-    });
+  } catch (err) {
+    console.error("Error rendering menu:", err);
+    container.innerHTML = "<p>⚠️ Error loading menu. Please try again later.</p>";
   }
+}
 
-  // ------------------------
-  // Live listener for tonight's menu
-  // ------------------------
-  db.collection("tonight").doc("menu")
-    .onSnapshot(doc => {
-      if (!doc.exists) {
-        menuContainer.innerHTML = "<p>Tonight’s menu not set yet.</p>";
-        return;
-      }
-      renderMenu(doc.data().drinks);
-    });
-});
+// --- Run ---
+document.addEventListener("DOMContentLoaded", renderMenu);
