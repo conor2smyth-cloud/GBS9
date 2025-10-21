@@ -86,3 +86,33 @@ def main():
 
     print("\n🎉 Update complete. GitHub Pages will rebuild automatically.")
 
+import firebase_admin
+from firebase_admin import credentials, firestore
+import json
+
+# Load Firestore service account
+cred = credentials.Certificate("gbs9-service-key.json")
+firebase_admin.initialize_app(cred)
+db = firestore.client()
+
+# Load drinks.json
+with open("data/drinks.json", "r", encoding="utf-8") as f:
+    drinks_data = json.load(f)
+
+# Define collections to push
+collections = ["cocktails", "beer", "spirits", "mixers"]
+
+for col in collections:
+    if col in drinks_data:
+        col_ref = db.collection(col)
+
+        # Wipe existing collection
+        docs = col_ref.stream()
+        for doc in docs:
+            doc.reference.delete()
+
+        # Add updated drinks
+        for drink in drinks_data[col]:
+            col_ref.add(drink)
+
+print("✅ Drinks pushed to Firestore!")
