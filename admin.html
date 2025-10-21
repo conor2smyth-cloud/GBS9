@@ -2,52 +2,48 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GBS9 Admin</title>
-  <link rel="stylesheet" href="css/admin.css">
-
-  <!-- Firebase compat SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
-
-  <!-- Firebase config -->
-  <script src="js/firebase.js"></script>
-
-  <!-- Admin logic -->
-  <script src="js/admin.js" defer></script>
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="admin.css">
 </head>
 <body>
-  <header>
-    <h1>Admin Dashboard</h1>
-    <p>Manage tonight’s drinks menu.</p>
-  </header>
+  <h1>Admin Dashboard</h1>
+  <p>Manage tonight’s drinks menu.</p>
 
-  <main>
-    <section>
-      <h2>Cocktails</h2>
-      <div id="cocktails"></div>
-    </section>
+  <div id="categories">
+    <h2>Cocktails</h2>
+    <div id="cocktails"></div>
 
-    <section>
-      <h2>Beer</h2>
-      <div id="beer"></div>
-    </section>
+    <h2>Beer</h2>
+    <div id="beer"></div>
 
-    <section>
-      <h2>Spirits</h2>
-      <div id="spirits"></div>
-    </section>
+    <h2>Spirits</h2>
+    <div id="spirits"></div>
 
-    <section>
-      <h2>Misc (Mixers)</h2>
-      <div id="misc"></div>
-    </section>
+    <h2>Misc (Mixers)</h2>
+    <div id="misc"></div>
+  </div>
 
-    <div class="save-container">
-      <button id="saveMenuBtn">Save Menu</button>
-      <p id="saveMessage" class="hidden">✅ Menu saved successfully!</p>
-    </div>
-  </main>
+  <button id="saveMenu">Save Menu</button>
+
+  <!-- ✅ Firebase only ONCE -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+
+  <script>
+    // ✅ Define firebaseConfig only here
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT_ID.appspot.com",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+  </script>
+
+  <!-- ✅ Only load admin.js AFTER firebase init -->
+  <script src="admin.js"></script>
 </body>
 </html>
