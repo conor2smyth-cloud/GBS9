@@ -14,15 +14,17 @@ const clearButton = document.getElementById("clearMenuBtn");
 
 async function loadAdminMenu() {
   const collections = ["cocktails", "beer", "spirits", "misc"];
-  const tonightSnap = await getDocs(collection(db, "tonightMenu"));
-  const activeIds = tonightSnap.docs.map(d => d.id);
 
-  // Load all drink categories
+  // Cache all active drink IDs from tonightMenu
+  const tonightSnap = await getDocs(collection(db, "tonightMenu"));
+  let activeIds = tonightSnap.docs.map(d => d.id);
+
   for (const col of collections) {
     const snap = await getDocs(collection(db, col));
     snap.forEach(docSnap => {
       const data = docSnap.data();
-      const isActive = activeIds.includes(docSnap.id);
+      const drinkId = docSnap.id; // use Firestore's own ID
+      const isActive = activeIds.includes(drinkId);
 
       const div = document.createElement("div");
       div.className = "drink-item";
@@ -32,17 +34,18 @@ async function loadAdminMenu() {
 
       const toggle = document.createElement("input");
       toggle.type = "checkbox";
+      toggle.dataset.id = drinkId;
       toggle.checked = isActive;
 
       toggle.addEventListener("change", async () => {
         if (toggle.checked) {
-          await setDoc(doc(db, "tonightMenu", docSnap.id), { active: true });
+          await setDoc(doc(db, "tonightMenu", drinkId), { active: true });
         } else {
           const confirmOff = confirm(`Remove "${data.name}" from Tonight's Menu?`);
           if (confirmOff) {
-            await deleteDoc(doc(db, "tonightMenu", docSnap.id));
+            await deleteDoc(doc(db, "tonightMenu", drinkId));
           } else {
-            toggle.checked = true; // revert
+            toggle.checked = true; // revert to ON
           }
         }
       });
@@ -52,21 +55,19 @@ async function loadAdminMenu() {
     });
   }
 
-  // Real-time sync — update checkboxes if others edit
+  // Realtime updates
   onSnapshot(collection(db, "tonightMenu"), (snapshot) => {
-    const activeIds = snapshot.docs.map(d => d.id);
-    document.querySelectorAll(".drink-item").forEach(item => {
-      const label = item.querySelector("label").textContent;
-      const drinkId = label.toLowerCase().replace(/\s+/g, "-");
-      const cb = item.querySelector("input[type=checkbox]");
-      cb.checked = activeIds.includes(drinkId);
+    activeIds = snapshot.docs.map(d => d.id);
+    document.querySelectorAll(".drink-item input[type=checkbox]").forEach(cb => {
+      const id = cb.dataset.id;
+      cb.checked = activeIds.includes(id);
     });
   });
 }
 
-// Clear menu button
+// Clear button
 clearButton.addEventListener("click", async () => {
-  const ok = confirm("Are you sure you want to clear the entire Tonight's Menu?");
+  const ok = confirm("Clear the entire Tonight's Menu?");
   if (!ok) return;
   const snap = await getDocs(collection(db, "tonightMenu"));
   for (const docSnap of snap.docs) {
@@ -76,3 +77,4 @@ clearButton.addEventListener("click", async () => {
 });
 
 window.addEventListener("DOMContentLoaded", loadAdminMenu);
+
