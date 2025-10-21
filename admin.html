@@ -72,6 +72,37 @@
     <p>✅ After saving, confirm live updates on the <a href="tonights-event.html" target="_blank">Guest Menu</a>.</p>
   </footer>
 
+<div class="tabs">
+  <button class="tab-button active" data-tab="cocktails-tab">Cocktails</button>
+  <button class="tab-button" data-tab="beer-tab">Beer</button>
+  <button class="tab-button" data-tab="spirits-tab">Spirits</button>
+  <button class="tab-button" data-tab="misc-tab">Misc</button>
+</div>
+
+<div id="cocktails-tab" class="tab-content active">
+  <h2>Cocktails</h2>
+  <div id="cocktails-list" class="checkbox-grid"></div>
+</div>
+
+<div id="beer-tab" class="tab-content">
+  <h2>Beer</h2>
+  <div id="beer-list" class="checkbox-grid"></div>
+</div>
+
+<div id="spirits-tab" class="tab-content">
+  <h2>Spirits</h2>
+  <div id="spirits-list" class="checkbox-grid"></div>
+</div>
+
+<div id="misc-tab" class="tab-content">
+  <h2>Misc</h2>
+  <div id="misc-list" class="checkbox-grid"></div>
+</div>
+
+<button id="save-menu">Save Menu</button>
+<p id="status-message"></p>
+
+
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
   <script src="js/firebase.js"></script>
