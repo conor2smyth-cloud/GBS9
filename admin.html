@@ -25,12 +25,12 @@
 
   <button id="saveMenu">Save Menu</button>
 
-  <!-- ✅ Firebase only ONCE -->
+  <!-- ✅ Firebase loaded only ONCE -->
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
 
   <script>
-    // ✅ Define firebaseConfig only here
+    // ✅ Firebase config defined here only
     const firebaseConfig = {
       apiKey: "YOUR_API_KEY",
       authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
@@ -39,11 +39,14 @@
       messagingSenderId: "YOUR_SENDER_ID",
       appId: "YOUR_APP_ID"
     };
+
+    // Init once
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
   </script>
 
-  <!-- ✅ Only load admin.js AFTER firebase init -->
+  <!-- ✅ Admin logic separate -->
   <script src="admin.js"></script>
 </body>
 </html>
+

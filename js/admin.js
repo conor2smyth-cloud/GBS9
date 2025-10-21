@@ -1,4 +1,5 @@
-// admin.js — now assumes firebase + db already exist from admin.html
+// admin.js
+// relies on firebase + db already initialized in admin.html
 
 async function loadCategory(category) {
   const container = document.getElementById(category);
@@ -28,8 +29,9 @@ async function saveMenu() {
         drinkId: cb.value
       }));
 
-    // clear old menu
     const tonightRef = db.collection("tonightMenu");
+
+    // clear old menu first
     const docs = await tonightRef.get();
     for (const doc of docs.docs) {
       await doc.ref.delete();
