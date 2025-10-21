@@ -3,25 +3,50 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GBS9 Admin Panel</title>
+  <title>GBS9 Admin Dashboard</title>
   <style>
     body {
       font-family: system-ui, sans-serif;
-      background: #f9f9f9;
+      background: #fafafa;
+      margin: 0;
       padding: 2rem;
+      color: #222;
     }
-    h1 { margin-bottom: 1rem; }
+
+    h1 {
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      margin-bottom: 1.5rem;
+      color: #555;
+    }
+
     .drink-item {
       display: flex;
       justify-content: space-between;
       align-items: center;
       background: #fff;
+      border: 1px solid #ddd;
       border-radius: 8px;
       padding: 0.75rem 1rem;
       margin-bottom: 0.5rem;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
     }
+
+    .drink-item label {
+      flex: 1;
+      font-weight: 500;
+    }
+
+    input[type="checkbox"] {
+      width: 22px;
+      height: 22px;
+      cursor: pointer;
+    }
+
     #clearMenuBtn {
+      display: inline-block;
       margin-top: 1.5rem;
       background: #c62828;
       color: #fff;
@@ -31,17 +56,123 @@
       cursor: pointer;
       font-weight: 600;
     }
+
     #clearMenuBtn:hover {
       background: #b71c1c;
+    }
+
+    .category-header {
+      font-size: 1.2rem;
+      margin-top: 1.5rem;
+      margin-bottom: 0.5rem;
+      color: #333;
+      border-bottom: 2px solid #eee;
+      padding-bottom: 0.25rem;
     }
   </style>
 </head>
 <body>
   <h1>GBS9 Admin Dashboard</h1>
-  <p>Toggle drinks to add/remove from Tonight’s Menu.</p>
+  <p>Toggle drinks to add/remove from Tonight’s Menu. Use the button below to clear all selections.</p>
+
   <div id="menuContainer"></div>
   <button id="clearMenuBtn">Clear Tonight’s Menu</button>
 
-  <script type="module" src="./js/admin.js"></script>
+  <script type="module">
+    import { db } from "./js/firebase.js";
+    import {
+      collection,
+      getDocs,
+      addDoc,
+      deleteDoc,
+      doc,
+      onSnapshot,
+      query,
+      where
+    } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-firestore.js";
+
+    const categories = ["cocktails", "beer", "spirits", "misc"];
+    const menuContainer = document.getElementById("menuContainer");
+    const clearButton = document.getElementById("clearMenuBtn");
+
+    async function loadAdminMenu() {
+      // Read tonightMenu and collect active drink IDs
+      const tonightSnap = await getDocs(collection(db, "tonightMenu"));
+      let activeDrinkIds = tonightSnap.docs.map(d => d.data().drinkId);
+
+      // Build list of all drinks per category
+      for (const category of categories) {
+        const header = document.createElement("div");
+        header.className = "category-header";
+        header.textContent = category.charAt(0).toUpperCase() + category.slice(1);
+        menuContainer.appendChild(header);
+
+        const drinksSnap = await getDocs(collection(db, category));
+        drinksSnap.forEach(drinkSnap => {
+          const data = drinkSnap.data();
+          const drinkId = drinkSnap.id;
+          const isActive = activeDrinkIds.includes(drinkId);
+
+          const div = document.createElement("div");
+          div.className = "drink-item";
+
+          const label = document.createElement("label");
+          label.textContent = data.name || "(Unnamed Drink)";
+
+          const toggle = document.createElement("input");
+          toggle.type = "checkbox";
+          toggle.checked = isActive;
+          toggle.dataset.id = drinkId;
+          toggle.dataset.category = category;
+
+          toggle.addEventListener("change", async () => {
+            if (toggle.checked) {
+              await addDoc(collection(db, "tonightMenu"), {
+                drinkId: drinkId,
+                category: category
+              });
+            } else {
+              const confirmOff = confirm(`Remove "${data.name}" from Tonight's Menu?`);
+              if (confirmOff) {
+                const q = query(collection(db, "tonightMenu"), where("drinkId", "==", drinkId));
+                const snap = await getDocs(q);
+                snap.forEach(async (docSnap) => {
+                  await deleteDoc(doc(db, "tonightMenu", docSnap.id));
+                });
+              } else {
+                toggle.checked = true; // revert to ON
+              }
+            }
+          });
+
+          div.append(label, toggle);
+          menuContainer.appendChild(div);
+        });
+      }
+
+      // Real-time sync for active menu
+      onSnapshot(collection(db, "tonightMenu"), (snapshot) => {
+        activeDrinkIds = snapshot.docs.map(d => d.data().drinkId);
+        document.querySelectorAll(".drink-item input[type=checkbox]").forEach(cb => {
+          const id = cb.dataset.id;
+          cb.checked = activeDrinkIds.includes(id);
+        });
+      });
+    }
+
+    // Clear entire menu
+    clearButton.addEventListener("click", async () => {
+      const ok = confirm("Are you sure you want to clear the entire Tonight's Menu?");
+      if (!ok) return;
+      const snap = await getDocs(collection(db, "tonightMenu"));
+      for (const docSnap of snap.docs) {
+        await deleteDoc(doc(db, "tonightMenu", docSnap.id));
+      }
+      alert("Tonight's Menu cleared.");
+    });
+
+    window.addEventListener("DOMContentLoaded", loadAdminMenu);
+  </script>
 </body>
 </html>
+
