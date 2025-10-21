@@ -1,25 +1,74 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const tabButtons = document.querySelectorAll(".tab-btn");
-  const tabPanels = document.querySelectorAll(".tab-panel");
+  const menuRef = firebase.firestore().collection("tonight").doc("menu");
 
-  tabButtons.forEach(btn => {
+  // 🔴 Live listener (updates instantly when admin saves)
+  menuRef.onSnapshot(doc => {
+    if (doc.exists) {
+      const tonight = doc.data();
+      renderMenu(tonight);
+    }
+  });
+});
+
+function renderMenu(tonight) {
+  const container = document.getElementById("sipMenu");
+  if (!container) return;
+
+  // Clear old content
+  container.innerHTML = "";
+
+  // Loop through categories
+  ["cocktails", "beer", "spirits", "mixers"].forEach(type => {
+    if (tonight[type] && tonight[type].length > 0) {
+      const section = document.createElement("div");
+      section.classList.add("menu-section");
+      section.innerHTML = `<h2>${type}</h2>`;
+
+      tonight[type].forEach(drink => {
+        const item = document.createElement("div");
+        item.classList.add("menu-item");
+        item.innerHTML = `
+          <button class="menu-link"
+            data-name="${drink.name}"
+            data-ingredients="${drink.ingredients || ""}"
+            data-method="${drink.method || ""}"
+            data-flavours="${drink.flavours || ""}">
+            ${drink.name}
+          </button>
+        `;
+        section.appendChild(item);
+      });
+
+      container.appendChild(section);
+    }
+  });
+
+  // Wire modal openers
+  document.querySelectorAll(".menu-link").forEach(btn => {
     btn.addEventListener("click", () => {
-      // Reset buttons
-      tabButtons.forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-
-      // Reset panels
-      tabPanels.forEach(panel => panel.classList.remove("active"));
-      const target = document.getElementById(btn.dataset.tab);
-      target.classList.add("active");
-
-      // Reset cascade animations
-      const cascades = target.querySelectorAll(".cascade");
-      cascades.forEach((el, i) => {
-        el.style.animation = "none";
-        void el.offsetWidth; // force reflow
-        el.style.animation = `cascadeDown 0.6s ease forwards ${i * 0.2}s`;
+      openModal({
+        name: btn.dataset.name,
+        ingredients: btn.dataset.ingredients,
+        method: btn.dataset.method,
+        flavours: btn.dataset.flavours
       });
     });
   });
-});
+}
+
+function openModal(drink) {
+  const modal = document.getElementById("menuModal");
+  modal.querySelector("h3").textContent = drink.name;
+  modal.querySelector(".ingredients").textContent = drink.ingredients;
+  modal.querySelector(".method").textContent = drink.method;
+
+  const flavoursBox = modal.querySelector(".flavours");
+  if (drink.flavours && drink.flavours.trim() !== "") {
+    flavoursBox.textContent = `Flavours: ${drink.flavours}`;
+    flavoursBox.style.display = "block";
+  } else {
+    flavoursBox.style.display = "none";
+  }
+
+  modal.style.display = "flex";
+}
