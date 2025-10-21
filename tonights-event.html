@@ -81,13 +81,16 @@ db.collection("tonight").doc("menu").onSnapshot(doc => {
 
 
 
-<!-- at end of tonights-event.html body -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 
-<script src="js/firebase.js"></script> <!-- initializes Firebase -->
-<script src="js/tonights-event.js" defer></script> <!-- your Firestore listener -->
+<!-- Use the committed template file -->
+<script src="js/firebase.template.js"></script>
+
+<!-- Your app logic -->
+<script src="js/admin.js" defer></script>
+
 
 <script>
 document.addEventListener("DOMContentLoaded", async () => {
