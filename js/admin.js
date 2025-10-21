@@ -1,71 +1,78 @@
-// --- Firestore Reference ---
-const db = firebase.firestore();
+// admin.js
 
-// Categories to load
-const categories = ["cocktails", "beer", "spirits", "misc"];
+// Firebase setup (uses firebase-config.js for config)
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+import { getFirestore, collection, getDocs, setDoc, doc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
-// --- Render checklists ---
-function loadAdminMenu() {
-  categories.forEach(cat => {
-    db.collection(cat).get().then(snapshot => {
-      const container = document.getElementById(cat);
-      if (!container) return;
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-      container.innerHTML = `<div class="checkbox-grid">
-        ${snapshot.docs.map(doc => {
-          const d = doc.data();
-          return `
-            <label>
-              <input type="checkbox" data-cat="${cat}" data-id="${doc.id}">
-              ${d.name || "Unnamed"}
-            </label>
-          `;
-        }).join("")}
-      </div>`;
+let currentCategory = "cocktails";
 
-      // Attach change listeners
-      container.querySelectorAll("input[type=checkbox]").forEach(cb => {
-        cb.addEventListener("change", e => {
-          saveSelection(e.target.dataset.cat, e.target.dataset.id, e.target.checked);
-        });
-      });
-    });
-  });
+// Force-show admin panel (no login)
+function showAdminPanel() {
+  document.getElementById("admin-panel").style.display = "block";
+  loadDrinks(currentCategory);
 }
 
-// --- Save selections live into tonightMenu ---
-function saveSelection(category, id, enabled) {
-  const ref = db.collection("tonightMenu").doc(`${category}_${id}`);
-  if (enabled) {
-    ref.set({ category, id, enabled: true });
-  } else {
-    ref.delete();
+// Load drinks from Firestore
+async function loadDrinks(category) {
+  currentCategory = category;
+  const container = document.getElementById("drinks-container");
+  container.innerHTML = "";
+
+  try {
+    const querySnapshot = await getDocs(collection(db, capitalize(category)));
+    querySnapshot.forEach(docSnap => {
+      const drink = docSnap.data();
+      const div = document.createElement("div");
+      div.classList.add("drink-item");
+
+      div.innerHTML = `
+        <label>
+          <input type="checkbox" value="${drink.name}">
+          ${drink.name}
+        </label>
+      `;
+      container.appendChild(div);
+    });
+  } catch (err) {
+    console.error("Error loading drinks:", err);
   }
 }
 
-// --- "Save Menu" button feedback ---
-document.addEventListener("DOMContentLoaded", () => {
-  loadAdminMenu();
+// Save tonight’s menu
+async function saveTonightsMenu() {
+  const selected = Array.from(document.querySelectorAll("#drinks-container input:checked"))
+    .map(input => ({ name: input.value, type: currentCategory }));
 
-  const saveBtn = document.getElementById("saveMenuBtn");
-  const msg = document.getElementById("saveMessage");
-
-  saveBtn.addEventListener("click", () => {
-    msg.style.display = "block";
-    setTimeout(() => msg.style.display = "none", 3000);
-  });
-});
-
-// --- Tab switching ---
-function openTab(tabName) {
-  document.querySelectorAll(".tabcontent").forEach(el => el.style.display = "none");
-  document.querySelectorAll(".tablink").forEach(btn => btn.classList.remove("active"));
-  document.getElementById(tabName).style.display = "block";
-  event.currentTarget.classList.add("active");
+  try {
+    await setDoc(doc(db, "tonight", "menu"), { drinks: selected, updatedAt: new Date() });
+    alert("Tonight’s menu saved!");
+  } catch (err) {
+    console.error("Error saving tonight’s menu:", err);
+    alert("Failed to save tonight’s menu.");
+  }
 }
 
-// Show first tab by default
-document.addEventListener("DOMContentLoaded", () => {
-  document.querySelector(".tablink").click();
-});
+// Print menu
+function printMenu() {
+  window.print();
+}
 
+// Preview menu (redirect to tonight’s event page)
+function previewMenu() {
+  window.location.href = "tonights-event.html";
+}
+
+// Utility: Capitalize first letter
+function capitalize(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+// Expose functions globally for inline HTML
+window.showAdminPanel = showAdminPanel;
+window.showCategory = loadDrinks;
+window.saveTonightsMenu = saveTonightsMenu;
+window.printMenu = printMenu;
+window.previewMenu = previewMenu;

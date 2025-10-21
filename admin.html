@@ -2,33 +2,36 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Admin – Tonight’s Menu</title>
+  <title>Admin Panel</title>
   <link rel="stylesheet" href="css/admin.css">
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
-  <script src="js/firebase.js"></script>
-  <script src="js/admin.js" defer></script>
 </head>
-<body>
+<body onload="showAdminPanel()">
+
   <h1>Admin Panel</h1>
+  <p>Select the drinks for tonight’s menu:</p>
 
-  <div id="adminContent">
-    <p>Select the drinks for tonight’s menu:</p>
-
-    <div class="tabs">
-      <button class="tablink" onclick="openTab('cocktails')">Cocktails</button>
-      <button class="tablink" onclick="openTab('beer')">Beer</button>
-      <button class="tablink" onclick="openTab('spirits')">Spirits</button>
-      <button class="tablink" onclick="openTab('misc')">Mixers</button>
-    </div>
-
-    <div id="cocktails" class="tabcontent"></div>
-    <div id="beer" class="tabcontent"></div>
-    <div id="spirits" class="tabcontent"></div>
-    <div id="misc" class="tabcontent"></div>
-
-    <button id="saveMenuBtn">💾 Save Menu</button>
-    <p id="saveMessage" style="color:green; display:none;">✅ Menu saved successfully!</p>
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab-button" onclick="showCategory('cocktails')">Cocktails</button>
+    <button class="tab-button" onclick="showCategory('beer')">Beer</button>
+    <button class="tab-button" onclick="showCategory('spirits')">Spirits</button>
+    <button class="tab-button" onclick="showCategory('mixers')">Mixers</button>
   </div>
+
+  <!-- Admin Panel -->
+  <div id="admin-panel" style="display:none;">
+    <div id="drinks-container"></div>
+
+    <div class="admin-actions">
+      <button onclick="saveTonightsMenu()">💾 Save Tonight’s Menu</button>
+      <button onclick="printMenu()">🖨️ Print Menu</button>
+      <button onclick="previewMenu()">👀 Preview Menu</button>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+  <script src="js/firebase-config.js"></script>
+  <script src="js/admin.js"></script>
 </body>
 </html>
