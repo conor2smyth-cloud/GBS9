@@ -1,94 +1,79 @@
-document.addEventListener("DOMContentLoaded", async () => {
-  // DOM references
-  const tabs = document.querySelectorAll(".tab-btn");
-  const contents = document.querySelectorAll(".tab-content");
-  const saveBtn = document.getElementById("saveTonightBtn");
-  const loginBox = document.getElementById("authBox");
+// admin.js
+document.addEventListener("DOMContentLoaded", () => {
+  // Firebase
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+
   const signInBtn = document.getElementById("signInBtn");
   const signOutBtn = document.getElementById("signOutBtn");
+  const emailInput = document.getElementById("adminEmail");
+  const passInput = document.getElementById("adminPass");
   const whoami = document.getElementById("whoami");
 
-  // --- Tabs handling ---
-  tabs.forEach(tab => {
-    tab.addEventListener("click", () => {
-      tabs.forEach(t => t.classList.remove("active"));
-      contents.forEach(c => c.classList.remove("active"));
-      tab.classList.add("active");
-      document.getElementById(tab.dataset.tab).classList.add("active");
-    });
-  });
+  const adminTabs = document.getElementById("adminTabs");
+  const adminActions = document.getElementById("adminActions");
 
-  // --- Load drinks dynamically ---
-  try {
-    const res = await fetch("data/drinks.json");
-    const data = await res.json();
-
-    const categories = {
-      cocktails: data.cocktails || [],
-      beer: data.beer || [],
-      spirits: data.spirits || [],
-      mixers: data.misc || [] // map misc → mixers
-    };
-
-    Object.keys(categories).forEach(cat => {
-      const container = document.getElementById(cat);
-      if (!container) return;
-
-      container.innerHTML = categories[cat].map(d => `
-        <label class="drink-label">
-          <input type="checkbox" data-name="${d.name}" data-type="${cat}">
-          ${d.name}
-        </label>
-      `).join("");
-    });
-  } catch (err) {
-    console.error("Error loading drinks:", err);
-  }
-
-  // --- Firebase Auth ---
-  signInBtn.addEventListener("click", async () => {
-    const email = document.getElementById("adminEmail").value;
-    const pass = document.getElementById("adminPass").value;
+  // --- Auth ---
+  signInBtn?.addEventListener("click", async () => {
     try {
-      await auth.signInWithEmailAndPassword(email, pass);
-      whoami.textContent = `Signed in as ${email}`;
-      signInBtn.style.display = "none";
-      signOutBtn.style.display = "inline-block";
-      loginBox.style.display = "none";
-      document.getElementById("adminTabs").style.display = "flex";
-      document.getElementById("adminActions").style.display = "block";
+      await auth.signInWithEmailAndPassword(emailInput.value, passInput.value);
     } catch (err) {
       alert("Login failed: " + err.message);
     }
   });
 
-  signOutBtn.addEventListener("click", async () => {
+  signOutBtn?.addEventListener("click", async () => {
     await auth.signOut();
-    whoami.textContent = "Signed out";
-    signInBtn.style.display = "inline-block";
-    signOutBtn.style.display = "none";
-    loginBox.style.display = "block";
-    document.getElementById("adminTabs").style.display = "none";
-    document.getElementById("adminActions").style.display = "none";
   });
 
-  // --- Save Menu ---
-  if (saveBtn) {
-    saveBtn.addEventListener("click", async () => {
-      const selected = [];
-      document.querySelectorAll("input[type=checkbox]:checked").forEach(cb => {
-        selected.push({
-          name: cb.dataset.name,
-          type: cb.dataset.type
+  auth.onAuthStateChanged(user => {
+    if (user) {
+      whoami.textContent = `Signed in as ${user.email}`;
+      signInBtn.style.display = "none";
+      signOutBtn.style.display = "inline-block";
+      adminTabs.style.display = "flex";
+      adminActions.style.display = "block";
+      loadDrinkOptions();
+    } else {
+      whoami.textContent = "";
+      signInBtn.style.display = "inline-block";
+      signOutBtn.style.display = "none";
+      adminTabs.style.display = "none";
+      adminActions.style.display = "none";
+    }
+  });
+
+  // --- Load drink categories dynamically ---
+  function loadDrinkOptions() {
+    const categories = ["cocktails", "beer", "spirits", "mixers"];
+
+    categories.forEach(cat => {
+      db.collection(cat).get().then(snapshot => {
+        const container = document.getElementById(cat);
+        if (!container) return;
+
+        container.innerHTML = `<div class="checkbox-grid">
+          ${snapshot.docs.map(doc => {
+            const d = doc.data();
+            return `
+              <label>
+                <input type="checkbox" data-cat="${cat}" data-id="${doc.id}">
+                ${d.name || "Unnamed"}
+              </label>
+            `;
+          }).join("")}
+        </div>`;
+
+        // Attach change listeners
+        container.querySelectorAll("input[type=checkbox]").forEach(cb => {
+          cb.addEventListener("change", e => {
+            saveSelection(e.target.dataset.cat, e.target.dataset.id, e.target.checked);
+          });
         });
       });
-
-      try {
-        await db.collection("tonight").doc("menu").set({ drinks: selected });
-        alert("✅ Tonight’s menu saved!");
-      } catch (err) {
-        alert("Error saving: " + err.message);
-      }
     });
   }
-});
+
+  // --- Save to Firestore ---
+  function saveSelection(category, id, enabled) {
+    const ref = db.collection("tonightMenu").
