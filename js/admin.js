@@ -1,108 +1,71 @@
-// js/admin.js
+// --- Firestore Reference ---
+const db = firebase.firestore();
 
-document.addEventListener("DOMContentLoaded", () => {
-  console.log("✅ Admin.js loaded");
+// Categories to load
+const categories = ["cocktails", "beer", "spirits", "misc"];
 
-  // Firestore reference
-  const db = firebase.firestore();
-
-  // Categories we want to manage
-  const categories = ["cocktails", "beer", "spirits", "mixers"];
-
-  // Containers
-  const saveBtn = document.getElementById("saveTonightBtn");
-  const tabs = document.getElementById("adminTabs");
-  const actions = document.getElementById("adminActions");
-
-  // Track selections locally before saving
-  let tonightMenu = { cocktails: [], beer: [], spirits: [], mixers: [] };
-
-  // ------------------------
-  // Load drinks into checkboxes
-  // ------------------------
-  function loadCategories() {
-    categories.forEach(cat => {
+// --- Render checklists ---
+function loadAdminMenu() {
+  categories.forEach(cat => {
+    db.collection(cat).get().then(snapshot => {
       const container = document.getElementById(cat);
       if (!container) return;
 
-      db.collection(cat).get().then(snapshot => {
-        if (snapshot.empty) {
-          container.innerHTML = `<p class="empty">No ${cat} found in Firestore.</p>`;
-          return;
-        }
+      container.innerHTML = `<div class="checkbox-grid">
+        ${snapshot.docs.map(doc => {
+          const d = doc.data();
+          return `
+            <label>
+              <input type="checkbox" data-cat="${cat}" data-id="${doc.id}">
+              ${d.name || "Unnamed"}
+            </label>
+          `;
+        }).join("")}
+      </div>`;
 
-        container.innerHTML = `<div class="checkbox-grid">
-          ${snapshot.docs.map(doc => {
-            const d = doc.data();
-            return `
-              <label>
-                <input type="checkbox" data-cat="${cat}" data-id="${doc.id}">
-                ${d.name || "Unnamed"}
-              </label>
-            `;
-          }).join("")}
-        </div>`;
-
-        // Attach listeners
-        container.querySelectorAll("input[type=checkbox]").forEach(cb => {
-          cb.addEventListener("change", e => {
-            const cat = e.target.dataset.cat;
-            const id = e.target.dataset.id;
-
-            if (e.target.checked) {
-              tonightMenu[cat].push(id);
-            } else {
-              tonightMenu[cat] = tonightMenu[cat].filter(x => x !== id);
-            }
-          });
+      // Attach change listeners
+      container.querySelectorAll("input[type=checkbox]").forEach(cb => {
+        cb.addEventListener("change", e => {
+          saveSelection(e.target.dataset.cat, e.target.dataset.id, e.target.checked);
         });
       });
     });
+  });
+}
+
+// --- Save selections live into tonightMenu ---
+function saveSelection(category, id, enabled) {
+  const ref = db.collection("tonightMenu").doc(`${category}_${id}`);
+  if (enabled) {
+    ref.set({ category, id, enabled: true });
+  } else {
+    ref.delete();
   }
+}
 
-  // ------------------------
-  // Save Tonight’s Menu
-  // ------------------------
-  if (saveBtn) {
-    saveBtn.addEventListener("click", async () => {
-      try {
-        await db.collection("tonight").doc("menu").set({
-          drinks: tonightMenu,
-          updatedAt: new Date()
-        });
-        alert("✅ Tonight’s menu saved successfully!");
-      } catch (err) {
-        console.error("Save error:", err);
-        alert("❌ Failed to save menu.");
-      }
-    });
-  }
+// --- "Save Menu" button feedback ---
+document.addEventListener("DOMContentLoaded", () => {
+  loadAdminMenu();
 
-  // ------------------------
-  // Tabs Switching
-  // ------------------------
-  if (tabs) {
-    const tabBtns = tabs.querySelectorAll(".tab-btn");
-    const tabContents = document.querySelectorAll(".tab-content");
+  const saveBtn = document.getElementById("saveMenuBtn");
+  const msg = document.getElementById("saveMessage");
 
-    tabBtns.forEach(btn => {
-      btn.addEventListener("click", () => {
-        tabBtns.forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
+  saveBtn.addEventListener("click", () => {
+    msg.style.display = "block";
+    setTimeout(() => msg.style.display = "none", 3000);
+  });
+});
 
-        tabContents.forEach(tc => {
-          tc.classList.remove("active");
-          if (tc.id === btn.dataset.tab) tc.classList.add("active");
-        });
-      });
-    });
-  }
+// --- Tab switching ---
+function openTab(tabName) {
+  document.querySelectorAll(".tabcontent").forEach(el => el.style.display = "none");
+  document.querySelectorAll(".tablink").forEach(btn => btn.classList.remove("active"));
+  document.getElementById(tabName).style.display = "block";
+  event.currentTarget.classList.add("active");
+}
 
-  // Show tabs + actions after login (for now, always show)
-  if (tabs) tabs.style.display = "flex";
-  if (actions) actions.style.display = "block";
-
-  // Init
-  loadCategories();
+// Show first tab by default
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelector(".tablink").click();
 });
 
