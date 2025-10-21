@@ -1,9 +1,6 @@
-// admin.js
+// js/admin.js
+import { db } from "./firebase.js";
 import {
-  initializeApp
-} from "https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js";
-import {
-  getFirestore,
   collection,
   getDocs,
   setDoc,
@@ -11,18 +8,6 @@ import {
   doc,
   onSnapshot
 } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyAxX7v-XXXXXXXXXXXXXXX",
-  authDomain: "gbs9-9d0a8.firebaseapp.com",
-  projectId: "gbs9-9d0a8",
-  storageBucket: "gbs9-9d0a8.appspot.com",
-  messagingSenderId: "969676248299",
-  appId: "1:969676248299:web:XXXXXXXXXXXXXX"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
 
 const menuContainer = document.getElementById("menuContainer");
 const clearButton = document.getElementById("clearMenuBtn");
@@ -32,11 +17,13 @@ async function loadAdminMenu() {
   const tonightSnap = await getDocs(collection(db, "tonightMenu"));
   const activeIds = tonightSnap.docs.map(d => d.id);
 
+  // Load all drink categories
   for (const col of collections) {
     const snap = await getDocs(collection(db, col));
     snap.forEach(docSnap => {
       const data = docSnap.data();
       const isActive = activeIds.includes(docSnap.id);
+
       const div = document.createElement("div");
       div.className = "drink-item";
 
@@ -65,17 +52,19 @@ async function loadAdminMenu() {
     });
   }
 
-  // Real-time listener: keep admin synced
+  // Real-time sync — update checkboxes if others edit
   onSnapshot(collection(db, "tonightMenu"), (snapshot) => {
     const activeIds = snapshot.docs.map(d => d.id);
-    document.querySelectorAll(".drink-item input[type=checkbox]").forEach(cb => {
-      const label = cb.previousSibling.textContent;
+    document.querySelectorAll(".drink-item").forEach(item => {
+      const label = item.querySelector("label").textContent;
       const drinkId = label.toLowerCase().replace(/\s+/g, "-");
+      const cb = item.querySelector("input[type=checkbox]");
       cb.checked = activeIds.includes(drinkId);
     });
   });
 }
 
+// Clear menu button
 clearButton.addEventListener("click", async () => {
   const ok = confirm("Are you sure you want to clear the entire Tonight's Menu?");
   if (!ok) return;
@@ -87,4 +76,3 @@ clearButton.addEventListener("click", async () => {
 });
 
 window.addEventListener("DOMContentLoaded", loadAdminMenu);
-

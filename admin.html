@@ -3,44 +3,45 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin Dashboard - GBS9</title>
-  <link rel="stylesheet" href="admin.css">
-  <script type="module" src="admin.js" defer></script>
+  <title>GBS9 Admin Panel</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      background: #f9f9f9;
+      padding: 2rem;
+    }
+    h1 { margin-bottom: 1rem; }
+    .drink-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #fff;
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      margin-bottom: 0.5rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+    #clearMenuBtn {
+      margin-top: 1.5rem;
+      background: #c62828;
+      color: #fff;
+      border: none;
+      padding: 0.75rem 1.25rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    #clearMenuBtn:hover {
+      background: #b71c1c;
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>GBS9 Admin Dashboard</h1>
-    <p>Select drinks to feature in tonight’s menu</p>
-  </header>
+  <h1>GBS9 Admin Dashboard</h1>
+  <p>Toggle drinks to add/remove from Tonight’s Menu.</p>
+  <div id="menuContainer"></div>
+  <button id="clearMenuBtn">Clear Tonight’s Menu</button>
 
-<div id="menuContainer"></div>
-<button id="clearMenuBtn" class="clear-btn">Clear Tonight's Menu</button>
-
-
-  <main>
-    <div id="status" class="status"></div>
-
-    <section id="tabs">
-      <button class="tab active" data-tab="cocktails">Cocktails</button>
-      <button class="tab" data-tab="beer">Beer</button>
-      <button class="tab" data-tab="spirits">Spirits</button>
-      <button class="tab" data-tab="misc">Mixers</button>
-    </section>
-
-    <div id="content">
-      <div id="cocktails" class="tab-content active"></div>
-      <div id="beer" class="tab-content"></div>
-      <div id="spirits" class="tab-content"></div>
-      <div id="misc" class="tab-content"></div>
-    </div>
-
-    <button id="saveMenuBtn">💾 Save Tonight’s Menu</button>
-  </main>
-
-  <footer>
-    <p>© 2025 GBS9 | Admin Panel</p>
-  </footer>
+  <script type="module" src="./js/admin.js"></script>
 </body>
 </html>
-
-

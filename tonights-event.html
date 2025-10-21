@@ -3,22 +3,44 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tonight’s Menu | GBS9</title>
-  <link rel="stylesheet" href="event.css" />
-  <script type="module" src="js/tonights-event.js" defer></script>
+  <title>Tonight’s Menu — GBS9</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      background: #fff;
+      margin: 0;
+      padding: 2rem;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    #eventMenu {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+    .drink-card {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 1rem;
+      text-align: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .drink-card img {
+      width: 100%;
+      border-radius: 6px;
+      object-fit: cover;
+    }
+    .drink-card h3 {
+      margin: 0.5rem 0;
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>🍸 Tonight’s Menu</h1>
-    <p>Curated exclusively for tonight’s event</p>
-  </header>
+  <h1>Tonight’s Menu</h1>
+  <div id="eventMenu"></div>
 
-  <main id="menuContainer">
-    <p class="loading">Loading menu...</p>
-  </main>
-
-  <footer>
-    <p>Follow us @GBS9 | <a href="tel:+3530000000">Call to book</a></p>
-  </footer>
+  <script type="module" src="./js/tonights-event.js"></script>
 </body>
 </html>
