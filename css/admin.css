@@ -1,117 +1,68 @@
-/* === Admin Page Styles === */
-
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: #1e1b18;
-  color: #f5d78c;
-  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #fafafa;
+  color: #333;
   padding: 20px;
-  line-height: 1.6;
 }
 
-h1, h2 {
-  color: #f5d78c;
-  font-weight: bold;
+header {
+  text-align: center;
+  margin-bottom: 30px;
 }
 
-#auth-section {
+h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+section {
   margin-bottom: 20px;
-  padding: 15px;
-  border-radius: 8px;
-  background: #2c2621;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.4);
 }
 
-input[type="email"],
-input[type="password"] {
-  padding: 8px;
-  margin: 5px;
-  border: 1px solid #f5d78c;
-  border-radius: 4px;
-  background: #3b322d;
-  color: #f5d78c;
-}
-
-button {
-  padding: 8px 14px;
-  margin: 5px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  background: #f5d78c;
-  color: #1e1b18;
-  font-weight: bold;
-  transition: all 0.2s ease-in-out;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-}
-
-button:hover {
-  background: #ffd97a;
-  transform: translateY(-2px);
-}
-
-button:active {
-  transform: translateY(0);
-}
-
-/* Tabs for categories */
-.tabs {
-  margin: 20px 0;
-  display: flex;
-  gap: 10px;
-}
-
-.tabs button {
-  flex: none;
-  background: #3b322d;
-  color: #f5d78c;
-  border: 1px solid #f5d78c;
-}
-
-.tabs button.active {
-  background: #f5d78c;
-  color: #1e1b18;
-}
-
-/* Drinks grid */
 .checkbox-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 12px;
-  margin-top: 15px;
-}
-
-.checkbox-grid label {
-  display: flex;
-  align-items: center;
   gap: 8px;
-  background: #2c2621;
-  border: 1px solid #f5d78c;
-  border-radius: 10px;
-  padding: 10px;
+}
+
+label {
+  background: #fff;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
   cursor: pointer;
-  transition: background 0.2s, transform 0.2s;
+  display: block;
 }
 
-.checkbox-grid label:hover {
-  background: #3b322d;
-  transform: translateY(-2px);
+input[type="checkbox"] {
+  margin-right: 8px;
 }
 
-.checkbox-grid input[type="checkbox"] {
-  transform: scale(1.2);
-  accent-color: #f5d78c;
+.save-container {
+  margin-top: 30px;
+  text-align: center;
 }
 
-/* Save/Print/Preview buttons container */
-#menu-actions {
-  margin-top: 25px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
+button {
+  padding: 10px 20px;
+  background: #0078d7;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
 }
 
-#menu-actions button {
-  min-width: 160px;
-  font-size: 15px;
+button:hover {
+  background: #005fa3;
+}
+
+.hidden {
+  display: none;
+}
+
+#saveMessage {
+  margin-top: 10px;
+  font-weight: bold;
+  color: green;
 }

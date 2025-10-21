@@ -2,110 +2,52 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>GBS Admin Panel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GBS9 Admin</title>
   <link rel="stylesheet" href="css/admin.css">
+
+  <!-- Firebase compat SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+
+  <!-- Firebase config -->
+  <script src="js/firebase.js"></script>
+
+  <!-- Admin logic -->
+  <script src="js/admin.js" defer></script>
 </head>
 <body>
   <header>
-    <h1>GBS Admin Panel</h1>
-    <p class="subtitle">Manage Tonight’s Menu • Update in Real-Time</p>
+    <h1>Admin Dashboard</h1>
+    <p>Manage tonight’s drinks menu.</p>
   </header>
 
-  <!-- SOP / Instructions -->
-  <section id="instructions">
-    <h2>📋 Standard Operating Procedure (SOP)</h2>
-    <ol>
-      <li><strong>Step 1:</strong> Choose the drinks you’d like to make available tonight by checking the boxes under each category tab.</li>
-      <li><strong>Step 2:</strong> When finished, scroll down and press the <em>Save Menu</em> button.</li>
-      <li><strong>Step 3:</strong> Wait for the confirmation message (green = success, red = error).</li>
-      <li><strong>Step 4:</strong> Open the <a href="tonights-event.html" target="_blank">Guest Menu</a> on another device to confirm the live menu is showing correctly.</li>
-      <li><strong>Step 5:</strong> If guests request additional drinks or if stock runs out, return here, update selections, and press <em>Save Menu</em> again.</li>
-    </ol>
-    <p><em>Note:</em> Changes are applied live. Refresh the Guest Menu to confirm updates.</p>
-  </section>
-
-  <!-- Tabs -->
-  <section id="menu-controls">
-    <div class="tabs">
-      <button class="tab-button active" data-tab="cocktails">Cocktails</button>
-      <button class="tab-button" data-tab="beer">Beer</button>
-      <button class="tab-button" data-tab="spirits">Spirits</button>
-      <button class="tab-button" data-tab="misc">Misc</button>
-    </div>
-
-    <div id="cocktails" class="tab-content active">
+  <main>
+    <section>
       <h2>Cocktails</h2>
-      <div class="checkbox-grid" id="cocktails-list">
-        <!-- Loaded by admin.js -->
-      </div>
-    </div>
+      <div id="cocktails"></div>
+    </section>
 
-    <div id="beer" class="tab-content">
+    <section>
       <h2>Beer</h2>
-      <div class="checkbox-grid" id="beer-list">
-        <!-- Loaded by admin.js -->
-      </div>
-    </div>
+      <div id="beer"></div>
+    </section>
 
-    <div id="spirits" class="tab-content">
+    <section>
       <h2>Spirits</h2>
-      <div class="checkbox-grid" id="spirits-list">
-        <!-- Loaded by admin.js -->
-      </div>
+      <div id="spirits"></div>
+    </section>
+
+    <section>
+      <h2>Misc (Mixers)</h2>
+      <div id="misc"></div>
+    </section>
+
+    <div class="save-container">
+      <button id="saveMenuBtn">Save Menu</button>
+      <p id="saveMessage" class="hidden">✅ Menu saved successfully!</p>
     </div>
-
-    <div id="misc" class="tab-content">
-      <h2>Misc</h2>
-      <div class="checkbox-grid" id="misc-list">
-        <!-- Loaded by admin.js -->
-      </div>
-    </div>
-  </section>
-
-  <!-- Save Controls -->
-  <section id="save-controls">
-    <button id="save-menu">💾 Save Menu</button>
-    <p id="status-message"></p>
-  </section>
-
-  <footer>
-    <p>✅ After saving, confirm live updates on the <a href="tonights-event.html" target="_blank">Guest Menu</a>.</p>
-  </footer>
-
-<div class="tabs">
-  <button class="tab-button active" data-tab="cocktails-tab">Cocktails</button>
-  <button class="tab-button" data-tab="beer-tab">Beer</button>
-  <button class="tab-button" data-tab="spirits-tab">Spirits</button>
-  <button class="tab-button" data-tab="misc-tab">Misc</button>
-</div>
-
-<div id="cocktails-tab" class="tab-content active">
-  <h2>Cocktails</h2>
-  <div id="cocktails-list" class="checkbox-grid"></div>
-</div>
-
-<div id="beer-tab" class="tab-content">
-  <h2>Beer</h2>
-  <div id="beer-list" class="checkbox-grid"></div>
-</div>
-
-<div id="spirits-tab" class="tab-content">
-  <h2>Spirits</h2>
-  <div id="spirits-list" class="checkbox-grid"></div>
-</div>
-
-<div id="misc-tab" class="tab-content">
-  <h2>Misc</h2>
-  <div id="misc-list" class="checkbox-grid"></div>
-</div>
-
-<button id="save-menu">Save Menu</button>
-<p id="status-message"></p>
-
-
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
-  <script src="js/firebase.js"></script>
-  <script src="js/admin.js"></script>
+  </main>
 </body>
 </html>

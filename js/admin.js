@@ -1,90 +1,50 @@
 // js/admin.js
 
-import { getFirestore, collection, getDocs, setDoc, doc } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
-import { app } from "./firebase.js";
+document.addEventListener("DOMContentLoaded", () => {
+  const categories = ["cocktails", "beer", "spirits", "misc"];
+  const saveBtn = document.getElementById("saveMenuBtn");
+  const saveMessage = document.getElementById("saveMessage");
 
-const db = getFirestore(app);
+  // Load drinks into toggle lists
+  categories.forEach(cat => {
+    db.collection(cat).get().then(snapshot => {
+      const container = document.getElementById(cat);
+      if (!container) return;
 
-// Categories we support
-const categories = ["cocktails", "beer", "spirits", "misc"];
-
-// Load drinks from Firestore
-async function loadDrinks() {
-  try {
-    for (const cat of categories) {
-      const querySnapshot = await getDocs(collection(db, cat));
-      const container = document.getElementById(`${cat}-list`);
-
-      if (!container) continue;
-
-      container.innerHTML = "";
-
-      querySnapshot.forEach((docSnap) => {
-        const data = docSnap.data();
-        const label = document.createElement("label");
-
-        label.innerHTML = `
-          <input type="checkbox" data-cat="${cat}" data-id="${docSnap.id}">
-          ${data.name || "Unnamed"}
-        `;
-
-        container.appendChild(label);
-      });
-    }
-    console.log("✅ Drinks loaded into admin panel.");
-  } catch (err) {
-    console.error("❌ Error loading drinks:", err);
-    document.getElementById("status-message").textContent = "Error loading drinks. Check console.";
-  }
-}
-
-// Save tonight’s menu
-async function saveMenu() {
-  const checkboxes = document.querySelectorAll("input[type=checkbox]");
-  const tonightMenu = {};
-
-  checkboxes.forEach((cb) => {
-    if (cb.checked) {
-      if (!tonightMenu[cb.dataset.cat]) {
-        tonightMenu[cb.dataset.cat] = [];
-      }
-      tonightMenu[cb.dataset.cat].push(cb.dataset.id);
-    }
+      container.innerHTML = `<div class="checkbox-grid">
+        ${snapshot.docs.map(doc => {
+          const d = doc.data();
+          return `
+            <label>
+              <input type="checkbox" data-cat="${cat}" data-id="${doc.id}">
+              ${d.name || "Unnamed"}
+            </label>
+          `;
+        }).join("")}
+      </div>`;
+    });
   });
 
-  try {
-    await setDoc(doc(db, "tonightMenu", "current"), tonightMenu);
-    console.log("✅ Menu saved:", tonightMenu);
+  // Save button -> collect all checked boxes into tonightMenu
+  saveBtn.addEventListener("click", () => {
+    const checkedBoxes = document.querySelectorAll("input[type=checkbox]:checked");
+    const batch = db.batch();
 
-    const msg = document.getElementById("status-message");
-    msg.textContent = "Menu saved successfully!";
-    msg.style.color = "green";
-  } catch (err) {
-    console.error("❌ Error saving menu:", err);
+    checkedBoxes.forEach(cb => {
+      const ref = db.collection("tonightMenu").doc(`${cb.dataset.cat}_${cb.dataset.id}`);
+      batch.set(ref, {
+        category: cb.dataset.cat,
+        id: cb.dataset.id,
+        enabled: true
+      });
+    });
 
-    const msg = document.getElementById("status-message");
-    msg.textContent = "Error saving menu.";
-    msg.style.color = "red";
-  }
-}
-
-// Attach event listeners
-document.addEventListener("DOMContentLoaded", () => {
-  loadDrinks();
-
-  const saveBtn = document.getElementById("save-menu");
-  if (saveBtn) {
-    saveBtn.addEventListener("click", saveMenu);
-  }
-
-  // Tab switching
-  document.querySelectorAll(".tab-button").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      document.querySelectorAll(".tab-button").forEach((b) => b.classList.remove("active"));
-      document.querySelectorAll(".tab-content").forEach((c) => c.classList.remove("active"));
-
-      btn.classList.add("active");
-      document.getElementById(btn.dataset.tab).classList.add("active");
+    batch.commit().then(() => {
+      saveMessage.classList.remove("hidden");
+      setTimeout(() => saveMessage.classList.add("hidden"), 2000);
+      console.log("[OK] Tonight's menu updated.");
+    }).catch(err => {
+      console.error("Error saving menu:", err);
     });
   });
 });
