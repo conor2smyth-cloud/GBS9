@@ -1,21 +1,20 @@
-// firebase.template.js
-// Copy this file to firebase.js and insert your real config
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+// js/firebase.template.js
+// Firebase template – DO NOT use directly.
+// Copy to js/firebase.js and fill in your actual config before running.
 
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT",
-  storageBucket: "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID",
-  measurementId: "YOUR_MEASUREMENT_ID"
+ apiKey: "AIzaSyAa9_gxx6MnrHHBABj6_Laif0C6LUorQhQ",
+  authDomain: "gbs9-9d0a8.firebaseapp.com",
+  projectId: "gbs9-9d0a8",
+  storageBucket: "gbs9-9d0a8.appspot.com",
+  messagingSenderId: "74649598691",
+  appId: "1:74649598691:web:0ab7026bcf19b8c6e063d6",
+  measurementId: "G-NHMVFL5H1E"
 };
 
-const app = initializeApp(firebaseConfig);
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
 
-export const auth = getAuth(app);
-export const db = getFirestore(app);
+// Export handles
+const auth = firebase.auth();
+const db = firebase.firestore();
