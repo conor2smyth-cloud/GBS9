@@ -1,52 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Admin Dashboard</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard - GBS9</title>
   <link rel="stylesheet" href="admin.css">
+  <script type="module" src="admin.js" defer></script>
 </head>
 <body>
-  <h1>Admin Dashboard</h1>
-  <p>Manage tonight’s drinks menu.</p>
+  <header>
+    <h1>GBS9 Admin Dashboard</h1>
+    <p>Select drinks to feature in tonight’s menu</p>
+  </header>
 
-  <div id="categories">
-    <h2>Cocktails</h2>
-    <div id="cocktails"></div>
+  <main>
+    <div id="status" class="status"></div>
 
-    <h2>Beer</h2>
-    <div id="beer"></div>
+    <section id="tabs">
+      <button class="tab active" data-tab="cocktails">Cocktails</button>
+      <button class="tab" data-tab="beer">Beer</button>
+      <button class="tab" data-tab="spirits">Spirits</button>
+      <button class="tab" data-tab="misc">Mixers</button>
+    </section>
 
-    <h2>Spirits</h2>
-    <div id="spirits"></div>
+    <div id="content">
+      <div id="cocktails" class="tab-content active"></div>
+      <div id="beer" class="tab-content"></div>
+      <div id="spirits" class="tab-content"></div>
+      <div id="misc" class="tab-content"></div>
+    </div>
 
-    <h2>Misc (Mixers)</h2>
-    <div id="misc"></div>
-  </div>
+    <button id="saveMenuBtn">💾 Save Tonight’s Menu</button>
+  </main>
 
-  <button id="saveMenu">Save Menu</button>
-
-  <!-- ✅ Firebase loaded only ONCE -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
-
-  <script>
-    // ✅ Firebase config defined here only
-    const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_PROJECT_ID.appspot.com",
-      messagingSenderId: "YOUR_SENDER_ID",
-      appId: "YOUR_APP_ID"
-    };
-
-    // Init once
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
-  </script>
-
-  <!-- ✅ Admin logic separate -->
-  <script src="js/admin.js"></script>
+  <footer>
+    <p>© 2025 GBS9 | Admin Panel</p>
+  </footer>
 </body>
 </html>
+
 

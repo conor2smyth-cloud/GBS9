@@ -1,46 +1,44 @@
-// tonights-event.js
-// db already initialized in HTML
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
+import { getFirestore, collection, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
 
-async function loadTonightMenu() {
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "gbs9-9d0a8.firebaseapp.com",
+  projectId: "gbs9-9d0a8",
+  storageBucket: "gbs9-9d0a8.firebasestorage.app",
+  messagingSenderId: "74649598691",
+  appId: "1:74649598691:web:0ab7026bcf19b8c6e063d6",
+  measurementId: "G-NHMVFL5H1E"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+async function renderMenu() {
   const menuDiv = document.getElementById("menu");
-  menuDiv.innerHTML = "<p>Loading menu...</p>";
-
-  try {
-    // get selected items
-    const snapshot = await db.collection("tonightMenu").get();
-
-    if (snapshot.empty) {
-      menuDiv.innerHTML = "<p>No menu has been set yet. Please check back later!</p>";
-      return;
-    }
-
-    // group by category
-    const grouped = {};
-    for (const doc of snapshot.docs) {
-      const { category, drinkId } = doc.data();
-
-      if (!grouped[category]) grouped[category] = [];
-
-      // fetch drink details from correct collection
-      const drinkDoc = await db.collection(category).doc(drinkId).get();
-      if (drinkDoc.exists) {
-        grouped[category].push(drinkDoc.data().name || "Unnamed");
-      }
-    }
-
-    // render menu
-    menuDiv.innerHTML = Object.entries(grouped).map(([cat, drinks]) => `
-      <h2>${cat.charAt(0).toUpperCase() + cat.slice(1)}</h2>
-      <ul>
-        ${drinks.map(d => `<li>${d}</li>`).join("")}
-      </ul>
-    `).join("");
-
-  } catch (err) {
-    console.error("Error loading tonight’s menu:", err);
-    menuDiv.innerHTML = "<p>⚠️ Failed to load menu.</p>";
+  const tonightSnap = await getDocs(collection(db, "tonightMenu"));
+  if (tonightSnap.empty) {
+    menuDiv.innerHTML = "<p>No menu set for tonight yet.</p>";
+    return;
   }
+
+  const grouped = {};
+  for (const t of tonightSnap.docs) {
+    const { category, drinkId } = t.data();
+    const drinkSnap = await getDoc(doc(db, category, drinkId));
+    if (drinkSnap.exists()) {
+      if (!grouped[category]) grouped[category] = [];
+      grouped[category].push(drinkSnap.data().name);
+    }
+  }
+
+  menuDiv.innerHTML = Object.entries(grouped)
+    .map(([cat, drinks]) => `
+      <div class="category">
+        <h2>${cat}</h2>
+        <ul>${drinks.map(d => `<li>${d}</li>`).join("")}</ul>
+      </div>
+    `).join("");
 }
 
-document.addEventListener("DOMContentLoaded", loadTonightMenu);
-
+document.addEventListener("DOMContentLoaded", renderMenu);

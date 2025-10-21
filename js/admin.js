@@ -1,56 +1,96 @@
-// admin.js
-// relies on firebase + db already initialized in admin.html
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, getDocs, setDoc, doc, deleteDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-async function loadCategory(category) {
-  const container = document.getElementById(category);
-  container.innerHTML = "<p>Loading...</p>";
+const firebaseConfig = {
+  apiKey: "AIzaSyAJJbNG4BUDZPWdOBh1ahsKXJ0KizkPmKs",
+  authDomain: "gbs9-9d0a8.firebaseapp.com",
+  projectId: "gbs9-9d0a8",
+  storageBucket: "gbs9-9d0a8.firebasestorage.app",
+  messagingSenderId: "74649598691",
+  appId: "1:74649598691:web:0ab7026bcf19b8c6e063d6",
+  measurementId: "G-NHMVFL5H1E"
+};
 
-  try {
-    const snapshot = await db.collection(category).get();
-    container.innerHTML = snapshot.docs.map(doc => {
-      const data = doc.data();
-      return `
-        <label class="drink-option">
-          <input type="checkbox" value="${doc.id}" data-category="${category}">
-          ${data.name || "Unnamed"}
-        </label>
-      `;
-    }).join("");
-  } catch (err) {
-    container.innerHTML = `<p>Error: ${err.message}</p>`;
-  }
-}
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-async function saveMenu() {
-  try {
-    const selected = Array.from(document.querySelectorAll("input[type=checkbox]:checked"))
-      .map(cb => ({
-        category: cb.dataset.category,
-        drinkId: cb.value
-      }));
+const categories = ["cocktails", "beer", "spirits", "misc"];
+const content = document.getElementById("content");
+const statusBox = document.getElementById("status");
+const saveMenuBtn = document.getElementById("saveMenuBtn");
 
-    const tonightRef = db.collection("tonightMenu");
+let tonightSelections = {};
 
-    // clear old menu first
-    const docs = await tonightRef.get();
-    for (const doc of docs.docs) {
-      await doc.ref.delete();
-    }
-
-    // save new
-    for (const item of selected) {
-      await tonightRef.add(item);
-    }
-
-    alert("✅ Tonight’s menu saved!");
-  } catch (err) {
-    console.error("Error saving menu:", err);
-    alert("❌ Failed to save menu.");
-  }
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  ["cocktails", "beer", "spirits", "misc"].forEach(loadCategory);
-  document.getElementById("saveMenu").addEventListener("click", saveMenu);
+document.addEventListener("DOMContentLoaded", async () => {
+  await loadTonightMenu();
+  await loadAllCategories();
+  setupTabs();
 });
 
+async function loadTonightMenu() {
+  const tonightRef = collection(db, "tonightMenu");
+  const snapshot = await getDocs(tonightRef);
+  tonightSelections = {};
+  snapshot.forEach(doc => {
+    tonightSelections[doc.id] = true;
+  });
+}
+
+async function loadAllCategories() {
+  for (const cat of categories) {
+    const catRef = collection(db, cat);
+    const snapshot = await getDocs(catRef);
+    const container = document.getElementById(cat);
+    container.innerHTML = `
+      <div class="checkbox-grid">
+        ${snapshot.docs.map(d => {
+          const drink = d.data();
+          const checked = tonightSelections[d.id] ? "checked" : "";
+          return `
+            <label>
+              <input type="checkbox" data-id="${d.id}" data-cat="${cat}" ${checked}>
+              ${drink.name || "Unnamed"}
+            </label>
+          `;
+        }).join("")}
+      </div>
+    `;
+  }
+}
+
+function setupTabs() {
+  const tabs = document.querySelectorAll(".tab");
+  const contents = document.querySelectorAll(".tab-content");
+
+  tabs.forEach(tab => {
+    tab.addEventListener("click", () => {
+      tabs.forEach(t => t.classList.remove("active"));
+      contents.forEach(c => c.classList.remove("active"));
+      tab.classList.add("active");
+      document.getElementById(tab.dataset.tab).classList.add("active");
+    });
+  });
+}
+
+saveMenuBtn.addEventListener("click", async () => {
+  statusBox.textContent = "Saving...";
+  const allChecked = document.querySelectorAll("input[type=checkbox]:checked");
+
+  // Clear previous menu
+  const tonightRef = collection(db, "tonightMenu");
+  const oldSnapshot = await getDocs(tonightRef);
+  for (const d of oldSnapshot.docs) {
+    await deleteDoc(doc(db, "tonightMenu", d.id));
+  }
+
+  // Add new selection
+  for (const cb of allChecked) {
+    await setDoc(doc(db, "tonightMenu", cb.dataset.id), {
+      category: cb.dataset.cat,
+      name: cb.parentElement.textContent.trim()
+    });
+  }
+
+  statusBox.textContent = "✅ Tonight’s menu saved!";
+  setTimeout(() => statusBox.textContent = "", 3000);
+});

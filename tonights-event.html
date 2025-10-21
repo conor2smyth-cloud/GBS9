@@ -2,36 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Tonight’s Menu</title>
-  <link rel="stylesheet" href="event.css">
+  <title>Tonight’s Menu | GBS9</title>
+  <link rel="stylesheet" href="css/event.css">
 </head>
 <body>
-  <h1>🍸 Tonight’s Drinks Menu 🍺</h1>
-  <p>Hand-picked for tonight’s event.</p>
-
+  <h1>🍸 Tonight’s Menu 🍺</h1>
   <div id="menu"></div>
 
-  <!-- ✅ Firebase loaded only ONCE -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
-
-  <script>
-    // ✅ Reuse same Firebase config (copy from admin.html)
-    const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_PROJECT_ID.appspot.com",
-      messagingSenderId: "YOUR_SENDER_ID",
-      appId: "YOUR_APP_ID"
-    };
-
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
-  </script>
-
-  <!-- Page logic -->
-  <script src="tonights-event.js"></script>
+  <script type="module" src="js/tonights-event.js"></script>
 </body>
 </html>
+
 
