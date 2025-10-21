@@ -60,6 +60,61 @@
     </section>
   </main>
 
+<!-- at end of tonights-event.html body -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="js/firebase.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+  const sipPanel = document.getElementById("sip");
+  try {
+    const [catRes, snap] = await Promise.all([
+      fetch("data/drinks.json").then(r=>r.json()),
+      FirebaseAPI.db.collection("tonight").doc("menu").get()
+    ]);
+    const tonight = snap.exists ? snap.data() : { cocktails:[], beer:[], spirits:[], mixers:[] };
+
+    // Build a quick lookup by name so we can show blurb/image
+    const catalog = [
+      ...(catRes.cocktails||[]).map(d=>({ ...d, type:"cocktail" })),
+      ...(catRes.beer||[]).map(d=>({ ...d, type:"beer" })),
+      ...(catRes.spirits||[]).map(d=>({ ...d, type:"spirit" })),
+      ...(catRes.mixers||[]).map(d=>({ ...d, type:"mixer" })),
+    ];
+    const byName = new Map(catalog.map(d => [d.name, d]));
+
+    const chosen = []
+      .concat((tonight.cocktails||[]).map(n=>byName.get(n)).filter(Boolean))
+      .concat((tonight.beer||[]).map(n=>byName.get(n)).filter(Boolean))
+      .concat((tonight.spirits||[]).map(n=>byName.get(n)).filter(Boolean));
+
+    // Simple grid cards (digital view)
+    sipPanel.innerHTML = `
+      <h2>Tonight’s Menu</h2>
+      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;">
+        ${chosen.map(d => `
+          <div class="card">
+            <img src="images/${d.image || 'coming-soon.jpg'}" alt="${d.name}">
+            <div class="card-body">
+              <h3>${d.name}</h3>
+              ${d.short ? `<p>${d.short}</p>` : ""}
+              <a href="#" class="btn" data-modal="${d.name}">Details</a>
+            </div>
+          </div>
+        `).join("")}
+      </div>
+    `;
+
+    // TODO: hook into your existing modal.js to open details by name
+
+  } catch (e) {
+    console.error(e);
+    sipPanel.innerHTML = "<p>Couldn’t load tonight’s menu.</p>";
+  }
+});
+</script>
+
+
   <!-- 🔥 Global Footer -->
   <footer>
     <p>&copy; 2025 GBS9. All rights reserved.</p>

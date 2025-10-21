@@ -37,3 +37,11 @@ li {
   }
 }
 
+/* css/print.css */
+@media print {
+  @page { size: A4 portrait; margin: 20mm; }
+  body { color:#111; background:#fff; font-family:'Merriweather',serif; }
+  button,.btn,.print-help{ display:none !important; }
+}
+
+

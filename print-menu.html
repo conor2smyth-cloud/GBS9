@@ -2,74 +2,130 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tonight’s Event Menu</title>
-  <link rel="stylesheet" href="css/print.css">
+  <title>Tonight’s Menu</title>
+  <link rel="stylesheet" href="css/style.css">
   <style>
-    /* Inline helper styles */
-    .print-help {
-      background: #f8f5e9;
-      border: 1px solid #ccc;
-      padding: 1rem;
-      margin: 1rem 0;
-      border-radius: 6px;
-      font-size: 0.9rem;
+    body {
+      font-family: 'Merriweather', serif;
+      background: #fff;
+      color: #000;
+      padding: 2rem;
+    }
+    h1, h2 {
+      text-align: center;
       color: #333;
+      margin-bottom: 1rem;
+    }
+    .menu-section {
+      margin-bottom: 2rem;
+      page-break-inside: avoid;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    li {
+      font-size: 1.2rem;
+      margin: 0.4rem 0;
+      padding: 0.2rem 0.5rem;
+    }
+    .print-note {
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      color: #555;
+      text-align: center;
     }
     @media print {
-      .print-help {
-        display: none; /* Hide instructions when printing */
-      }
+      .print-note { display: none; }
     }
   </style>
 </head>
 <body>
-  <h1>Tonight’s Menu</h1>
+  <h1>Tonight’s Event Menu</h1>
+  <div id="menuContainer"></div>
 
-  <!-- ✅ Instructions for you (hidden on print) -->
-  <div class="print-help">
-    <strong>Printing Instructions:</strong><br>
-    - On desktop: Press <kbd>Ctrl + P</kbd> (Windows/Linux) or <kbd>Cmd + P</kbd> (Mac).<br>
-    - In the print dialog, select your printer or “Save as PDF”.<br>
-    - Recommended sizes: A4 Portrait for standard menus, or A5 Portrait for smaller menus.<br>
-    - You can adjust the size in the “More settings → Paper size” dropdown.<br>
-    - Borders and buttons will be hidden automatically.
+  <div class="print-note">
+    <p><strong>Printing Instructions:</strong>  
+    Press <kbd>Ctrl + P</kbd> (Windows/Linux) or <kbd>Cmd + P</kbd> (Mac).  
+    For best results: set paper size to A4, orientation to Portrait, and scale to 100%.</p>
   </div>
 
-  <!-- ✅ Auto-populated menu container -->
-  <div id="printMenuContent"></div>
-
   <script>
-    // Load tonight’s menu from localStorage
-    document.addEventListener("DOMContentLoaded", () => {
-      const tonight = JSON.parse(localStorage.getItem("tonight") || "{}");
-      const container = document.getElementById("printMenuContent");
+  document.addEventListener("DOMContentLoaded", () => {
+    const tonight = JSON.parse(localStorage.getItem("tonight") || "{}");
+    tonight.sip = tonight.sip || [];
 
-      if (!tonight.sip || tonight.sip.length === 0) {
-        container.innerHTML = "<p>No drinks have been selected for tonight’s menu yet.</p>";
-        return;
+    // Group drinks by type
+    const grouped = {
+      cocktails: tonight.sip.filter(d => d.type === "cocktail"),
+      beer: tonight.sip.filter(d => d.type === "beer"),
+      spirits: tonight.sip.filter(d => d.type === "spirit"),
+      mixers: tonight.sip.filter(d => d.type === "mixer"),
+    };
+
+    const menuContainer = document.getElementById("menuContainer");
+    menuContainer.innerHTML = `
+      ${grouped.cocktails.length ? `<div class="menu-section"><h2>Cocktails</h2><ul>${grouped.cocktails.map(d => `<li>${d.name}</li>`).join("")}</ul></div>` : ""}
+      ${grouped.beer.length ? `<div class="menu-section"><h2>Beer</h2><ul>${grouped.beer.map(d => `<li>${d.name}</li>`).join("")}</ul></div>` : ""}
+      ${grouped.spirits.length ? `<div class="menu-section"><h2>Spirits</h2><ul>${grouped.spirits.map(d => `<li>${d.name}</li>`).join("")}</ul></div>` : ""}
+      ${grouped.mixers.length ? `<div class="menu-section"><h2>Mixers</h2><ul>${grouped.mixers.map(d => `<li>${d.name}</li>`).join("")}</ul></div>` : ""}
+    `;
+  });
+  </script>
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tonight’s Menu</title>
+  <link rel="stylesheet" href="css/print.css">
+  <style>
+    .print-help{background:#f8f5e9;border:1px solid #ccc;padding:1rem;margin:1rem 0;border-radius:6px;font-size:.9rem;color:#333}
+    @media print {.print-help{display:none}}
+    h1,h2{text-align:center}
+    .menu-section{page-break-inside:avoid;margin:1.5rem 0}
+    ul{list-style:none;padding:0;margin:.4rem auto;max-width:600px}
+    li{font-size:1.1rem;padding:.2rem 0;border-bottom:1px dotted #aaa}
+  </style>
+</head>
+<body>
+  <h1>Tonight’s Event Menu</h1>
+
+  <div class="print-help">
+    <strong>Printing tips:</strong>
+    Press <kbd>Ctrl+P</kbd>/<kbd>Cmd+P</kbd>. Choose A4 Portrait (or A5 for small menus). Scale 100%. Headers/footers off.
+  </div>
+
+  <div id="menuContainer"></div>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script src="js/firebase.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      try {
+        const snap = await FirebaseAPI.db.collection("tonight").doc("menu").get();
+        const data = snap.exists ? snap.data() : { cocktails:[], beer:[], spirits:[], mixers:[] };
+
+        const renderSection = (title, arr) =>
+          arr && arr.length
+            ? `<div class="menu-section"><h2>${title}</h2><ul>${arr.map(n=>`<li>${n}</li>`).join("")}</ul></div>`
+            : "";
+
+        document.getElementById("menuContainer").innerHTML =
+          renderSection("Cocktails", data.cocktails) +
+          renderSection("Beer",      data.beer) +
+          renderSection("Spirits",   data.spirits) +
+          renderSection("Mixers",    data.mixers);
+      } catch (e) {
+        document.getElementById("menuContainer").innerHTML = "<p>Couldn’t load menu.</p>";
+        console.error(e);
       }
-
-      let html = "";
-      html += `<h2>Cocktails</h2><ul>`;
-      tonight.sip.filter(d => d.type === "cocktail").forEach(drink => {
-        html += `<li>${drink.name}</li>`;
-      });
-      html += `</ul>`;
-
-      html += `<h2>Beer</h2><ul>`;
-      tonight.sip.filter(d => d.type === "beer").forEach(drink => {
-        html += `<li>${drink.name}</li>`;
-      });
-      html += `</ul>`;
-
-      html += `<h2>Spirits & Mixers</h2><ul>`;
-      tonight.sip.filter(d => d.type === "spirit").forEach(drink => {
-        html += `<li>${drink.name}</li>`;
-      });
-      html += `</ul>`;
-
-      container.innerHTML = html;
     });
   </script>
 </body>
