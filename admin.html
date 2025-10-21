@@ -2,40 +2,79 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Admin Panel - Drinks Menu</title>
-  <link rel="stylesheet" href="admin.css">
+  <title>GBS Admin Panel</title>
+  <link rel="stylesheet" href="css/admin.css">
 </head>
 <body>
-  <div class="admin-container">
-    <h1>Admin Panel</h1>
+  <header>
+    <h1>GBS Admin Panel</h1>
+    <p class="subtitle">Manage Tonight’s Menu • Update in Real-Time</p>
+  </header>
 
-    <!-- Tabs -->
+  <!-- SOP / Instructions -->
+  <section id="instructions">
+    <h2>📋 Standard Operating Procedure (SOP)</h2>
+    <ol>
+      <li><strong>Step 1:</strong> Choose the drinks you’d like to make available tonight by checking the boxes under each category tab.</li>
+      <li><strong>Step 2:</strong> When finished, scroll down and press the <em>Save Menu</em> button.</li>
+      <li><strong>Step 3:</strong> Wait for the confirmation message (green = success, red = error).</li>
+      <li><strong>Step 4:</strong> Open the <a href="tonights-event.html" target="_blank">Guest Menu</a> on another device to confirm the live menu is showing correctly.</li>
+      <li><strong>Step 5:</strong> If guests request additional drinks or if stock runs out, return here, update selections, and press <em>Save Menu</em> again.</li>
+    </ol>
+    <p><em>Note:</em> Changes are applied live. Refresh the Guest Menu to confirm updates.</p>
+  </section>
+
+  <!-- Tabs -->
+  <section id="menu-controls">
     <div class="tabs">
       <button class="tab-button active" data-tab="cocktails">Cocktails</button>
       <button class="tab-button" data-tab="beer">Beer</button>
       <button class="tab-button" data-tab="spirits">Spirits</button>
-      <button class="tab-button" data-tab="misc">Mixers</button>
+      <button class="tab-button" data-tab="misc">Misc</button>
     </div>
 
-    <!-- Tab Content -->
-    <div class="tab-content active" id="cocktails"></div>
-    <div class="tab-content" id="beer"></div>
-    <div class="tab-content" id="spirits"></div>
-    <div class="tab-content" id="misc"></div>
-
-    <!-- Controls -->
-    <div class="controls">
-      <button id="saveMenu">💾 Save Menu</button>
-      <button id="previewMenu">👀 Preview</button>
-      <button id="printMenu">🖨️ Print</button>
+    <div id="cocktails" class="tab-content active">
+      <h2>Cocktails</h2>
+      <div class="checkbox-grid" id="cocktails-list">
+        <!-- Loaded by admin.js -->
+      </div>
     </div>
 
-    <div id="status"></div>
-  </div>
+    <div id="beer" class="tab-content">
+      <h2>Beer</h2>
+      <div class="checkbox-grid" id="beer-list">
+        <!-- Loaded by admin.js -->
+      </div>
+    </div>
 
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js"></script>
-  <script src="js/firebase-template.js"></script>
+    <div id="spirits" class="tab-content">
+      <h2>Spirits</h2>
+      <div class="checkbox-grid" id="spirits-list">
+        <!-- Loaded by admin.js -->
+      </div>
+    </div>
+
+    <div id="misc" class="tab-content">
+      <h2>Misc</h2>
+      <div class="checkbox-grid" id="misc-list">
+        <!-- Loaded by admin.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Save Controls -->
+  <section id="save-controls">
+    <button id="save-menu">💾 Save Menu</button>
+    <p id="status-message"></p>
+  </section>
+
+  <footer>
+    <p>✅ After saving, confirm live updates on the <a href="tonights-event.html" target="_blank">Guest Menu</a>.</p>
+  </footer>
+
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
+  <script src="js/firebase.js"></script>
   <script src="js/admin.js"></script>
 </body>
 </html>
