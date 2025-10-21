@@ -5,24 +5,26 @@ import sys
 import os
 import shutil
 
+# --- File paths ---
 EXCEL_FILE = "data/drinks.xlsx"
 JSON_FILE = "data/drinks.json"
 IMAGES_SRC = "data/images"
 IMAGES_DEST = "assets/drinks"
 
 def main():
+    # --- Step 1: Excel → JSON ---
     print("Step 1: Importing Excel -> JSON ...")
 
     try:
-        # Load Excel workbook
+        # Load workbook
         xls = pd.ExcelFile(EXCEL_FILE)
 
-        # Normalize columns: lower-case + underscores
+        # Normalize column names: lowercase, underscores
         def normalize_columns(df):
             df.columns = [c.strip().lower().replace(" ", "_") for c in df.columns]
             return df
 
-        # Helper to safely parse each sheet
+        # Safe parser
         def parse_sheet(sheet_name):
             if sheet_name in xls.sheet_names:
                 df = xls.parse(sheet_name).fillna("")
@@ -32,24 +34,15 @@ def main():
                 print(f"[WARN] Sheet '{sheet_name}' not found in Excel. Using empty list.")
                 return []
 
-        # Parse categories
-        cocktails = parse_sheet("Cocktails")
-        beer = parse_sheet("Beer")
-        spirits = parse_sheet("Spirits")
-        misc = parse_sheet("Misc")
-        equipment = parse_sheet("Equipment")
-        glasses = parse_sheet("Glasses")
-        snacks = parse_sheet("Snacks")
-
-        # Build structure
+        # Collect sheets
         drinks_data = {
-            "cocktails": cocktails,
-            "beer": beer,
-            "spirits": spirits,
-            "misc": misc,
-            "equipment": equipment,
-            "glasses": glasses,
-            "snacks": snacks
+            "cocktails": parse_sheet("Cocktails"),
+            "beer": parse_sheet("Beer"),
+            "spirits": parse_sheet("Spirits"),
+            "misc": parse_sheet("Misc"),
+            "equipment": parse_sheet("Equipment"),
+            "glasses": parse_sheet("Glasses"),
+            "snacks": parse_sheet("Snacks")
         }
 
         # Save JSON
@@ -62,7 +55,7 @@ def main():
         print(f"[ERROR] Excel import failed: {e}")
         sys.exit(1)
 
-    # Step 2: Validate JSON
+    # --- Step 2: Validate JSON ---
     print("\nStep 2: Validating JSON ...")
     try:
         subprocess.check_call([sys.executable, "validate_json.py"])
@@ -70,12 +63,12 @@ def main():
         print("[ERROR] Validation failed.")
         sys.exit(1)
 
-    # Step 3: Sync images
+    # --- Step 3: Sync images ---
     print("\nStep 3: Syncing images ...")
     if not os.path.exists(IMAGES_DEST):
         os.makedirs(IMAGES_DEST)
 
-    copied, missing = 0, []
+    copied = 0
     for root, _, files in os.walk(IMAGES_SRC):
         for file in files:
             src_path = os.path.join(root, file)
@@ -86,10 +79,8 @@ def main():
                 copied += 1
 
     print(f"[OK] Copied {copied} new images to {IMAGES_DEST}")
-    if missing:
-        print(f"[WARN] Missing images: {missing}")
 
-    # Step 4: Upload to Firestore
+    # --- Step 4: Upload drinks.json → Firestore ---
     print("\nStep 4: Uploading drinks.json to Firestore ...")
     try:
         subprocess.check_call(["node", "uploadDrinks.js"])
@@ -97,13 +88,13 @@ def main():
         print("[ERROR] Firestore upload failed.")
         sys.exit(1)
 
-    # Step 5: Git commit + push
+    # --- Step 5: Commit + push ---
     print("\nStep 5: Committing + pushing changes ...")
     try:
-        subprocess.check_call(["git", "add", JSON_FILE, IMAGES_DEST])
-        subprocess.check_call(["git", "commit", "-m", "Update drinks and assets"])
-        subprocess.check_call(["git", "push"])
-        print("[OK] Changes pushed to GitHub")
+        subprocess.check_call(["git", "add", "-A"])
+        subprocess.check_call(["git", "commit", "-m", "Auto-update drinks, images, and Firestore"])
+        subprocess.check_call(["git", "push", "origin", "main"])
+        print("✅ Git commit + push complete!")
     except subprocess.CalledProcessError:
         print("[WARN] Git push failed. Please check manually.")
 
