@@ -2,36 +2,40 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Admin Panel</title>
-  <link rel="stylesheet" href="css/admin.css">
+  <title>Admin Panel - Drinks Menu</title>
+  <link rel="stylesheet" href="admin.css">
 </head>
-<body onload="showAdminPanel()">
+<body>
+  <div class="admin-container">
+    <h1>Admin Panel</h1>
 
-  <h1>Admin Panel</h1>
-  <p>Select the drinks for tonight’s menu:</p>
-
-  <!-- Tabs -->
-  <div class="tabs">
-    <button class="tab-button" onclick="showCategory('cocktails')">Cocktails</button>
-    <button class="tab-button" onclick="showCategory('beer')">Beer</button>
-    <button class="tab-button" onclick="showCategory('spirits')">Spirits</button>
-    <button class="tab-button" onclick="showCategory('mixers')">Mixers</button>
-  </div>
-
-  <!-- Admin Panel -->
-  <div id="admin-panel" style="display:none;">
-    <div id="drinks-container"></div>
-
-    <div class="admin-actions">
-      <button onclick="saveTonightsMenu()">💾 Save Tonight’s Menu</button>
-      <button onclick="printMenu()">🖨️ Print Menu</button>
-      <button onclick="previewMenu()">👀 Preview Menu</button>
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab-button active" data-tab="cocktails">Cocktails</button>
+      <button class="tab-button" data-tab="beer">Beer</button>
+      <button class="tab-button" data-tab="spirits">Spirits</button>
+      <button class="tab-button" data-tab="misc">Mixers</button>
     </div>
+
+    <!-- Tab Content -->
+    <div class="tab-content active" id="cocktails"></div>
+    <div class="tab-content" id="beer"></div>
+    <div class="tab-content" id="spirits"></div>
+    <div class="tab-content" id="misc"></div>
+
+    <!-- Controls -->
+    <div class="controls">
+      <button id="saveMenu">💾 Save Menu</button>
+      <button id="previewMenu">👀 Preview</button>
+      <button id="printMenu">🖨️ Print</button>
+    </div>
+
+    <div id="status"></div>
   </div>
 
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
-  <script src="js/firebase-config.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js"></script>
+  <script src="js/firebase-template.js"></script>
   <script src="js/admin.js"></script>
 </body>
 </html>

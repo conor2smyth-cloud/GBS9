@@ -1,78 +1,79 @@
-// admin.js
+// Admin Panel JS – No login required
 
-// Firebase setup (uses firebase-config.js for config)
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-import { getFirestore, collection, getDocs, setDoc, doc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+import { getFirestore, collection, getDocs, doc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
 
+// Firebase init
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-let currentCategory = "cocktails";
+// Categories we support
+const categories = ["cocktails", "beer", "spirits", "misc"];
 
-// Force-show admin panel (no login)
-function showAdminPanel() {
-  document.getElementById("admin-panel").style.display = "block";
-  loadDrinks(currentCategory);
-}
+// --- Load Drinks ---
+async function loadDrinks() {
+  for (const cat of categories) {
+    const container = document.getElementById(cat);
+    if (!container) continue;
 
-// Load drinks from Firestore
-async function loadDrinks(category) {
-  currentCategory = category;
-  const container = document.getElementById("drinks-container");
-  container.innerHTML = "";
+    const snap = await getDocs(collection(db, cat));
+    container.innerHTML = `<div class="checkbox-grid">
+      ${snap.docs.map(d => {
+        const data = d.data();
+        return `
+          <label>
+            <input type="checkbox" data-cat="${cat}" data-id="${d.id}">
+            ${data.name || "Unnamed"}
+          </label>
+        `;
+      }).join("")}
+    </div>`;
 
-  try {
-    const querySnapshot = await getDocs(collection(db, capitalize(category)));
-    querySnapshot.forEach(docSnap => {
-      const drink = docSnap.data();
-      const div = document.createElement("div");
-      div.classList.add("drink-item");
-
-      div.innerHTML = `
-        <label>
-          <input type="checkbox" value="${drink.name}">
-          ${drink.name}
-        </label>
-      `;
-      container.appendChild(div);
+    // Add change listeners
+    container.querySelectorAll("input[type=checkbox]").forEach(cb => {
+      cb.addEventListener("change", e => {
+        saveSelection(e.target.dataset.cat, e.target.dataset.id, e.target.checked);
+      });
     });
-  } catch (err) {
-    console.error("Error loading drinks:", err);
   }
 }
 
-// Save tonight’s menu
-async function saveTonightsMenu() {
-  const selected = Array.from(document.querySelectorAll("#drinks-container input:checked"))
-    .map(input => ({ name: input.value, type: currentCategory }));
-
-  try {
-    await setDoc(doc(db, "tonight", "menu"), { drinks: selected, updatedAt: new Date() });
-    alert("Tonight’s menu saved!");
-  } catch (err) {
-    console.error("Error saving tonight’s menu:", err);
-    alert("Failed to save tonight’s menu.");
+// --- Save Selection to tonightMenu ---
+async function saveSelection(category, id, enabled) {
+  const ref = doc(db, "tonightMenu", `${category}_${id}`);
+  if (enabled) {
+    await setDoc(ref, { category, id });
+  } else {
+    await deleteDoc(ref);
   }
 }
 
-// Print menu
-function printMenu() {
+// --- Save Menu Button ---
+document.getElementById("saveMenu").addEventListener("click", async () => {
+  document.getElementById("status").innerText = "✅ Menu saved!";
+  setTimeout(() => (document.getElementById("status").innerText = ""), 2000);
+});
+
+// --- Preview Button ---
+document.getElementById("previewMenu").addEventListener("click", () => {
+  window.open("tonights-event.html", "_blank");
+});
+
+// --- Print Button ---
+document.getElementById("printMenu").addEventListener("click", () => {
   window.print();
-}
+});
 
-// Preview menu (redirect to tonight’s event page)
-function previewMenu() {
-  window.location.href = "tonights-event.html";
-}
+// --- Tabs ---
+document.querySelectorAll(".tab-button").forEach(button => {
+  button.addEventListener("click", () => {
+    document.querySelectorAll(".tab-button").forEach(btn => btn.classList.remove("active"));
+    document.querySelectorAll(".tab-content").forEach(tab => tab.classList.remove("active"));
 
-// Utility: Capitalize first letter
-function capitalize(str) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-}
+    button.classList.add("active");
+    document.getElementById(button.dataset.tab).classList.add("active");
+  });
+});
 
-// Expose functions globally for inline HTML
-window.showAdminPanel = showAdminPanel;
-window.showCategory = loadDrinks;
-window.saveTonightsMenu = saveTonightsMenu;
-window.printMenu = printMenu;
-window.previewMenu = previewMenu;
+// Start everything
+loadDrinks();
