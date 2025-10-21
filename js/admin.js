@@ -1,79 +1,90 @@
-// Admin Panel JS – No login required
+// js/admin.js
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-import { getFirestore, collection, getDocs, doc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+import { getFirestore, collection, getDocs, setDoc, doc } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+import { app } from "./firebase.js";
 
-// Firebase init
-const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 // Categories we support
 const categories = ["cocktails", "beer", "spirits", "misc"];
 
-// --- Load Drinks ---
+// Load drinks from Firestore
 async function loadDrinks() {
-  for (const cat of categories) {
-    const container = document.getElementById(cat);
-    if (!container) continue;
+  try {
+    for (const cat of categories) {
+      const querySnapshot = await getDocs(collection(db, cat));
+      const container = document.getElementById(`${cat}-list`);
 
-    const snap = await getDocs(collection(db, cat));
-    container.innerHTML = `<div class="checkbox-grid">
-      ${snap.docs.map(d => {
-        const data = d.data();
-        return `
-          <label>
-            <input type="checkbox" data-cat="${cat}" data-id="${d.id}">
-            ${data.name || "Unnamed"}
-          </label>
+      if (!container) continue;
+
+      container.innerHTML = "";
+
+      querySnapshot.forEach((docSnap) => {
+        const data = docSnap.data();
+        const label = document.createElement("label");
+
+        label.innerHTML = `
+          <input type="checkbox" data-cat="${cat}" data-id="${docSnap.id}">
+          ${data.name || "Unnamed"}
         `;
-      }).join("")}
-    </div>`;
 
-    // Add change listeners
-    container.querySelectorAll("input[type=checkbox]").forEach(cb => {
-      cb.addEventListener("change", e => {
-        saveSelection(e.target.dataset.cat, e.target.dataset.id, e.target.checked);
+        container.appendChild(label);
       });
+    }
+    console.log("✅ Drinks loaded into admin panel.");
+  } catch (err) {
+    console.error("❌ Error loading drinks:", err);
+    document.getElementById("status-message").textContent = "Error loading drinks. Check console.";
+  }
+}
+
+// Save tonight’s menu
+async function saveMenu() {
+  const checkboxes = document.querySelectorAll("input[type=checkbox]");
+  const tonightMenu = {};
+
+  checkboxes.forEach((cb) => {
+    if (cb.checked) {
+      if (!tonightMenu[cb.dataset.cat]) {
+        tonightMenu[cb.dataset.cat] = [];
+      }
+      tonightMenu[cb.dataset.cat].push(cb.dataset.id);
+    }
+  });
+
+  try {
+    await setDoc(doc(db, "tonightMenu", "current"), tonightMenu);
+    console.log("✅ Menu saved:", tonightMenu);
+
+    const msg = document.getElementById("status-message");
+    msg.textContent = "Menu saved successfully!";
+    msg.style.color = "green";
+  } catch (err) {
+    console.error("❌ Error saving menu:", err);
+
+    const msg = document.getElementById("status-message");
+    msg.textContent = "Error saving menu.";
+    msg.style.color = "red";
+  }
+}
+
+// Attach event listeners
+document.addEventListener("DOMContentLoaded", () => {
+  loadDrinks();
+
+  const saveBtn = document.getElementById("save-menu");
+  if (saveBtn) {
+    saveBtn.addEventListener("click", saveMenu);
+  }
+
+  // Tab switching
+  document.querySelectorAll(".tab-button").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".tab-button").forEach((b) => b.classList.remove("active"));
+      document.querySelectorAll(".tab-content").forEach((c) => c.classList.remove("active"));
+
+      btn.classList.add("active");
+      document.getElementById(btn.dataset.tab).classList.add("active");
     });
-  }
-}
-
-// --- Save Selection to tonightMenu ---
-async function saveSelection(category, id, enabled) {
-  const ref = doc(db, "tonightMenu", `${category}_${id}`);
-  if (enabled) {
-    await setDoc(ref, { category, id });
-  } else {
-    await deleteDoc(ref);
-  }
-}
-
-// --- Save Menu Button ---
-document.getElementById("saveMenu").addEventListener("click", async () => {
-  document.getElementById("status").innerText = "✅ Menu saved!";
-  setTimeout(() => (document.getElementById("status").innerText = ""), 2000);
-});
-
-// --- Preview Button ---
-document.getElementById("previewMenu").addEventListener("click", () => {
-  window.open("tonights-event.html", "_blank");
-});
-
-// --- Print Button ---
-document.getElementById("printMenu").addEventListener("click", () => {
-  window.print();
-});
-
-// --- Tabs ---
-document.querySelectorAll(".tab-button").forEach(button => {
-  button.addEventListener("click", () => {
-    document.querySelectorAll(".tab-button").forEach(btn => btn.classList.remove("active"));
-    document.querySelectorAll(".tab-content").forEach(tab => tab.classList.remove("active"));
-
-    button.classList.add("active");
-    document.getElementById(button.dataset.tab).classList.add("active");
   });
 });
-
-// Start everything
-loadDrinks();
