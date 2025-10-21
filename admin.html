@@ -13,87 +13,51 @@
 
   <main>
     <h1>Admin Dashboard</h1>
-    <p>Manage tonight’s event drinks list below. Selected drinks go live instantly once you press <strong>Save Tonight’s Menu</strong>.</p>
 
-    <!-- 🔐 Sign in -->
-    <section>
-      <h3>Admin Sign In</h3>
-      <div id="authBox">
-        <input id="adminEmail" type="email" placeholder="Email">
-        <input id="adminPass" type="password" placeholder="Password">
-        <button id="signInBtn" class="btn">Sign In</button>
-        <button id="signOutBtn" class="btn" style="display:none">Sign Out</button>
-      </div>
-      <small id="whoami"></small>
-    </section>
+    <!-- ✅ Success notification -->
+    <div id="adminNotice" class="admin-notice" style="display:none;">
+      ✅ Tonight’s menu has been saved!
+    </div>
 
-    <!-- 📑 FAQ / SOP -->
+    <!-- ✅ SOP / Help -->
     <section class="admin-help">
       <h2>Admin SOP – Tonight’s Event Setup</h2>
-      <ul>
-        <li><a href="#faq1">How do I add cocktails to tonight’s event?</a></li>
-        <li><a href="#faq2">How do I print tonight’s menu?</a></li>
-        <li><a href="#faq3">Can I hide a drink later?</a></li>
-      </ul>
-      <div id="faq1">
-        <h3>Q: How do I add cocktails to tonight’s event?</h3>
-        <p>A: Sign in, open a tab, tick the drinks you want, then click <strong>Save Tonight’s Menu</strong>. Guests will see updates instantly.</p>
-      </div>
-      <div id="faq2">
-        <h3>Q: How do I print tonight’s menu?</h3>
-        <p>A: Click <strong>🖨️ Print Menu</strong>. This opens a printable version in a new tab. Use <kbd>Ctrl+P</kbd> or <kbd>Cmd+P</kbd>.</p>
-      </div>
-      <div id="faq3">
-        <h3>Q: Can I hide a drink later?</h3>
-        <p>A: Yes. Just untick it in the selector and save again. It disappears from the guest menu immediately.</p>
-      </div>
+      <p><strong>Steps:</strong></p>
+      <ol>
+        <li>Log in with your admin account.</li>
+        <li>Use the tabs below to tick which drinks should appear tonight.</li>
+        <li>Click <strong>Save Tonight’s Menu</strong> when finished.</li>
+        <li>Guests will see the live menu instantly under <em>Tonight’s Event > Sip</em>.</li>
+        <li>Click <strong>Print Menu</strong> for a printable version.</li>
+      </ol>
     </section>
 
-    <!-- 🍸 Tabs -->
-    <div class="admin-tabs" id="adminTabs" style="display:none">
+    <!-- ✅ Tabs -->
+    <div class="admin-tabs">
       <button class="tab-btn active" data-tab="cocktails">Cocktails</button>
       <button class="tab-btn" data-tab="beer">Beer</button>
       <button class="tab-btn" data-tab="spirits">Spirits</button>
       <button class="tab-btn" data-tab="mixers">Mixers</button>
     </div>
 
-    <!-- Tab Content -->
+    <!-- ✅ Tab content -->
     <div id="cocktails" class="tab-content active"></div>
     <div id="beer" class="tab-content"></div>
     <div id="spirits" class="tab-content"></div>
     <div id="mixers" class="tab-content"></div>
 
-    <!-- 🚀 Actions -->
-    <div id="adminActions" style="display:none; margin-top:1rem;">
+    <!-- ✅ Actions -->
+    <div id="adminActions" style="margin-top:1rem;">
       <button id="saveTonightBtn" class="btn">💾 Save Tonight’s Menu</button>
       <button id="printMenuBtn" class="btn">🖨️ Print Menu</button>
-      <button id="previewMenuBtn" class="btn">👀 Preview Menu</button>
     </div>
   </main>
 
-    <!-- Actions -->
-    <div id="adminActions" style="display:none; margin-top:1rem;">
-      <button id="saveTonightBtn" class="btn">💾 Save Tonight’s Menu</button>
-      <button id="printMenuBtn" class="btn">🖨️ Print Menu</button>
-      <button id="previewMenuBtn" class="btn">👀 Preview Menu</button>
-    </div>
-
-    <!-- Firebase core + compat SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-
-    <!-- ✅ Use this file instead of firebase.js -->
-    <script src="js/firebase.template.js"></script>
-
-    <!-- Your admin logic -->
-    <script src="js/admin.js" defer></script>
-  </main>
-</body>
-</html>
-
-
-
-
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script src="js/firebase.js"></script>
+  <script src="js/admin.js" defer></script>
 </body>
 </html>
