@@ -1,96 +1,90 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, getDocs, setDoc, doc, deleteDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+// admin.js
+import {
+  initializeApp
+} from "https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js";
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  setDoc,
+  deleteDoc,
+  doc,
+  onSnapshot
+} from "https://www.gstatic.com/firebasejs/9.6.11/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAJJbNG4BUDZPWdOBh1ahsKXJ0KizkPmKs",
+  apiKey: "AIzaSyAxX7v-XXXXXXXXXXXXXXX",
   authDomain: "gbs9-9d0a8.firebaseapp.com",
   projectId: "gbs9-9d0a8",
-  storageBucket: "gbs9-9d0a8.firebasestorage.app",
-  messagingSenderId: "74649598691",
-  appId: "1:74649598691:web:0ab7026bcf19b8c6e063d6",
-  measurementId: "G-NHMVFL5H1E"
+  storageBucket: "gbs9-9d0a8.appspot.com",
+  messagingSenderId: "969676248299",
+  appId: "1:969676248299:web:XXXXXXXXXXXXXX"
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-const categories = ["cocktails", "beer", "spirits", "misc"];
-const content = document.getElementById("content");
-const statusBox = document.getElementById("status");
-const saveMenuBtn = document.getElementById("saveMenuBtn");
+const menuContainer = document.getElementById("menuContainer");
+const clearButton = document.getElementById("clearMenuBtn");
 
-let tonightSelections = {};
+async function loadAdminMenu() {
+  const collections = ["cocktails", "beer", "spirits", "misc"];
+  const tonightSnap = await getDocs(collection(db, "tonightMenu"));
+  const activeIds = tonightSnap.docs.map(d => d.id);
 
-document.addEventListener("DOMContentLoaded", async () => {
-  await loadTonightMenu();
-  await loadAllCategories();
-  setupTabs();
-});
+  for (const col of collections) {
+    const snap = await getDocs(collection(db, col));
+    snap.forEach(docSnap => {
+      const data = docSnap.data();
+      const isActive = activeIds.includes(docSnap.id);
+      const div = document.createElement("div");
+      div.className = "drink-item";
 
-async function loadTonightMenu() {
-  const tonightRef = collection(db, "tonightMenu");
-  const snapshot = await getDocs(tonightRef);
-  tonightSelections = {};
-  snapshot.forEach(doc => {
-    tonightSelections[doc.id] = true;
-  });
-}
+      const label = document.createElement("label");
+      label.textContent = data.name;
 
-async function loadAllCategories() {
-  for (const cat of categories) {
-    const catRef = collection(db, cat);
-    const snapshot = await getDocs(catRef);
-    const container = document.getElementById(cat);
-    container.innerHTML = `
-      <div class="checkbox-grid">
-        ${snapshot.docs.map(d => {
-          const drink = d.data();
-          const checked = tonightSelections[d.id] ? "checked" : "";
-          return `
-            <label>
-              <input type="checkbox" data-id="${d.id}" data-cat="${cat}" ${checked}>
-              ${drink.name || "Unnamed"}
-            </label>
-          `;
-        }).join("")}
-      </div>
-    `;
+      const toggle = document.createElement("input");
+      toggle.type = "checkbox";
+      toggle.checked = isActive;
+
+      toggle.addEventListener("change", async () => {
+        if (toggle.checked) {
+          await setDoc(doc(db, "tonightMenu", docSnap.id), { active: true });
+        } else {
+          const confirmOff = confirm(`Remove "${data.name}" from Tonight's Menu?`);
+          if (confirmOff) {
+            await deleteDoc(doc(db, "tonightMenu", docSnap.id));
+          } else {
+            toggle.checked = true; // revert
+          }
+        }
+      });
+
+      div.append(label, toggle);
+      menuContainer.appendChild(div);
+    });
   }
-}
 
-function setupTabs() {
-  const tabs = document.querySelectorAll(".tab");
-  const contents = document.querySelectorAll(".tab-content");
-
-  tabs.forEach(tab => {
-    tab.addEventListener("click", () => {
-      tabs.forEach(t => t.classList.remove("active"));
-      contents.forEach(c => c.classList.remove("active"));
-      tab.classList.add("active");
-      document.getElementById(tab.dataset.tab).classList.add("active");
+  // Real-time listener: keep admin synced
+  onSnapshot(collection(db, "tonightMenu"), (snapshot) => {
+    const activeIds = snapshot.docs.map(d => d.id);
+    document.querySelectorAll(".drink-item input[type=checkbox]").forEach(cb => {
+      const label = cb.previousSibling.textContent;
+      const drinkId = label.toLowerCase().replace(/\s+/g, "-");
+      cb.checked = activeIds.includes(drinkId);
     });
   });
 }
 
-saveMenuBtn.addEventListener("click", async () => {
-  statusBox.textContent = "Saving...";
-  const allChecked = document.querySelectorAll("input[type=checkbox]:checked");
-
-  // Clear previous menu
-  const tonightRef = collection(db, "tonightMenu");
-  const oldSnapshot = await getDocs(tonightRef);
-  for (const d of oldSnapshot.docs) {
-    await deleteDoc(doc(db, "tonightMenu", d.id));
+clearButton.addEventListener("click", async () => {
+  const ok = confirm("Are you sure you want to clear the entire Tonight's Menu?");
+  if (!ok) return;
+  const snap = await getDocs(collection(db, "tonightMenu"));
+  for (const docSnap of snap.docs) {
+    await deleteDoc(doc(db, "tonightMenu", docSnap.id));
   }
-
-  // Add new selection
-  for (const cb of allChecked) {
-    await setDoc(doc(db, "tonightMenu", cb.dataset.id), {
-      category: cb.dataset.cat,
-      name: cb.parentElement.textContent.trim()
-    });
-  }
-
-  statusBox.textContent = "✅ Tonight’s menu saved!";
-  setTimeout(() => statusBox.textContent = "", 3000);
+  alert("Tonight's Menu cleared.");
 });
+
+window.addEventListener("DOMContentLoaded", loadAdminMenu);
+
