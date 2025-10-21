@@ -2,83 +2,36 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tonight’s Event – GBS9</title>
-  <link rel="stylesheet" href="css/style.css">
-  <script src="js/header.js" defer></script>
+  <title>Tonight’s Menu</title>
+  <link rel="stylesheet" href="event.css">
 </head>
 <body>
-  <header id="site-header"></header>
+  <h1>🍸 Tonight’s Drinks Menu 🍺</h1>
+  <p>Hand-picked for tonight’s event.</p>
 
-  <main>
-    <h1>🍸 Tonight’s Event</h1>
+  <div id="menu"></div>
 
-    <!-- Tabs navigation -->
-    <div class="tabs">
-      <button class="tab-btn active" data-tab="sip">Sip</button>
-      <button class="tab-btn" data-tab="tip">Tip</button>
-      <button class="tab-btn" data-tab="celebrate">Celebrate</button>
-      <button class="tab-btn" data-tab="roulette">Roulette</button>
-    </div>
+  <!-- ✅ Firebase loaded only ONCE -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
 
-<main>
-  <h1>Tonight’s Menu</h1>
-  <div id="tonightMenu"></div>
-</main>
-<script src="js/tonights-event.js" defer></script>
+  <script>
+    // ✅ Reuse same Firebase config (copy from admin.html)
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT_ID.appspot.com",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
 
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+  </script>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tonight’s Event - GBS9</title>
-  <link rel="stylesheet" href="css/style.css">
-  <script src="js/header.js" defer></script>
-</head>
-<body>
-  <header id="site-header"></header>
-
-  <main>
-    <section id="event-tabs">
-      <div class="tabs">
-        <button class="tab-btn active" data-tab="sip">🥂 Sip</button>
-        <button class="tab-btn" data-tab="tip">💸 Tip</button>
-        <button class="tab-btn" data-tab="celebrate">🎉 Celebrate</button>
-        <button class="tab-btn" data-tab="jam">🎵 Jam</button>
-      </div>
-
-      <div id="sip" class="tab-content active">
-        <h2>Tonight’s Menu</h2>
-        <div id="menuList"></div>
-      </div>
-
-      <div id="tip" class="tab-content">
-        <h2>Tip the Bartender</h2>
-        <p>Scan the QR code to tip with Revolut.</p>
-        <img src="images/revolut-qr.png" alt="Revolut QR" style="max-width:200px;">
-      </div>
-
-      <div id="celebrate" class="tab-content">
-        <h2>Celebrate</h2>
-        <p>Upload your best pictures of the night to our live gallery!</p>
-      </div>
-
-      <div id="jam" class="tab-content">
-        <h2>Spotify Jam</h2>
-        <p>Join our shared playlist and add songs for the night!</p>
-      </div>
-    </section>
-  </main>
-
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-  <script src="js/firebase.js"></script>
-
-  <!-- App script -->
-  <script src="js/tonights-event.js" defer></script>
+  <!-- Page logic -->
+  <script src="tonights-event.js"></script>
 </body>
 </html>
+
