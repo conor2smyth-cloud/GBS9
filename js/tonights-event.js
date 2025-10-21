@@ -1,71 +1,48 @@
+// js/tonights-event.js
+
 document.addEventListener("DOMContentLoaded", () => {
-  const db = firebase.firestore();
+  const menuContainer = document.getElementById("sipMenu");
 
-  const sipContainer = document.getElementById("sipTab"); // Make sure Sip tab has id="sipTab"
+  if (!menuContainer) {
+    console.error("❌ No #sipMenu element found in HTML");
+    return;
+  }
 
-  // --- Render Function ---
-  function renderMenu(drinks) {
-    if (!drinks || drinks.length === 0) {
-      sipContainer.innerHTML = "<p>No drinks selected for tonight yet.</p>";
-      return;
-    }
+  // ✅ Live listener for tonight's menu
+  window.db
+    .collection("tonightMenu")
+    .doc("current") // we keep everything under a single doc
+    .onSnapshot((doc) => {
+      if (!doc.exists) {
+        menuContainer.innerHTML = `<p>No menu set for tonight yet.</p>`;
+        return;
+      }
 
-    sipContainer.innerHTML = drinks.map(drink => `
-      <div class="menu-card" data-name="${drink.name}" data-type="${drink.type}">
-        <h3>${drink.name}</h3>
-        <p class="type">${drink.type}</p>
-      </div>
-    `).join("");
+      const data = doc.data();
+      const items = data?.items || [];
 
-    // Attach modal openers
-    sipContainer.querySelectorAll(".menu-card").forEach(card => {
-      card.addEventListener("click", () => {
-        openDrinkModal(card.dataset.name, card.dataset.type);
-      });
+      if (items.length === 0) {
+        menuContainer.innerHTML = `<p>No drinks selected yet.</p>`;
+        return;
+      }
+
+      // Build menu layout
+      menuContainer.innerHTML = items
+        .map((drink) => {
+          return `
+            <div class="menu-item card">
+              <h3>${drink.name}</h3>
+              ${drink.image && drink.image !== "coming-soon.jpg" 
+                ? `<img src="images/cocktails/${drink.image}" alt="${drink.name}">`
+                : `<div class="placeholder">Image coming soon</div>`}
+              <p><strong>Ingredients:</strong> ${drink.ingredients || "N/A"}</p>
+              <p><strong>Method:</strong> ${drink.method || "N/A"}</p>
+              ${drink.flavours && drink.flavours.length > 0 
+                ? `<p><strong>Flavours:</strong> ${drink.flavours.join(", ")}</p>` 
+                : ""}
+            </div>
+          `;
+        })
+        .join("");
     });
-  }
-
-  // --- Modal logic (basic version; can be expanded later) ---
-  async function openDrinkModal(name, type) {
-    try {
-      const res = await fetch("data/drinks.json");
-      const allDrinks = await res.json();
-      const drinkList = allDrinks[type + "s"] || []; // cocktails, beers, spirits, mixers
-      const drink = drinkList.find(d => d.name === name);
-
-      if (!drink) return;
-
-      const modal = document.getElementById("globalModal");
-      document.getElementById("globalModalTitle").textContent = drink.name;
-      document.getElementById("globalModalDesc").textContent = drink.blurb || drink.ingredients || "";
-
-      // Optional flavours field
-      const flavourBox = document.getElementById("globalModalFlavours");
-      if (drink.flavours && drink.flavours.length > 0) {
-        flavourBox.innerHTML = "<strong>Flavours:</strong> " + drink.flavours.join(", ");
-        flavourBox.style.display = "block";
-      } else {
-        flavourBox.style.display = "none";
-      }
-
-      // Image
-      const modalImg = document.getElementById("globalModalImg");
-      if (modalImg && drink.image) {
-        modalImg.src = "images/cocktails/" + drink.image;
-      }
-
-      modal.style.display = "flex";
-    } catch (err) {
-      console.error("Modal open failed", err);
-    }
-  }
-
-  // --- Firestore Listener ---
-  db.collection("tonight").doc("menu").onSnapshot(doc => {
-    if (doc.exists) {
-      renderMenu(doc.data().drinks);
-    } else {
-      sipContainer.innerHTML = "<p>No menu saved yet.</p>";
-    }
-  });
 });

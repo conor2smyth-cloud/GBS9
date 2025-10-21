@@ -3,160 +3,78 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tonight's Event - GBS9</title>
-  <link rel="stylesheet" href="css/style.css?v=20251013">
+  <title>Tonight’s Event – GBS9</title>
+  <link rel="stylesheet" href="css/style.css">
   <script src="js/header.js" defer></script>
 </head>
 <body>
-  <!-- Global Header -->
   <header id="site-header"></header>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tonight's Event</title>
-  <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-  <!-- 🔥 Global Header -->
-  <header>
-    <script src="js/header.js" defer></script>
-  </header>
-
   <main>
-    <section class="event-tabs">
-      <!-- Tab Navigation -->
-      <div class="tab-nav">
-        <button class="tab-btn active" data-tab="sip">Sip</button>
-        <button class="tab-btn" data-tab="tip">Tip</button>
-        <button class="tab-btn" data-tab="celebrate">Celebrate</button>
+    <h1>🍸 Tonight’s Event</h1>
+
+    <!-- Tabs navigation -->
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="sip">Sip</button>
+      <button class="tab-btn" data-tab="tip">Tip</button>
+      <button class="tab-btn" data-tab="celebrate">Celebrate</button>
+      <button class="tab-btn" data-tab="roulette">Roulette</button>
+    </div>
+
+    <!-- === Tabs Content === -->
+    <section id="sip" class="tab-content active">
+      <h2>Sip Menu</h2>
+      <div id="tonightMenu" class="menu-grid">
+        <!-- JS will inject live menu here -->
       </div>
+    </section>
 
-      <!-- Tab Content -->
-      <div class="tab-content">
-        <div class="tab-panel active" id="sip">
-          <h2>Sip</h2>
-          <p class="cascade">Discover tonight’s curated cocktail list.</p>
-          <p class="cascade">Expertly shaken, stirred, and served.</p>
-          <a href="#" class="btn cascade">Explore Cocktails</a>
-        </div>
+    <section id="tip" class="tab-content">
+      <h2>Tip</h2>
+      <p>QR code and tipping info will go here.</p>
+    </section>
 
-        <div class="tab-panel" id="tip">
-          <h2>Tip</h2>
-          <p class="cascade">Find your perfect bartender’s tip.</p>
-          <p class="cascade">Quick tricks and insider knowledge.</p>
-          <a href="#" class="btn cascade">Learn More</a>
-        </div>
+    <section id="celebrate" class="tab-content">
+      <h2>Celebrate</h2>
+      <p>Gallery + Spotify Jam features will go here.</p>
+    </section>
 
-        <div class="tab-panel" id="celebrate">
-          <h2>Celebrate</h2>
-          <p class="cascade">Raise a glass to tonight’s vibe.</p>
-          <p class="cascade">Share the moment with your crew.</p>
-          <a href="#" class="btn cascade">Celebrate Now</a>
-        </div>
-      </div>
+    <section id="roulette" class="tab-content">
+      <h2>Roulette</h2>
+      <p>Spin the wheel for a cocktail number!</p>
     </section>
   </main>
 
-<div id="menuModal" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <h3></h3>
-    <p class="ingredients"></p>
-    <p class="method"></p>
-    <p class="flavours"></p>
-  </div>
-</div>
-
-const db = firebase.firestore();
-
-db.collection("tonight").doc("menu").onSnapshot(doc => {
-  if (doc.exists) {
-    const menu = doc.data().drinks;
-    renderMenu(menu); // your function to display in Sip tab
-  }
-});
-
-
-
-<!-- Firebase core + compat SDKs -->
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-
-<!-- Your restricted config (safe to commit) -->
-<script src="js/firebase.template.js"></script>
-
-<!-- Your app-specific logic -->
-<script src="js/admin.js" defer></script>
-
-
-
-<script>
-document.addEventListener("DOMContentLoaded", async () => {
-  const sipPanel = document.getElementById("sip");
-  try {
-    const [catRes, snap] = await Promise.all([
-      fetch("data/drinks.json").then(r=>r.json()),
-      FirebaseAPI.db.collection("tonight").doc("menu").get()
-    ]);
-    const tonight = snap.exists ? snap.data() : { cocktails:[], beer:[], spirits:[], mixers:[] };
-
-    // Build a quick lookup by name so we can show blurb/image
-    const catalog = [
-      ...(catRes.cocktails||[]).map(d=>({ ...d, type:"cocktail" })),
-      ...(catRes.beer||[]).map(d=>({ ...d, type:"beer" })),
-      ...(catRes.spirits||[]).map(d=>({ ...d, type:"spirit" })),
-      ...(catRes.mixers||[]).map(d=>({ ...d, type:"mixer" })),
-    ];
-    const byName = new Map(catalog.map(d => [d.name, d]));
-
-    const chosen = []
-      .concat((tonight.cocktails||[]).map(n=>byName.get(n)).filter(Boolean))
-      .concat((tonight.beer||[]).map(n=>byName.get(n)).filter(Boolean))
-      .concat((tonight.spirits||[]).map(n=>byName.get(n)).filter(Boolean));
-
-    // Simple grid cards (digital view)
-    sipPanel.innerHTML = `
-      <h2>Tonight’s Menu</h2>
-      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;">
-        ${chosen.map(d => `
-          <div class="card">
-            <img src="images/${d.image || 'coming-soon.jpg'}" alt="${d.name}">
-            <div class="card-body">
-              <h3>${d.name}</h3>
-              ${d.short ? `<p>${d.short}</p>` : ""}
-              <a href="#" class="btn" data-modal="${d.name}">Details</a>
-            </div>
-          </div>
-        `).join("")}
-      </div>
-    `;
-
-    // TODO: hook into your existing modal.js to open details by name
-
-  } catch (e) {
-    console.error(e);
-    sipPanel.innerHTML = "<p>Couldn’t load tonight’s menu.</p>";
-  }
-});
-</script>
-
-
-  <!-- 🔥 Global Footer -->
   <footer>
     <p>&copy; 2025 GBS9. All rights reserved.</p>
   </footer>
 
-  <!-- Scripts -->
+  <!-- === Firebase Core SDKs === -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+  <!-- Your Firebase config -->
+  <script src="js/firebase.template.js"></script>
+
+  <!-- Tabs switching -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const tabs = document.querySelectorAll(".tab-btn");
+      const contents = document.querySelectorAll(".tab-content");
+
+      tabs.forEach(btn => {
+        btn.addEventListener("click", () => {
+          tabs.forEach(b => b.classList.remove("active"));
+          contents.forEach(c => c.classList.remove("active"));
+          btn.classList.add("active");
+          document.getElementById(btn.dataset.tab).classList.add("active");
+        });
+      });
+    });
+  </script>
+
+  <!-- Live menu -->
   <script src="js/tonights-event.js" defer></script>
-
-<script src="js/tonights-event.js" defer></script>
-
-
-
 </body>
 </html>
-
