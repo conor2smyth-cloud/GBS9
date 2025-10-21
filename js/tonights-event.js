@@ -1,74 +1,71 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const menuRef = firebase.firestore().collection("tonight").doc("menu");
+  const db = firebase.firestore();
 
-  // 🔴 Live listener (updates instantly when admin saves)
-  menuRef.onSnapshot(doc => {
+  const sipContainer = document.getElementById("sipTab"); // Make sure Sip tab has id="sipTab"
+
+  // --- Render Function ---
+  function renderMenu(drinks) {
+    if (!drinks || drinks.length === 0) {
+      sipContainer.innerHTML = "<p>No drinks selected for tonight yet.</p>";
+      return;
+    }
+
+    sipContainer.innerHTML = drinks.map(drink => `
+      <div class="menu-card" data-name="${drink.name}" data-type="${drink.type}">
+        <h3>${drink.name}</h3>
+        <p class="type">${drink.type}</p>
+      </div>
+    `).join("");
+
+    // Attach modal openers
+    sipContainer.querySelectorAll(".menu-card").forEach(card => {
+      card.addEventListener("click", () => {
+        openDrinkModal(card.dataset.name, card.dataset.type);
+      });
+    });
+  }
+
+  // --- Modal logic (basic version; can be expanded later) ---
+  async function openDrinkModal(name, type) {
+    try {
+      const res = await fetch("data/drinks.json");
+      const allDrinks = await res.json();
+      const drinkList = allDrinks[type + "s"] || []; // cocktails, beers, spirits, mixers
+      const drink = drinkList.find(d => d.name === name);
+
+      if (!drink) return;
+
+      const modal = document.getElementById("globalModal");
+      document.getElementById("globalModalTitle").textContent = drink.name;
+      document.getElementById("globalModalDesc").textContent = drink.blurb || drink.ingredients || "";
+
+      // Optional flavours field
+      const flavourBox = document.getElementById("globalModalFlavours");
+      if (drink.flavours && drink.flavours.length > 0) {
+        flavourBox.innerHTML = "<strong>Flavours:</strong> " + drink.flavours.join(", ");
+        flavourBox.style.display = "block";
+      } else {
+        flavourBox.style.display = "none";
+      }
+
+      // Image
+      const modalImg = document.getElementById("globalModalImg");
+      if (modalImg && drink.image) {
+        modalImg.src = "images/cocktails/" + drink.image;
+      }
+
+      modal.style.display = "flex";
+    } catch (err) {
+      console.error("Modal open failed", err);
+    }
+  }
+
+  // --- Firestore Listener ---
+  db.collection("tonight").doc("menu").onSnapshot(doc => {
     if (doc.exists) {
-      const tonight = doc.data();
-      renderMenu(tonight);
+      renderMenu(doc.data().drinks);
+    } else {
+      sipContainer.innerHTML = "<p>No menu saved yet.</p>";
     }
   });
 });
-
-function renderMenu(tonight) {
-  const container = document.getElementById("sipMenu");
-  if (!container) return;
-
-  // Clear old content
-  container.innerHTML = "";
-
-  // Loop through categories
-  ["cocktails", "beer", "spirits", "mixers"].forEach(type => {
-    if (tonight[type] && tonight[type].length > 0) {
-      const section = document.createElement("div");
-      section.classList.add("menu-section");
-      section.innerHTML = `<h2>${type}</h2>`;
-
-      tonight[type].forEach(drink => {
-        const item = document.createElement("div");
-        item.classList.add("menu-item");
-        item.innerHTML = `
-          <button class="menu-link"
-            data-name="${drink.name}"
-            data-ingredients="${drink.ingredients || ""}"
-            data-method="${drink.method || ""}"
-            data-flavours="${drink.flavours || ""}">
-            ${drink.name}
-          </button>
-        `;
-        section.appendChild(item);
-      });
-
-      container.appendChild(section);
-    }
-  });
-
-  // Wire modal openers
-  document.querySelectorAll(".menu-link").forEach(btn => {
-    btn.addEventListener("click", () => {
-      openModal({
-        name: btn.dataset.name,
-        ingredients: btn.dataset.ingredients,
-        method: btn.dataset.method,
-        flavours: btn.dataset.flavours
-      });
-    });
-  });
-}
-
-function openModal(drink) {
-  const modal = document.getElementById("menuModal");
-  modal.querySelector("h3").textContent = drink.name;
-  modal.querySelector(".ingredients").textContent = drink.ingredients;
-  modal.querySelector(".method").textContent = drink.method;
-
-  const flavoursBox = modal.querySelector(".flavours");
-  if (drink.flavours && drink.flavours.trim() !== "") {
-    flavoursBox.textContent = `Flavours: ${drink.flavours}`;
-    flavoursBox.style.display = "block";
-  } else {
-    flavoursBox.style.display = "none";
-  }
-
-  modal.style.display = "flex";
-}
