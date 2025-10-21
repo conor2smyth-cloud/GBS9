@@ -85,3 +85,42 @@ document.addEventListener("DOMContentLoaded", () => {
     displayCocktails(filtered);
   }
 });
+
+// Load and render Premium Listings
+fetch("data/drinks.json")
+  .then(res => res.json())
+  .then(data => {
+    const allDrinks = [
+      ...data.cocktails,
+      ...data.beer,
+      ...data.spirits,
+      ...data.snacks,
+      ...data.misc
+    ];
+
+    // Sort: those with real images first
+    allDrinks.sort((a, b) => {
+      const aHasImage = a.image && a.image !== "coming-soon.jpg";
+      const bHasImage = b.image && b.image !== "coming-soon.jpg";
+
+      if (aHasImage && !bHasImage) return -1; // a first
+      if (!aHasImage && bHasImage) return 1;  // b first
+
+      // Optional secondary sort: alphabetically by name
+      return a.name.localeCompare(b.name);
+    });
+
+    const container = document.getElementById("premiumListings");
+
+    container.innerHTML = allDrinks.map(drink => `
+      <div class="card" data-name="${drink.name}">
+        <img src="images/${drink.image || 'coming-soon.jpg'}" alt="${drink.name}">
+        <div class="card-body">
+          <h3>${drink.name}</h3>
+          <p>${drink.short || ''}</p>
+        </div>
+      </div>
+    `).join("");
+  })
+  .catch(err => console.error("Error loading drinks:", err));
+
