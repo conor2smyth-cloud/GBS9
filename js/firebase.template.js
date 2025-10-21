@@ -3,13 +3,13 @@
 // Copy to js/firebase.js and fill in your actual config before running.
 
 const firebaseConfig = {
- apiKey: "AIzaSyAa9_gxx6MnrHHBABj6_Laif0C6LUorQhQ",
-  authDomain: "gbs9-9d0a8.firebaseapp.com",
-  projectId: "gbs9-9d0a8",
-  storageBucket: "gbs9-9d0a8.appspot.com",
-  messagingSenderId: "74649598691",
-  appId: "1:74649598691:web:0ab7026bcf19b8c6e063d6",
-  measurementId: "G-NHMVFL5H1E"
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT_ID.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID",
+  measurementId: "YOUR_MEASUREMENT_ID"
 };
 
 // Initialize Firebase
