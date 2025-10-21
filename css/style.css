@@ -486,6 +486,9 @@ section {
   to   { opacity: 1; transform: scale(1); }
 }
 
+#clearMenuBtn:hover {
+  background: #b71c1c;
+}
 
 
 /* === Footer === */

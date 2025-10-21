@@ -89,3 +89,23 @@ clearButton.addEventListener("click", async () => {
 
 window.addEventListener("DOMContentLoaded", loadAdminMenu);
 
+// === Clear Tonight's Menu Button Logic ===
+import { collection, getDocs, deleteDoc, doc }
+  from "https://www.gstatic.com/firebasejs/9.6.11/firebase-firestore.js";
+import { db } from "./firebase.js";
+
+const clearButton = document.getElementById("clearMenuBtn");
+
+if (clearButton) {
+  clearButton.addEventListener("click", async () => {
+    const ok = confirm("Are you sure you want to clear the entire Tonight’s Menu?");
+    if (!ok) return;
+
+    const snap = await getDocs(collection(db, "tonightMenu"));
+    for (const docSnap of snap.docs) {
+      await deleteDoc(doc(db, "tonightMenu", docSnap.id));
+    }
+
+    alert("Tonight’s Menu cleared successfully.");
+  });
+}
