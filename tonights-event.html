@@ -1,46 +1,213 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tonight’s Menu — GBS9</title>
-  <style>
-    body {
-      font-family: system-ui, sans-serif;
-      background: #fff;
-      margin: 0;
-      padding: 2rem;
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tonight’s Menu — GBS9</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@600&display=swap');
+
+  :root {
+    --accent:#1a1a1a;
+    --subtle:#555;
+    --highlight:#b49a5d;
+    --font-header:"Playfair Display",serif;
+    --font-body:"Inter",sans-serif;
+  }
+
+  body {
+    font-family:var(--font-body);
+    margin:0;
+    background:#fcfbf8;
+    color:var(--accent);
+    -webkit-font-smoothing:antialiased;
+  }
+
+  header {
+    text-align:center;
+    padding:1rem 1rem 0.5rem;
+  }
+  header img.logo {
+    width:120px;
+    margin-bottom:0.5rem;
+  }
+  h1 {
+    font-family:var(--font-header);
+    font-size:1.7rem;
+    margin:0;
+    color:var(--highlight);
+  }
+  .event-title {
+    font-size:1rem;
+    color:var(--subtle);
+    margin:0.25rem 0 1rem;
+  }
+
+  /* Tabs */
+  .tabs {
+    display:flex;
+    justify-content:center;
+    background:#f3f1ec;
+    border-bottom:1px solid #e5e2da;
+    position:sticky;
+    top:0;
+    z-index:5;
+  }
+  .tab {
+    flex:1;
+    padding:0.75rem 0;
+    text-align:center;
+    cursor:pointer;
+    font-weight:600;
+    border-bottom:3px solid transparent;
+    color:var(--subtle);
+    font-size:1rem;
+  }
+  .tab.active {
+    border-color:var(--highlight);
+    color:var(--accent);
+  }
+
+  /* Menu sections */
+  .menu-section {
+    display:none;
+    padding:1rem 1rem 2rem;
+    max-width:700px;
+    margin:0 auto;
+  }
+  .menu-section.active { display:block; }
+
+  .drink-card {
+    padding:1rem 0;
+    border-bottom:1px solid #eceae4;
+  }
+  .drink-card:last-child { border:none; }
+
+  .drink-card h3 {
+    font-family:var(--font-header);
+    font-size:1.25rem;
+    margin:0 0 0.3rem;
+  }
+  .drink-card p.blurb {
+    font-style:italic;
+    color:var(--subtle);
+    margin:0 0 0.3rem;
+    font-size:1.05rem;
+  }
+  .drink-card p.ingredients {
+    margin:0;
+    font-size:1.05rem;
+  }
+
+  footer {
+    text-align:center;
+    padding:1rem;
+  }
+  footer img.qr {
+    width:100px;
+    margin-top:0.5rem;
+  }
+  footer p {
+    font-size:0.9rem;
+    color:var(--subtle);
+  }
+
+  /* PRINT for A4 → 2x A5 */
+  @media print {
+    .tabs, #printBtn { display:none; }
+    body { background:#fff; color:#000; font-size:11pt; padding:0; margin:0; }
+    header, footer { page-break-inside:avoid; }
+    .page {
+      width:148mm;
+      height:210mm;
+      padding:10mm;
+      box-sizing:border-box;
+      display:inline-block;
+      vertical-align:top;
     }
-    h1 {
-      text-align: center;
-      margin-bottom: 2rem;
+    @page {
+      size:A4 portrait;
+      margin:0;
     }
-    #eventMenu {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1rem;
-    }
-    .drink-card {
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      padding: 1rem;
-      text-align: center;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-    }
-    .drink-card img {
-      width: 100%;
-      border-radius: 6px;
-      object-fit: cover;
-    }
-    .drink-card h3 {
-      margin: 0.5rem 0;
-    }
-  </style>
+    body::after { content:""; display:block; clear:both; }
+  }
+</style>
 </head>
 <body>
-  <h1>Tonight’s Menu</h1>
-  <div id="eventMenu"></div>
+  <header>
+    <img src="./assets/logos/company-logo.png" alt="GBS9 Logo" class="logo" />
+    <h1>GBS9</h1>
+    <p class="event-title">Autumn Cocktail Evening — October 2025</p>
+  </header>
 
-  <script type="module" src="./js/tonights-event.js"></script>
+  <div class="tabs">
+    <div class="tab active" data-tab="cocktails">Cocktails</div>
+    <div class="tab" data-tab="spirits">Spirits</div>
+    <div class="tab" data-tab="beer">Beer</div>
+    <div class="tab" data-tab="snacks">Snacks</div>
+  </div>
+
+  <section id="cocktails" class="menu-section active"></section>
+  <section id="spirits" class="menu-section"></section>
+  <section id="beer" class="menu-section"></section>
+  <section id="snacks" class="menu-section"></section>
+
+  <footer>
+    <p>Scan for live menu updates</p>
+    <img src="./assets/qr-code.png" alt="QR Code" class="qr" />
+  </footer>
+
+<script type="module">
+import { db } from "./js/firebase.js";
+import { collection, onSnapshot, getDoc, doc }
+  from "https://www.gstatic.com/firebasejs/9.6.11/firebase-firestore.js";
+
+const tabs=document.querySelectorAll(".tab");
+const sections={
+  cocktails:document.getElementById("cocktails"),
+  spirits:document.getElementById("spirits"),
+  beer:document.getElementById("beer"),
+  snacks:document.getElementById("snacks")
+};
+
+// Tab switching
+tabs.forEach(tab=>{
+  tab.addEventListener("click",()=>{
+    tabs.forEach(t=>t.classList.remove("active"));
+    Object.values(sections).forEach(s=>s.classList.remove("active"));
+    tab.classList.add("active");
+    sections[tab.dataset.tab].classList.add("active");
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+});
+
+// Live Firestore feed
+async function loadMenu(){
+  const tonightMenuRef=collection(db,"tonightMenu");
+  onSnapshot(tonightMenuRef, async snapshot=>{
+    Object.values(sections).forEach(s=>s.innerHTML="");
+    for(const item of snapshot.docs){
+      const {category,drinkId}=item.data();
+      if(!category||!drinkId) continue;
+      const ref=doc(db,category,drinkId);
+      const snap=await getDoc(ref);
+      if(!snap.exists()) continue;
+      const d=snap.data();
+      const section=sections[category];
+      if(!section) continue;
+      const card=document.createElement("div");
+      card.className="drink-card";
+      card.innerHTML=`
+        <h3>${d.name||"Untitled"}</h3>
+        ${d.blurb?`<p class="blurb">${d.blurb}</p>`:""}
+        ${d.ingredients?`<p class="ingredients">${d.ingredients}</p>`:""}
+      `;
+      section.appendChild(card);
+    }
+  });
+}
+loadMenu();
+</script>
 </body>
 </html>
+
