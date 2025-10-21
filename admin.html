@@ -71,16 +71,26 @@
     </div>
   </main>
 
-<!-- Firebase core + compat SDKs -->
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+    <!-- Actions -->
+    <div id="adminActions" style="display:none; margin-top:1rem;">
+      <button id="saveTonightBtn" class="btn">💾 Save Tonight’s Menu</button>
+      <button id="printMenuBtn" class="btn">🖨️ Print Menu</button>
+      <button id="previewMenuBtn" class="btn">👀 Preview Menu</button>
+    </div>
 
-<!-- Your restricted config (safe to commit) -->
-<script src="js/firebase.template.js"></script>
+    <!-- Firebase core + compat SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 
-<!-- Your app-specific logic -->
-<script src="js/admin.js" defer></script>
+    <!-- ✅ Use this file instead of firebase.js -->
+    <script src="js/firebase.template.js"></script>
+
+    <!-- Your admin logic -->
+    <script src="js/admin.js" defer></script>
+  </main>
+</body>
+</html>
 
 
 
